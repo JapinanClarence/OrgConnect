@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import express from "express";
+import errorHandler from "./middleware/error.js";
 
 const app = express();
 
@@ -14,6 +15,8 @@ mongoose
   .catch((err) => {
     console.error("DB connection error:", err);
   });
+
+app.use(errorHandler)
 
 // Handle 404 errors for undefined routes
 app.use((req, res, next) => {
