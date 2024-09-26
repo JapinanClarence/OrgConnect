@@ -30,9 +30,8 @@ userSchema.pre("save", async function (next) {
       return next(err);
     }
   }
-
   next();
-});
+},{ discriminatorKey: "role", collection: "users" });
 
 // Method to compare a given password with the hashed password in the database
 userSchema.methods.comparePassword = async function (candidatePassword) {
@@ -42,4 +41,11 @@ userSchema.methods.comparePassword = async function (candidatePassword) {
 // Base UserModel
 const UserModel = mongoose.model("User", userSchema);
 
-export {UserModel};
+
+const StudentSchema = new mongoose.Schema({
+
+})
+
+const StudentModel = mongoose.model("2", StudentSchema);
+
+export {UserModel, StudentModel};
