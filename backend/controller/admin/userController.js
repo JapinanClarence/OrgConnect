@@ -1,4 +1,4 @@
-import { UserModel as Admin } from "../../model/UserModel.js";
+import { OrgAdminModel as Admin } from "../../model/UserModel.js";
 
 export const createUser = async (req, res, next) => {
   const { firstname, lastname, middlename, username, email, password } =

@@ -78,7 +78,18 @@ const StudentSchema = new mongoose.Schema({
   course: { type: String },
 });
 
+//organization admin specific schema 
+const OrgAdminSchema = new mongoose.Schema({
+  active: {
+    type: Boolean,
+    default: false,
+  },
+})
+
 //Discriminator for student
 const StudentModel = UserModel.discriminator("2", StudentSchema);
 
-export { UserModel, StudentModel };
+//discriminator for org admin
+const OrgAdminModel = UserModel.discriminator("1", OrgAdminSchema);
+
+export { UserModel, StudentModel, OrgAdminModel };
