@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import express from "express";
 import auth from "./routes/auth.js";
-import adminRoutes from "./routes/admin/user.js";
+import superAdminRoutes from "./routes/superadmin/user.js";
 import userRoutes from "./routes/user.js";
 
 const app = express();
@@ -21,7 +21,7 @@ mongoose
 //auth router
 app.use("/api/", auth);
 
-app.use("/api/admin/", adminRoutes)
+app.use("/api/superadmin/", superAdminRoutes)
 
 //user routes
 app.use("/api/user/", userRoutes);

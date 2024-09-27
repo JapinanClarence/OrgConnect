@@ -3,7 +3,7 @@ import {
   createUser,
   findUser,
   getUser,
-} from "../../controller/admin/userController.js";
+} from "../../controller/superadmin/userController.js";
 import { userValidationRules, validate } from "../../middleware/validator.js";
 import {
   authenticate,
@@ -13,7 +13,7 @@ import {
 const router = express.Router();
 
 router.post(
-  "/user",
+  "/accounts",
   authenticate,
   authorizeRole("superadmin"),
   express.json(),
@@ -22,7 +22,7 @@ router.post(
   createUser
 );
 
-router.get("/user", authenticate, authorizeRole("superadmin"), getUser);
+router.get("/accounts", authenticate, authorizeRole("superadmin"), getUser);
 
-router.get("/user/:id", authenticate, authorizeRole("superadmin"), findUser);
+router.get("/accounts/:id", authenticate, authorizeRole("superadmin"), findUser);
 export default router;
