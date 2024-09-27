@@ -26,10 +26,10 @@ export const register = async (req, res, next) => {
     const existingStudent = await Student.findOne({ studentId });
     //check if student exists
     if (existingStudent) {
-      const error = new Error("Student already exists");
-      error.status = 400;
-      error.success = false;
-      return next(error);
+      res.status(400).json({
+        success: false,
+        message: "Student already exists",
+      });
     }
 
     const studentData = {
@@ -52,10 +52,10 @@ export const register = async (req, res, next) => {
       message: "Student created successfully",
     });
   } catch (err) {
-    const error = new Error(err.message);
-    error.status = 500;
-    error.success = false;
-    return next(error);
+    res.status(500).json({
+      success: false,
+      message: err.message,
+    });
   }
 };
 
@@ -64,18 +64,18 @@ export const login = async (req, res, next) => {
   try {
     const user = await User.findOne({ email });
     if (!user) {
-      const error = new Error("Invalid email or password");
-      error.status = 401;
-      error.success = false;
-      return next(error);
+      res.status(401).json({
+        success: false,
+        message: "Invalid email or password",
+      });
     }
     //compare password
     const isMatch = await user.comparePassword(password);
     if (!isMatch) {
-      const error = new Error("Invalid email or password");
-      error.status = 401;
-      error.success = false;
-      return next(error);
+      res.status(401).json({
+        success: false,
+        message: "Invalid email or password",
+      });
     }
     //generate jwt token
     const token = jwt.sign(
@@ -106,9 +106,9 @@ export const login = async (req, res, next) => {
       token,
     });
   } catch (err) {
-    const error = new Error(err.message);
-    error.status = 500;
-    error.success = false;
-    return next(error);
+    res.status(500).json({
+      success: false,
+      message: err.message,
+    });
   }
 };
