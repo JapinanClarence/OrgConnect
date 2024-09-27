@@ -18,31 +18,38 @@ export const register = async (req, res, next) => {
     age,
     contactNumber,
     course,
+    username,
     email,
     password,
   } = req.body;
 
   try {
-    const existingStudent = await Student.findOne({$or: [{ studentId }, { email }]});
+    const existingStudent = await Student.findOne({
+      $or: [{ studentId }, { email }],
+    });
     //check if student exists
     if (existingStudent) {
       return res.status(400).json({
         success: false,
-        message: existingStudent.studentId === studentId ? "Student already exists" : "Email already taken",
+        message:
+          existingStudent.studentId === studentId
+            ? "Student already exists"
+            : "Email already taken",
       });
     }
 
     const studentData = {
-      studentId: studentId,
-      firstname: firstname,
-      lastname: lastname,
-      middlename: middlename,
-      age: age,
-      contactNumber: contactNumber,
-      course: course,
-      email: email,
-      password: password,
-      profilePicture: null
+      studentId,
+      firstname,
+      lastname,
+      middlename,
+      age,
+      contactNumber,
+      course,
+      username,
+      email,
+      password,
+      profilePicture: null,
     };
 
     await Student.create(studentData);
@@ -63,7 +70,15 @@ export const register = async (req, res, next) => {
 export const login = async (req, res, next) => {
   const { email, password } = req.body;
   try {
-    const user = await User.findOne({ email });
+    //find username or email
+    const user = await User.findOne({
+      $or: [
+        { username: email },
+        {
+          email: email,
+        },
+      ],
+    });
     if (!user) {
       return res.status(401).json({
         success: false,
@@ -82,7 +97,7 @@ export const login = async (req, res, next) => {
     const token = jwt.sign(
       {
         userId: user._id,
-        email: user.email,
+        username: user.username,
         role: user.role,
       },
       ACCESS_KEY,

@@ -8,9 +8,22 @@ import bcrypt from "bcrypt";
  */
 const userSchema = new mongoose.Schema(
   {
+    firstname: {
+      type: String,
+      required: [true, "Firstname is required"],
+    },
+    lastname: {
+      type: String,
+      required: [true, "Lastname is required"],
+    },
+    middlename: { type: String },
+    username: {
+      type: String,
+      required: [true, "Username is required"],
+    },
     email: {
       type: String,
-      required: [true, "email is required"]
+      required: [true, "email is required"],
     },
     profilePicture: {
       type: String,
@@ -22,7 +35,7 @@ const userSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      minLength: 8
+      minLength: 8,
     },
   },
   { timestamps: true }
@@ -59,9 +72,6 @@ const UserModel = mongoose.model("User", userSchema);
 
 //Student specific schema
 const StudentSchema = new mongoose.Schema({
-  firstname: { type: String },
-  lastname: { type: String },
-  middlename: { type: String },
   studentId: { type: String },
   age: { type: String },
   contactNumber: { type: String },

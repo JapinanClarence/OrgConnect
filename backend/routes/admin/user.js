@@ -1,7 +1,10 @@
 import express from "express";
-import { createUser } from "../../controller/admin/userController.js";
+import { createUser, getUser } from "../../controller/admin/userController.js";
 import { userValidationRules, validate } from "../../middleware/validator.js";
-import { authenticate, authorizeRole } from "../../middleware/authMiddleware.js";
+import {
+  authenticate,
+  authorizeRole,
+} from "../../middleware/authMiddleware.js";
 
 const router = express.Router();
 
@@ -14,5 +17,7 @@ router.post(
   validate,
   createUser
 );
+
+router.get("/user", authenticate, authorizeRole("superadmin"), getUser);
 
 export default router;
