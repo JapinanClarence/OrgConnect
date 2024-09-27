@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import express from "express";
 import auth from "./routes/auth.js";
 import superAdminRoutes from "./routes/superadmin/user.js";
+import adminRoutes from "./routes/admin/user.js";
 import userRoutes from "./routes/user.js";
 
 const app = express();
@@ -20,8 +21,10 @@ mongoose
 
 //auth router
 app.use("/api/", auth);
-
+//super admin routes
 app.use("/api/superadmin/", superAdminRoutes)
+//admin routes
+app.use("/api/admin/", adminRoutes);
 
 //user routes
 app.use("/api/user/", userRoutes);
