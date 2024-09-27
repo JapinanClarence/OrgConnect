@@ -24,7 +24,7 @@ export const authenticate = (req, res, next) => {
 export const authorizeRole = (...requiredRoles) => {
   const roleMapping = {
     admin: "1",
-    user: "2",
+    student: "2",
     superadmin: "0",
   };
 

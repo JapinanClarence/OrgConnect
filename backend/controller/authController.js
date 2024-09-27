@@ -23,12 +23,12 @@ export const register = async (req, res, next) => {
   } = req.body;
 
   try {
-    const existingStudent = await Student.findOne({ studentId });
+    const existingStudent = await Student.findOne({$or: [{ studentId }, { email }]});
     //check if student exists
     if (existingStudent) {
-     return res.status(400).json({
+      return res.status(400).json({
         success: false,
-        message: "Student already exists",
+        message: existingStudent.studentId === studentId ? "Student already exists" : "Email already taken",
       });
     }
 
@@ -42,6 +42,7 @@ export const register = async (req, res, next) => {
       course: course,
       email: email,
       password: password,
+      profilePicture: null
     };
 
     await Student.create(studentData);
