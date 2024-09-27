@@ -1,5 +1,5 @@
 import express from "express";
-import { register } from "../controller/authController.js";
+import { login, register } from "../controller/authController.js";
 import { studentValidationRules, validate } from "../middleware/validator.js";
 
 const router = express.Router();
@@ -11,5 +11,7 @@ router.post(
   validate,
   register
 );
+
+router.post("/login", express.json(), login);
 
 export default router;
