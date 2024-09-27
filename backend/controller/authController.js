@@ -1,7 +1,7 @@
-import { UserModel as User, StudentModel as Student } from "../model/UserModel";
+import { UserModel as User, StudentModel as Student } from "../model/UserModel.js";
 
 export const register = async (req, res, next) => {
-  const [
+  const {
     studentId,
     firstname,
     lastname,
@@ -11,7 +11,7 @@ export const register = async (req, res, next) => {
     course,
     email,
     password,
-  ] = req.body;
+ } = req.body;
 
   try {
     const existingStudent = await Student.findOne({ studentId });
@@ -31,17 +31,10 @@ export const register = async (req, res, next) => {
       age: age,
       contactNumber: contactNumber,
       course: course,
-    };
-
-    const userData = {
       email: email,
-      password: password,
-      role: "2", //student role
+      password: password
     };
 
-    //insert user data
-    await User.create(userData);
-    //insert student data
     await Student.create(studentData);
     
     //return status

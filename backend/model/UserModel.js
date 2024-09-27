@@ -1,6 +1,11 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
-
+/**
+ * Roles
+ * 0 - Superadmin
+ * 1 - admin
+ * 2 - Student
+ */
 const userSchema = new mongoose.Schema(
   {
     email: {
@@ -16,7 +21,7 @@ const userSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      required: [true, "Password is required"],
+      minLength: 8
     },
   },
   { timestamps: true }
@@ -63,6 +68,6 @@ const StudentSchema = new mongoose.Schema({
 });
 
 //Discriminator for student
-const StudentModel = mongoose.model("2", StudentSchema);
+const StudentModel = UserModel.discriminator("2", StudentSchema);
 
 export { UserModel, StudentModel };
