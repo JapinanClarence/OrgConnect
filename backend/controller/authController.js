@@ -26,7 +26,7 @@ export const register = async (req, res, next) => {
     const existingStudent = await Student.findOne({ studentId });
     //check if student exists
     if (existingStudent) {
-      res.status(400).json({
+     return res.status(400).json({
         success: false,
         message: "Student already exists",
       });
@@ -52,7 +52,7 @@ export const register = async (req, res, next) => {
       message: "Student created successfully",
     });
   } catch (err) {
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       message: err.message,
     });

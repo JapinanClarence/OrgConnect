@@ -8,7 +8,7 @@ export const createUser = async (req, res, next) => {
     const user = await Admin.findOne({ email });
 
     if (user) {
-      res.status(400).json({
+      return res.status(400).json({
         success: false,
         message: "Email already registered",
       });
@@ -24,7 +24,7 @@ export const createUser = async (req, res, next) => {
         message: "User created successfully"
     })
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       message: error.message,
     });
