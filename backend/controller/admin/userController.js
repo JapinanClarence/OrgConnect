@@ -1,5 +1,32 @@
-import { UserModel as Admin, StudentModel as Student } from "../model/UserModel";
+import {
+  UserModel as Admin
+} from "../../model/UserModel.js";
 
-export const createUser = async (req, res, next) =>{
-    
-}
+export const createUser = async (req, res, next) => {
+  const { email, password } = req.body;
+  try {
+    const user = await Admin.findOne({ email });
+
+    if (user) {
+      res.status(400).json({
+        success: false,
+        message: "Email already registered",
+      });
+    }
+
+    await Admin.create({
+        email: email,
+        password: password
+    })
+
+    res.status(201).json({
+        success: true,
+        message: "User created successfully"
+    })
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};

@@ -11,7 +11,10 @@ export const studentValidationRules = () => [
     body("password").notEmpty().withMessage("Password is required"),
 ];
 
-
+export const userValidationRules = () => [
+  body("email").notEmpty().withMessage("Email is required"),
+  body("password").notEmpty().withMessage("Password is required"),
+]
 
 // Middleware to handle validation errors
 export const validate = (req, res, next) => {

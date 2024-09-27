@@ -1,8 +1,7 @@
 import mongoose from "mongoose";
 import express from "express";
-import errorHandler from "./middleware/error.js";
 import auth from "./routes/auth.js";
-
+import AdminRoutes from "./routes/admin/user.js";
 
 
 const app = express();
@@ -22,8 +21,7 @@ mongoose
 //auth router
 app.use("/api/", auth);
 
-//error handler middleware
-app.use(errorHandler)
+app.use("/api/admin", AdminRoutes)
 
 // Handle 404 errors for undefined routes
 app.use((req, res, next) => {
