@@ -21,12 +21,13 @@ mongoose
 //auth router
 app.use("/api/", auth);
 
-app.use("/api/admin", adminRoutes)
+app.use("/api/admin/", adminRoutes)
 
 //user routes
 app.use("/api/user/", userRoutes);
 // Handle 404 errors for undefined routes
 app.use((req, res, next) => {
+ 
   res.status(404).json({
     success: false,
     message: "Page not found",

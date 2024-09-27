@@ -4,12 +4,15 @@ export const createUser = async (req, res, next) => {
   const { firstname, lastname, middlename, username, email, password } =
     req.body;
   try {
-    const user = await Admin.findOne({$or: [{ username }, { email }]});
+    const user = await Admin.findOne({ $or: [{ username }, { email }] });
     //verify if email is already taken
     if (user) {
       return res.status(400).json({
         success: false,
-        message: user.username === username ? "Username already taken" : "Email already taken",
+        message:
+          user.username === username
+            ? "Username already taken"
+            : "Email already taken",
       });
     }
 
@@ -39,7 +42,9 @@ export const getUser = async (req, res, next) => {
   try {
     const role = "1";
 
-    const user = await Admin.find({ role }).select("email role");
+    const user = await Admin.find({ role }).select(
+      "firstname lastname middlename username email role"
+    );
 
     if (user.length <= 0) {
       return res.status(200).json({
@@ -48,6 +53,31 @@ export const getUser = async (req, res, next) => {
       });
     }
 
+    res.status(200).json({
+      success: true,
+      data: user,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+export const findUser = async (req, res, next) => {
+  const userId = req.params.id;
+  try {
+    const user = await Admin.findById(userId).select(
+      "firstname lastname middlename username email role"
+    );
+
+    if (!user) {
+      return res.status(404).json({
+        success: true,
+        message: "User not found",
+      });
+    }
     res.status(200).json({
       success: true,
       data: user,

@@ -1,5 +1,9 @@
 import express from "express";
-import { createUser, getUser } from "../../controller/admin/userController.js";
+import {
+  createUser,
+  findUser,
+  getUser,
+} from "../../controller/admin/userController.js";
 import { userValidationRules, validate } from "../../middleware/validator.js";
 import {
   authenticate,
@@ -20,4 +24,5 @@ router.post(
 
 router.get("/user", authenticate, authorizeRole("superadmin"), getUser);
 
+router.get("/user/:id", authenticate, authorizeRole("superadmin"), findUser);
 export default router;
