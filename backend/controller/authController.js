@@ -64,7 +64,7 @@ export const login = async (req, res, next) => {
   try {
     const user = await User.findOne({ email });
     if (!user) {
-      res.status(401).json({
+      return res.status(401).json({
         success: false,
         message: "Invalid email or password",
       });
@@ -72,7 +72,7 @@ export const login = async (req, res, next) => {
     //compare password
     const isMatch = await user.comparePassword(password);
     if (!isMatch) {
-      res.status(401).json({
+      return res.status(401).json({
         success: false,
         message: "Invalid email or password",
       });
@@ -106,7 +106,7 @@ export const login = async (req, res, next) => {
       token,
     });
   } catch (err) {
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       message: err.message,
     });

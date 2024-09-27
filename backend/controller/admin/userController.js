@@ -6,7 +6,7 @@ export const createUser = async (req, res, next) => {
   const { email, password } = req.body;
   try {
     const user = await Admin.findOne({ email });
-
+      //verify if email was already used
     if (user) {
       return res.status(400).json({
         success: false,
@@ -16,7 +16,8 @@ export const createUser = async (req, res, next) => {
 
     await Admin.create({
         email: email,
-        password: password
+        password: password,
+        role: "1"//default admin role 
     })
 
     res.status(201).json({
