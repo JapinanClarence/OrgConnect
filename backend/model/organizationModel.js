@@ -8,11 +8,15 @@ const organizationSchema = new mongoose.Schema({
     description:{
         type: String
     },
-    aboutUs:{
+    about:{
         type: String
     },
     contact:{
         type:String
+    },
+    user:{
+        type: mongoose.Schema.Types.ObjectId,
+        required: [true, "User is required"]
     }
 }, {timestamps : true})
 
