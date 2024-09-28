@@ -20,6 +20,10 @@ export const userValidationRules = () => [
   body("password").notEmpty().withMessage("Password is required"),
 ]
 
+export const organizationValidationRules = () => [
+  body("name").notEmpty().withMessage("Organization name is required"),
+]
+
 // Middleware to handle validation errors
 export const validate = (req, res, next) => {
     const errors = validationResult(req);

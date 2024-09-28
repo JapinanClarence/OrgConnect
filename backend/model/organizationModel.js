@@ -1,25 +1,32 @@
 import mongoose from "mongoose";
 
-const organizationSchema = new mongoose.Schema({
+const organizationSchema = new mongoose.Schema(
+  {
     name: {
-        type: String,
-        required: [true, "Name is required"]
+      type: String,
+      required: [true, "Name is required"],
     },
-    description:{
-        type: String
+    description: {
+      type: String,
     },
-    about:{
-        type: String
+    about: {
+      type: String,
     },
-    contact:{
-        type:String
+    contact: {
+      type: String,
     },
-    user:{
-        type: mongoose.Schema.Types.ObjectId,
-        required: [true, "User is required"]
-    }
-}, {timestamps : true})
+    banner: {
+        type:String,
+    },
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: [true, "User is required"],
+    },
+  },
+  { timestamps: true }
+);
 
-const Organization = mongoose.Model("Organization", organizationSchema);
+const Organization = mongoose.model("Organization", organizationSchema);
 
 export default Organization;
