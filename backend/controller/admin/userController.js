@@ -4,7 +4,7 @@ export const findUser = async (req, res, next) => {
     const userId = req.user.userId;
     try {
       const user = await Admin.findById(userId).select(
-        "firstname lastname middlename username email role"
+        "firstname lastname middlename username email role active"
       );
   
       if (!user) {
