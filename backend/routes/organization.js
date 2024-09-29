@@ -6,6 +6,10 @@ import {
   studentOrgs,
 } from "../controller/organizationController.js";
 import { authorizeRole, authenticate } from "../middleware/authMiddleware.js";
+import {
+  joinOrganizationValidationRules,
+  validate,
+} from "../middleware/validator.js";
 
 const router = express.Router();
 
@@ -29,6 +33,16 @@ router.get(
   authenticate,
   authorizeRole("student"),
   findOrg
+);
+
+router.post(
+  "/organization",
+  authenticate,
+  authorizeRole("student"),
+  express.json(),
+  joinOrganizationValidationRules(),
+  validate,
+  joinOrg
 );
 
 export default router;
