@@ -44,3 +44,28 @@ export const createOrg = async (req, res, next) => {
     });
   }
 };
+
+export const findOrg = async (req, res, next) => {
+  const userId = req.user.userId;
+
+  try {
+    const org = await Organization.findOne({user: userId});
+
+    if(!org){
+      return res.status(404).json({
+        success: false,
+        message: "Organization not found"
+      })
+    }
+
+    res.status(200).json({
+      success: true,
+      data: org
+    })
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
+}
