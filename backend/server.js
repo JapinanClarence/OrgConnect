@@ -5,6 +5,7 @@ import superAdminRoutes from "./routes/superadmin/user.js";
 import adminRoutes from "./routes/admin/user.js";
 import userRoutes from "./routes/user.js";
 import adminOrganizationRoutes from "./routes/admin/organization.js";
+import organizationRoutes from "./routes/organization.js";
 
 const app = express();
 
@@ -29,6 +30,8 @@ app.use("/api/admin/", adminRoutes);
 app.use("/api/admin/", adminOrganizationRoutes)
 //user routes
 app.use("/api/user/", userRoutes);
+app.use("/api/user/", organizationRoutes);
+
 // Handle 404 errors for undefined routes
 app.use((req, res, next) => {
  

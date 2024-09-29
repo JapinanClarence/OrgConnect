@@ -33,25 +33,60 @@ export const joinOrg = async (req, res, next) => {
 };
 
 export const getOrg = async (req, res, next) => {
-    try{
-        const organization = await Organization.find().select("name description about contact banner")
-        
-        if(organization.length <= 0){
-            return res.status(200).json({
-                success: false,
-                message: "No organizations foun"
-            })
-        }
+  try {
+    const organization = await Organization.find().select(
+      "name description about contact banner"
+    );
 
-        res.status(200).json({
-            success: true,
-            data: organization
-        })
-    
-    }catch(err){
-        return res.status(500).json({
-            success: false,
-            message: err.message,
-          });
+    if (organization.length <= 0) {
+      return res.status(200).json({
+        success: false,
+        message: "No organizations foun",
+      });
     }
-}
+
+    res.status(200).json({
+      success: true,
+      data: organization,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
+};
+
+export const studentOrgs = async (req, res, next) => {
+  const student = req.user.userId;
+
+  try {
+    const membership = await Membership.find({ student });
+
+    if (membership.length <= 0) {
+      return res.status(200).json({
+        success: false,
+        message: "No joined organizations found",
+      });
+    }
+
+    // return all organizations joined by the student
+    const organizations = await Promise.all(
+      membership.map(async (membership) => {
+        return await Organization.findById(membership.organization).select(
+          "name description about contact banner"
+        );
+      })
+    );
+
+    res.status(200).json({
+      success: true,
+      data: organizations, 
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
+};
