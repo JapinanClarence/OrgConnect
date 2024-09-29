@@ -24,6 +24,10 @@ export const organizationValidationRules = () => [
   body("name").notEmpty().withMessage("Organization name is required"),
 ]
 
+export const joinOrganizationValidationRules = () => [
+  body("organization").notEmpty().withMessage("Organization is required"),
+]
+
 // Middleware to handle validation errors
 export const validate = (req, res, next) => {
     const errors = validationResult(req);

@@ -9,7 +9,7 @@ export const findUser = async (req, res, next) => {
   
       if (!user) {
         return res.status(404).json({
-          success: true,
+          success: false,
           message: "User not found",
         });
       }

@@ -48,7 +48,7 @@ export const getUser = async (req, res, next) => {
 
     if (user.length <= 0) {
       return res.status(200).json({
-        success: true,
+        success: false,
         message: "No users found",
       });
     }
@@ -74,7 +74,7 @@ export const findUser = async (req, res, next) => {
 
     if (!user) {
       return res.status(404).json({
-        success: true,
+        success: false,
         message: "User not found",
       });
     }

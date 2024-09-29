@@ -49,7 +49,7 @@ export const findOrg = async (req, res, next) => {
   const userId = req.user.userId;
 
   try {
-    const org = await Organization.findOne({user: userId});
+    const org = await Organization.findOne({user: userId}).select("name description about contact banner");
 
     if(!org){
       return res.status(404).json({

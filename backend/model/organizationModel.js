@@ -18,6 +18,22 @@ const organizationSchema = new mongoose.Schema(
     banner: {
         type:String,
     },
+    officers : [
+      {
+        firstname: {
+          type: String
+        },
+        lastname: {
+          type: String
+        },
+        middlename: {
+          type: String
+        },
+        role: {
+          type: String
+        }
+      }
+    ],
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
