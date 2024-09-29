@@ -1,5 +1,10 @@
 import express from "express";
-import { getOrg, joinOrg, studentOrgs } from "../controller/organizationController.js";
+import {
+  findOrg,
+  getOrg,
+  joinOrg,
+  studentOrgs,
+} from "../controller/organizationController.js";
 import { authorizeRole, authenticate } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
@@ -17,6 +22,13 @@ router.get(
       return getOrg(req, res, next);
     }
   }
+);
+
+router.get(
+  "/organization/:id",
+  authenticate,
+  authorizeRole("student"),
+  findOrg
 );
 
 export default router;

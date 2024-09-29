@@ -81,7 +81,34 @@ export const studentOrgs = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      data: organizations, 
+      data: organizations,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
+};
+
+export const findOrg = async (req, res, next) => {
+  const organization = req.params.id;
+
+  try {
+    const org = await Organization.findById(organization).select(
+      "name description about contact banner"
+    );
+
+    if (!org) {
+      return res.status(404).json({
+        success: false,
+        message: "Organization not found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      data: org,
     });
   } catch (err) {
     return res.status(500).json({
