@@ -1,10 +1,13 @@
-import { Outlet } from "react-router-dom"
+"use client";
+import { Outlet } from "react-router-dom";
+import React from "react";
+
 const Mainlayout = () => {
   return (
-    <div>
-      <Outlet/>
-    </div>
-  )
-}
+    <>
+      <Outlet />
+    </>
+  );
+};
 
-export default Mainlayout
+export default Mainlayout;
