@@ -9,20 +9,10 @@ const {
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ["./src/**/*.{ts,tsx}"],
   darkMode: "class",
   theme: {
-    extend: {
-      fontFamily:{
-        sans: ['Open sans', 'sans-serif']
-      }
-    },
-    gridTemplateColumns:{
-      '70/30': '70% 28%',
-    }
+    // rest of the code
   },
   plugins: [
     addVariablesForColors,

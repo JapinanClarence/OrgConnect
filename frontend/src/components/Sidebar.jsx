@@ -1,5 +1,4 @@
 import {
-  BarChart2,
   User,
   Users,
   MoreVertical,
@@ -7,6 +6,9 @@ import {
   ChevronLast,
   Calendar,
   Newspaper,
+  Settings2,
+  Home,
+  Gauge
 } from "lucide-react";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
@@ -14,15 +16,22 @@ import { Link } from "react-router-dom";
 
 const SIDEBAR_ITEMS = [
   {
-    name: "Dashboard",
-    icon: BarChart2,
-    color: "#6366f1",
+    name: "Home",
+    icon: Home,
+    color: "#fff",
     href: "/",
   },
-  { name: "Calendar", icon: Calendar, color: "#8B5CF6", href: "/events" },
-  { name: "Announcments", icon: Newspaper, color: "#10B981", href: "/announcment" },
-  { name: "Officers", icon: User, color: "#EC4899", href: "/users" },
-  { name: "Members", icon: Users, color: "#F59E0B", href: "/members" },
+  {
+    name: "Dashboard",
+    icon: Gauge,
+    color: "#fff",
+    href: "/dashboard",
+  },
+  { name: "Calendar", icon: Calendar, color: "#fff", href: "/events" },
+  { name: "Announcments", icon: Newspaper, color: "#fff", href: "/announcment" },
+  { name: "Officers", icon: User, color: "#fff", href: "/users" },
+  { name: "Members", icon: Users, color: "#fff", href: "/members" },
+  { name: "Settings", icon: Settings2, color: "#fff", href: "/settings" },
 ];
 
 const Sidebar = () => {
@@ -35,8 +44,8 @@ const Sidebar = () => {
       }`}
       animate={{ width: isSidebarOpen ? 256 : 80 }}
     >
-      <div className="h-full  bg-gray-800 backdrop-blur-md p-4 flex flex-col border-r border-gray-700">
-        <div className="pb-2 flex justify-between items-center">
+      <div className="h-full  bg-gray-800 p-4 flex flex-col border-r border-gray-700">
+        <div className="pb-2 flex justify-between items-center border-b">
           <img
             src="NavLogo.svg"
             className={`overflow-hidden transition-all ${
