@@ -1,4 +1,5 @@
 import { Route, Routes } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
 import DashboardLayout from "./layouts/DashboardLayout";
 import Mainlayout from "./layouts/Mainlayout";
 import Homepage from "./pages/Homepage";
@@ -8,16 +9,24 @@ import Signuppage from "./pages/Signuppage";
 
 const App = () => {
   return (
-    <Routes>
-      <Route path="/" element={<Mainlayout />}>
-        <Route path="/login" element={<Loginpage/>}/>
-        <Route path="/signup" element={<Signuppage/>}/>
-      </Route>
-      <Route path="/" element={<DashboardLayout />}>
-        <Route index element={<Homepage />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-      </Route>
-    </Routes>
+    <>
+      <Toaster
+        position="top-right"
+        toastOptions={{
+          duration: 2000,
+        }}
+      />
+      <Routes>
+        <Route path="/" element={<Mainlayout />}>
+          <Route path="/login" element={<Loginpage />} />
+          <Route path="/signup" element={<Signuppage />} />
+        </Route>
+        <Route path="/" element={<DashboardLayout />}>
+          <Route index element={<Homepage />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+        </Route>
+      </Routes>
+    </>
   );
 };
 

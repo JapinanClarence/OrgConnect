@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import express from "express";
+import cors from "cors";
 import auth from "./routes/auth.js";
 import superAdminRoutes from "./routes/superadmin/user.js";
 import adminRoutes from "./routes/admin/user.js";
@@ -20,6 +21,8 @@ mongoose
   .catch((err) => {
     console.error("DB connection error:", err);
   });
+
+app.use(cors());
 
 //auth router
 app.use("/api/", auth);

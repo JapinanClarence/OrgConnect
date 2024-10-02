@@ -2,12 +2,33 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { LoaderCircle } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import {toast} from "react-hot-toast";
+import { useAuthStore } from "../../store/authStore";
+
 const Loginform = () => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const isLoading = false;
-  const handleLogin = (e) => {
+
+  const navigate = useNavigate();
+  const { login, error, isLoading } = useAuthStore();
+
+
+  const handleLogin = async (e) => {
     e.preventDefault();
+    try {
+        const userData = {
+            email,
+            password,
+          };
+        //   console.log(userData)
+        const isSuccess = await login(userData);
+
+        toast.success("Login successful");
+        navigate("/");
+    } catch (error) {
+        console.log(error)
+    }
   };
   return (
     <motion.div
@@ -29,16 +50,20 @@ const Loginform = () => {
       </div>
       <div className="">
         <form action="" id="login-form" onSubmit={handleLogin}>
+        {error && (
+            <p className="bg-red-200 rounded-md border border-red-500 text-red-500 text-xs p-3 mb-2">
+              {error}
+            </p>
+          )}
           <div className="">
             <label htmlFor="" className="text-gray-600 text-sm">
               Username
             </label>
             <input
-              id="username"
               type="text"
               className="rounded-md border w-full text-sm px-3 py-2 focus:outline-1 focus:ring-0 focus:border-gray-600"
-              placeholder="Enter Username..."
               required
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div className="">
@@ -49,8 +74,8 @@ const Loginform = () => {
               id="password"
               type="password"
               className="rounded-md border w-full text-sm px-3 py-2 focus:outline-1 focus:ring-0 focus:border-gray-600"
-              placeholder="Enter Password..."
               required
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
           <div className="mt-10">
