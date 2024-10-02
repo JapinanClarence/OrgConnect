@@ -1,7 +1,7 @@
 const Loginform = () => {
   return (
-    <div className="m-10 px-10 py-8 rounded-lg space-y-4 bg-white w-96 max-w-96">
-      <form action="" id="login-form">
+    <form action="" id="login-form">
+      <div className="m-10 p-8 rounded-lg space-y-4 bg-white max-w-96">
         <div className="leading-loose">
           <img
             src="OrgConnect-transparent.svg"
@@ -46,13 +46,12 @@ const Loginform = () => {
               Login
             </button>
             <p className="text-sm text-slate-900 mt-5 text-center">
-              Don't have an account?{" "}
-              <span className="font-bold">Create an account</span>
+              Don't have an account? <a href="/signup" className="font-bold">Create an account</a>
             </p>
           </div>
         </div>
-      </form>
-    </div>
+      </div>
+    </form>
   );
 };
 
