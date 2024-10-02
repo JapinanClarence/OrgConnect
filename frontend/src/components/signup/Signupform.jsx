@@ -1,28 +1,37 @@
+import { motion } from "framer-motion";
+import Input from "../ui/input";
+import { Link } from "react-router-dom";
+import { LoaderCircle } from "lucide-react";
+
 const Signupform = () => {
   return (
-    <form action="" id="signup-form">
-      <div className="m-10 p-8 rounded-lg space-y-4 bg-white max-w-lg">
-        <div className="leading-loose">
-          <img
-            src="OrgConnect-transparent.svg"
-            alt="OrgConnect logo"
-            className="w-16 h-16 mx-auto"
-          />
-          <h1 className="font-bold text-2xl text-gray-900">Sign up</h1>
-          <p className="text-sm text-gray-600">
-            Fill in the form to get started.
-          </p>
-        </div>
-        <div className="">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="m-10 p-8 rounded-xl space-y-4 bg-white max-w-lg shadow border border-slate-300"
+    >
+      <div className="leading-loose">
+        <img
+          src="OrgConnect-transparent.svg"
+          alt="OrgConnect logo"
+          className="w-16 h-16 mx-auto"
+        />
+        <h1 className="font-bold text-2xl text-gray-900">Sign up</h1>
+        <p className="text-sm text-gray-600">
+          Fill in the form to get started.
+        </p>
+      </div>
+      <div className="">
+        <form action="" id="signup-form">
           <div className="lg:flex gap-3">
             <div className="">
               <label htmlFor="" className="text-gray-600 text-sm">
                 Firstname
               </label>
-              <input
+              <Input
                 id="firstname"
                 type="text"
-                className="rounded-md border w-full text-sm px-3 py-2 focus:outline-1 focus:ring-0 focus:border-gray-600"
                 required
               />
             </div>
@@ -118,14 +127,14 @@ const Signupform = () => {
             </button>
             <p className="text-sm text-slate-900 mt-5 text-center">
               Already have an account?{" "}
-              <a className="font-bold" href="/login">
+              <Link className="font-bold hover:underline" to="/login">
                 Login
-              </a>
+              </Link>
             </p>
           </div>
-        </div>
+        </form>
       </div>
-    </form>
+    </motion.div>
   );
 };
 
