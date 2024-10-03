@@ -44,7 +44,7 @@ const Sidebar = () => {
       }`}
       animate={{ width: isSidebarOpen ? 256 : 80 }}
     >
-      <div className="h-full  bg-gray-800 p-4 flex flex-col border-r border-gray-700">
+      <div className="h-full  bg-gray-900 p-4 flex flex-col border-r border-gray-700">
         <div className="pb-2 flex justify-between items-center border-b">
           <img
             src="NavLogo.svg"
@@ -67,7 +67,7 @@ const Sidebar = () => {
         <nav className="mt-8 flex-grow">
           {SIDEBAR_ITEMS.map((item) => (
             <Link key={item.href} to={item.href}>
-              <motion.div className="flex items-center p-4 text-sm font-medium rounded-lg hover:bg-gray-700 transition-colors mb-2">
+              <motion.div className="flex items-center p-4 text-sm font-light rounded-lg hover:bg-gray-700 transition-colors mb-2">
                 <item.icon
                   size={20}
                   style={{ color: item.color, minWidth: "20px" }}
@@ -98,7 +98,7 @@ const Sidebar = () => {
           />
           <div
             className={`
-              flex justify-between items-center gap-10
+              flex justify-between items-center gap-5
               overflow-hidden transition-all ${isSidebarOpen ? "ml-4" : "w-0"}
           `}
           >
@@ -106,7 +106,7 @@ const Sidebar = () => {
               <h4 className="font-semibold">John Doe</h4>
               <span className="text-xs text-gray-400">johndoe@gmail.com</span>
             </div>
-            <MoreVertical size={20} />
+            <MoreVertical size={24} />
           </div>
         </div>
       </div>

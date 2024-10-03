@@ -12,9 +12,8 @@ export const useAuthStore = create((set) => ({
   signup: async (data ) => {
     set({ isLoading: true, error: null });
 
-    console.log(data);
-
     try {
+
       const response = await axios.post(`${baseUrl}/register`, data);
 
       set({ isLoading: false });
@@ -29,10 +28,10 @@ export const useAuthStore = create((set) => ({
   login: async (data) => {
     set({ isLoading: true, error: null });
     
-    console.log(data);
     try {
       const response = await axios.post(`${baseUrl}/login`, data);
 
+      localStorage.setItem("token", response.data.token);
       set({ isLoading: false });
     } catch (error) {
       set({

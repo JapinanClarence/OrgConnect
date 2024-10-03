@@ -199,7 +199,7 @@ const Signupform = () => {
             />
           </div>
           <div className="mt-10">
-            <button
+            <motion.button
               type="submit"
               className="bg-gray-900 hover:bg-gray-800 text-md text-white rounded-md px-3 py-2 w-full"
               disabled={isLoading}
@@ -209,7 +209,7 @@ const Signupform = () => {
               ) : (
                 "Signup"
               )}
-            </button>
+            </motion.button>
             <p className="text-sm text-slate-900 mt-5 text-center">
               Already have an account?{" "}
               <Link className="font-bold hover:underline" to="/login">

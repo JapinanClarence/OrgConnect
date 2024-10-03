@@ -33,7 +33,7 @@ export const register = async (req, res, next) => {
         success: false,
         message:
           existingStudent.studentId === studentId
-            ? "Student already exists"
+            ? "Student ID already taken"
             : "Email already taken",
       });
     }

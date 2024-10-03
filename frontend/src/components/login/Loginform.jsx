@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { LoaderCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import {toast} from "react-hot-toast";
+import { toast } from "react-hot-toast";
 import { useAuthStore } from "../../store/authStore";
 
 const Loginform = () => {
@@ -13,21 +13,19 @@ const Loginform = () => {
   const navigate = useNavigate();
   const { login, error, isLoading } = useAuthStore();
 
-
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-        const userData = {
-            email,
-            password,
-          };
-        //   console.log(userData)
-        const isSuccess = await login(userData);
+      const userData = {
+        email,
+        password,
+      };
+      const data = await login(userData);
 
-        toast.success("Login successful");
-        navigate("/");
+      toast.success("Login successful");
+    //   navigate("/");
     } catch (error) {
-        console.log(error)
+      console.log(error);
     }
   };
   return (
@@ -50,7 +48,7 @@ const Loginform = () => {
       </div>
       <div className="">
         <form action="" id="login-form" onSubmit={handleLogin}>
-        {error && (
+          {error && (
             <p className="bg-red-200 rounded-md border border-red-500 text-red-500 text-xs p-3 mb-2">
               {error}
             </p>
@@ -84,7 +82,11 @@ const Loginform = () => {
               className="bg-gray-900 hover:bg-gray-800 text-md text-white rounded-md px-3 py-2 w-full"
               disabled={isLoading}
             >
-              {isLoading ? <LoaderCircle className="w-6 h-6 text-gray-500 mx-auto animate-spin" /> : "Login"}
+              {isLoading ? (
+                <LoaderCircle className="w-6 h-6 text-gray-500 mx-auto animate-spin" />
+              ) : (
+                "Login"
+              )}
             </motion.button>
             <p className="text-sm text-slate-900 mt-5 text-center">
               Don't have an account?{" "}
