@@ -41,7 +41,7 @@ const UserItem = () => {
     <div className="grid grid-flow-col items-center border-5 p-2 border-t-2">
       <Avatar className="col-span-1">
         <AvatarImage src="https://github.com/shadcn.png" alt="user-profile" />
-        <AvatarFallback>CN</AvatarFallback>
+        <AvatarFallback>AD</AvatarFallback>
       </Avatar>
       <div className="col-span-5">
         <div className="text-[16px] font-bold">John Doe</div>
