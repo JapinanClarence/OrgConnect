@@ -22,7 +22,6 @@ const Homepage = () => {
         // Update the localStorage with the new user info
         localStorage.setItem("userData", JSON.stringify(updatedUserData));
 
-        console.log("User data updated:", updatedUserData);
       } catch (error) {
         console.error("Error updating user data:", error);
       }

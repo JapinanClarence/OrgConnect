@@ -26,7 +26,8 @@ import { useState } from "react";
 const UserItem = () => {
   const { logout } = useAuth();
   const [isAlertDialogOpen, setIsAlertDialogOpen] = useState(false);
-
+  const { userData } = JSON.parse(localStorage.getItem("userData"));
+  
   const handleLogout = () => {
     logout();
   };
@@ -37,6 +38,8 @@ const UserItem = () => {
   const closeAlertDialog = () => {
     setIsAlertDialogOpen(false);
   };
+
+  const fullname = userData.middlename ? `${userData.firstname} ${userData.middlename.charAt(0)}. ${userData.lastname}` : `${userData.firstname} ${userData.lastname}`;
   return (
     <div className="grid grid-flow-col items-center border-5 p-2 border-t-2">
       <Avatar className="col-span-1">
@@ -44,8 +47,8 @@ const UserItem = () => {
         <AvatarFallback>AD</AvatarFallback>
       </Avatar>
       <div className="col-span-5">
-        <div className="text-[16px] font-bold">John Doe</div>
-        <div className="text-[13px] font-neutral-500">johnD@gmail.com</div>
+        <div className="text-[16px] font-bold">{fullname}</div>
+        <div className="text-[13px] font-neutral-500">{userData.email}</div>
       </div>
       <DropdownMenu className="col-span-1">
         <DropdownMenuTrigger asChild>
