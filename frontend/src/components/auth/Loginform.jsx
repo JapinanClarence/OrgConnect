@@ -63,6 +63,7 @@ const Loginform = () => {
       console.log(error.response.data.message);
       const message = error.response.data.message;
       setErrorMessage(message);
+      setIsSubmitting(false);
     }
   };
   return (

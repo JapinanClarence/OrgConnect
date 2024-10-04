@@ -23,13 +23,22 @@ import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
 import apiClient from "@/api/axios";
 import { useLayoutEffect, useState } from "react";
+import { useAuth } from "@/context/AuthContext";
 
 const Signupform = () => {
   const navigate = useNavigate();
   const [showPass, setShowPass] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  //   const { login, isAuthenticated } = useAuth();
+    const {isAuthenticated } = useAuth();
+
+
+  // if user exists navigate to homepage
+  useLayoutEffect(() =>{
+    if(isAuthenticated){
+      navigate("/");
+    }
+  })
 
   const form = useForm({
     resolver: zodResolver(SignupSchema),
@@ -55,15 +64,16 @@ const Signupform = () => {
   const onSubmit = async (data) => {
     try {
       console.log(SignupSchema.parse(data));
-      //   setIsSubmitting(true);
-      //   const formData = SignupSchema.parse(data);
-      //   const response = await apiClient.post("/signup", formData);
-      //   login(response.data.token);
-      //   navigate("/");
+        setIsSubmitting(true);
+        const formData = SignupSchema.parse(data);
+        const response = await apiClient.post("/register", formData);
+
+        navigate("/login");
     } catch (error) {
       console.log(error.response.data.message);
       const message = error.response.data.message;
       setErrorMessage(message);
+      setIsSubmitting(false);
     }
   };
   return (
@@ -218,7 +228,7 @@ const Signupform = () => {
                           Contact Number
                         </FormLabel>
                         <FormControl>
-                          <Input {...field} type="text" />
+                          <Input {...field} type="text" maxLength="11"/>
                         </FormControl>
                         <FormMessage className="text-xs " />
                       </FormItem>
@@ -286,7 +296,7 @@ const Signupform = () => {
                   {isSubmitting ? (
                     <LoaderCircle className="w-6 h-6 text-gray-500 mx-auto animate-spin" />
                   ) : (
-                    "Login"
+                    "Signup"
                   )}
                 </Button>
               </div>
