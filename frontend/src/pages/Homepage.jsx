@@ -1,7 +1,10 @@
-// pages/Homepage.js
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 
 const Homepage = () => {
+  useEffect(() => {
+    
+  })
   return (
     <>
       <div className="flex items-center ">
