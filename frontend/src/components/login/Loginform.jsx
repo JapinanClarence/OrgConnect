@@ -14,13 +14,24 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage
+  FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { LoaderCircle } from "lucide-react";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { LoaderCircle, Eye, EyeOff } from "lucide-react";
 import { z } from "zod";
+import { useAuth } from "@/context/AuthContext";
+import apiClient from "@/api/axios";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const Loginform = () => {
+  const navigate = useNavigate();
+  const [showPass, setShowPass] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const {login} = useAuth();
+
   const form = useForm({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
@@ -29,77 +40,132 @@ const Loginform = () => {
     },
   });
 
-  const onSubmit = (data) => {
-    const formData = LoginSchema.parse(data);
+  const tooglePasswordVisibility = () => {
+    setShowPass(!showPass);
+  };
 
-    console.log(formData);
+  const onSubmit = async (data) => {
+    try {
+      const formData = LoginSchema.parse(data);
+      
+      const response = await apiClient.post("/login", formData);
+      
+      login(response.data.token);
+      // navigate("/");
+    } catch (error) {
+      console.log(error.response.data.message);
+      const message = error.response.data.message;
+      setErrorMessage(message);
+    }
   };
   return (
-    <Card
+    <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="m-10 rounded-xl space-y-4 bg-white max-w-3xl w-[450px] shadow border border-slate-300"
     >
-      <CardHeader>
-        <img
-          src="OrgConnect-transparent.svg"
-          alt="OrgConnect logo"
-          className="w-16 h-16 mx-auto"
-        />
-        <h1 className="font-bold text-2xl text-gray-900">Login</h1>
-        <p className="text-sm text-gray-600">
-          Fill in the form to get started.
-        </p>
-      </CardHeader>
-      <CardContent>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            <div>
-              <FormField
-                control={form.control}
-                name="username"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-gray-600 text-sm">
-                      Username
-                    </FormLabel>
-                    <FormControl>
-                      <Input {...field} type="text" />
-                    </FormControl>
-                    <FormMessage className="text-xs "/>
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-gray-600 text-sm">
-                      Password
-                    </FormLabel>
-                    <FormControl>
-                      <Input {...field} type="text" />
-                    </FormControl>
-                    <FormMessage className="text-xs"/>
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div>
-              <Button
-                id="submit"
-                className="bg-gray-900 hover:bg-gray-800 text-md text-white rounded-md px-3 py-2 w-full"
-              >
-                Login
-              </Button>
-            </div>
-          </form>
-        </Form>
-      </CardContent>
-      {/* <CardFooter></CardFooter> */}
-    </Card>
+      <Card
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="m-10 rounded-xl bg-white max-w-3xl w-[450px] shadow border border-gray-300"
+      >
+        <CardHeader>
+          <img
+            src="OrgConnect-transparent.svg"
+            alt="OrgConnect logo"
+            className="w-16 h-16 mx-auto"
+          />
+          <h1 className="font-bold text-2xl text-gray-900">Login</h1>
+          <p className="text-sm text-gray-600">
+            Fill in the form to get started.
+          </p>
+        </CardHeader>
+        <CardContent>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              {errorMessage && (
+                <Alert
+                  variant="destructive"
+                  className="py-2 px-3 bg-red-500 bg-opacity-20"
+                >
+                  <AlertDescription>{errorMessage}</AlertDescription>
+                </Alert>
+              )}
+              <div>
+                <FormField
+                  control={form.control}
+                  name="username"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-gray-600 text-sm">
+                        Username
+                      </FormLabel>
+                      <FormControl>
+                        <Input {...field} type="text" />
+                      </FormControl>
+                      <FormMessage className="text-xs " />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-gray-600 text-sm">
+                        Password
+                      </FormLabel>
+                      <FormControl>
+                        <div className="relative w-full ">
+                          <Input
+                            {...field}
+                            type={showPass ? "text" : "password"}
+                          />
+                          <Button
+                            type="button"
+                            size="icon"
+                            variant="ghost"
+                            className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                            onClick={tooglePasswordVisibility}
+                            aria-label={
+                              showPass ? "Hide Password" : "Show Password"
+                            }
+                          >
+                            {showPass ? (
+                              <Eye className="text-gray-500" />
+                            ) : (
+                              <EyeOff className="text-gray-500" />
+                            )}
+                          </Button>
+                        </div>
+                      </FormControl>
+                      <FormMessage className="text-xs" />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div>
+                <Button
+                  id="submit"
+                  className="bg-gray-900 hover:bg-gray-800 text-md text-white rounded-md px-3 py-2 w-full"
+                >
+                  Login
+                </Button>
+              </div>
+            </form>
+          </Form>
+        </CardContent>
+        <CardFooter className="flex justify-center items-center">
+          <p className="text-sm text-slate-900 text-center">
+            Don't have an account?{" "}
+            <Link to="/signup" className="font-bold hover:underline">
+              Create an account
+            </Link>
+          </p>
+        </CardFooter>
+      </Card>
+    </motion.div>
   );
 };
 
