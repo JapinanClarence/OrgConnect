@@ -33,11 +33,11 @@ const Loginform = () => {
   const { login, isAuthenticated } = useAuth();
 
   // if user exists navigate to homepage
-  useLayoutEffect(() =>{
-    if(isAuthenticated){
+  useLayoutEffect(() => {
+    if (isAuthenticated) {
       navigate("/");
     }
-  })
+  });
 
   const form = useForm({
     resolver: zodResolver(LoginSchema),
@@ -57,8 +57,14 @@ const Loginform = () => {
       const formData = LoginSchema.parse(data);
 
       const response = await apiClient.post("/login", formData);
-      login(response.data.token);
-      navigate("/");
+      console.log(response.data.role);
+      if (response.data.role == "2") {
+        setErrorMessage("Invalid Credentials");
+        setIsSubmitting(false);
+      } else {
+        login(response.data.token);
+        navigate("/");
+      }
     } catch (error) {
       console.log(error.response.data.message);
       const message = error.response.data.message;
@@ -72,9 +78,7 @@ const Loginform = () => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <Card
-        className="m-10 rounded-xl bg-white max-w-3xl w-[450px] shadow border border-gray-300"
-      >
+      <Card className="m-10 rounded-xl bg-white max-w-3xl w-[450px] shadow border border-gray-300">
         <CardHeader>
           <img
             src="OrgConnect-transparent.svg"
