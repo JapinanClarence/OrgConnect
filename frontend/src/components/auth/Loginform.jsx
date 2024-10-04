@@ -19,7 +19,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { LoaderCircle, Eye, EyeOff } from "lucide-react";
-import { z } from "zod";
 import { useAuth } from "@/context/AuthContext";
 import apiClient from "@/api/axios";
 import { useLayoutEffect, useState } from "react";
@@ -73,9 +72,6 @@ const Loginform = () => {
       transition={{ duration: 0.5 }}
     >
       <Card
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
         className="m-10 rounded-xl bg-white max-w-3xl w-[450px] shadow border border-gray-300"
       >
         <CardHeader>
