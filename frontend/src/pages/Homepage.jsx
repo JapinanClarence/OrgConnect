@@ -1,39 +1,24 @@
-import { motion } from "framer-motion";
-import Header from "@/components/Header";
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import apiClient from "@/api/axios";
-import { useAuth } from "@/context/AuthContext";
+// pages/Homepage.js
+import { Button } from "@/components/ui/button";
 
 const Homepage = () => {
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const getUser = async () => {
-      const userData = JSON.parse(localStorage.getItem("userData"));
-
-      try {
-        const response = await apiClient.get("/admin/profile", {
-          headers: {
-            Authorization: userData.token,
-          },
-        });
-        // const userData = response.data;
-
-        // localStorage.setItem("userData", JSON.stringify(userData.data));
-      } catch (error) {
-        console.log(error);
-
-      }
-    };
-    getUser();
-  });
   return (
-    <div className="flex-1 overflow-auto relative z-10">
-      <Header title="Homepage" />
-
-      <main className="max-w-7xl mx-auto py-6 px-4 lg:px-8"></main>
-    </div>
+    <>
+      <div className="flex items-center ">
+        <h1 className="text-lg font-semibold md:text-2xl text-gray-900">Inventory</h1>
+      </div>
+      <div className="flex flex-1 items-center justify-center rounded-lg  text-gray-900 border border-gray-900 border-dashed shadow-sm">
+        <div className="flex flex-col items-center gap-1 text-center">
+          <h3 className="text-2xl font-bold tracking-tight">
+            You have no products
+          </h3>
+          <p className="text-sm text-muted-foreground">
+            You can start selling as soon as you add a product.
+          </p>
+          <Button className="mt-4">Add Product</Button>
+        </div>
+      </div>
+    </>
   );
 };
 

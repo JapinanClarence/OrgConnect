@@ -57,7 +57,7 @@ const Loginform = () => {
       const formData = LoginSchema.parse(data);
 
       const response = await apiClient.post("/login", formData);
-      console.log(response.data.role);
+
       if (response.data.role == "2") {
         setErrorMessage("Invalid Credentials");
         setIsSubmitting(false);

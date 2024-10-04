@@ -306,7 +306,7 @@ const Signupform = () => {
         <CardFooter className="flex justify-center items-center">
           <p className="text-sm text-slate-900 text-center">
             Already have an account?{" "}
-            <Link to="/signup" className="font-bold hover:underline">
+            <Link to="/login" className="font-bold hover:underline">
               Login
             </Link>
           </p>

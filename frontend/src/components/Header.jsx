@@ -1,14 +1,26 @@
-// src/components/Header.js
-import { Menu } from "lucide-react";
-import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Search } from "lucide-react";
+import MobileNav from "@/components/MobileNav";
 
-const Header = ({ title }) => {
+const Header = ({title}) => {
   return (
-    <header className="bg-white shadow-lg border-b border-gray-200">
-      <div className="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-        {/* Menu Button */}
-        <h1 className="text-2xl font-semibold text-gray-900">{title}</h1>
-		
+    <header className="flex h-14 items-center gap-4 border-b px-4 lg:h-[60px] bg-gray-100 shadow-sm lg:px-6 z-10">
+      {/* Mobile Navigation */}
+      <MobileNav />
+
+      {/* Search Bar */}
+      <div className="w-full flex-1">
+        <form>
+          <div className="relative">
+            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+            <Input
+              type="search"
+              placeholder="Search..."
+              className="w-full appearance-none bg-background pl-8 shadow-none md:w-2/3 lg:w-1/3"
+            />
+          </div>
+        </form>
       </div>
     </header>
   );
