@@ -3,25 +3,27 @@ import Header from "@/components/Header";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import apiClient from "@/api/axios";
+import { useAuth } from "@/context/AuthContext";
 
 const Homepage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
     const getUser = async () => {
-      const token = localStorage.getItem("token");
+      const userData = JSON.parse(localStorage.getItem("userData"));
+
       try {
         const response = await apiClient.get("/admin/profile", {
           headers: {
-            Authorization: token,
+            Authorization: userData.token,
           },
         });
-        const userData = response.data;
+        // const userData = response.data;
 
-        localStorage.setItem("userData", JSON.stringify(userData.data));
+        // localStorage.setItem("userData", JSON.stringify(userData.data));
       } catch (error) {
         console.log(error);
-        navigate("/login");
+
       }
     };
     getUser();

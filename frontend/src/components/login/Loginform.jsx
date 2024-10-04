@@ -22,7 +22,7 @@ import { LoaderCircle, Eye, EyeOff } from "lucide-react";
 import { z } from "zod";
 import { useAuth } from "@/context/AuthContext";
 import apiClient from "@/api/axios";
-import { useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
@@ -30,7 +30,15 @@ const Loginform = () => {
   const navigate = useNavigate();
   const [showPass, setShowPass] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const {login} = useAuth();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { login, isAuthenticated } = useAuth();
+
+  // if user exists navigate to homepage
+  useLayoutEffect(() =>{
+    if(isAuthenticated){
+      navigate("/");
+    }
+  })
 
   const form = useForm({
     resolver: zodResolver(LoginSchema),
@@ -43,15 +51,15 @@ const Loginform = () => {
   const tooglePasswordVisibility = () => {
     setShowPass(!showPass);
   };
-
+  //handle form submit
   const onSubmit = async (data) => {
     try {
+      setIsSubmitting(true);
       const formData = LoginSchema.parse(data);
-      
+
       const response = await apiClient.post("/login", formData);
-      
       login(response.data.token);
-      // navigate("/");
+      navigate("/");
     } catch (error) {
       console.log(error.response.data.message);
       const message = error.response.data.message;
@@ -149,8 +157,13 @@ const Loginform = () => {
                 <Button
                   id="submit"
                   className="bg-gray-900 hover:bg-gray-800 text-md text-white rounded-md px-3 py-2 w-full"
+                  disabled={isSubmitting}
                 >
-                  Login
+                  {isSubmitting ? (
+                    <LoaderCircle className="w-6 h-6 text-gray-500 mx-auto animate-spin" />
+                  ) : (
+                    "Login"
+                  )}
                 </Button>
               </div>
             </form>
