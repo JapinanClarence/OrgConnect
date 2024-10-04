@@ -1,6 +1,5 @@
 import { create } from "zustand";
-import axios from "axios";
-const baseUrl = import.meta.env.VITE_BASE_URL;
+import apiClient from "../api/axios";
 
 export const useAuthStore = create((set) => ({
   user: null,
@@ -14,7 +13,7 @@ export const useAuthStore = create((set) => ({
 
     try {
 
-      const response = await axios.post(`${baseUrl}/register`, data);
+      const response = await apiClient.post(`/register`, data);
 
       set({ isLoading: false });
     } catch (error) {
@@ -29,9 +28,16 @@ export const useAuthStore = create((set) => ({
     set({ isLoading: true, error: null });
     
     try {
-      const response = await axios.post(`${baseUrl}/login`, data);
+      const response = await apiClient.post(`/login`, data);
+      console.log(response);
+      if(response.data.role !== "2"){
 
+        set({error: "Anauthorized"});
+        throw error;
+      }
+      
       localStorage.setItem("token", response.data.token);
+
       set({ isLoading: false });
     } catch (error) {
       set({
@@ -41,4 +47,8 @@ export const useAuthStore = create((set) => ({
       throw error;
     }
   },
+  logout: () =>{
+    localStorage.removeItem("token");
+    set({user: null})
+  }
 }));

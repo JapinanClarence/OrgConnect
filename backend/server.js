@@ -26,10 +26,11 @@ app.use(cors());
 
 //auth router
 app.use("/api/", auth);
+//admin profile routes
+app.use("/api/admin/", adminRoutes);
+
 //super admin routes
 app.use("/api/superadmin/", superAdminRoutes)
-//admin routes
-app.use("/api/admin/", adminRoutes);
 app.use("/api/admin/", adminOrganizationRoutes)
 //user routes
 app.use("/api/user/", userRoutes);
