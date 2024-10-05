@@ -27,6 +27,7 @@ import {
 } from "@/components/ui/form";
 import { LoaderCircle } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const AddOrganizationDialog = ({ showDialog, onClose  }) => {
   const [errorMessage, setErrorMessage] = useState("");
@@ -68,6 +69,11 @@ const AddOrganizationDialog = ({ showDialog, onClose  }) => {
     }
   };
   return (
+    // <motion.div
+    //   initial={{ opacity: 0, y: 20 }}
+    //   animate={{ opacity: 1, y: 0 }}
+    //   transition={{ duration: 0.5 }}
+    // >
     <Dialog open={showDialog}>
       <DialogContent className="w-[400px] lg:w-[500px] bg-white">
         <DialogHeader>
@@ -173,6 +179,7 @@ const AddOrganizationDialog = ({ showDialog, onClose  }) => {
         </div>
       </DialogContent>
     </Dialog>
+    // </motion.div>
   );
 };
 

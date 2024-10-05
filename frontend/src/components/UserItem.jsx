@@ -8,46 +8,29 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/AuthContext";
-import { useState } from "react";
 
 const UserItem = () => {
-  const { logout } = useAuth();
-  const [isAlertDialogOpen, setIsAlertDialogOpen] = useState(false);
-  const { userData } = JSON.parse(localStorage.getItem("userData"));
-  
+  const { logout, userData } = useAuth();
+
   const handleLogout = () => {
     logout();
   };
-  const openAlertDialog = () => {
-    setIsAlertDialogOpen(true);
-  };
 
-  const closeAlertDialog = () => {
-    setIsAlertDialogOpen(false);
-  };
-
-  const fullname = userData.middlename ? `${userData.firstname} ${userData.middlename.charAt(0)}. ${userData.lastname}` : `${userData.firstname} ${userData.lastname}`;
+  // const fullname = userData.middlename
+  //   ? `${userData.firstname} ${userData.middlename.charAt(0)}. ${
+  //       userData.lastname
+  //     }`
+  //   : `${userData.firstname} ${userData.lastname}`;
   return (
     <div className="grid grid-flow-col items-center border-5 p-2 border-t-2">
       <Avatar className="col-span-1">
-        <AvatarImage src="https://github.com/shadcn.png" alt="user-profile" />
+        {/* <AvatarImage src="https://github.com/shadcn.png" alt="user-profile" /> */}
         <AvatarFallback>AD</AvatarFallback>
       </Avatar>
       <div className="col-span-5">
-        <div className="text-[16px] font-bold">{fullname}</div>
+        <div className="text-[16px] font-bold">{userData.username}</div>
         <div className="text-[13px] font-neutral-500">{userData.email}</div>
       </div>
       <DropdownMenu className="col-span-1">
@@ -64,25 +47,6 @@ const UserItem = () => {
           <DropdownMenuItem onSelect={handleLogout}>Logout</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-
-      {/* <AlertDialog open={isAlertDialogOpen} onOpenChange={setIsAlertDialogOpen}>
-        <AlertDialogContent className="">
-          <AlertDialogHeader>
-            <AlertDialogTitle>
-              Are you sure you want to log out?
-            </AlertDialogTitle>
-            <AlertDialogDescription>
-              This will log you out of your account.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel onClick={closeAlertDialog}>
-              Cancel
-            </AlertDialogCancel>
-            <AlertDialogAction onClick={handleLogout}>Logout</AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog> */}
     </div>
   );
 };

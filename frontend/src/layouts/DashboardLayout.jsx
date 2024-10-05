@@ -1,8 +1,4 @@
 import { Outlet } from "react-router-dom";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Search } from "lucide-react";
 import DesktopSidebar from "@/components/Sidebar";
 import MobileNav from "@/components/MobileNav";
 import Header from "@/components/Header";
@@ -23,7 +19,7 @@ const DashboardLayout = () => {
           <Header/>
 
           {/* Page content */}
-          <main className="h-full">
+          <main >
             {/* Render child routes */}
             <Outlet />
           </main>

@@ -57,12 +57,12 @@ const Loginform = () => {
       const formData = LoginSchema.parse(data);
 
       const response = await apiClient.post("/login", formData);
-
-      if (response.data.role == "2") {
+   
+      if (response.data.data.role == "2") {
         setErrorMessage("Invalid Credentials");
         setIsSubmitting(false);
       } else {
-        login(response.data.token);
+        login(response.data.token, response.data.data );
         navigate("/");
       }
     } catch (error) {

@@ -20,7 +20,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const storedData = JSON.parse(localStorage.getItem("userData"));
-    
+   
     if (storedData) {
       const { token, userData } = storedData;
       const decoded = jwtDecode(token);
@@ -29,23 +29,22 @@ export const AuthProvider = ({ children }) => {
         logout(); // Token expired, log the user out
       } else {
         setToken(token);
-        setUserData(decoded);
+        setUserData(userData);
         setIsAuthenticated(true);
       }
     }
   }, []);
 
-  const login = (newToken) => {
+  const login = (newToken, newData) => {
     const decoded = jwtDecode(newToken);
     
     if (isTokenExpired(decoded)) {
       logout(); // Token is already expired
       return;
     }
-
-    localStorage.setItem("userData", JSON.stringify({ token: newToken, userData: decoded }));
+    localStorage.setItem("userData", JSON.stringify({ token: newToken, userData: newData }));
     setToken(newToken);
-    setUserData(decoded);
+    setUserData(newData);
     setIsAuthenticated(true);
   };
 
