@@ -38,3 +38,13 @@ export const SignupSchema = z.object({
     .string()
     .min(8, { message: "Password should be at least 8 characters" }),
 });
+export const OrgSchema = z.object({
+  name: z.string().min(1, {
+    message: "Organization name is required",
+  }),
+  description: z.string().min(1, {
+    message: "Description is required",
+  }),
+  about: z.string(),
+  contact: z.string(),
+});

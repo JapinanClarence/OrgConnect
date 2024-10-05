@@ -23,7 +23,7 @@ const DashboardLayout = () => {
           <Header/>
 
           {/* Page content */}
-          <main >
+          <main className="h-full">
             {/* Render child routes */}
             <Outlet />
           </main>

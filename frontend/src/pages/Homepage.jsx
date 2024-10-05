@@ -29,7 +29,7 @@ const Homepage = () => {
     getUserData();
   });
   return (
-    <div className="h-full p-10">
+    <div className="p-10">
       <OrganizationInfo />
     </div>
   );
