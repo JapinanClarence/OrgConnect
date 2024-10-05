@@ -13,7 +13,6 @@ import { useAuth } from "@/context/AuthContext";
 
 const UserItem = () => {
   const { logout, userData } = useAuth();
-
   const handleLogout = () => {
     logout();
   };
