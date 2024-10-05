@@ -8,6 +8,7 @@ import Loginpage from "@/pages/Loginpage";
 import Signuppage from "@/pages/Signuppage";
 import { useAuth } from "@/context/AuthContext";
 import ProtectedRoute from "@/components/auth/ProtectedRoutes";
+
 const App = () => {
   return (
     <>
