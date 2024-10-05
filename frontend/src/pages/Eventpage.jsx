@@ -3,13 +3,14 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import  {Textarea} from "@/components/ui/textarea";
-import EventCalendar from "@/components/calendar/Eventcalendar";
+import EventCalendar from "@/components/events/Eventcalendar";
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { EventSchema } from "@/schema";
 import { LoaderCircle } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import EventsCard from "@/components/events/EventsCard";
 
 const Eventpage = () => {
   const [showDialog, setShowDialog] = useState(false);
@@ -35,7 +36,7 @@ const Eventpage = () => {
   };
 
   const handleDateClick = (selected) => {
-    console.log(selected.startStr);
+    console.log(selected);
     setShowDialog(true);
     
     // Set the start and end dates in the form
@@ -49,6 +50,9 @@ const Eventpage = () => {
         <div className="p-2 rounded border border-black border-opacity-15 flex-shrink-0">
           <div>
             <h1 className="font-bold text-xl">Events</h1>
+          </div>
+          <div>
+
           </div>
         </div>
         <div className="flex-grow">
