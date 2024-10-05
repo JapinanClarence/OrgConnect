@@ -24,6 +24,15 @@ export const organizationValidationRules = () => [
   body("name").notEmpty().withMessage("Organization name is required"),
 ]
 
+export const eventValidationRules = () =>[
+  body("title").notEmpty().withMessage("Event title is required"),
+  body("startDate").notEmpty().withMessage("Start date is required"),
+  body("endDate").notEmpty().withMessage("End date is required"),
+  body("checkIn").notEmpty().withMessage("Check in is required"),
+  body("checkOut").notEmpty().withMessage("Check out is required"),
+  body("location").notEmpty().withMessage("Location is required"),
+]
+
 export const joinOrganizationValidationRules = () => [
   body("organization").notEmpty().withMessage("Organization is required"),
 ]
