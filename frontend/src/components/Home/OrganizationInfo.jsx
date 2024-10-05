@@ -21,11 +21,11 @@ const OrganizationInfo = () => {
       }
     };
     getOrganizationData();
-  });
+  }, []);
 
   return (
     <>
-      <AddOrganizationDialog showDialog={showDialog} />
+      <AddOrganizationDialog showDialog={showDialog} onClose={() => setShowDialog(false)} />
       <div className="h-full">
         <div className="flex items-center ">
           <h1 className="text-lg font-semibold md:text-2xl text-gray-900">

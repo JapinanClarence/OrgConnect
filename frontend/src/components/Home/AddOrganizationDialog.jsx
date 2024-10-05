@@ -28,7 +28,7 @@ import {
 import { LoaderCircle } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 
-const AddOrganizationDialog = ({ showDialog }) => {
+const AddOrganizationDialog = ({ showDialog, onClose  }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
@@ -55,7 +55,8 @@ const AddOrganizationDialog = ({ showDialog }) => {
       });
 
       if (response) {
-        navigate("/"); // Navigate to the homepage
+        navigate("/");
+        onClose(); 
       }
     } catch (error) {
       console.log(error.response);
