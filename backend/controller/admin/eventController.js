@@ -50,11 +50,36 @@ export const createEvent = async (req, res, next) => {
         success: true,
         message: "Event created",
       });
-      
+
   } catch (err) {
     return res.status(500).json({
       success: false,
       message: err.message,
     });
   }
+};
+
+export const getEvent = async (req,res, next) => {
+    try {
+        const event = await Events.find().select(
+            "title startDate endDate startTime endTime location"
+          );
+      
+          if (event.length <= 0) {
+            return res.status(200).json({
+              success: false,
+              message: "No events found",
+            });
+          }
+      
+          res.status(200).json({
+            success: true,
+            data: event,
+          });
+    }catch (err) {
+        return res.status(500).json({
+          success: false,
+          message: err.message,
+        });
+      }
 };

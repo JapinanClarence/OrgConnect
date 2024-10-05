@@ -7,7 +7,7 @@ import {
   validate,
   eventValidationRules,
 } from "../../middleware/validator.js";
-import { createEvent } from "../../controller/admin/eventController.js";
+import { createEvent, getEvent } from "../../controller/admin/eventController.js";
 
 const router = express.Router();
 
@@ -22,10 +22,10 @@ router.post(
   createEvent
 );
 
-// router.get("/organization",
-//   authenticate,
-//   authorizeRole("admin"),
-//   findOrg
-// )
+router.get("/event",
+  authenticate,
+  authorizeRole("admin"),
+  getEvent
+)
 
 export default router;
