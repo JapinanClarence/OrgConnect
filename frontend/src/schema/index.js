@@ -48,3 +48,23 @@ export const OrgSchema = z.object({
   about: z.string(),
   contact: z.string(),
 });
+// Regex pattern for time in HH:MM (24-hour format)
+const timeRegex = /^([01]\d|2[0-3]):([0-5]\d)$/;
+
+export const EventSchema = z.object({
+  title: z.string().min(1, {
+    message: "Event title is required",
+  }),
+  description: z.string().optional(),
+  startDate: z.string(), // Validate string from HTML input
+  endDate: z.string(),
+  checkIn: z.string().refine((value) => timeRegex.test(value), {
+    message: "Invalid time format. Expected HH:MM",
+  }),
+  checkOut: z.string().refine((value) => timeRegex.test(value), {
+    message: "Invalid time format. Expected HH:MM",
+  }),
+  location: z.string().min(1, {
+    message: "Location is required",
+  }),
+});

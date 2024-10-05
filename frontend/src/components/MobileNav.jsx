@@ -28,11 +28,6 @@ const MobileNav = () => {
         side="left"
         className="flex flex-col bg-gray-900 text-white"
       >
-        <SheetHeader>
-          <SheetTitle></SheetTitle>
-          <SheetDescription></SheetDescription>
-        </SheetHeader>
-
         <nav className="grid gap-2 text-lg font-medium">
           <Link
             to="/"

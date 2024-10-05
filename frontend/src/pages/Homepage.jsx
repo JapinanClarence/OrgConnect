@@ -47,7 +47,7 @@ const Homepage = () => {
         onClose={() => setShowDialog(false)}
       />
       <div className="h-full flex justify-center items-center">
-        <Card className="text-gray-900 mx-auto">
+        {/* <Card className="text-gray-900 mx-auto">
           <CardHeader>
             <div className="flex items-center  border-b-[1px] border-gray-400 shadow-sm">
               <h1 className="text-lg font-semibold md:text-2xl  py-2">
@@ -76,7 +76,7 @@ const Homepage = () => {
               </div>
             </div>
           </CardFooter>
-        </Card>
+        </Card> */}
       </div>
     </>
   );

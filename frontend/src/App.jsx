@@ -8,6 +8,7 @@ import Loginpage from "@/pages/Loginpage";
 import Signuppage from "@/pages/Signuppage";
 import { useAuth } from "@/context/AuthContext";
 import ProtectedRoute from "@/components/auth/ProtectedRoutes";
+import Eventpage from "@/pages/Eventpage";
 
 const App = () => {
   return (
@@ -23,10 +24,10 @@ const App = () => {
           <Route path="/login" element={<Loginpage />} />
           <Route path="/signup" element={<Signuppage />} />
         </Route>
-        <Route path="/" element={<ProtectedRoute />}>
-          <Route path="/" element={<DashboardLayout />}>
+        <Route element={<ProtectedRoute />}>
+          <Route element={<DashboardLayout />}>
             <Route index element={<Homepage />} />
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/event" element={<Eventpage />} />
           </Route>
         </Route>
       </Routes>
