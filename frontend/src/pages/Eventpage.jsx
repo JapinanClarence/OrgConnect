@@ -1,21 +1,42 @@
-import { useState } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
+import { useEffect, useState } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import  {Textarea} from "@/components/ui/textarea";
-import EventCalendar from "@/components/events/Eventcalendar";
+import { Textarea } from "@/components/ui/textarea";
+import EventCalendar from "@/components/events/EventCalendar";
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { EventSchema } from "@/schema";
 import { LoaderCircle } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import EventsCard from "@/components/events/EventsCard";
+import apiClient from "@/api/axios";
+import { useNavigate } from "react-router-dom";
+import EditEvent from "@/components/events/EditEvent";
 
 const Eventpage = () => {
-  const [showDialog, setShowDialog] = useState(false);
+  const [showAddEvent, setShowAddEventDialog] = useState(false);
+  const [showEventInfo, setShowEventInfo] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [currentEvents, setCurrentEvents] = useState([]);
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [selectedEvent, setSelectedEvent] = useState("");
+  const navigate = useNavigate();
 
   const form = useForm({
     resolver: zodResolver(EventSchema),
@@ -24,150 +45,213 @@ const Eventpage = () => {
       description: "",
       startDate: "",
       endDate: "",
-      checkIn: "",
-      checkOut: "",
       location: "",
     },
   });
 
-  const onSubmit = async (data) => {
-    const formData = EventSchema.parse(data);
-    console.log(formData);
+  const handleDateClick = (selected) => {
+    setShowAddEventDialog(true);
+
+    // Set the start and end dates
+    setStartDate(selected.startStr);
+    setEndDate(selected.endStr);
   };
 
-  const handleDateClick = (selected) => {
-    console.log(selected);
-    setShowDialog(true);
-    
-    // Set the start and end dates in the form
-    form.setValue("startDate", selected.startStr);
-    form.setValue("endDate", selected.endStr);
+  const handleEventClick = (selected) => {
+    const eventData = {
+      id: selected.event.id,
+      title: selected.event.title,
+      startDate: selected.event.startStr,
+      endDate:selected.event.endStr,
+      desription: selected.event.extendedProps.description,
+      location: selected.event.extendedProps.location,
+      status: selected.event.extendedProps.status
+    }
+    setSelectedEvent(eventData); // Store selected event data
+    setShowEventInfo(true); // Show the dropdown
+
   };
+
+  const onSubmit = async (data) => {
+    const user = JSON.parse(localStorage.getItem("userData"));
+    try {
+      setIsSubmitting(true);
+      const { title, description, location } = EventSchema.parse(data);
+
+      const formData = {
+        title,
+        description,
+        location,
+        startDate,
+        endDate,
+      };
+      console.log(formData);
+
+      const response = await apiClient.post("/admin/event", formData, {
+        headers: {
+          Authorization: user.token,
+        },
+      });
+      if (response) {
+        await fetchEvents();
+        setIsSubmitting(false);
+        setShowAddEventDialog(false);
+        form.reset();
+      }
+    } catch (error) {
+      const message = error.response.data.message;
+      setErrorMessage(message);
+      setIsSubmitting(false);
+    }
+  };
+
+  const onEdit = async (data) =>{
+    console.log(data)
+  }
+
+  const fetchEvents = async () => {
+    try {
+      const user = JSON.parse(localStorage.getItem("userData"));
+      const { data } = await apiClient.get("/admin/event/", {
+        headers: {
+          Authorization: user.token,
+        },
+      });
+
+      const events = data.data;
+      setCurrentEvents(
+        events.map((event) => ({
+          id: event._id,
+          title: event.title,
+          start: event.startDate,
+          end: event.endDate,
+          description: event.description,
+          status: event.status,
+          location: event.location
+        }))
+      );
+    } catch (error) {
+      console.error("Failed to fetch events:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchEvents();
+  }, []);
 
   return (
     <>
       <div className="bg-white shadow-lg rounded-lg border border-gray-200 text-gray-900 p-5 flex gap-2 flex-col sm:flex-row">
-        <div className="p-2 rounded border border-black border-opacity-15 flex-shrink-0">
-          <div>
-            <h1 className="font-bold text-xl">Events</h1>
-          </div>
-          <div>
-
-          </div>
-        </div>
-        <div className="flex-grow">
-          <EventCalendar onDateClick={handleDateClick} /> {/* Use the EventCalendar component */}
+        <div className="p-2 rounded flex-shrink-0 bg-gray-900 bg-opacity-10 max-w-[100px] w-[100px]"></div>
+        <div className="flex-grow" style={{ height: `calc(100vh - 200px)` }}>
+          <EventCalendar
+            onDateClick={handleDateClick}
+            currentEvents={currentEvents}
+            onEventClick={handleEventClick}
+          />
         </div>
       </div>
 
-      <Dialog open={showDialog} onOpenChange={setShowDialog}>
+      <EditEvent open={showEventInfo} onOpenChange={setShowEventInfo} onSubmit={onEdit} eventData={selectedEvent} />
+
+      <Dialog open={showAddEvent} onOpenChange={setShowAddEventDialog}>
         <DialogContent className="w-[400px] lg:w-[500px] bg-white">
           <DialogHeader>
             <DialogTitle>Add Event</DialogTitle>
             <DialogDescription>
-              Setup event details below. Please fill in all required fields to create your event.
+              Please fill in all required fields to create your event.
             </DialogDescription>
           </DialogHeader>
           <div className="">
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-6"
+              >
                 {errorMessage && (
-                  <Alert variant="destructive" className="py-2 px-3 bg-red-500 bg-opacity-20">
+                  <Alert
+                    variant="destructive"
+                    className="py-2 px-3 bg-red-500 bg-opacity-20"
+                  >
                     <AlertDescription>{errorMessage}</AlertDescription>
                   </Alert>
                 )}
                 <div className="space-y-2">
                   {/* Title Field */}
-                  <FormField control={form.control} name="title" render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-gray-600 text-sm">Title</FormLabel>
-                      <FormControl>
-                        <Input {...field} type="text" />
-                      </FormControl>
-                      <FormMessage className="text-xs" />
-                    </FormItem>
-                  )} />
+                  <FormField
+                    control={form.control}
+                    name="title"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-gray-600 text-sm">
+                          Title
+                        </FormLabel>
+                        <FormControl>
+                          <Input {...field} type="text" />
+                        </FormControl>
+                        <FormMessage className="text-xs" />
+                      </FormItem>
+                    )}
+                  />
 
                   {/* Description Field */}
-                  <FormField control={form.control} name="description" render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-gray-600 text-sm">Description</FormLabel>
-                      <FormControl>
-                        <div className="relative w-full ">
-                          <Textarea className="resize-none" {...field} />
-                        </div>
-                      </FormControl>
-                      <FormMessage className="text-xs" />
-                    </FormItem>
-                  )} />
-
-                  {/* Start and End Date Fields */}
-                  <div className="grid grid-flow-col gap-3 ">
-                    <FormField control={form.control} name="startDate" render={({ field }) => (
+                  <FormField
+                    control={form.control}
+                    name="description"
+                    render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="text-gray-600 text-sm">Start Date</FormLabel>
+                        <FormLabel className="text-gray-600 text-sm">
+                          Description{" "}
+                          <span className="text-[10px] text-slate-500">
+                            (optional)
+                          </span>
+                        </FormLabel>
                         <FormControl>
-                          <Input {...field} type="date" disabled />
+                          <div className="relative w-full ">
+                            <Textarea className="resize-y" {...field} />
+                          </div>
                         </FormControl>
                         <FormMessage className="text-xs" />
                       </FormItem>
-                    )} />
-
-                    <FormField control={form.control} name="endDate" render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-gray-600 text-sm">End Date</FormLabel>
-                        <FormControl>
-                          <Input {...field} type="date" disabled />
-                        </FormControl>
-                        <FormMessage className="text-xs" />
-                      </FormItem>
-                    )} />
-                  </div>
-
-                  {/* Check In and Check Out Fields */}
-                  <div className="grid grid-flow-col gap-3 ">
-                    <FormField control={form.control} name="checkIn" render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-gray-600 text-sm">Check In</FormLabel>
-                        <FormControl>
-                          <Input {...field} type="time" />
-                        </FormControl>
-                        <FormMessage className="text-xs" />
-                      </FormItem>
-                    )} />
-
-                    <FormField control={form.control} name="checkOut" render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-gray-600 text-sm">Check Out</FormLabel>
-                        <FormControl>
-                          <Input {...field} type="time" />
-                        </FormControl>
-                        <FormMessage className="text-xs" />
-                      </FormItem>
-                    )} />
-                  </div>
+                    )}
+                  />
 
                   {/* Location Field */}
-                  <FormField control={form.control} name="location" render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-gray-600 text-sm">Location</FormLabel>
-                      <FormControl>
-                        <div className="relative w-full ">
+                  <FormField
+                    control={form.control}
+                    name="location"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-gray-600 text-sm">
+                          Location
+                        </FormLabel>
+                        <FormControl>
                           <Input {...field} type="text" />
-                        </div>
-                      </FormControl>
-                      <FormMessage className="text-xs" />
-                    </FormItem>
-                  )} />
+                        </FormControl>
+                        <FormMessage className="text-xs" />
+                      </FormItem>
+                    )}
+                  />
                 </div>
 
-                <div className="flex justify-end">
-                  <Button id="submit" className="w-[130px]" disabled={isSubmitting}>
+                <div className="flex justify-between mt-4">
+                  <Button
+                    type="submit"
+                    className="w-[120px]"
+                    disabled={isSubmitting}
+                  >
                     {isSubmitting ? (
-                      <LoaderCircle className="w-6 h-6 text-gray-500 mx-auto animate-spin" />
+                      <LoaderCircle className="animate-spin" />
                     ) : (
-                      "Save changes"
+                      "Create Event"
                     )}
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => setShowAddEventDialog(false)}
+                  >
+                    Cancel
                   </Button>
                 </div>
               </form>

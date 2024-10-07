@@ -8,8 +8,6 @@ export const createEvent = async (req, res, next) => {
     description,
     startDate,
     endDate,
-    checkIn,
-    checkOut,
     location,
   } = req.body;
 
@@ -40,8 +38,6 @@ export const createEvent = async (req, res, next) => {
         description,
         startDate,
         endDate,
-        checkIn,
-        checkOut,
         location,
         organization: organization._id
     })
@@ -62,7 +58,7 @@ export const createEvent = async (req, res, next) => {
 export const getEvent = async (req,res, next) => {
     try {
         const event = await Events.find().select(
-            "title startDate endDate startTime endTime location"
+            "title startDate endDate status location description"
           );
       
           if (event.length <= 0) {
