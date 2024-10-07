@@ -31,6 +31,12 @@ export const eventValidationRules = () =>[
   body("location").notEmpty().withMessage("Location is required"),
 ]
 
+export const attendanceValidationRules = () =>[
+  body("eventId").notEmpty().withMessage("Event Id is required"),
+  body("studentId").notEmpty().withMessage("Student Id is required")
+]
+
+
 export const joinOrganizationValidationRules = () => [
   body("organization").notEmpty().withMessage("Organization is required"),
 ]
