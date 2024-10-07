@@ -84,6 +84,7 @@ export const updateAttendance = async (req, res, next) =>{
 
 export const getAttendance = async (req, res, next) =>{
     try {
+      //fetch attendees base on its event id
       const attendance = await Attendance.find({event: req.params.id});
 
       if(attendance.length <= 0){

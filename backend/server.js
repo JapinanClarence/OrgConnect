@@ -9,6 +9,7 @@ import adminOrganizationRoutes from "./routes/admin/organization.js";
 import organizationRoutes from "./routes/organization.js";
 import adminEventRoutes from "./routes/admin/events.js";
 import attendanceRoutes from "./routes/admin/attendance.js"
+import adminAnnouncementRoutes from "./routes/admin/announcement.js";
 
 const app = express();
 
@@ -35,6 +36,7 @@ app.use("/api/admin/", adminRoutes);
 app.use("/api/superadmin/", superAdminRoutes)
 app.use("/api/admin/", adminOrganizationRoutes)
 app.use("/api/admin/", adminEventRoutes)
+app.use("/api/admin/", adminAnnouncementRoutes)
 
 //attendance routes
 app.use("/api/attendance", attendanceRoutes)
