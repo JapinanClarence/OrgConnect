@@ -63,10 +63,11 @@ const Eventpage = () => {
       title: selected.event.title,
       startDate: selected.event.startStr,
       endDate:selected.event.endStr,
-      desription: selected.event.extendedProps.description,
+      description: selected.event.extendedProps.description,
       location: selected.event.extendedProps.location,
-      status: selected.event.extendedProps.status
+      active: selected.event.extendedProps.active
     }
+    console.log(eventData)
     setSelectedEvent(eventData); // Store selected event data
     setShowEventInfo(true); // Show the dropdown
 
@@ -126,7 +127,7 @@ const Eventpage = () => {
           start: event.startDate,
           end: event.endDate,
           description: event.description,
-          status: event.status,
+          active: event.active,
           location: event.location
         }))
       );

@@ -57,4 +57,5 @@ export const EventSchema = z.object({
   location: z.string().min(1, {
     message: "Location is required",
   }),
+  active: z.boolean(false).optional()
 });

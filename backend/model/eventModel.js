@@ -16,10 +16,9 @@ const eventSchema = new mongoose.Schema({
         type: Date,
         required: [true, "End date is required"]
     },
-    status:{
-        type: String,
-        enum: ["0", "1",],
-        default: "0"
+    active:{
+        type: Boolean,
+        default: false
     },
     location: {
         type: String,

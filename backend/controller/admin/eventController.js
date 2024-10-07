@@ -58,7 +58,7 @@ export const createEvent = async (req, res, next) => {
 export const getEvent = async (req,res, next) => {
     try {
         const event = await Events.find().select(
-            "title startDate endDate status location description"
+            "title startDate endDate active location description"
           );
       
           if (event.length <= 0) {
