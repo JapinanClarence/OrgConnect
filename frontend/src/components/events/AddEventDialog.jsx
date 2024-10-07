@@ -118,6 +118,7 @@ const AddEventDialog = ({form, open, onOpenChange, onSubmit, isSubmitting, error
                   <Button
                     type="button"
                     variant="outline"
+                    className="border border-gray-500 hover:bg-gray-100"
                     onClick={() => onOpenChange(false)}
                   >
                     Cancel
