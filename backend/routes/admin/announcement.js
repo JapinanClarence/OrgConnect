@@ -10,6 +10,7 @@ import {
 import {
   createAnnouncement,
   deleteAnnoucement,
+  findAnnouncement,
   getAnnouncement,
   updateAnnouncement,
 //   getAttendance,
@@ -41,7 +42,6 @@ router.delete(
     "/announcement/:id",
     authenticate,
     authorizeRole("admin"),
-    express.json(),
     deleteAnnoucement
   );
 
@@ -50,5 +50,12 @@ router.get("/event/:id/announcement",
     authorizeRole("admin"),
     getAnnouncement
 )
+
+router.get(
+    "/announcement/:id",
+    authenticate,
+    authorizeRole("admin"),
+    findAnnouncement
+  );
 
 export default router;

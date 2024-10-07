@@ -1,5 +1,14 @@
 import mongoose from "mongoose";
 
+/**
+ * Category:
+ * 0 = General info
+ * 1 = Meetings
+ * 2 = Reminders
+ * 3 = News
+ * 4 = Alerts
+ */
+
 const announcementSchema = new mongoose.Schema({
     title: {
         type: String,
@@ -8,6 +17,14 @@ const announcementSchema = new mongoose.Schema({
     description: {
         type: String,
     }, 
+    category: {
+        type: String,
+        enum: ["0", "1", "2", "3", "4"],
+        default: "0"
+    },
+    link:{
+        type:String,
+    },
     organization:{
         type: mongoose.Schema.ObjectId,
         required: [true, "Organization is required"]
