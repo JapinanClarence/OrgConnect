@@ -1,32 +1,12 @@
 import { useEffect, useState } from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-} from "@/components/ui/dialog";
-import {
-  Form,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormControl,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import EventCalendar from "@/components/events/EventCalendar";
-import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { EventSchema } from "@/schema";
-import { LoaderCircle } from "lucide-react";
-import { Alert, AlertDescription } from "@/components/ui/alert";
 import apiClient from "@/api/axios";
-import { useNavigate } from "react-router-dom";
 import EditEventDialog from "@/components/events/EditEventDialog";
 import AddEventDialog from "@/components/events/AddEventDialog";
+import { useToast } from "@/hooks/use-toast";
 
 const Eventpage = () => {
   const [showAddEvent, setShowAddEventDialog] = useState(false);
@@ -38,6 +18,7 @@ const Eventpage = () => {
   const [endDate, setEndDate] = useState("");
   const [selectedEvent, setSelectedEvent] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
+  const { toast } = useToast();
 
   const form = useForm({
     resolver: zodResolver(EventSchema),
@@ -85,7 +66,7 @@ const Eventpage = () => {
         startDate,
         endDate,
       };
-      
+
       const response = await apiClient.post("/admin/event", formData, {
         headers: {
           Authorization: user.token,
@@ -101,6 +82,11 @@ const Eventpage = () => {
       const message = error.response.data.message;
       setErrorMessage(message);
       setIsSubmitting(false);
+    } finally {
+      toast({
+        title: "Success",
+        description: "Event added successfully!",
+      });
     }
   };
 
@@ -135,6 +121,11 @@ const Eventpage = () => {
       const message = error.response.data.message;
       setErrorMessage(message);
       setIsSubmitting(false);
+    } finally {
+      toast({
+        title: "Success",
+        description: "Event updated successfully!",
+      });
     }
   };
   const handleDelete = async (eventId) => {
@@ -157,6 +148,11 @@ const Eventpage = () => {
       const message = error.response.data.message;
       setErrorMessage(message);
       setIsSubmitting(false);
+    } finally {
+      toast({
+        title: "Success",
+        description: "Event delete successfully!",
+      });
     }
   };
 
