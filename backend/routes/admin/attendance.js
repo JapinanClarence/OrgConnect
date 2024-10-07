@@ -3,8 +3,14 @@ import {
   authenticate,
   authorizeRole,
 } from "./../../middleware/authMiddleware.js";
-import { validate, attendanceValidationRules } from "../../middleware/validator.js";
-import { createAttendance } from "../../controller/admin/attendanceController.js";
+import {
+  validate,
+  attendanceValidationRules,
+} from "../../middleware/validator.js";
+import {
+  createAttendance,
+  updateAttendance,
+} from "../../controller/admin/attendanceController.js";
 
 const router = express.Router();
 
@@ -16,8 +22,15 @@ router.post(
   express.json(),
   attendanceValidationRules(),
   validate,
-    createAttendance
+  createAttendance
 );
 
+router.patch(
+  "/:id",
+  authenticate,
+  authorizeRole("admin"),
+  express.json(),
+  updateAttendance
+);
 
 export default router;
