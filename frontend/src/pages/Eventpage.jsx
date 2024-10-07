@@ -26,6 +26,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import apiClient from "@/api/axios";
 import { useNavigate } from "react-router-dom";
 import EditEventDialog from "@/components/events/EditEventDialog";
+import AddEventDialog from "@/components/events/AddEventDialog";
 
 const Eventpage = () => {
   const [showAddEvent, setShowAddEventDialog] = useState(false);
@@ -37,8 +38,6 @@ const Eventpage = () => {
   const [endDate, setEndDate] = useState("");
   const [selectedEvent, setSelectedEvent] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
-
-  const navigate = useNavigate();
 
   const form = useForm({
     resolver: zodResolver(EventSchema),
@@ -86,7 +85,7 @@ const Eventpage = () => {
         startDate,
         endDate,
       };
-
+      
       const response = await apiClient.post("/admin/event", formData, {
         headers: {
           Authorization: user.token,
@@ -118,7 +117,7 @@ const Eventpage = () => {
         location,
         startDate,
         endDate,
-        active
+        active,
       };
       const response = await apiClient.patch(`/admin/event/${id}`, formData, {
         headers: {
@@ -150,7 +149,7 @@ const Eventpage = () => {
 
       if (response) {
         await fetchEvents();
-        setIsSubmitting(false);
+        setIsDeleting(false);
         setShowEventInfo(false);
         form.reset();
       }
@@ -159,7 +158,7 @@ const Eventpage = () => {
       setErrorMessage(message);
       setIsSubmitting(false);
     }
-  }
+  };
 
   const fetchEvents = async () => {
     try {
@@ -213,112 +212,14 @@ const Eventpage = () => {
         onDelete={handleDelete}
         isDeleting={isDeleting}
       />
-
-      <Dialog open={showAddEvent} onOpenChange={setShowAddEventDialog}>
-        <DialogContent className="w-[400px] lg:w-[500px] bg-white">
-          <DialogHeader>
-            <DialogTitle>Add Event</DialogTitle>
-            <DialogDescription>
-              Please fill in all required fields to create your event.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="">
-            <Form {...form}>
-              <form
-                onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-6"
-              >
-                {errorMessage && (
-                  <Alert
-                    variant="destructive"
-                    className="py-2 px-3 bg-red-500 bg-opacity-20"
-                  >
-                    <AlertDescription>{errorMessage}</AlertDescription>
-                  </Alert>
-                )}
-                <div className="space-y-2">
-                  {/* Title Field */}
-                  <FormField
-                    control={form.control}
-                    name="title"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-gray-600 text-sm">
-                          Title
-                        </FormLabel>
-                        <FormControl>
-                          <Input {...field} type="text" />
-                        </FormControl>
-                        <FormMessage className="text-xs" />
-                      </FormItem>
-                    )}
-                  />
-
-                  {/* Description Field */}
-                  <FormField
-                    control={form.control}
-                    name="description"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-gray-600 text-sm">
-                          Description{" "}
-                          <span className="text-[10px] text-slate-500">
-                            (optional)
-                          </span>
-                        </FormLabel>
-                        <FormControl>
-                          <div className="relative w-full ">
-                            <Textarea className="resize-y" {...field} />
-                          </div>
-                        </FormControl>
-                        <FormMessage className="text-xs" />
-                      </FormItem>
-                    )}
-                  />
-
-                  {/* Location Field */}
-                  <FormField
-                    control={form.control}
-                    name="location"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-gray-600 text-sm">
-                          Location
-                        </FormLabel>
-                        <FormControl>
-                          <Input {...field} type="text" />
-                        </FormControl>
-                        <FormMessage className="text-xs" />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-
-                <div className="flex justify-between mt-4">
-                  <Button
-                    type="submit"
-                    className="w-[120px]"
-                    disabled={isSubmitting}
-                  >
-                    {isSubmitting ? (
-                      <LoaderCircle className="animate-spin" />
-                    ) : (
-                      "Create Event"
-                    )}
-                  </Button>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={() => setShowAddEventDialog(false)}
-                  >
-                    Cancel
-                  </Button>
-                </div>
-              </form>
-            </Form>
-          </div>
-        </DialogContent>
-      </Dialog>
+      <AddEventDialog
+        form={form}
+        open={showAddEvent}
+        onOpenChange={setShowAddEventDialog}
+        onSubmit={onSubmit}
+        isSubmitting={isSubmitting}
+        errorMessage={errorMessage}
+      />
     </>
   );
 };
