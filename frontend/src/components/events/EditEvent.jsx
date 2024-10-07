@@ -215,7 +215,7 @@ const EditEvent = ({
                 <Button
                   type="button"
                   variant="outline"
-                  onClick={() => setShowAddEventDialog(false)}
+                  onClick={() => onOpenChange(false)}
                 >
                   Cancel
                 </Button>

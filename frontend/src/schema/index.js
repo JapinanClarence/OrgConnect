@@ -50,6 +50,7 @@ export const OrgSchema = z.object({
 });
 
 export const EventSchema = z.object({
+  id:z.string().optional(),
   title: z.string().min(1, {
     message: "Event title is required",
   }),
@@ -57,5 +58,7 @@ export const EventSchema = z.object({
   location: z.string().min(1, {
     message: "Location is required",
   }),
-  active: z.boolean(false).optional()
+  active: z.boolean(false).optional(),
+  startDate: z.string().optional(),
+  endDate: z.string().optional()
 });

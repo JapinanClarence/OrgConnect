@@ -3,11 +3,12 @@ import {
   authenticate,
   authorizeRole,
 } from "./../../middleware/authMiddleware.js";
+import { validate, eventValidationRules } from "../../middleware/validator.js";
 import {
-  validate,
-  eventValidationRules,
-} from "../../middleware/validator.js";
-import { createEvent, getEvent } from "../../controller/admin/eventController.js";
+  createEvent,
+  getEvent,
+  updateEvent,
+} from "../../controller/admin/eventController.js";
 
 const router = express.Router();
 
@@ -22,10 +23,8 @@ router.post(
   createEvent
 );
 
-router.get("/event",
-  authenticate,
-  authorizeRole("admin"),
-  getEvent
-)
+router.get("/event", authenticate, authorizeRole("admin"), getEvent);
+
+router.patch("/event/:id", authenticate, authorizeRole("admin"), express.json(), updateEvent);
 
 export default router;

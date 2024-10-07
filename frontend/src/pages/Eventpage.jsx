@@ -62,15 +62,13 @@ const Eventpage = () => {
       id: selected.event.id,
       title: selected.event.title,
       startDate: selected.event.startStr,
-      endDate:selected.event.endStr,
+      endDate: selected.event.endStr,
       description: selected.event.extendedProps.description,
       location: selected.event.extendedProps.location,
-      active: selected.event.extendedProps.active
-    }
-    console.log(eventData)
+      active: selected.event.extendedProps.active,
+    };
     setSelectedEvent(eventData); // Store selected event data
     setShowEventInfo(true); // Show the dropdown
-
   };
 
   const onSubmit = async (data) => {
@@ -86,7 +84,6 @@ const Eventpage = () => {
         startDate,
         endDate,
       };
-      console.log(formData);
 
       const response = await apiClient.post("/admin/event", formData, {
         headers: {
@@ -106,9 +103,39 @@ const Eventpage = () => {
     }
   };
 
-  const onEdit = async (data) =>{
-    console.log(data)
-  }
+  const onEdit = async (data) => {
+    const user = JSON.parse(localStorage.getItem("userData"));
+    try {
+      setIsSubmitting(true);
+      const { id, title, description, location, startDate, endDate, active } =
+        EventSchema.parse(data);
+
+      const formData = {
+        title,
+        description,
+        location,
+        startDate,
+        endDate,
+        active
+      };
+      const response = await apiClient.patch(`/admin/event/${id}`, formData, {
+        headers: {
+          Authorization: user.token,
+        },
+      });
+
+      if (response) {
+        await fetchEvents();
+        setIsSubmitting(false);
+        setShowEventInfo(false);
+        form.reset();
+      }
+    } catch (error) {
+      const message = error.response.data.message;
+      setErrorMessage(message);
+      setIsSubmitting(false);
+    }
+  };
 
   const fetchEvents = async () => {
     try {
@@ -128,7 +155,7 @@ const Eventpage = () => {
           end: event.endDate,
           description: event.description,
           active: event.active,
-          location: event.location
+          location: event.location,
         }))
       );
     } catch (error) {
@@ -153,7 +180,12 @@ const Eventpage = () => {
         </div>
       </div>
 
-      <EditEvent open={showEventInfo} onOpenChange={setShowEventInfo} onSubmit={onEdit} eventData={selectedEvent} />
+      <EditEvent
+        open={showEventInfo}
+        onOpenChange={setShowEventInfo}
+        onSubmit={onEdit}
+        eventData={selectedEvent}
+      />
 
       <Dialog open={showAddEvent} onOpenChange={setShowAddEventDialog}>
         <DialogContent className="w-[400px] lg:w-[500px] bg-white">
