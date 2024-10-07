@@ -19,19 +19,21 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { LoaderCircle, Pen } from "lucide-react";
+import { LoaderCircle, Pen, Trash2 } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { useEffect, useState } from "react";
 
-const EditEvent = ({
+const EditEventDialog = ({
   open,
   onOpenChange,
   eventData,
   onSubmit,
   errorMessage,
   isSubmitting,
+  isDeleting,
+  onDelete
 }) => {
   const [isEditable, setIsEditable] = useState({
     title: false,
@@ -59,6 +61,10 @@ const EditEvent = ({
       [fieldName]: !prev[fieldName], // Toggle only the specific field
     }));
   };
+
+  const handleDelete = () =>{
+    onDelete(eventData.id);
+  }
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="w-[400px] lg:w-[500px] bg-white">
@@ -201,17 +207,32 @@ const EditEvent = ({
               </div>
 
               <div className="flex justify-between mt-4">
-                <Button
-                  type="submit"
-                  className="w-[120px]"
-                  disabled={isSubmitting}
-                >
-                  {isSubmitting ? (
-                    <LoaderCircle className="animate-spin" />
-                  ) : (
-                    "Apply"
-                  )}
-                </Button>
+                <div className="grid grid-flow-col gap-2">
+                  <Button
+                    type="submit"
+                    className="w-[90px]"
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? (
+                      <LoaderCircle className="animate-spin" />
+                    ) : (
+                      "Apply"
+                    )}
+                  </Button>
+                  <Button
+                    type="button"
+                    onClick={handleDelete}
+                    variant="destructive"
+                    disabled={isDeleting}
+                  >
+                    {isDeleting ? (
+                      <LoaderCircle className="animate-spin" />
+                    ) : (
+                      <Trash2 className="h-4"/>
+                    )}
+                  </Button>
+                </div>
+               
                 <Button
                   type="button"
                   variant="outline"
@@ -228,4 +249,4 @@ const EditEvent = ({
   );
 };
 
-export default EditEvent;
+export default EditEventDialog;

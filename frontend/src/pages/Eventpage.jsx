@@ -25,7 +25,7 @@ import { LoaderCircle } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import apiClient from "@/api/axios";
 import { useNavigate } from "react-router-dom";
-import EditEvent from "@/components/events/EditEvent";
+import EditEventDialog from "@/components/events/EditEventDialog";
 
 const Eventpage = () => {
   const [showAddEvent, setShowAddEventDialog] = useState(false);
@@ -36,6 +36,8 @@ const Eventpage = () => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [selectedEvent, setSelectedEvent] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
+
   const navigate = useNavigate();
 
   const form = useForm({
@@ -136,6 +138,28 @@ const Eventpage = () => {
       setIsSubmitting(false);
     }
   };
+  const handleDelete = async (eventId) => {
+    const user = JSON.parse(localStorage.getItem("userData"));
+
+    try {
+      const response = await apiClient.delete(`/admin/event/${eventId}`, {
+        headers: {
+          Authorization: user.token,
+        },
+      });
+
+      if (response) {
+        await fetchEvents();
+        setIsSubmitting(false);
+        setShowEventInfo(false);
+        form.reset();
+      }
+    } catch (error) {
+      const message = error.response.data.message;
+      setErrorMessage(message);
+      setIsSubmitting(false);
+    }
+  }
 
   const fetchEvents = async () => {
     try {
@@ -176,15 +200,18 @@ const Eventpage = () => {
             onDateClick={handleDateClick}
             currentEvents={currentEvents}
             onEventClick={handleEventClick}
+            onDelete={handleDelete}
           />
         </div>
       </div>
 
-      <EditEvent
+      <EditEventDialog
         open={showEventInfo}
         onOpenChange={setShowEventInfo}
         onSubmit={onEdit}
         eventData={selectedEvent}
+        onDelete={handleDelete}
+        isDeleting={isDeleting}
       />
 
       <Dialog open={showAddEvent} onOpenChange={setShowAddEventDialog}>

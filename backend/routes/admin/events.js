@@ -6,6 +6,7 @@ import {
 import { validate, eventValidationRules } from "../../middleware/validator.js";
 import {
   createEvent,
+  deleteEvent,
   getEvent,
   updateEvent,
 } from "../../controller/admin/eventController.js";
@@ -26,5 +27,6 @@ router.post(
 router.get("/event", authenticate, authorizeRole("admin"), getEvent);
 
 router.patch("/event/:id", authenticate, authorizeRole("admin"), express.json(), updateEvent);
+router.delete("/event/:id", authenticate, authorizeRole("admin"), deleteEvent);
 
 export default router;
