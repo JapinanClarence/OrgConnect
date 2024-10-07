@@ -9,7 +9,9 @@ import {
 } from "../../middleware/validator.js";
 import {
   createAnnouncement,
+  deleteAnnoucement,
   getAnnouncement,
+  updateAnnouncement,
 //   getAttendance,
 //   updateAttendance,
 } from "../../controller/admin/announcementController.js";
@@ -27,13 +29,21 @@ router.post(
   createAnnouncement
 );
 
-// router.patch(
-//   "/:id",
-//   authenticate,
-//   authorizeRole("admin"),
-//   express.json(),
-//   updateAttendance
-// );
+router.patch(
+  "/announcement/:id",
+  authenticate,
+  authorizeRole("admin"),
+  express.json(),
+  updateAnnouncement
+);
+
+router.delete(
+    "/announcement/:id",
+    authenticate,
+    authorizeRole("admin"),
+    express.json(),
+    deleteAnnoucement
+  );
 
 router.get("/event/:id/announcement", 
     authenticate,
