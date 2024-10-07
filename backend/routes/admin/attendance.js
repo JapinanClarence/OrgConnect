@@ -9,6 +9,7 @@ import {
 } from "../../middleware/validator.js";
 import {
   createAttendance,
+  getAttendance,
   updateAttendance,
 } from "../../controller/admin/attendanceController.js";
 
@@ -32,5 +33,11 @@ router.patch(
   express.json(),
   updateAttendance
 );
+
+router.get("/:id", 
+    authenticate,
+    authorizeRole("admin"),
+    getAttendance
+)
 
 export default router;

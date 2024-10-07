@@ -81,3 +81,27 @@ export const updateAttendance = async (req, res, next) =>{
     });
   }
 }
+
+export const getAttendance = async (req, res, next) =>{
+    try {
+      const attendance = await Attendance.find({event: req.params.id});
+
+      if(attendance.length <= 0){
+        return res.status(200).json({
+          success: false,
+          message: "No attendees found",
+        });
+      }
+
+      // console.log(req.params.id);
+      res.status(200).json({
+        success: true,
+        data: attendance
+      })
+    } catch (err) {
+      return res.status(500).json({
+        success: false,
+        message: err.message,
+      });
+    }
+}
