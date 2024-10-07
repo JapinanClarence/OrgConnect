@@ -170,7 +170,7 @@ const Eventpage = () => {
   return (
     <>
       <div className="bg-white shadow-lg rounded-lg border border-gray-200 text-gray-900 p-5 flex gap-2 flex-col sm:flex-row">
-        <div className="p-2 rounded flex-shrink-0 bg-gray-900 bg-opacity-10 max-w-[100px] w-[100px]"></div>
+        <div className="p-2 rounded flex-shrink-0 bg-gray-900 bg-opacity-10 md:w-[100px]"></div>
         <div className="flex-grow" style={{ height: `calc(100vh - 200px)` }}>
           <EventCalendar
             onDateClick={handleDateClick}
