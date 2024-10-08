@@ -50,7 +50,7 @@ export const OrgSchema = z.object({
 });
 
 export const EventSchema = z.object({
-  id:z.string().optional(),
+  id: z.string().optional(),
   title: z.string().min(1, {
     message: "Event title is required",
   }),
@@ -60,5 +60,14 @@ export const EventSchema = z.object({
   }),
   active: z.boolean(false).optional(),
   startDate: z.string().optional(),
-  endDate: z.string().optional()
+  endDate: z.string().optional(),
+});
+
+export const AnnouncementSchema = z.object({
+  id: z.string().optional(),
+  title: z.string().min(1, {
+    message: "Event title is required",
+  }),
+  description: z.string().optional(),
+  category: z.enum(["0", "1", "2", "3", "4"]),
 });

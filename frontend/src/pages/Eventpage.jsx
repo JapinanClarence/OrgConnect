@@ -7,6 +7,7 @@ import apiClient from "@/api/axios";
 import EditEventDialog from "@/components/events/EditEventDialog";
 import AddEventDialog from "@/components/events/AddEventDialog";
 import { useToast } from "@/hooks/use-toast";
+import { formatDate } from "@/util/helpers";
 
 const Eventpage = () => {
   const [showAddEvent, setShowAddEventDialog] = useState(false);
@@ -19,6 +20,7 @@ const Eventpage = () => {
   const [selectedEvent, setSelectedEvent] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
   const { toast } = useToast();
+  const date = formatDate(Date.now());
 
   const form = useForm({
     resolver: zodResolver(EventSchema),
@@ -84,8 +86,8 @@ const Eventpage = () => {
       setIsSubmitting(false);
     } finally {
       toast({
-        title: "Success",
-        description: "Event added successfully!",
+        title: "Event has been created",
+        description: `${date}`,
       });
     }
   };
@@ -123,8 +125,8 @@ const Eventpage = () => {
       setIsSubmitting(false);
     } finally {
       toast({
-        title: "Success",
-        description: "Event updated successfully!",
+        title: "Event updated",
+        description: `${date}`,
       });
     }
   };
@@ -150,8 +152,8 @@ const Eventpage = () => {
       setIsSubmitting(false);
     } finally {
       toast({
-        title: "Success",
-        description: "Event delete successfully!",
+        title: "Event deleted",
+        description: `${date}`,
       });
     }
   };
