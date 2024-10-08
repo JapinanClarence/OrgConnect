@@ -4,7 +4,7 @@ import Organization from "../../model/organizationModel.js";
 import { OrgAdminModel as Admin } from "../../model/UserModel.js";
 
 export const createAnnouncement = async (req, res, next) => {
-  const { title, description } = req.body;
+  const { title, description, category } = req.body;
 
   const userId = req.user.userId;
   try {
@@ -31,6 +31,7 @@ export const createAnnouncement = async (req, res, next) => {
       title,
       description,
       organization: organization._id,
+      category
     });
 
     res.status(201).json({
@@ -78,7 +79,7 @@ export const getAnnouncement = async (req, res, next) => {
     }
 
     res.status(200).json({
-      sucess: true,
+      success: true,
       data: announcement,
     });
   } catch (err) {

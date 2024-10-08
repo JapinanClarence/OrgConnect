@@ -24,9 +24,9 @@ const DesktopSidebar = () => {
               <Calendar className="h-6 w-6" />
               Calendar
             </Link>
-            <Link to="/announcment" className="flex items-center gap-3 rounded-lg bg-muted px-3 py-2 text-primary transition-all hover:text-primary">
+            <Link to="/announcement" className="flex items-center gap-3 rounded-lg bg-muted px-3 py-2 text-primary transition-all hover:text-primary">
               <Newspaper className="h-6 w-6" />
-              Announcments
+              Announcements
             </Link>
             <Link to="/officers" className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
               <User className="h-6 w-6" />

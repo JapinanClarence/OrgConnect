@@ -1,6 +1,5 @@
 import { Outlet } from "react-router-dom";
 import DesktopSidebar from "@/components/Sidebar";
-import MobileNav from "@/components/MobileNav";
 import Header from "@/components/Header";
 
 const DashboardLayout = () => {

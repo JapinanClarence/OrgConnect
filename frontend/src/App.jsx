@@ -1,4 +1,5 @@
 import { Route, Routes } from "react-router-dom";
+import { Toaster } from "@/components/ui/toaster";
 import DashboardLayout from "@/layouts/DashboardLayout";
 import Mainlayout from "@/layouts/Mainlayout";
 import Homepage from "@/pages/Homepage";
@@ -7,7 +8,7 @@ import Loginpage from "@/pages/Loginpage";
 import Signuppage from "@/pages/Signuppage";
 import ProtectedRoute from "@/components/auth/ProtectedRoutes";
 import Eventpage from "@/pages/Eventpage";
-import { Toaster } from "@/components/ui/toaster";
+import AnnouncementPage from "@/pages/AnnouncementPage";
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
           <Route element={<DashboardLayout />}>
             <Route index element={<Homepage />} />
             <Route path="/event" element={<Eventpage />} />
+            <Route path="/announcement" element={<AnnouncementPage/>}/>
           </Route>
         </Route>
       </Routes>

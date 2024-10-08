@@ -21,7 +21,7 @@ const router = express.Router();
 
 //create organization routes
 router.post(
-  "/event/announcement",
+  "/announcement",
   authenticate,
   authorizeRole("admin"),
   express.json(),
@@ -45,7 +45,7 @@ router.delete(
     deleteAnnoucement
   );
 
-router.get("/event/:id/announcement", 
+router.get("/announcement", 
     authenticate,
     authorizeRole("admin"),
     getAnnouncement
