@@ -6,8 +6,20 @@ import {
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { X } from "lucide-react";
 import { useState, useEffect } from "react";
 
 const categoryMap = {
@@ -17,8 +29,29 @@ const categoryMap = {
   3: { name: "News", color: "bg-purple-500" },
   4: { name: "Alerts", color: "bg-red-500" },
 };
-const AnnouncementCard = ({ id, title, description, datePosted, category }) => {
+const AnnouncementCard = ({
+  id,
+  title,
+  description,
+  datePosted,
+  category,
+  onDelete,
+}) => {
   const [badgeCategory, setBadgeCategory] = useState({ name: "", color: "" });
+  const [showAlert, setShowAlert] = useState(false);
+
+  const handleDelete = () => {
+    setShowAlert(true); // Show the delete confirmation dialog
+  };
+
+  const confirmDelete = () => {
+    onDelete(id); // Call the delete function
+    setShowAlert(false); // Close the alert dialog after deleting
+  };
+
+  const cancelDelete = () => {
+    setShowAlert(false); // Close the alert dialog without deleting
+  };
 
   useEffect(() => {
     // Set badge details based on the category
@@ -27,35 +60,62 @@ const AnnouncementCard = ({ id, title, description, datePosted, category }) => {
     }
   }, [category]);
   return (
-    <Card className="shadow-sm border-zinc-300">
-      <CardContent className="p-4 md:p-5">
-        <CardHeader className="flex text-xs flex-col md:flex-row p-0">
-          <span className="font-bold text-xs mr-2">Posted on:</span>
-          {datePosted}
-        </CardHeader>
+    <>
+      <Card className="shadow-sm border-zinc-300">
+        <CardContent className="p-4 md:p-5 relative">
+          <div className="absolute top-1 right-1 p-0 m-0">
+            <Button
+              className="h-0 hover:bg-transparent p-0 m-0"
+              variant="ghost"
+              onClick={handleDelete}
+            >
+              <X className="text-zinc-500 h-[13px]" />
+            </Button>
+          </div>
+          <CardHeader className="flex text-xs flex-col md:flex-row p-0">
+            <span className="font-bold text-xs mr-2">Posted on:</span>
+            {datePosted}
+          </CardHeader>
 
-        <CardTitle className="text-md">
-          {title}
-          <Badge
-            className={`ml-2 hidden md:inline ${badgeCategory.color} text-white`}
-          >
-            {badgeCategory.name}
-          </Badge>
-        </CardTitle>
-        <CardDescription className="text-pretty md:text-wrap overflow-hidden whitespace-nowrap text-ellipsis max-w-full">
-          {description.length > 50
-            ? `${description.slice(0, 100)}...`
-            : description}
-        </CardDescription>
-        <CardFooter className="inline md:hidden p-0">
-          <Badge
-            className={`${badgeCategory.color} text-white`}
-          >
-            {badgeCategory.name}
-          </Badge>
-        </CardFooter>
-      </CardContent>
-    </Card>
+          <CardTitle className="text-md">
+            {title}
+            <Badge
+              className={`ml-2 hidden md:inline ${badgeCategory.color} text-white`}
+            >
+              {badgeCategory.name}
+            </Badge>
+          </CardTitle>
+          <CardDescription className="text-pretty md:text-wrap overflow-hidden whitespace-nowrap text-ellipsis max-w-full">
+            {description.length > 50
+              ? `${description.slice(0, 100)}...`
+              : description}
+          </CardDescription>
+          <CardFooter className="inline md:hidden p-0">
+            <Badge className={`${badgeCategory.color} text-white`}>
+              {badgeCategory.name}
+            </Badge>
+          </CardFooter>
+        </CardContent>
+      </Card>
+
+      <AlertDialog open={showAlert} onOpenChange={setShowAlert}>
+        <AlertDialogContent className="bg-white">
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This action cannot be undone. This will permanently delete the
+              announcement.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={cancelDelete}>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={confirmDelete}>
+              Continue
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </>
   );
 };
 

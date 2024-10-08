@@ -57,7 +57,7 @@ const AnnouncementPage = () => {
           Authorization: user.token,
         },
       });
-      console.log(data);
+  
       if (!data.success) {
         setAnnouncement([]);
       } else {
@@ -115,6 +115,34 @@ const AnnouncementPage = () => {
       });
     }
   };
+  const onDelete = async (id) => {
+    const user  = JSON.parse(localStorage.getItem("userData"));
+    try {
+      const res = await apiClient.delete(`/admin/announcement/${id}`, {
+        headers: {
+          Authorization: user.token,
+        },
+      });
+
+      if (res) {
+        await fetchAnnouncements();
+        setIsSubmitting(false);
+        setShowAddDialog(false);
+        form.reset();
+      }
+    } catch (error) {
+      const message = error.response.data.message;
+      toast({
+        title: {message},
+        description: `${date}`,
+      });
+    }finally{
+      toast({
+        title: "Announcement deleted",
+        description: `${date}`,
+      });
+    }
+  }
   return (
     <>
       <div className="bg-[#fefefe] h-[80vh] shadow-lg rounded-lg border border-gray-200 text-gray-900 px-8 pb-8 flex flex-col gap-5 md:gap-8 relative">
@@ -167,6 +195,7 @@ const AnnouncementPage = () => {
                   description={announcement.description}
                   category={announcement.category}
                   datePosted={formatDate(announcement.createdAt)}
+                  onDelete= {onDelete}
                 />
               ))}
             {visibleCount < filteredAnnouncements.length && (
