@@ -30,6 +30,8 @@ const AnnouncementPage = () => {
   const { toast } = useToast();
   const date = formatDate(Date.now());
 
+  const [visibleCount, setVisibleCount] = useState(10);
+
   const form = useForm({
     resolver: zodResolver(AnnouncementSchema),
     defaultValues: {
@@ -81,6 +83,9 @@ const AnnouncementPage = () => {
       setFilteredAnnouncements(filtered);
     }
   };
+  const handleSeeMore = () => {
+    setVisibleCount((prevCount) => prevCount + 10); // Increment the visible count by 10
+  };
 
   const onAddEvent = async (data) => {
     const user = JSON.parse(localStorage.getItem("userData"));
@@ -112,7 +117,7 @@ const AnnouncementPage = () => {
   };
   return (
     <>
-      <div className="bg-[#fefefe] h-[80vh] shadow-lg rounded-lg border border-gray-200 text-gray-900 px-8 pb-8 flex flex-col gap-8 relative">
+      <div className="bg-[#fefefe] h-[80vh] shadow-lg rounded-lg border border-gray-200 text-gray-900 px-8 pb-8 flex flex-col gap-5 md:gap-8 relative">
         <div className="sticky top-0 left-0 right-0 flex flex-row justify-between w-full bg-inherit z-10 pt-8">
           <Select
             value={selectedCategory} // Set the selected value for controlled component
@@ -151,17 +156,29 @@ const AnnouncementPage = () => {
             </div>
           </div>
         ) : filteredAnnouncements.length > 0 ? (
-          <div className="grid gap-2 overflow-y-auto pr-2">
-            {filteredAnnouncements.map((announcement) => (
-              <AnnouncementCard
-                key={announcement._id}
-                id={announcement._id}
-                title={announcement.title}
-                description={announcement.description}
-                category={announcement.category}
-                datePosted={formatDate(announcement.createdAt)}
-              />
-            ))}
+          <div className="grid gap-2 overflow-y-auto pr-2 flex-grow">
+            {filteredAnnouncements
+              .slice(0, visibleCount)
+              .map((announcement) => (
+                <AnnouncementCard
+                  key={announcement._id}
+                  id={announcement._id}
+                  title={announcement.title}
+                  description={announcement.description}
+                  category={announcement.category}
+                  datePosted={formatDate(announcement.createdAt)}
+                />
+              ))}
+            {visibleCount < filteredAnnouncements.length && (
+              <div className="flex justify-center mt-4">
+                <Button
+                  onClick={handleSeeMore}
+                  className="bg-zinc-200 hover:bg-zinc-100 w-full text-zinc-900"
+                >
+                  See more announcements
+                </Button>
+              </div>
+            )}
           </div>
         ) : (
           <div className="flex items-center justify-center h-full">

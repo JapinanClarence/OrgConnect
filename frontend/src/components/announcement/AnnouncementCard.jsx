@@ -28,23 +28,32 @@ const AnnouncementCard = ({ id, title, description, datePosted, category }) => {
   }, [category]);
   return (
     <Card className="shadow-sm border-zinc-300">
-      <CardContent className="p-5">
-        <CardHeader className="flex text-xs flex-row p-0">
+      <CardContent className="p-4 md:p-5">
+        <CardHeader className="flex text-xs flex-col md:flex-row p-0">
           <span className="font-bold text-xs mr-2">Posted on:</span>
           {datePosted}
         </CardHeader>
 
         <CardTitle className="text-md">
           {title}
-          <Badge className={`ml-2 ${badgeCategory.color} text-white`}>
+          <Badge
+            className={`ml-2 hidden md:inline ${badgeCategory.color} text-white`}
+          >
             {badgeCategory.name}
           </Badge>
         </CardTitle>
         <CardDescription className="text-pretty md:text-wrap overflow-hidden whitespace-nowrap text-ellipsis max-w-full">
           {description.length > 50
-            ? `${description.slice(0, 300)}...`
+            ? `${description.slice(0, 100)}...`
             : description}
         </CardDescription>
+        <CardFooter className="inline md:hidden p-0">
+          <Badge
+            className={`${badgeCategory.color} text-white`}
+          >
+            {badgeCategory.name}
+          </Badge>
+        </CardFooter>
       </CardContent>
     </Card>
   );
