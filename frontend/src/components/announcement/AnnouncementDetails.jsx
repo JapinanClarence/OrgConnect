@@ -12,6 +12,7 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { DialogBody, DialogFooter } from "@material-tailwind/react";
+import { Badge } from "@/components/ui/badge";
 
 const AnnouncementDetails = ({ announcementData, open, onOpenChange }) => {
   const [loading, setLoading] = useState(true);
@@ -37,11 +38,11 @@ const AnnouncementDetails = ({ announcementData, open, onOpenChange }) => {
           <DialogTitle className="">{announcementData.title}</DialogTitle>
           <div className="space-x-2">
             <span className="text-xs">{announcementData.datePosted}</span>
-            <span
-              className={`text-xs px-3 font-bold text-white w-min rounded-md ${category.color}`}
+            <Badge
+              className={`text-white ${category.color}`}
             >
               {category.name}
-            </span>
+            </Badge>
           </div>
         </DialogHeader>
         <DialogBody className="p-0 space-y-2 pb-2 border-b-[1px] border-zinc-300">
