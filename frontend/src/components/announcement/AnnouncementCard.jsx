@@ -41,7 +41,8 @@ const AnnouncementCard = ({
   const [badgeCategory, setBadgeCategory] = useState({ name: "", color: "" });
   const [showAlert, setShowAlert] = useState(false);
 
-  const handleDelete = () => {
+  const handleDelete = (event) => {
+    event.stopPropagation(); 
     setShowAlert(true); // Show the delete confirmation dialog
   };
 
@@ -68,13 +69,13 @@ const AnnouncementCard = ({
     <>
       <Card className="shadow-sm border-zinc-300" onClick={handleClick}>
         <CardContent className="p-4 md:p-5 relative">
-          <div className="absolute top-1 right-1 p-0 m-0">
+          <div className="absolute top-1 right-1 p-0 m-0 z-20">
             <Button
-              className="h-0 hover:bg-transparent p-0 m-0"
+              className="h-[20px] w-[20px] p-0 rounded-full m-0 hover:bg-zinc-100"
               variant="ghost"
               onClick={handleDelete}
             >
-              <X className="text-zinc-500 h-[13px]" />
+              <X className="text-zinc-500 h-[13px] " />
             </Button>
           </div>
           <CardHeader className="flex text-xs flex-col md:flex-row p-0">
