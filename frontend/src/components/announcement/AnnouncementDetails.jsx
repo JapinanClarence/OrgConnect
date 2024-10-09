@@ -14,7 +14,7 @@ import {
 import { DialogBody, DialogFooter } from "@material-tailwind/react";
 import { Badge } from "@/components/ui/badge";
 
-const AnnouncementDetails = ({ announcementData, open, onOpenChange }) => {
+const AnnouncementDetails = ({ announcementData, open, onOpenChange, onEdit }) => {
   const [loading, setLoading] = useState(true);
 
   const categoryMap = {
@@ -29,6 +29,10 @@ const AnnouncementDetails = ({ announcementData, open, onOpenChange }) => {
     name: "Unknown",
     color: "bg-gray-500",
   };
+
+  const handleEdit = () =>{
+    onEdit(announcementData)
+  }
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -54,7 +58,7 @@ const AnnouncementDetails = ({ announcementData, open, onOpenChange }) => {
           </div>
         </DialogBody>
         <DialogFooter className="justify-start p-0">
-          <Button variant="link" className="w-min p-0 font-bold">
+          <Button variant="link" className="w-min p-0 font-bold h-min" onClick={handleEdit}>
             Edit
           </Button>
         </DialogFooter>

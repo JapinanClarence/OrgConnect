@@ -33,14 +33,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { AnnouncementSchema } from "@/schema";
 
 const EditAnnouncementDialog = ({announcementData, open, onOpenChange, onSubmit, isSubmitting, errorMessage}) => {
-  console.log(announcementData)
-  
-  const [showAlert, setShowAlert] = useState(false);
-  const [isEditable, setIsEditable] = useState({
-    title: false,
-    description: false,
-    category: false,
-  });
+
   const form = useForm({
     resolver: zodResolver(AnnouncementSchema),
     defaultValues: announcementData || {}, // Set default values at initialization
@@ -55,26 +48,8 @@ const EditAnnouncementDialog = ({announcementData, open, onOpenChange, onSubmit,
     }
   }, [announcementData, reset]);
 
-  // Function to toggle editability
-  const handleEditToggle = (fieldName) => {
-    setIsEditable((prev) => ({
-      ...prev,
-      [fieldName]: !prev[fieldName], // Toggle only the specific field
-    }));
-  };
 
-  const handleDelete = () => {
-    setShowAlert(true); // Show the delete confirmation dialog
-  };
 
-  const confirmDelete = () => {
-    onDelete(announcementData.id); // Call the delete function
-    setShowAlert(false); // Close the alert dialog after deleting
-  };
-
-  const cancelDelete = () => {
-    setShowAlert(false); // Close the alert dialog without deleting
-  };
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="bg-white">
@@ -173,13 +148,13 @@ const EditAnnouncementDialog = ({announcementData, open, onOpenChange, onSubmit,
               <div className="flex justify-between mt-4">
                 <Button
                   type="submit"
-                  className="w-[180px]"
+                  className="w-[100px]"
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? (
                     <LoaderCircle className="animate-spin" />
                   ) : (
-                    "Create Announcement"
+                    "Submit"
                   )}
                 </Button>
                 <Button

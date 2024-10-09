@@ -19,7 +19,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { AnnouncementSchema } from "@/schema";
 import { useToast } from "@/hooks/use-toast";
 import AnnouncementDetails from "@/components/announcement/AnnouncementDetails";
-import { useNavigate } from "react-router-dom";
+import EditAnnouncementDialog from "@/components/announcement/EditAnnouncementDialog";
+
 const AnnouncementPage = () => {
   const [announcements, setAnnouncement] = useState([]);
   const [filteredAnnouncements, setFilteredAnnouncements] = useState([]);
@@ -30,9 +31,10 @@ const AnnouncementPage = () => {
   const [errorMessage, setErrorMessage] = useState(false);
   const [showAnnouncementDetails, setShowAnnouncementDetails] = useState(false);
   const [currentAnnouncement, setCurrentAnnouncement] = useState("");
+  const [showEditDialog, setShowEditDialog] = useState(false);
   const { toast } = useToast();
   const date = formatDate(Date.now());
-  const navigate = useNavigate();
+  
 
   const [visibleCount, setVisibleCount] = useState(10);
 
@@ -96,6 +98,11 @@ const AnnouncementPage = () => {
     setCurrentAnnouncement(data);
   };
 
+  const handleEditDialog = (data) =>{
+    setShowEditDialog(true);
+    setCurrentAnnouncement(data);
+  }
+
   const onAddEvent = async (data) => {
     const user = JSON.parse(localStorage.getItem("userData"));
 
@@ -124,6 +131,40 @@ const AnnouncementPage = () => {
       });
     }
   };
+  const onEdit= async (data) =>{
+    const user =JSON.parse(localStorage.getItem("userData"));
+
+    try {
+      setIsSubmitting(true);
+
+      const {id, title, description, category} = data;
+
+      const formData = {
+        title,
+        description,
+        category
+      }
+
+      const res = await apiClient.patch(`/admin/announcement/${id}`, formData, {
+        headers: {
+          Authorization: user.token,
+        },
+      });
+
+      if (res) {
+        await fetchAnnouncements();
+        setIsSubmitting(false);
+        setShowEditDialog(false);
+        setShowAnnouncementDetails(false);
+        form.reset();
+      }
+
+    } catch (error) {
+      const message = error.response.data.message;
+      setErrorMessage(message);
+      setIsSubmitting(false);
+    }
+  }
   const onDelete = async (id) => {
     const user = JSON.parse(localStorage.getItem("userData"));
     try {
@@ -239,6 +280,15 @@ const AnnouncementPage = () => {
         announcementData={currentAnnouncement}
         open={showAnnouncementDetails}
         onOpenChange={setShowAnnouncementDetails}
+        onEdit={handleEditDialog}
+      />
+      <EditAnnouncementDialog
+        announcementData={currentAnnouncement}
+        open={showEditDialog}
+        onOpenChange={setShowEditDialog}
+        onSubmit={onEdit}
+        isSubmitting={isSubmitting}
+        errorMessage={errorMessage}
       />
     </>
   );
