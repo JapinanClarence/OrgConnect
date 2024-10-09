@@ -23,7 +23,7 @@ const App = () => {
           <Route element={<DashboardLayout />}>
             <Route index element={<Homepage />} />
             <Route path="/event" element={<Eventpage />} />
-            <Route path="/announcement" element={<AnnouncementPage/>}/>
+            <Route path="/announcement" element={<AnnouncementPage />} />
           </Route>
         </Route>
       </Routes>

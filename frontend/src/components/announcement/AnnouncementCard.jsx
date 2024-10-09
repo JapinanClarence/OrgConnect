@@ -36,6 +36,7 @@ const AnnouncementCard = ({
   datePosted,
   category,
   onDelete,
+  onClick,
 }) => {
   const [badgeCategory, setBadgeCategory] = useState({ name: "", color: "" });
   const [showAlert, setShowAlert] = useState(false);
@@ -53,6 +54,10 @@ const AnnouncementCard = ({
     setShowAlert(false); // Close the alert dialog without deleting
   };
 
+  const handleClick = () => {
+    onClick({id, title, description, category, datePosted});
+  };
+
   useEffect(() => {
     // Set badge details based on the category
     if (categoryMap[category]) {
@@ -61,7 +66,7 @@ const AnnouncementCard = ({
   }, [category]);
   return (
     <>
-      <Card className="shadow-sm border-zinc-300">
+      <Card className="shadow-sm border-zinc-300" onClick={handleClick}>
         <CardContent className="p-4 md:p-5 relative">
           <div className="absolute top-1 right-1 p-0 m-0">
             <Button

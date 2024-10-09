@@ -18,7 +18,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AnnouncementSchema } from "@/schema";
 import { useToast } from "@/hooks/use-toast";
-
+import AnnouncementDetails from "@/components/announcement/AnnouncementDetails";
+import { useNavigate } from "react-router-dom";
 const AnnouncementPage = () => {
   const [announcements, setAnnouncement] = useState([]);
   const [filteredAnnouncements, setFilteredAnnouncements] = useState([]);
@@ -27,8 +28,11 @@ const AnnouncementPage = () => {
   const [showAddDialog, setShowAddDialog] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState(false);
+  const [showAnnouncementDetails, setShowAnnouncementDetails] = useState(false);
+  const [currentAnnouncement, setCurrentAnnouncement] = useState("");
   const { toast } = useToast();
   const date = formatDate(Date.now());
+  const navigate = useNavigate();
 
   const [visibleCount, setVisibleCount] = useState(10);
 
@@ -57,7 +61,7 @@ const AnnouncementPage = () => {
           Authorization: user.token,
         },
       });
-  
+
       if (!data.success) {
         setAnnouncement([]);
       } else {
@@ -85,6 +89,11 @@ const AnnouncementPage = () => {
   };
   const handleSeeMore = () => {
     setVisibleCount((prevCount) => prevCount + 10); // Increment the visible count by 10
+  };
+
+  const handleAnnouncementClick = async (data) => {
+    setShowAnnouncementDetails(true);
+    setCurrentAnnouncement(data);
   };
 
   const onAddEvent = async (data) => {
@@ -116,7 +125,7 @@ const AnnouncementPage = () => {
     }
   };
   const onDelete = async (id) => {
-    const user  = JSON.parse(localStorage.getItem("userData"));
+    const user = JSON.parse(localStorage.getItem("userData"));
     try {
       const res = await apiClient.delete(`/admin/announcement/${id}`, {
         headers: {
@@ -133,16 +142,16 @@ const AnnouncementPage = () => {
     } catch (error) {
       const message = error.response.data.message;
       toast({
-        title: {message},
+        title: { message },
         description: `${date}`,
       });
-    }finally{
+    } finally {
       toast({
         title: "Announcement deleted",
         description: `${date}`,
       });
     }
-  }
+  };
   return (
     <>
       <div className="bg-[#fefefe] h-[80vh] shadow-lg rounded-lg border border-gray-200 text-gray-900 px-8 pb-8 flex flex-col gap-5 md:gap-8 relative">
@@ -184,7 +193,7 @@ const AnnouncementPage = () => {
             </div>
           </div>
         ) : filteredAnnouncements.length > 0 ? (
-          <div className="grid gap-2 overflow-y-auto pr-2 flex-grow">
+          <div className="flex flex-col gap-2 overflow-y-auto pr-2">
             {filteredAnnouncements
               .slice(0, visibleCount)
               .map((announcement) => (
@@ -195,7 +204,8 @@ const AnnouncementPage = () => {
                   description={announcement.description}
                   category={announcement.category}
                   datePosted={formatDate(announcement.createdAt)}
-                  onDelete= {onDelete}
+                  onDelete={onDelete}
+                  onClick={handleAnnouncementClick}
                 />
               ))}
             {visibleCount < filteredAnnouncements.length && (
@@ -223,6 +233,12 @@ const AnnouncementPage = () => {
         onSubmit={onAddEvent}
         isSubmitting={isSubmitting}
         errorMessage={errorMessage}
+      />
+
+      <AnnouncementDetails
+        announcementData={currentAnnouncement}
+        open={showAnnouncementDetails}
+        onOpenChange={setShowAnnouncementDetails}
       />
     </>
   );
