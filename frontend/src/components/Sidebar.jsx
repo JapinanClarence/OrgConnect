@@ -9,31 +9,31 @@ const DesktopSidebar = () => {
       <div className="flex h-full max-h-screen flex-col gap-2">
         <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
           <Link to="/" className="flex items-center gap-2 font-semibold">
-            <img src="NavLogo.svg" className="w-48" />
+            <img src="OrgConnect-transparent.svg" className="w-9" />
             {/* <span className="">OrgConnect</span> */}
           </Link>
         </div>
 
         <div className="flex-1">
-          <nav className="grid items-start px-2 text-lg font-base lg:px-4">
+          <nav className="grid items-start px-2 text-md font-base lg:px-4">
             <Link to="/" className="flex items-center gap-3 rounded-lg px-3 py-2 text-white transition-all">
-              <Home className="h-6 w-6" />
+              <Home size={20}/>
               Home
             </Link>
             <Link to="/event" className="flex items-center gap-3 rounded-lg px-3 py-2 text-white transition-all">
-              <Calendar className="h-6 w-6" />
+              <Calendar size={20}/>
               Calendar
             </Link>
             <Link to="/announcement" className="flex items-center gap-3 rounded-lg px-3 py-2 text-white transition-all">
-              <Newspaper className="h-6 w-6" />
+              <Newspaper size={20}/>
               Announcements
             </Link>
             <Link to="/" className="flex items-center gap-3 rounded-lg px-3 py-2 text-white transition-all">
-              <User className="h-6 w-6" />
+              <User size={20}/>
               Officers
             </Link>
             <Link to="/" className="flex items-center gap-3 rounded-lg px-3 py-2 text-white transition-all">
-              <Users className="h-6 w-6" />
+              <Users size={20}/>
               Members
             </Link>
           </nav>
