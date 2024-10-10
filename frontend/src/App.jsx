@@ -25,8 +25,8 @@ const App = () => {
         <Route element={<ProtectedRoute />}>
           <Route element={<DashboardLayout />}>
             <Route index element={<Homepage />} />
-            <Route path="/event" element={<Eventpage />} />
-            <Route path="/announcement" element={<AnnouncementPage />} />
+            <Route path="/events" element={<Eventpage />} />
+            <Route path="/announcements" element={<AnnouncementPage />} />
           </Route>
         </Route>
       </Routes>

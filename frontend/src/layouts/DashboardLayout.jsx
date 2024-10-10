@@ -10,9 +10,9 @@ const DashboardLayout = () => {
         <div
           className={`flex flex-col flex-1 transition-all duration-300 md:ml-[72px] lg:ml-64`}
         >
-          <Header />
-          <main className="px-6 pt-8 dark:bg-black bg-white dark:bg-grid-small-white/[0.2] bg-grid-small-black/[0.2]" style={{height: `calc(100vh - 53px)`}}>
-            <div className="overlay-area  absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-black bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] -z-10"></div>
+          <Header title="" />
+          <main className=" p-6 md:px-4 md:pt-8 " style={{height: `calc(100vh - 53px)`}}>
+            {/* <div className="overlay-area  absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-black bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] -z-10"></div> */}
 
             <Outlet />
           </main>

@@ -30,7 +30,7 @@ import UserItem from "@/components/UserItem";
 
 const DesktopSidebar = () => {
   return (
-    <aside className="fixed left-0 z-20 h-full flex-col border-r hidden md:flex lg:w-64 text-white bg-gray-900">
+    <aside className="fixed left-0 z-40 h-full flex-col border-r hidden md:flex lg:w-64 text-white bg-gray-900">
       {/* <div className="overlay-area  absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-black bg-zinc-900 [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] -z-10"></div> */}
       <div className="border-b border-zinc-500 flex justify-start items-center py-2 px-4">
         <Link to={"/"} aria-label="Home">
@@ -49,7 +49,7 @@ const DesktopSidebar = () => {
             <TooltipTrigger asChild>
               <Link
                 to="/"
-                className="rounded-lg hover:bg-gray-900/90 size-full flex items-center justify-start p-2"
+                className="rounded-lg hover:bg-gray-800/90 size-full flex items-center justify-start p-2"
               >
                 <Home />
                 <span className="hidden lg:block ml-2 font-bold text-sm">
@@ -57,7 +57,7 @@ const DesktopSidebar = () => {
                 </span>
               </Link>
             </TooltipTrigger>
-            <TooltipContent className="lg:hidden" side="right" sideOffset={5}>
+            <TooltipContent className="lg:hidden bg-white text-gray-900" side="right" sideOffset={5}>
               Home
             </TooltipContent>
           </Tooltip>
@@ -66,7 +66,7 @@ const DesktopSidebar = () => {
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
-                to={"/analytics"}
+                to={"/"}
                 className="rounded-lg hover:bg-gray-800 size-full flex items-center justify-start p-2"
               >
                 <SquareTerminal className="" />
@@ -75,7 +75,7 @@ const DesktopSidebar = () => {
                 </span>
               </Link>
             </TooltipTrigger>
-            <TooltipContent className="lg:hidden" side="right" sideOffset={5}>
+            <TooltipContent className="lg:hidden bg-white text-gray-900" side="right" sideOffset={5}>
               Analytics
             </TooltipContent>
           </Tooltip>
@@ -84,17 +84,17 @@ const DesktopSidebar = () => {
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
-                to="/event"
+                to="/events"
                 className="rounded-lg hover:bg-gray-800 size-full flex items-center justify-start p-2"
               >
                 <Calendar className="" />
                 <span className="hidden lg:block ml-2 font-bold text-sm">
-                  Event
+                  Calendar
                 </span>
               </Link>
             </TooltipTrigger>
-            <TooltipContent className="lg:hidden" side="right" sideOffset={5}>
-              Event
+            <TooltipContent className="lg:hidden bg-white text-gray-900" side="right" sideOffset={5}>
+              Calendar
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
@@ -102,17 +102,17 @@ const DesktopSidebar = () => {
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
-                to={"/announcement"}
+                to={"/announcements"}
                 className="rounded-lg hover:bg-gray-800 size-full flex items-center justify-start p-2"
               >
                 <Newspaper className="" />
                 <span className="hidden lg:block ml-2 font-bold text-sm">
-                  Announcement
+                  Announcements
                 </span>
               </Link>
             </TooltipTrigger>
-            <TooltipContent className="lg:hidden" side="right" sideOffset={5}>
-              Announcement
+            <TooltipContent className="lg:hidden bg-white text-gray-900" side="right" sideOffset={5}>
+              Announcements
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
@@ -120,7 +120,7 @@ const DesktopSidebar = () => {
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
-                to="/payments"
+                to="/"
                 className="rounded-lg hover:bg-gray-800 size-full flex items-center justify-start p-2"
               >
                 <WalletCards className="" />
@@ -129,7 +129,7 @@ const DesktopSidebar = () => {
                 </span>
               </Link>
             </TooltipTrigger>
-            <TooltipContent className="lg:hidden" side="right" sideOffset={5}>
+            <TooltipContent className="lg:hidden bg-white text-gray-900" side="right" sideOffset={5}>
               Payments
             </TooltipContent>
           </Tooltip>
@@ -139,7 +139,7 @@ const DesktopSidebar = () => {
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
-                to={"/officer"}
+                to={"/"}
                 className="rounded-lg hover:bg-gray-800 size-full flex items-center justify-start p-2"
               >
                 <User className="" />
@@ -148,7 +148,7 @@ const DesktopSidebar = () => {
                 </span>
               </Link>
             </TooltipTrigger>
-            <TooltipContent className="lg:hidden" side="right" sideOffset={5}>
+            <TooltipContent className="lg:hidden bg-white text-gray-900" side="right" sideOffset={5}>
               Officers
             </TooltipContent>
           </Tooltip>
@@ -157,7 +157,7 @@ const DesktopSidebar = () => {
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
-                to={"/member"}
+                to={"/"}
                 className="rounded-lg hover:bg-gray-800 size-full flex items-center justify-start p-2"
               >
                 <Users className="" />
@@ -166,13 +166,13 @@ const DesktopSidebar = () => {
                 </span>
               </Link>
             </TooltipTrigger>
-            <TooltipContent className="lg:hidden" side="right" sideOffset={5}>
+            <TooltipContent className="lg:hidden bg-white text-gray-900" side="right" sideOffset={5}>
               Members
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
       </nav>
-      <nav className="mt-auto grid gap-1 p-2 border-t-[1px] border-zinc-500">
+      <nav className="mt-auto grid gap-1 p-3 border-t-[1px] border-gray-500">
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
@@ -180,7 +180,7 @@ const DesktopSidebar = () => {
                 {/* Avatar remains visible on all screen sizes */}
                 <Avatar className="size-10">
                   {/* <AvatarImage src="https://github.com/shadcn.png" alt="user-profile" /> */}
-                  <AvatarFallback className="text-zinc-500">AD</AvatarFallback>
+                  <AvatarFallback className="text-gray-500">AD</AvatarFallback>
                 </Avatar>
 
                 {/* Hide name on medium screens and above */}
