@@ -1,79 +1,54 @@
 // components/MobileNav.js
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import {
-  Menu,
-  Package2,
-  Home,
-  ShoppingCart,
-  Package,
-  Users,
-  LineChart,
-} from "lucide-react";
+import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
+import { MenuIcon } from "lucide-react";
 import { Link } from "react-router-dom";
 import UserItem from "@/components/UserItem";
-import { SheetDescription, SheetHeader, SheetTitle } from "./ui/sheet";
 
 const MobileNav = () => {
   return (
-    <Sheet>
+    <Sheet className="">
       <SheetTrigger asChild>
-        <Button variant="outline" size="icon" className="shrink-0 md:hidden">
-          <Menu className="h-5 w-5 text-gray-900" />
-          <span className="sr-only">Toggle navigation menu</span>
+        <Button
+          className="md:hidden p-2 text-xl hover:bg-zinc-300"
+          variant="ghost"
+          aria-label="Toggle sidebar"
+        >
+          <MenuIcon className="h-6 w-6" />
         </Button>
       </SheetTrigger>
-
       <SheetContent
         side="left"
-        className="flex flex-col bg-gray-900 text-white"
+        className="bg-zinc-900 text-white border-zinc-500"
+        aria-describedby={undefined}
       >
-        <nav className="grid gap-2 text-lg font-medium">
-          <Link
-            to="/"
-            className="flex items-center gap-2 text-lg font-semibold"
-          >
-            <img src="NavLogo.svg" className="w-48" />
-            {/* <span>Acme Inc</span> */}
+        <SheetTitle></SheetTitle>
+        <div className="flex items-center pb-2 border-b-[1px] border-zinc-300">
+          <Link to={"/"} aria-label="Home">
+            <img
+              src="OrgConnect-transparent.svg"
+              className="size-12 fill-foreground"
+            />
           </Link>
-          <Link
-            to="#"
-            className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-          >
-            <Home className="h-5 w-5" />
-            Dashboard
+          <span className=" inline text-2xl font-semibold">OrgConnect</span>
+        </div>
+
+        <div className="grid gap-1 mt-5 font-normal text-lg">
+          <Link to={"/"} className="rounded-lg hover:bg-zinc-800 p-2">
+            Home
           </Link>
-          <Link
-            to="#"
-            className="mx-[-0.65rem] flex items-center gap-4 rounded-xl bg-muted px-3 py-2 text-foreground hover:text-foreground"
-          >
-            <ShoppingCart className="h-5 w-5" />
-            Orders
-          </Link>
-          <Link
-            to="#"
-            className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-          >
-            <Package className="h-5 w-5" />
-            Products
-          </Link>
-          <Link
-            to="#"
-            className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-          >
-            <Users className="h-5 w-5" />
-            Customers
-          </Link>
-          <Link
-            to="#"
-            className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-          >
-            <LineChart className="h-5 w-5" />
-            Analytics
-          </Link>
-        </nav>
-        <div className="mt-auto">
-          <UserItem />
+
+          <Link to={"/event"} className="rounded-lg hover:bg-zinc-800 p-2">Calendar</Link>
+
+          <Link to={"/announcement"} className="rounded-lg hover:bg-zinc-800 p-2">Announcement</Link>
+
+          <Link to={"/payments"} className="rounded-lg hover:bg-zinc-800 p-2">Payments</Link>
+
+          <Link to={"/analytics"} className="rounded-lg hover:bg-zinc-800 p-2">Analytics</Link>
+
+          <Link to={"/officer"} className="rounded-lg hover:bg-zinc-800 p-2">Officers</Link>
+
+          <Link to={"/member"} className="rounded-lg hover:bg-zinc-800 p-2">Members</Link>
         </div>
       </SheetContent>
     </Sheet>

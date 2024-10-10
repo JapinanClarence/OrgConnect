@@ -10,10 +10,13 @@ import ProtectedRoute from "@/components/auth/ProtectedRoutes";
 import Eventpage from "@/pages/Eventpage";
 import AnnouncementPage from "@/pages/AnnouncementPage";
 
+// for testing only
+import { Test } from "@/pages/Test";
 const App = () => {
   return (
     <>
       <Toaster />
+      {/* <Test/> */}
       <Routes>
         <Route path="/" element={<Mainlayout />}>
           <Route path="/login" element={<Loginpage />} />
