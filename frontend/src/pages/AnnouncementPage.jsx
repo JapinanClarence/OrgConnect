@@ -34,7 +34,6 @@ const AnnouncementPage = () => {
   const [showEditDialog, setShowEditDialog] = useState(false);
   const { toast } = useToast();
   const date = formatDate(Date.now());
-  
 
   const [visibleCount, setVisibleCount] = useState(10);
 
@@ -98,10 +97,10 @@ const AnnouncementPage = () => {
     setCurrentAnnouncement(data);
   };
 
-  const handleEditDialog = (data) =>{
+  const handleEditDialog = (data) => {
     setShowEditDialog(true);
     setCurrentAnnouncement(data);
-  }
+  };
 
   const onAddEvent = async (data) => {
     const user = JSON.parse(localStorage.getItem("userData"));
@@ -131,19 +130,19 @@ const AnnouncementPage = () => {
       });
     }
   };
-  const onEdit= async (data) =>{
-    const user =JSON.parse(localStorage.getItem("userData"));
+  const onEdit = async (data) => {
+    const user = JSON.parse(localStorage.getItem("userData"));
 
     try {
       setIsSubmitting(true);
 
-      const {id, title, description, category} = data;
+      const { id, title, description, category } = data;
 
       const formData = {
         title,
         description,
-        category
-      }
+        category,
+      };
 
       const res = await apiClient.patch(`/admin/announcement/${id}`, formData, {
         headers: {
@@ -158,13 +157,17 @@ const AnnouncementPage = () => {
         setShowAnnouncementDetails(false);
         form.reset();
       }
-
     } catch (error) {
       const message = error.response.data.message;
       setErrorMessage(message);
       setIsSubmitting(false);
+    } finally {
+      toast({
+        title: "Announcement has been updated",
+        description: `${date}`,
+      });
     }
-  }
+  };
   const onDelete = async (id) => {
     const user = JSON.parse(localStorage.getItem("userData"));
     try {

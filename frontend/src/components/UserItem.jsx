@@ -24,18 +24,18 @@ const UserItem = () => {
   //   : `${userData.firstname} ${userData.lastname}`;
   return (
     <div className="grid grid-flow-col items-center border-5 p-2 border-t-2">
-      <Avatar className="col-span-1">
+      <Avatar className="col-span-2">
         {/* <AvatarImage src="https://github.com/shadcn.png" alt="user-profile" /> */}
         <AvatarFallback>AD</AvatarFallback>
       </Avatar>
-      <div className="col-span-5">
+      <div className="col-span-6">
         <div className="text-[16px] font-bold">{userData.username}</div>
         <div className="text-[13px] font-neutral-500">{userData.email}</div>
       </div>
-      <DropdownMenu className="col-span-1">
+      <DropdownMenu className="">
         <DropdownMenuTrigger asChild>
-          <Button className="p-0">
-            <MoreVertical />
+          <Button className="w-min p-0 bg-inherit hover:bg-transparent" size="icon">
+            <MoreVertical/>
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="bg-white ">
