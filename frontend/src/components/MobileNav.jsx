@@ -19,7 +19,7 @@ const MobileNav = () => {
       </SheetTrigger>
       <SheetContent
         side="left"
-        className="bg-zinc-900 text-white border-zinc-500"
+        className="bg-gray-900 text-white border-zinc-500"
         aria-describedby={undefined}
       >
         <SheetTitle></SheetTitle>
@@ -34,21 +34,21 @@ const MobileNav = () => {
         </div>
 
         <div className="grid gap-1 mt-5 font-normal text-lg">
-          <Link to={"/"} className="rounded-lg hover:bg-zinc-800 p-2">
+          <Link to={"/"} className="rounded-lg hover:bg-gray-800 p-2">
             Home
           </Link>
 
-          <Link to={"/event"} className="rounded-lg hover:bg-zinc-800 p-2">Calendar</Link>
+          <Link to={"/event"} className="rounded-lg hover:bg-gray-800 p-2">Calendar</Link>
 
-          <Link to={"/announcement"} className="rounded-lg hover:bg-zinc-800 p-2">Announcement</Link>
+          <Link to={"/announcement"} className="rounded-lg hover:bg-gray-800 p-2">Announcement</Link>
 
-          <Link to={"/payments"} className="rounded-lg hover:bg-zinc-800 p-2">Payments</Link>
+          <Link to={"/payments"} className="rounded-lg hover:bg-gray-800 p-2">Payments</Link>
 
-          <Link to={"/analytics"} className="rounded-lg hover:bg-zinc-800 p-2">Analytics</Link>
+          <Link to={"/analytics"} className="rounded-lg hover:bg-gray-800 p-2">Analytics</Link>
 
-          <Link to={"/officer"} className="rounded-lg hover:bg-zinc-800 p-2">Officers</Link>
+          <Link to={"/officer"} className="rounded-lg hover:bg-gray-800 p-2">Officers</Link>
 
-          <Link to={"/member"} className="rounded-lg hover:bg-zinc-800 p-2">Members</Link>
+          <Link to={"/member"} className="rounded-lg hover:bg-gray-800 p-2">Members</Link>
         </div>
       </SheetContent>
     </Sheet>

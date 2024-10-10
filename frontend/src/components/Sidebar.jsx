@@ -31,7 +31,7 @@ import UserItem from "@/components/UserItem";
 const DesktopSidebar = () => {
   return (
     <aside className="fixed left-0 z-20 h-full flex-col border-r hidden md:flex lg:w-64 text-white bg-gray-900">
-      <div className="overlay-area  absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-black bg-zinc-900 [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] -z-10"></div>
+      {/* <div className="overlay-area  absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-black bg-zinc-900 [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] -z-10"></div> */}
       <div className="border-b border-zinc-500 flex justify-start items-center py-2 px-4">
         <Link to={"/"} aria-label="Home">
           <img
@@ -49,7 +49,7 @@ const DesktopSidebar = () => {
             <TooltipTrigger asChild>
               <Link
                 to="/"
-                className="rounded-lg hover:bg-zinc-800 size-full flex items-center justify-start p-2"
+                className="rounded-lg hover:bg-gray-900/90 size-full flex items-center justify-start p-2"
               >
                 <Home />
                 <span className="hidden lg:block ml-2 font-bold text-sm">
@@ -66,8 +66,26 @@ const DesktopSidebar = () => {
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
+                to={"/analytics"}
+                className="rounded-lg hover:bg-gray-800 size-full flex items-center justify-start p-2"
+              >
+                <SquareTerminal className="" />
+                <span className="hidden lg:block ml-2 font-bold text-sm">
+                  Analytics
+                </span>
+              </Link>
+            </TooltipTrigger>
+            <TooltipContent className="lg:hidden" side="right" sideOffset={5}>
+              Analytics
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Link
                 to="/event"
-                className="rounded-lg hover:bg-zinc-800 size-full flex items-center justify-start p-2"
+                className="rounded-lg hover:bg-gray-800 size-full flex items-center justify-start p-2"
               >
                 <Calendar className="" />
                 <span className="hidden lg:block ml-2 font-bold text-sm">
@@ -85,7 +103,7 @@ const DesktopSidebar = () => {
             <TooltipTrigger asChild>
               <Link
                 to={"/announcement"}
-                className="rounded-lg hover:bg-zinc-800 size-full flex items-center justify-start p-2"
+                className="rounded-lg hover:bg-gray-800 size-full flex items-center justify-start p-2"
               >
                 <Newspaper className="" />
                 <span className="hidden lg:block ml-2 font-bold text-sm">
@@ -103,7 +121,7 @@ const DesktopSidebar = () => {
             <TooltipTrigger asChild>
               <Link
                 to="/payments"
-                className="rounded-lg hover:bg-zinc-800 size-full flex items-center justify-start p-2"
+                className="rounded-lg hover:bg-gray-800 size-full flex items-center justify-start p-2"
               >
                 <WalletCards className="" />
                 <span className="hidden lg:block ml-2 font-bold text-sm">
@@ -116,30 +134,13 @@ const DesktopSidebar = () => {
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Link
-                to={"/analytics"}
-                className="rounded-lg hover:bg-zinc-800 size-full flex items-center justify-start p-2"
-              >
-                <SquareTerminal className="" />
-                <span className="hidden lg:block ml-2 font-bold text-sm">
-                  Analytics
-                </span>
-              </Link>
-            </TooltipTrigger>
-            <TooltipContent className="lg:hidden" side="right" sideOffset={5}>
-              Analytics
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
+    
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
                 to={"/officer"}
-                className="rounded-lg hover:bg-zinc-800 size-full flex items-center justify-start p-2"
+                className="rounded-lg hover:bg-gray-800 size-full flex items-center justify-start p-2"
               >
                 <User className="" />
                 <span className="hidden lg:block ml-2 font-bold text-sm">
@@ -157,7 +158,7 @@ const DesktopSidebar = () => {
             <TooltipTrigger asChild>
               <Link
                 to={"/member"}
-                className="rounded-lg hover:bg-zinc-800 size-full flex items-center justify-start p-2"
+                className="rounded-lg hover:bg-gray-800 size-full flex items-center justify-start p-2"
               >
                 <Users className="" />
                 <span className="hidden lg:block ml-2 font-bold text-sm">

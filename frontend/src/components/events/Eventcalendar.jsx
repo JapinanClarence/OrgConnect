@@ -59,7 +59,7 @@ const EventCalendar = ({ onDateClick, currentEvents, onEventClick }) => {
       }}
       initialView="timeGridWeek"
       events={currentEvents}
-      eventBackgroundColor="#AC9804"
+      eventBackgroundColor="#2c5039"
       eventBorderColor="transparent"
       editable={false}
       selectable={true}

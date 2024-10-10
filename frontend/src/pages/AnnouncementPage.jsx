@@ -198,7 +198,7 @@ const AnnouncementPage = () => {
   };
   return (
     <>
-      <div className="bg-[#fefefe] h-[80vh] shadow-lg rounded-lg border border-gray-200 text-gray-900 px-8 pb-8 flex flex-col gap-5 md:gap-8 relative">
+      <div className="bg-[#fefefe] h-[86vh] shadow-lg rounded-lg border border-gray-200 text-gray-900 px-8 pb-8 flex flex-col gap-5 md:gap-8 relative">
         <div className="sticky top-0 left-0 right-0 flex flex-row justify-between w-full bg-inherit z-10 pt-8">
           <Select
             value={selectedCategory} // Set the selected value for controlled component

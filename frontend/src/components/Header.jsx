@@ -7,7 +7,7 @@ import MobileNav from "@/components/MobileNav";
 
 const Header = ({ title }) => {
   return (
-    <header className="sticky top-0 z-10 flex h-[53px] items-center border-b bg-zinc-200 px-4 shadow-md">
+    <header className="sticky top-0 z-30 flex h-[53px] items-center border-b bg-zinc-200 px-4 shadow-md">
       <MobileNav/>
       <h1 className="text-xl font-semibold ml-2">Homepage</h1>
     </header>
