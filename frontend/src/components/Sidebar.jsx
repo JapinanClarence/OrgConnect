@@ -5,7 +5,7 @@ import UserItem from "@/components/UserItem";
 
 const DesktopSidebar = () => {
   return (
-    <div className="hidden border-r bg-muted/40 md:block bg-zinc-900 text-gray-200">
+    <div className="hidden border-r md:block bg-gray-900 text-gray-200 z-10">
       <div className="flex h-full max-h-screen flex-col gap-2">
         <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
           <Link to="/" className="flex items-center gap-2 font-semibold">

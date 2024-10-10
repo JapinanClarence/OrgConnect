@@ -43,7 +43,7 @@ const AnnouncementDetails = ({ announcementData, open, onOpenChange, onEdit }) =
           <div className="space-x-2">
             <span className="text-xs">{announcementData.datePosted}</span>
             <Badge
-              className={`text-white ${category.color}`}
+              className={`text-white ${category.color} hover:${category.color}`}
             >
               {category.name}
             </Badge>

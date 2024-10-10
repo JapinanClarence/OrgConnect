@@ -221,7 +221,7 @@ const AnnouncementPage = () => {
           </Select>
           <div className="flex items-start">
             <Button
-              className="bg-zinc-800 hover:bg-zinc-700 w-[70px] md:w-full"
+              className=" w-[70px] md:w-full"
               onClick={setShowAddDialog}
             >
               <span className="hidden md:inline">Create announcement</span>
