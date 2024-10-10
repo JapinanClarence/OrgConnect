@@ -29,6 +29,7 @@ const categoryMap = {
   3: { name: "News", color: "bg-purple-500" },
   4: { name: "Alerts", color: "bg-red-500" },
 };
+
 const AnnouncementCard = ({
   id,
   title,
@@ -38,11 +39,11 @@ const AnnouncementCard = ({
   onDelete,
   onClick,
 }) => {
-  const [badgeCategory, setBadgeCategory] = useState({ name: "", color: "" });
+  const [badgeCategory, setBadgeCategory] = useState(null);
   const [showAlert, setShowAlert] = useState(false);
 
   const handleDelete = (event) => {
-    event.stopPropagation(); 
+    event.stopPropagation();
     setShowAlert(true); // Show the delete confirmation dialog
   };
 
@@ -56,7 +57,7 @@ const AnnouncementCard = ({
   };
 
   const handleClick = () => {
-    onClick({id, title, description, category, datePosted});
+    onClick({ id, title, description, category, datePosted });
   };
 
   useEffect(() => {
@@ -65,6 +66,7 @@ const AnnouncementCard = ({
       setBadgeCategory(categoryMap[category]);
     }
   }, [category]);
+
   return (
     <>
       <Card className="shadow-sm border-zinc-300" onClick={handleClick}>
@@ -75,7 +77,7 @@ const AnnouncementCard = ({
               variant="ghost"
               onClick={handleDelete}
             >
-              <X className="text-zinc-500 h-[13px] " />
+              <X className="text-zinc-500 h-[13px]" />
             </Button>
           </div>
           <CardHeader className="flex text-xs flex-col md:flex-row p-0">
@@ -85,11 +87,13 @@ const AnnouncementCard = ({
 
           <CardTitle className="text-md">
             {title}
-            <Badge
-              className={`ml-2 hidden md:inline ${badgeCategory.color} text-white`}
-            >
-              {badgeCategory.name}
-            </Badge>
+            {badgeCategory && (
+              <Badge
+                className={`ml-2 hidden md:inline ${badgeCategory.color} text-white hover:${badgeCategory.color}`}
+              >
+                {badgeCategory.name}
+              </Badge>
+            )}
           </CardTitle>
           <CardDescription className="text-pretty md:text-wrap overflow-hidden whitespace-nowrap text-ellipsis max-w-full">
             {description.length > 50
@@ -97,9 +101,11 @@ const AnnouncementCard = ({
               : description}
           </CardDescription>
           <CardFooter className="inline md:hidden p-0">
-            <Badge className={`${badgeCategory.color} text-white`}>
-              {badgeCategory.name}
-            </Badge>
+            {badgeCategory && (
+              <Badge className={`${badgeCategory.color} text-white`}>
+                {badgeCategory.name}
+              </Badge>
+            )}
           </CardFooter>
         </CardContent>
       </Card>
@@ -114,7 +120,9 @@ const AnnouncementCard = ({
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel onClick={cancelDelete}>Cancel</AlertDialogCancel>
+            <AlertDialogCancel onClick={cancelDelete}>
+              Cancel
+            </AlertDialogCancel>
             <AlertDialogAction onClick={confirmDelete}>
               Continue
             </AlertDialogAction>
