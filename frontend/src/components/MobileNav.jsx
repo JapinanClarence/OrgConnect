@@ -1,13 +1,20 @@
-// components/MobileNav.js
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 import { MenuIcon } from "lucide-react";
-import { Link } from "react-router-dom";
-import UserItem from "@/components/UserItem";
+import { Link, useNavigate } from "react-router-dom";
 
 const MobileNav = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const handleNavigation = (path) => {
+    setIsOpen(false); // Close the sheet
+    navigate(path); // Redirect to the new path
+  };
+
   return (
-    <Sheet className="">
+    <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger asChild>
         <Button
           className="md:hidden p-2 text-xl hover:bg-zinc-300"
@@ -30,25 +37,58 @@ const MobileNav = () => {
               className="size-12 fill-foreground"
             />
           </Link>
-          <span className=" inline text-2xl font-semibold">OrgConnect</span>
+          <span className="inline text-2xl font-semibold">OrgConnect</span>
         </div>
 
         <div className="grid gap-1 mt-5 font-normal text-lg">
-          <Link to={"/"} className="rounded-lg hover:bg-gray-800 p-2">
+          <button
+            onClick={() => handleNavigation("/")}
+            className="rounded-lg hover:bg-gray-800 p-2 w-full text-left"
+          >
             Home
-          </Link>
+          </button>
 
-          <Link to={"/event"} className="rounded-lg hover:bg-gray-800 p-2">Calendar</Link>
+          <button
+            onClick={() => handleNavigation("#")}
+            className="rounded-lg hover:bg-gray-800 p-2 w-full text-left"
+          >
+            Analytics
+          </button>
 
-          <Link to={"/announcement"} className="rounded-lg hover:bg-gray-800 p-2">Announcement</Link>
+          <button
+            onClick={() => handleNavigation("/events")}
+            className="rounded-lg hover:bg-gray-800 p-2 w-full text-left"
+          >
+            Calendar
+          </button>
 
-          <Link to={"/payments"} className="rounded-lg hover:bg-gray-800 p-2">Payments</Link>
+          <button
+            onClick={() => handleNavigation("/announcements")}
+            className="rounded-lg hover:bg-gray-800 p-2 w-full text-left"
+          >
+            Announcements
+          </button>
 
-          <Link to={"/analytics"} className="rounded-lg hover:bg-gray-800 p-2">Analytics</Link>
+          <button
+            onClick={() => handleNavigation("#")}
+            className="rounded-lg hover:bg-gray-800 p-2 w-full text-left"
+          >
+            Payments
+          </button>
 
-          <Link to={"/officer"} className="rounded-lg hover:bg-gray-800 p-2">Officers</Link>
+          <button
+            onClick={() => handleNavigation("#")}
+            className="rounded-lg hover:bg-gray-800 p-2 w-full text-left"
+          >
+            Officers
+          </button>
 
-          <Link to={"/member"} className="rounded-lg hover:bg-gray-800 p-2">Members</Link>
+          <button
+            onClick={() => handleNavigation("#")}
+            className="rounded-lg hover:bg-gray-800 p-2 w-full text-left"
+          >
+            Members
+          </button>
         </div>
       </SheetContent>
     </Sheet>
