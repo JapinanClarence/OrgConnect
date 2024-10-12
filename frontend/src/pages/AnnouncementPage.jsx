@@ -119,16 +119,16 @@ const AnnouncementPage = () => {
         setIsSubmitting(false);
         setShowAddDialog(false);
         form.reset();
+
+        toast({
+          title: "Announcement has been created",
+          description: `${date}`,
+        });
       }
     } catch (error) {
       const message = error.response.data.message;
       setErrorMessage(message);
       setIsSubmitting(false);
-    } finally {
-      toast({
-        title: "Announcement has been created",
-        description: `${date}`,
-      });
     }
   };
   const onEdit = async (data) => {
@@ -157,16 +157,15 @@ const AnnouncementPage = () => {
         setShowEditDialog(false);
         setShowAnnouncementDetails(false);
         form.reset();
+        toast({
+          title: "Announcement has been updated",
+          description: `${date}`,
+        });
       }
     } catch (error) {
       const message = error.response.data.message;
       setErrorMessage(message);
       setIsSubmitting(false);
-    } finally {
-      toast({
-        title: "Announcement has been updated",
-        description: `${date}`,
-      });
     }
   };
   const onDelete = async (id) => {
@@ -183,16 +182,16 @@ const AnnouncementPage = () => {
         setIsSubmitting(false);
         setShowAddDialog(false);
         form.reset();
+
+        toast({
+          title: "Announcement deleted",
+          description: `${date}`,
+        });
       }
     } catch (error) {
       const message = error.response.data.message;
       toast({
         title: { message },
-        description: `${date}`,
-      });
-    } finally {
-      toast({
-        title: "Announcement deleted",
         description: `${date}`,
       });
     }

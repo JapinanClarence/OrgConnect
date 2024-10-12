@@ -79,16 +79,15 @@ const Eventpage = () => {
         setIsSubmitting(false);
         setShowAddEventDialog(false);
         form.reset();
+        toast({
+          title: "Event has been created",
+          description: `${date}`,
+        });
       }
     } catch (error) {
       const message = error.response.data.message;
       setErrorMessage(message);
       setIsSubmitting(false);
-    } finally {
-      toast({
-        title: "Event has been created",
-        description: `${date}`,
-      });
     }
   };
 
@@ -118,16 +117,15 @@ const Eventpage = () => {
         setIsSubmitting(false);
         setShowEventInfo(false);
         form.reset();
+        toast({
+          title: "Event updated",
+          description: `${date}`,
+        });
       }
     } catch (error) {
       const message = error.response.data.message;
       setErrorMessage(message);
       setIsSubmitting(false);
-    } finally {
-      toast({
-        title: "Event updated",
-        description: `${date}`,
-      });
     }
   };
   const handleDelete = async (eventId) => {
@@ -145,16 +143,15 @@ const Eventpage = () => {
         setIsDeleting(false);
         setShowEventInfo(false);
         form.reset();
+        toast({
+          title: "Event deleted",
+          description: `${date}`,
+        });
       }
     } catch (error) {
       const message = error.response.data.message;
       setErrorMessage(message);
       setIsSubmitting(false);
-    } finally {
-      toast({
-        title: "Event deleted",
-        description: `${date}`,
-      });
     }
   };
 

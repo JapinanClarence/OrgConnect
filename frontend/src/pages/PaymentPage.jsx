@@ -58,33 +58,33 @@ const PaymentPage = () => {
     }
   };
 
-  const onAdd = async (data) =>{
+  const onAdd = async (data) => {
     const user = JSON.parse(localStorage.getItem("userData"));
     try {
-        setIsSubmitting(true);
-        const res = await apiClient.post("/admin/payment", data, {
-          headers: {
-            Authorization: user.token,
-          },
-        });
-  
-        if (res) {
-          await fetchPayments();
-          setIsSubmitting(false);
-          setShowAddDialog(false);
-          form.reset();
-        }
-      } catch (error) {
-        const message = error.response.data.message;
-        setErrorMessage(message);
+      setIsSubmitting(true);
+      const res = await apiClient.post("/admin/payment", data, {
+        headers: {
+          Authorization: user.token,
+        },
+      });
+
+      if (res) {
+        await fetchPayments();
         setIsSubmitting(false);
-      } finally {
+        setShowAddDialog(false);
+        form.reset();
+
         toast({
           title: "Financial record has been added",
           description: `${date}`,
         });
       }
-  }
+    } catch (error) {
+      const message = error.response.data.message;
+      setErrorMessage(message);
+      setIsSubmitting(false);
+    }
+  };
   return (
     <div className="bg-[#fefefe] shadow-lg rounded-lg border border-gray-200 text-gray-900 px-6 py-5 flex flex-col relative">
       <h1 className="font-bold">Financial Records</h1>
@@ -93,7 +93,14 @@ const PaymentPage = () => {
       </p>
       <PaymentTable data={data} loading={loading} onAdd={setShowAddDialog} />
 
-      <AddPaymentDialog open={showAddDialog} onOpenChange={setShowAddDialog} form={form} onSubmit={onAdd} isSubmitting={isSubmitting} errorMessage={errorMessage}></AddPaymentDialog>
+      <AddPaymentDialog
+        open={showAddDialog}
+        onOpenChange={setShowAddDialog}
+        form={form}
+        onSubmit={onAdd}
+        isSubmitting={isSubmitting}
+        errorMessage={errorMessage}
+      ></AddPaymentDialog>
     </div>
   );
 };
