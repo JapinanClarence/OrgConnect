@@ -6,26 +6,27 @@ import {
 import {
   validate,
   announcementValidationRules,
+  paymentValidationRules,
 } from "../../middleware/validator.js";
 import {
-//   createAnnouncement,
-    getPayment
-//   getAttendance,
-//   updateAttendance,
+  createPayment,
+  getPayment,
+  //   getAttendance,
+  //   updateAttendance,
 } from "../../controller/admin/paymentController.js";
 
 const router = express.Router();
 
 //create organization routes
-// router.post(
-//   "/announcement",
-//   authenticate,
-//   authorizeRole("admin"),
-//   express.json(),
-//   announcementValidationRules(),
-//   validate,
-//   createAnnouncement
-// );
+router.post(
+  "/payment",
+  authenticate,
+  authorizeRole("admin"),
+  express.json(),
+  paymentValidationRules(),
+  validate,
+  createPayment
+);
 
 // router.patch(
 //   "/announcement/:id",
@@ -42,11 +43,7 @@ const router = express.Router();
 //     deleteAnnoucement
 //   );
 
-router.get("/payment", 
-    authenticate,
-    authorizeRole("admin"),
-    getPayment
-)
+router.get("/payment", authenticate, authorizeRole("admin"), getPayment);
 
 // router.get(
 //     "/announcement/:id",

@@ -79,5 +79,7 @@ export const PaymentSchema = z.object({
     message: "Purpose is required",
   }),
   details: z.string().min(1, {message: "Detail is required"}),
-  amount: z.number().min(1, {message: "Ammount is required"})
+  amount: z.preprocess((val) => Number(val), z.number().min(1, {
+    message: "Amount is required",
+  })),
 });

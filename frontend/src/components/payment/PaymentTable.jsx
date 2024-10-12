@@ -1,0 +1,221 @@
+// PaymentTable.js
+import React from "react";
+import {
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  useReactTable,
+  flexRender,
+} from "@tanstack/react-table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "@/components/ui/select";
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
+import { ChevronLeft, ChevronRight, Settings2 } from "lucide-react";
+import { columns } from "@/components/payment/columns";
+
+const PaymentTable = ({ data, loading, onAdd }) => {
+  const [sorting, setSorting] = React.useState([]);
+  const [columnFilters, setColumnFilters] = React.useState([]);
+  const [columnVisibility, setColumnVisibility] = React.useState({});
+  const [pagination, setPagination] = React.useState({
+    pageIndex: 0,
+    pageSize: 10, // Default rows per page
+  });
+
+  const table = useReactTable({
+    data,
+    columns,
+    onSortingChange: setSorting,
+    onColumnFiltersChange: setColumnFilters,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    onColumnVisibilityChange: setColumnVisibility,
+    pageCount: Math.ceil(data.length / pagination.pageSize),
+    state: {
+      pagination,
+      sorting,
+      columnFilters,
+      columnVisibility,
+    },
+  });
+
+  const handleRowsPerPageChange = (size) => {
+    setPagination((prev) => ({
+      ...prev,
+      pageSize: size,
+      pageIndex: 0, // Reset to first page when page size changes
+    }));
+  };
+
+  return (
+    <>
+      <div className="md:flex items-center justify-between py-4">
+        <Input
+          placeholder="Filter payments..."
+          value={table.getColumn("purpose")?.getFilterValue() ?? ""}
+          onChange={(event) =>
+            table.getColumn("purpose")?.setFilterValue(event.target.value)
+          }
+          className="md:max-w-sm"
+        />
+
+        <div className="flex-wrap-reverse mt-2 space-y-2 md:space-y-0 md:mt-0 md:space-x-2 md:flex md:items-center">
+          <Button className="w-full md:w-fit" onClick={onAdd}>
+            Add Payment Record
+          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="outline"
+                className="w-full md:w-fit"
+              >
+                <Settings2 className="mr-2 h-4 w-4" /> View
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              {table
+                .getAllColumns()
+                .filter((column) => column.getCanHide())
+                .map((column) => {
+                  return (
+                    <DropdownMenuCheckboxItem
+                      key={column.id}
+                      className="capitalize"
+                      checked={column.getIsVisible()}
+                      onCheckedChange={(value) =>
+                        column.toggleVisibility(!!value)
+                      }
+                    >
+                      {column.id}
+                    </DropdownMenuCheckboxItem>
+                  );
+                })}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+      </div>
+
+      <div className="rounded-md border flex-1">
+        <Table>
+          <TableHeader>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <TableRow key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                  <TableHead key={header.id}>
+                    {flexRender(
+                      header.column.columnDef.header,
+                      header.getContext()
+                    )}
+                  </TableHead>
+                ))}
+              </TableRow>
+            ))}
+          </TableHeader>
+          <TableBody className="">
+            {table.getRowModel().rows?.length ? (
+              table.getRowModel().rows.map((row) => (
+                <TableRow
+                  key={row.id}
+                  data-state={row.getIsSelected() && "selected"}
+                >
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell key={cell.id}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
+            ) : (
+              <TableRow className="hover:bg-transparent">
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center text-muted-foreground"
+                >
+                  No results.
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </div>
+      <div className="flex items-center justify-end py-4 gap-2">
+        <div className="hidden md:flex justify-end items-center gap-2 flex-1">
+          <span className="text-xs font-bold">Rows per page</span>
+          <Select
+            value={pagination.pageSize.toString()}
+            onValueChange={(value) => handleRowsPerPageChange(Number(value))}
+          >
+            <SelectTrigger className="max-w-14 h-8">
+              <SelectValue
+                className="text-xs"
+                placeholder={pagination.pageSize.toString()}
+              />
+            </SelectTrigger>
+
+            <SelectContent>
+              {[10, 15, 20, 30].map((size) => (
+                <SelectItem key={size} value={size.toString()}>
+                  {size}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+        <div className="flex items-center gap-2">
+          <div className="text-xs text-muted-foreground">
+            {`Page ${table.getRowModel().rows.length} of ${data.length}`}
+          </div>
+          <div className="space-x-1 md:space-x-2">
+            <Button
+              variant="outline"
+              className="h-7 w-7 p-0"
+              onClick={() => table.previousPage()}
+              disabled={!table.getCanPreviousPage()}
+            >
+              <ChevronLeft className="size-4" />
+            </Button>
+            <Button
+              variant="outline"
+              className="h-7 w-7 p-0"
+              onClick={() => table.nextPage()}
+              disabled={!table.getCanNextPage()}
+            >
+              <ChevronRight className="size-4" />
+            </Button>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default PaymentTable;

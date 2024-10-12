@@ -1,5 +1,4 @@
-import { Card } from '@/components/ui/card';
-import React, {useState, useEffect} from 'react'
+import React from "react";
 import {
   Dialog,
   DialogContent,
@@ -15,49 +14,27 @@ import {
   FormControl,
   FormMessage,
 } from "@/components/ui/form";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { LoaderCircle } from "lucide-react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { AnnouncementSchema } from "@/schema";
+import { LoaderCircle, PhilippinePeso } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
-const EditAnnouncementDialog = ({announcementData, open, onOpenChange, onSubmit, isSubmitting, errorMessage}) => {
-
-  const form = useForm({
-    resolver: zodResolver(AnnouncementSchema),
-    defaultValues: announcementData || {}, // Set default values at initialization
-  });
-
-  const { reset } = form;
-
-  // Use effect to reset form when announcementData changes
-  useEffect(() => {
-    if (announcementData) {
-      reset(announcementData); // This will reset the form with new event data
-    }
-  }, [announcementData, reset]);
-
-
-
+const AddPaymentDialog = ({
+  open,
+  onOpenChange,
+  onSubmit,
+  form,
+  isSubmitting,
+  errorMessage,
+}) => {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="bg-white">
+      <DialogContent>
         <DialogHeader>
-          <DialogTitle>Announcement Info</DialogTitle>
+          <DialogTitle>Add Financial Record</DialogTitle>
           <DialogDescription>
-            Click the edit button to edit the announcement info.
+            Please fill in all required fields to add financial records.
           </DialogDescription>
         </DialogHeader>
         <div className="">
@@ -72,14 +49,14 @@ const EditAnnouncementDialog = ({announcementData, open, onOpenChange, onSubmit,
                 </Alert>
               )}
               <div className="space-y-2">
-                {/* Title Field */}
+                {/* Purpose Field */}
                 <FormField
                   control={form.control}
-                  name="title"
+                  name="purpose"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="text-gray-600 text-sm">
-                        Title
+                        Purpose
                       </FormLabel>
                       <FormControl>
                         <Input {...field} type="text" />
@@ -89,20 +66,17 @@ const EditAnnouncementDialog = ({announcementData, open, onOpenChange, onSubmit,
                   )}
                 />
 
-                {/* Description Field */}
+                {/* Details Field */}
                 <FormField
                   control={form.control}
-                  name="description"
+                  name="details"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="text-gray-600 text-sm">
-                        Description{" "}
-                        <span className="text-[10px] text-slate-500">
-                          (optional)
-                        </span>
+                        Details{" "}
                       </FormLabel>
                       <FormControl>
-                        <div className="relative w-full h-full">
+                        <div className="relative w-full ">
                           <Textarea className="resize-y" {...field} />
                         </div>
                       </FormControl>
@@ -111,36 +85,24 @@ const EditAnnouncementDialog = ({announcementData, open, onOpenChange, onSubmit,
                   )}
                 />
 
-                {/* category Field */}
+                {/* amount Field */}
                 <FormField
                   control={form.control}
-                  name="category"
+                  name="amount"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="text-gray-600 text-sm">
-                        Category
+                        Amount{" "}
                       </FormLabel>
-                      <Select
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
-                      >
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Choose category" />
-                          </SelectTrigger>
-                        </FormControl>
-
-                        <SelectContent className="bg-white border-zinc-300">
-                          <SelectGroup>
-                            <SelectLabel>Categories</SelectLabel>
-                            <SelectItem value="0">General Info</SelectItem>
-                            <SelectItem value="1">Meetings</SelectItem>
-                            <SelectItem value="2">Reminders</SelectItem>
-                            <SelectItem value="3">News</SelectItem>
-                            <SelectItem value="4">Alerts</SelectItem>
-                          </SelectGroup>
-                        </SelectContent>
-                      </Select>
+                      <FormControl>
+                        <div className="relative w-full ">
+                          <div className="absolute left-0 top-0 p-[10px]  ">
+                            <PhilippinePeso className="h-4 w-4 text-muted-foreground" />
+                          </div>
+                          <Input {...field} type="number" min="0.00" placeholder="0.00" className="pl-8"/>
+                        </div>
+                      </FormControl>
+                      <FormMessage className="text-xs" />
                     </FormItem>
                   )}
                 />
@@ -149,13 +111,13 @@ const EditAnnouncementDialog = ({announcementData, open, onOpenChange, onSubmit,
               <div className="flex justify-between mt-4">
                 <Button
                   type="submit"
-                  className="w-[100px]"
+                  className="w-[140px]"
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? (
                     <LoaderCircle className="animate-spin" />
                   ) : (
-                    "Submit"
+                    "Add Record"
                   )}
                 </Button>
                 <Button
@@ -173,6 +135,6 @@ const EditAnnouncementDialog = ({announcementData, open, onOpenChange, onSubmit,
       </DialogContent>
     </Dialog>
   );
-}
+};
 
-export default EditAnnouncementDialog
+export default AddPaymentDialog;

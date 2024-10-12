@@ -3,7 +3,7 @@ import { OrgAdminModel as Admin } from "../../model/UserModel.js";
 import Payments from "../../model/paymentModel.js";
 
 export const createPayment = async (req, res, next) => {
-  const { purpose, ammount, details } = req.body;
+  const { purpose, amount, details } = req.body;
   const userId = req.user.userId;
 
   try {
@@ -28,8 +28,9 @@ export const createPayment = async (req, res, next) => {
 
     await Payments.create({
       purpose,
-      ammount,
+      amount,
       details,
+      organization: organization._id
     });
 
     res.status(201).json({
