@@ -51,6 +51,7 @@ const PaymentTable = ({ data, loading, onAdd }) => {
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
+    onPaginationChange: setPagination,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -91,10 +92,7 @@ const PaymentTable = ({ data, loading, onAdd }) => {
           </Button>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button
-                variant="outline"
-                className="w-full md:w-fit"
-              >
+              <Button variant="outline" className="w-full md:w-fit">
                 <Settings2 className="mr-2 h-4 w-4" /> View
               </Button>
             </DropdownMenuTrigger>
@@ -174,7 +172,7 @@ const PaymentTable = ({ data, loading, onAdd }) => {
             value={pagination.pageSize.toString()}
             onValueChange={(value) => handleRowsPerPageChange(Number(value))}
           >
-            <SelectTrigger className="max-w-14 h-8">
+            <SelectTrigger className="max-w-[60px] h-8">
               <SelectValue
                 className="text-xs"
                 placeholder={pagination.pageSize.toString()}
@@ -192,7 +190,9 @@ const PaymentTable = ({ data, loading, onAdd }) => {
         </div>
         <div className="flex items-center gap-2">
           <div className="text-xs text-muted-foreground">
-            {`Page ${table.getRowModel().rows.length} of ${data.length}`}
+            {`Page ${
+              table.getState().pagination.pageIndex + 1
+            } of ${table.getPageCount()}`}
           </div>
           <div className="space-x-1 md:space-x-2">
             <Button

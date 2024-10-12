@@ -38,7 +38,7 @@ const PaymentPage = () => {
           Authorization: user.token,
         },
       });
-
+      console.log(data)
       if (!data.success) {
         setData([]);
       } else {
