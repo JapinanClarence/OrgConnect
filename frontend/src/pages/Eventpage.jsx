@@ -187,9 +187,9 @@ const Eventpage = () => {
 
   return (
     <>
-      <div className="bg-white shadow-lg rounded-lg border border-gray-200 text-gray-900 p-5 flex gap-2 flex-col sm:flex-row">
-        <div className="p-2 rounded flex-shrink-0 bg-gray-900 bg-opacity-10 md:w-[100px]"></div>
-        <div className="flex-grow" style={{ height: `calc(100vh - 150px)` }}>
+      <div className="bg-white md:shadow-lg md:rounded-lg border border-gray-200 text-gray-900 p-5 md:flex gap-2">
+        <div className="rounded bg-gray-900 bg-opacity-10 md:w-[100px]"></div>
+        <div className="md:w-full" >
           <EventCalendar
             onDateClick={handleDateClick}
             currentEvents={currentEvents}

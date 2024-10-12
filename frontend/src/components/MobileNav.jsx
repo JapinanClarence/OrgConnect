@@ -68,7 +68,7 @@ const MobileNav = () => {
           </button>
 
           <button
-            onClick={() => handleNavigation("#")}
+            onClick={() => handleNavigation("/payments")}
             className="rounded-lg hover:bg-gray-800 p-2 w-full text-left"
           >
             Payments

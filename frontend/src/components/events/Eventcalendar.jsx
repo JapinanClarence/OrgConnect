@@ -4,7 +4,7 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import listPlugin from "@fullcalendar/list";
 import interactionPlugin from "@fullcalendar/interaction";
 import { useRef, useEffect } from "react";
-import "@/assets/FullCalendar.css"
+import "@/assets/FullCalendar.css";
 
 const EventCalendar = ({ onDateClick, currentEvents, onEventClick }) => {
   const calendarRef = useRef(null);
@@ -12,6 +12,7 @@ const EventCalendar = ({ onDateClick, currentEvents, onEventClick }) => {
     const handleResize = () => {
       const calendarApi = calendarRef.current.getApi(); // Get the FullCalendar API
       const width = window.innerWidth;
+      let calendarHeight = "auto";
 
       // Adjust header toolbar based on screen size
       if (width < 768) {
@@ -20,8 +21,8 @@ const EventCalendar = ({ onDateClick, currentEvents, onEventClick }) => {
           center: "title",
           end: "dayGridMonth,listMonth",
         });
-
-        // calendarApi.setOption("initialView", 
+        calendarHeight = "88vh";
+        // calendarApi.setOption("initialView",
         //   "dayGridMonth"
         // )
       } else if (width < 1024) {
@@ -30,13 +31,16 @@ const EventCalendar = ({ onDateClick, currentEvents, onEventClick }) => {
           center: "title",
           end: "dayGridMonth,timeGridWeek,timeGridDay",
         });
+        calendarHeight = "80vh";
       } else {
         calendarApi.setOption("headerToolbar", {
           start: "prev,next today",
           center: "title",
           end: "dayGridMonth,timeGridWeek,timeGridDay,listMonth",
         });
+        calendarHeight = "80vh";
       }
+      calendarApi.setOption("height", calendarHeight);
     };
 
     // Add event listener for window resizing
