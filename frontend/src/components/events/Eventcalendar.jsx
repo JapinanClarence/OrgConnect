@@ -20,6 +20,10 @@ const EventCalendar = ({ onDateClick, currentEvents, onEventClick }) => {
           center: "title",
           end: "dayGridMonth,listMonth",
         });
+
+        // calendarApi.setOption("initialView", 
+        //   "dayGridMonth"
+        // )
       } else if (width < 1024) {
         calendarApi.setOption("headerToolbar", {
           start: "prev,next",

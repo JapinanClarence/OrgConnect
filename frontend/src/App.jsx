@@ -9,6 +9,7 @@ import Signuppage from "@/pages/Signuppage";
 import ProtectedRoute from "@/components/auth/ProtectedRoutes";
 import Eventpage from "@/pages/Eventpage";
 import AnnouncementPage from "@/pages/AnnouncementPage";
+import PaymentPage from "@/pages/PaymentPage";
 
 // for testing only
 import { Test } from "@/pages/Test";
@@ -27,6 +28,7 @@ const App = () => {
             <Route index element={<Homepage />} />
             <Route path="/events" element={<Eventpage />} />
             <Route path="/announcements" element={<AnnouncementPage />} />
+            <Route path="/payments" element={<PaymentPage />} />
           </Route>
         </Route>
       </Routes>

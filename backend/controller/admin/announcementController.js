@@ -133,7 +133,7 @@ export const updateAnnouncement = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      message: "Event updated successfully!",
+      message: "Announcement updated successfully!",
     });
   } catch (err) {
     return res.status(500).json({
@@ -158,7 +158,7 @@ export const deleteAnnoucement = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      message: "Event deleted successfully",
+      message: "Announcement deleted successfully",
     });
   } catch (err) {
     return res.status(500).json({

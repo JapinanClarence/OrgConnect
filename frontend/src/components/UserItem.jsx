@@ -12,16 +12,10 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/AuthContext";
 
 const UserItem = () => {
-  const { logout, userData } = useAuth();
-  const handleLogout = () => {
-    logout();
-  };
-
-  // const fullname = userData.middlename
-  //   ? `${userData.firstname} ${userData.middlename.charAt(0)}. ${
-  //       userData.lastname
-  //     }`
-  //   : `${userData.firstname} ${userData.lastname}`;
+    const { logout, userData } = useAuth();
+    const handleLogout = () => {
+      logout();
+    };
   return (
     <div className="grid grid-flow-col items-center border-5 p-2 border-t-2">
       <Avatar className="col-span-2">

@@ -70,7 +70,7 @@ const AnnouncementCard = ({
   return (
     <>
       <Card className="shadow-sm border-zinc-300" onClick={handleClick}>
-        <CardContent className="p-4 md:p-5 relative">
+        <CardContent className="p-3 md:p-5 relative">
           <div className="absolute top-1 right-1 p-0 m-0 z-20">
             <Button
               className="h-[20px] w-[20px] p-0 rounded-full m-0 hover:bg-zinc-100"

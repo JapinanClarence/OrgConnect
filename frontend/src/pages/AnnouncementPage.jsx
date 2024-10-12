@@ -8,6 +8,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Card,
+  CardTitle,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+} from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { LoaderCircle, Plus } from "lucide-react";
 import AnnouncementCard from "@/components/announcement/AnnouncementCard";
@@ -198,7 +207,7 @@ const AnnouncementPage = () => {
   };
   return (
     <>
-      <div className="bg-[#fefefe] h-[86vh] shadow-lg rounded-lg border border-gray-200 text-gray-900 px-8 pb-8 flex flex-col gap-5 md:gap-8 relative">
+      <div className="bg-[#fefefe] h-[86vh] shadow-lg rounded-lg border border-gray-200 text-gray-900 px-6 md:px-5 pb-5 flex flex-col gap-5 md:gap-8 relative">
         <div className="sticky top-0 left-0 right-0 flex flex-row justify-between w-full bg-inherit z-10 pt-8">
           <Select
             value={selectedCategory} // Set the selected value for controlled component
@@ -220,10 +229,7 @@ const AnnouncementPage = () => {
             </SelectContent>
           </Select>
           <div className="flex items-start">
-            <Button
-              className=" w-[70px] md:w-full"
-              onClick={setShowAddDialog}
-            >
+            <Button className=" w-[70px] md:w-full" onClick={setShowAddDialog}>
               <span className="hidden md:inline">Create announcement</span>
               <Plus className="h-4 w-4 ml-0 md:ml-2" />
             </Button>
@@ -231,13 +237,71 @@ const AnnouncementPage = () => {
         </div>
 
         {loading ? (
-          <div className="flex flex-col items-center justify-center h-full">
-            <div className="text-zinc-400 flex items-center gap-2">
-              <LoaderCircle className="animate-spin" /> Loading...
+          // <div className="flex flex-col items-center justify-center h-full">
+          //   <div className="text-zinc-400 flex items-center gap-2">
+          //     <LoaderCircle className="animate-spin" /> Loading...
+          //   </div>
+          // </div>
+          <div className="flex flex-col gap-2 overflow-y-auto">
+            <div className="shadow-sm bg-white border-[1px] rounded-lg border-zinc-300 p-5 flex flex-col gap-2">
+              <div>
+                <Skeleton className={"w-[190px] h-3"}></Skeleton>
+              </div>
+              <div>
+                <Skeleton className={"w-[300px] h-3"}></Skeleton>
+              </div>
+              <div>
+                <Skeleton className={"w-[500px] h-3"}></Skeleton>
+              </div>
+              <div>
+                <Skeleton className={"w-[250px] h-3"}></Skeleton>
+              </div>
+            </div>
+            <div className="shadow-sm bg-white border-[1px] rounded-lg border-zinc-300 p-5 flex flex-col gap-2">
+              <div>
+                <Skeleton className={"w-[190px] h-3"}></Skeleton>
+              </div>
+              <div>
+                <Skeleton className={"w-[300px] h-3"}></Skeleton>
+              </div>
+              <div>
+                <Skeleton className={"w-[500px] h-3"}></Skeleton>
+              </div>
+              <div>
+                <Skeleton className={"w-[250px] h-3"}></Skeleton>
+              </div>
+            </div>
+            <div className="shadow-sm bg-white border-[1px] rounded-lg border-zinc-300 p-5 flex flex-col gap-2">
+              <div>
+                <Skeleton className={"w-[190px] h-3"}></Skeleton>
+              </div>
+              <div>
+                <Skeleton className={"w-[300px] h-3"}></Skeleton>
+              </div>
+              <div>
+                <Skeleton className={"w-[500px] h-3"}></Skeleton>
+              </div>
+              <div>
+                <Skeleton className={"w-[250px] h-3"}></Skeleton>
+              </div>
+            </div>
+            <div className="shadow-sm bg-white border-[1px] rounded-lg border-zinc-300 p-5 flex flex-col gap-2">
+              <div>
+                <Skeleton className={"w-[190px] h-3"}></Skeleton>
+              </div>
+              <div>
+                <Skeleton className={"w-[300px] h-3"}></Skeleton>
+              </div>
+              <div>
+                <Skeleton className={"w-[500px] h-3"}></Skeleton>
+              </div>
+              <div>
+                <Skeleton className={"w-[250px] h-3"}></Skeleton>
+              </div>
             </div>
           </div>
         ) : filteredAnnouncements.length > 0 ? (
-          <div className="flex flex-col gap-2 overflow-y-auto pr-2">
+          <div className="flex flex-col gap-2 overflow-y-auto ">
             {filteredAnnouncements
               .slice(0, visibleCount)
               .map((announcement) => (

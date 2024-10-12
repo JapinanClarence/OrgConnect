@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from "react";
-import apiClient from "@/api/axios";
-import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ChevronFirst, ChevronLast } from "lucide-react";
-import { Skeleton } from "@/components/ui/skeleton";
 import {
   Dialog,
   DialogContent,

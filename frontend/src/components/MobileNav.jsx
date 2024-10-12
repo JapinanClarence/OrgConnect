@@ -1,6 +1,11 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+  SheetTitle,
+} from "@/components/ui/sheet";
 import { MenuIcon } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -49,13 +54,6 @@ const MobileNav = () => {
           </button>
 
           <button
-            onClick={() => handleNavigation("#")}
-            className="rounded-lg hover:bg-gray-800 p-2 w-full text-left"
-          >
-            Analytics
-          </button>
-
-          <button
             onClick={() => handleNavigation("/events")}
             className="rounded-lg hover:bg-gray-800 p-2 w-full text-left"
           >
@@ -88,6 +86,12 @@ const MobileNav = () => {
             className="rounded-lg hover:bg-gray-800 p-2 w-full text-left"
           >
             Members
+          </button>
+          <button
+            onClick={() => handleNavigation("#")}
+            className="rounded-lg hover:bg-gray-800 p-2 w-full text-left"
+          >
+            Analytics
           </button>
         </div>
       </SheetContent>
