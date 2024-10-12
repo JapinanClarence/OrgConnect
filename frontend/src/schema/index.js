@@ -66,8 +66,18 @@ export const EventSchema = z.object({
 export const AnnouncementSchema = z.object({
   id: z.string().optional(),
   title: z.string().min(1, {
-    message: "Event title is required",
+    message: "Announcement title is required",
   }),
   description: z.string().optional(),
   category: z.enum(["0", "1", "2", "3", "4"]),
+});
+
+
+export const PaymentSchema = z.object({
+  id: z.string().optional(),
+  purpose: z.string().min(1, {
+    message: "Purpose is required",
+  }),
+  details: z.string().min(1, {message: "Detail is required"}),
+  amount: z.number().min(1, {message: "Ammount is required"})
 });

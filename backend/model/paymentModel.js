@@ -17,7 +17,7 @@ const paymentSchema = new mongoose.Schema({
         type: mongoose.Schema.ObjectId,
         required: true
     }
-}, {timestamps});
+}, {timestamps:true});   
 
 const Payments = mongoose.model("Payments", paymentSchema);
 

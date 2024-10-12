@@ -100,4 +100,7 @@
   ::-webkit-scrollbar-thumb:hover {
     background: #555;
   }
+  ::-webkit-scrollbar:horizontal {
+    height: 5px; /* Smaller height for horizontal scrollbar */
+  }
 }
