@@ -34,11 +34,17 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
-import { ChevronLeft, ChevronRight, Settings2 } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  LoaderCircle,
+  Settings2,
+} from "lucide-react";
 import { columns } from "@/components/payment/columns";
 
+import TableSkeleton from "@/components/payment/TableSkeleton";
+
 const PaymentTable = ({ data, loading, onAdd, onEdit, onDelete }) => {
-  
   const [sorting, setSorting] = React.useState([]);
   const [columnFilters, setColumnFilters] = React.useState([]);
   const [columnVisibility, setColumnVisibility] = React.useState({});
@@ -137,7 +143,9 @@ const PaymentTable = ({ data, loading, onAdd, onEdit, onDelete }) => {
             ))}
           </TableHeader>
           <TableBody className="">
-            {table.getRowModel().rows?.length ? (
+            {loading ? (
+              <TableSkeleton/>
+            ) : table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
@@ -155,13 +163,19 @@ const PaymentTable = ({ data, loading, onAdd, onEdit, onDelete }) => {
               ))
             ) : (
               <TableRow className="hover:bg-transparent">
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center text-muted-foreground"
-                >
-                  No results.
-                </TableCell>
-              </TableRow>
+              <TableCell
+                colSpan={table.getVisibleLeafColumns().length || 5}
+                className="h-32 text-center text-muted-foreground"
+              >
+                <div className="flex flex-col items-center justify-center">
+                  
+                  <p className="text-sm text-gray-600">No results found</p>
+                  <p className="text-xs text-gray-400">
+                    Try adjusting your filters or adding new data.
+                  </p>
+                </div>
+              </TableCell>
+            </TableRow>
             )}
           </TableBody>
         </Table>
