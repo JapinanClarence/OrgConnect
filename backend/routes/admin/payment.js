@@ -11,6 +11,7 @@ import {
 import {
   createPayment,
   getPayment,
+  updatePayment,
   //   getAttendance,
   //   updateAttendance,
 } from "../../controller/admin/paymentController.js";
@@ -28,13 +29,13 @@ router.post(
   createPayment
 );
 
-// router.patch(
-//   "/announcement/:id",
-//   authenticate,
-//   authorizeRole("admin"),
-//   express.json(),
-//   updateAnnouncement
-// );
+router.patch(
+  "/payment/:id",
+  authenticate,
+  authorizeRole("admin"),
+  express.json(),
+  updatePayment
+);
 
 // router.delete(
 //     "/announcement/:id",

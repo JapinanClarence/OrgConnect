@@ -74,7 +74,6 @@ export const AnnouncementSchema = z.object({
 
 
 export const PaymentSchema = z.object({
-  id: z.string().optional(),
   purpose: z.string().min(1, {
     message: "Purpose is required",
   }),

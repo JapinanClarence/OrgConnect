@@ -7,13 +7,16 @@ import PaymentTable from "@/components/payment/paymenttable";
 import AddPaymentDialog from "@/components/payment/AddPaymentDialog";
 import { useToast } from "@/hooks/use-toast";
 import { formatDate } from "@/util/helpers";
+import EditPaymentDialog from "@/components/payment/EditPaymentDialog";
 
 const PaymentPage = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showAddDialog, setShowAddDialog] = useState(false);
+  const [showEditDialog, setShowEditDialog] = useState(false);
   const [errorMessage, setErrorMessage] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [currenPayment, setCurrentPayment] = useState("");
   const { toast } = useToast();
   const date = formatDate(Date.now());
 
@@ -38,7 +41,7 @@ const PaymentPage = () => {
           Authorization: user.token,
         },
       });
-      console.log(data)
+
       if (!data.success) {
         setData([]);
       } else {
@@ -85,13 +88,46 @@ const PaymentPage = () => {
       setIsSubmitting(false);
     }
   };
+
+  const handleEditDialog = (data) =>{
+    setShowEditDialog(true);
+    setCurrentPayment(data);
+  }
+  const onEdit = async (data) =>{
+    const user = JSON.parse(localStorage.getItem("userData"));
+
+    try {
+      setIsSubmitting(true);
+      const res = await apiClient.patch(`/admin/payment/${currenPayment.id}`, data, {
+        headers: {
+          Authorization: user.token,
+        },
+      });
+
+      if (res) {
+        await fetchPayments();
+        setIsSubmitting(false);
+        setShowEditDialog(false);
+        form.reset();
+
+        toast({
+          title: `${currenPayment.purpose} has been updated`,
+          description: `${date}`,
+        });
+      }
+    } catch (error) {
+      const message = error.response.data.message;
+      setErrorMessage(message);
+      setIsSubmitting(false);
+    }
+  }
   return (
     <div className="bg-[#fefefe] shadow-lg rounded-lg border border-gray-200 text-gray-900 px-6 py-5 flex flex-col relative">
       <h1 className="font-bold">Financial Records</h1>
       <p className="text-sm text-muted-foreground">
         Here are the recent financial records of your organization
       </p>
-      <PaymentTable data={data} loading={loading} onAdd={setShowAddDialog} />
+      <PaymentTable data={data} loading={loading} onAdd={setShowAddDialog} onEdit={handleEditDialog} />
 
       <AddPaymentDialog
         open={showAddDialog}
@@ -100,7 +136,16 @@ const PaymentPage = () => {
         onSubmit={onAdd}
         isSubmitting={isSubmitting}
         errorMessage={errorMessage}
-      ></AddPaymentDialog>
+      />
+
+      <EditPaymentDialog
+        paymentData={currenPayment}
+        open={showEditDialog}
+        onOpenChange={setShowEditDialog}
+        onSubmit={onEdit}
+        isSubmitting={isSubmitting}
+        errorMessage={errorMessage}
+      />
     </div>
   );
 };

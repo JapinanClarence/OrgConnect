@@ -2,10 +2,17 @@
 import React from "react";
 import { CaretSortIcon, DotsHorizontalIcon } from "@radix-ui/react-icons";
 import { Button } from "@/components/ui/button";
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+} from "@/components/ui/dropdown-menu";
 
 // Define the columns for the table
-export const columns = [
+export const columns = (handleEdit) => [
   {
     accessorKey: "purpose",
     header: "Purpose",
@@ -74,11 +81,15 @@ export const columns = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem onClick={() => navigator.clipboard.writeText(payment.id)}>
+            <DropdownMenuItem
+              onClick={() => navigator.clipboard.writeText(payment.id)}
+            >
               Copy payment ID
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Edit Payment</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => handleEdit(payment)}>
+              Edit Payment
+            </DropdownMenuItem>
             <DropdownMenuItem>Delete Payment</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -86,3 +97,4 @@ export const columns = [
     },
   },
 ];
+

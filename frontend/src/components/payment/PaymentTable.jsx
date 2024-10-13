@@ -37,7 +37,8 @@ import { Input } from "@/components/ui/input";
 import { ChevronLeft, ChevronRight, Settings2 } from "lucide-react";
 import { columns } from "@/components/payment/columns";
 
-const PaymentTable = ({ data, loading, onAdd }) => {
+const PaymentTable = ({ data, loading, onAdd, onEdit }) => {
+  
   const [sorting, setSorting] = React.useState([]);
   const [columnFilters, setColumnFilters] = React.useState([]);
   const [columnVisibility, setColumnVisibility] = React.useState({});
@@ -48,7 +49,7 @@ const PaymentTable = ({ data, loading, onAdd }) => {
 
   const table = useReactTable({
     data,
-    columns,
+    columns: columns(onEdit),
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     onPaginationChange: setPagination,
