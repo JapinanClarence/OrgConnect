@@ -10,6 +10,7 @@ import {
 } from "../../middleware/validator.js";
 import {
   createPayment,
+  deletePayment,
   getPayment,
   updatePayment,
   //   getAttendance,
@@ -37,12 +38,12 @@ router.patch(
   updatePayment
 );
 
-// router.delete(
-//     "/announcement/:id",
-//     authenticate,
-//     authorizeRole("admin"),
-//     deleteAnnoucement
-//   );
+router.delete(
+    "/payment/:id",
+    authenticate,
+    authorizeRole("admin"),
+    deletePayment
+  );
 
 router.get("/payment", authenticate, authorizeRole("admin"), getPayment);
 

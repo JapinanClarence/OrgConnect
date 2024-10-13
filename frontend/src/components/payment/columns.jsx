@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 // Define the columns for the table
-export const columns = (handleEdit) => [
+export const columns = (handleEdit, handleDelete) => [
   {
     accessorKey: "purpose",
     header: "Purpose",
@@ -90,7 +90,7 @@ export const columns = (handleEdit) => [
             <DropdownMenuItem onClick={() => handleEdit(payment)}>
               Edit Payment
             </DropdownMenuItem>
-            <DropdownMenuItem>Delete Payment</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => handleDelete(payment.id)}>Delete Payment</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );

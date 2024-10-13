@@ -8,6 +8,17 @@ import AddPaymentDialog from "@/components/payment/AddPaymentDialog";
 import { useToast } from "@/hooks/use-toast";
 import { formatDate } from "@/util/helpers";
 import EditPaymentDialog from "@/components/payment/EditPaymentDialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 const PaymentPage = () => {
   const [data, setData] = useState([]);
@@ -16,6 +27,7 @@ const PaymentPage = () => {
   const [showEditDialog, setShowEditDialog] = useState(false);
   const [errorMessage, setErrorMessage] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
   const [currenPayment, setCurrentPayment] = useState("");
   const { toast } = useToast();
   const date = formatDate(Date.now());
@@ -93,6 +105,48 @@ const PaymentPage = () => {
     setShowEditDialog(true);
     setCurrentPayment(data);
   }
+
+  const handleDeleteDialog = (data) =>{
+    setShowAlert(true);
+    setCurrentPayment(data);
+  }
+
+  const confirmDelete = () => {
+    onDelete(currenPayment); // Call the delete function
+    setShowAlert(false); // Close the alert dialog after deleting
+  };
+
+  const cancelDelete = () => {
+    setShowAlert(false); // Close the alert dialog without deleting
+  };
+
+  const onDelete = async (paymentId) =>{
+
+    const user = JSON.parse(localStorage.getItem("userData"));
+    try {
+      const res = await apiClient.delete(`/admin/payment/${paymentId}`, {
+        headers: {
+          Authorization: user.token,
+        },
+      });
+
+      if (res) {
+        await fetchPayments();
+
+        toast({
+          title: "Payment record deleted",
+          description: `${date}`,
+        });
+      }
+    } catch (error) {
+      const message = error.response.data.message;
+      toast({
+        title: { message },
+        description: `${date}`,
+      });
+    }
+  }
+
   const onEdit = async (data) =>{
     const user = JSON.parse(localStorage.getItem("userData"));
 
@@ -127,7 +181,7 @@ const PaymentPage = () => {
       <p className="text-sm text-muted-foreground">
         Here are the recent financial records of your organization
       </p>
-      <PaymentTable data={data} loading={loading} onAdd={setShowAddDialog} onEdit={handleEditDialog} />
+      <PaymentTable data={data} loading={loading} onAdd={setShowAddDialog} onEdit={handleEditDialog} onDelete={handleDeleteDialog}/>
 
       <AddPaymentDialog
         open={showAddDialog}
@@ -146,6 +200,25 @@ const PaymentPage = () => {
         isSubmitting={isSubmitting}
         errorMessage={errorMessage}
       />
+       <AlertDialog open={showAlert} onOpenChange={setShowAlert}>
+        <AlertDialogContent className="bg-white">
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This action cannot be undone. This will permanently delete the
+              payment record.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={cancelDelete}>
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction onClick={confirmDelete}>
+              Continue
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };

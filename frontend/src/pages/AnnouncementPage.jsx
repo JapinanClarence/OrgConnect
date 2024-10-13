@@ -179,9 +179,6 @@ const AnnouncementPage = () => {
 
       if (res) {
         await fetchAnnouncements();
-        setIsSubmitting(false);
-        setShowAddDialog(false);
-        form.reset();
 
         toast({
           title: "Announcement deleted",
