@@ -23,12 +23,13 @@ export const attendeesColumns = [
 
       return (
         <div className="flex justify-center">
-            <Avatar className="">
-          <AvatarImage src={profilePicture} alt="User Profile" />
-          <AvatarFallback className="bg-gray-200 text-gray-400 font-bold">{fullname?.[0].toUpperCase()}</AvatarFallback>
-        </Avatar>
+          <Avatar className="size-9">
+            <AvatarImage src={profilePicture} alt="User Profile" />
+            <AvatarFallback className="bg-gray-200 text-gray-400 font-bold">
+              {fullname?.[0].toUpperCase()}
+            </AvatarFallback>
+          </Avatar>
         </div>
-        
       );
     },
   },
@@ -46,7 +47,9 @@ export const attendeesColumns = [
         </Button>
       );
     },
-    cell: ({ row }) => <div className="">{row.getValue("studentId")}</div>,
+    cell: ({ row }) => (
+      <div className="text-xs">{row.getValue("studentId")}</div>
+    ),
   },
   {
     accessorKey: "fullname",
@@ -62,26 +65,30 @@ export const attendeesColumns = [
         </Button>
       );
     },
-    cell: ({ row }) => <div className="">{row.getValue("fullname")}</div>,
+    cell: ({ row }) => (
+      <div className="text-xs">{row.getValue("fullname")}</div>
+    ),
   },
   {
     accessorKey: "email",
     header: "Email",
-    cell: ({ row }) => <div className="">{row.getValue("email")}</div>,
+    cell: ({ row }) => <div className="text-xs">{row.getValue("email")}</div>,
   },
   {
     accessorKey: "course",
     header: "Course",
-    cell: ({ row }) => <div className="">{row.getValue("course")}</div>,
+    cell: ({ row }) => <div className="text-xs">{row.getValue("course")}</div>,
   },
   {
     accessorKey: "checkIn",
     header: "Check In",
-    cell: ({ row }) => <div className="">{row.getValue("checkIn")}</div>,
+    cell: ({ row }) => <div className="text-xs">{row.getValue("checkIn")}</div>,
   },
   {
     accessorKey: "checkOut",
     header: "Check Out",
-    cell: ({ row }) => <div className="">{row.getValue("checkOut")}</div>,
+    cell: ({ row }) => (
+      <div className="text-xs">{row.getValue("checkOut")}</div>
+    ),
   },
 ];
