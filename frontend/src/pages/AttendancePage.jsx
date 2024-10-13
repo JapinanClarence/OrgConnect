@@ -10,10 +10,10 @@ const AttendancePage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchPayments();
+    fetchEvents();
   }, []);
 
-  const fetchPayments = async () => {
+  const fetchEvents = async () => {
     const user = JSON.parse(localStorage.getItem("userData"));
     try {
       const { data } = await apiClient.get("/admin/event", {
@@ -52,9 +52,9 @@ const AttendancePage = () => {
 
   return (
     <div className="bg-[#fefefe] shadow-lg rounded-lg border border-gray-200 text-gray-900 px-6 py-5 flex flex-col relative">
-      <h1 className="font-bold">Event Attendance Table</h1>
+      <h1 className="font-bold">Event Attendance Overview</h1>
       <p className="text-sm text-muted-foreground">
-        Manage your event attendance here
+        Monitor and manage event attendance.
       </p>
       <AttendanceTable data={data} onClick={handleClickEventRow}/>
     </div>

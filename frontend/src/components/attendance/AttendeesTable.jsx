@@ -1,4 +1,3 @@
-// PaymentTable.js
 import React from "react";
 import {
   getCoreRowModel,
@@ -32,12 +31,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { ChevronLeft, ChevronRight, Settings2 } from "lucide-react";
-import { attendanceColumns } from "@/components/attendance/AttendanceColumns";
+import { attendeesColumns } from "@/components/attendance/AttendeesColumns";
 
-// import TableSkeleton from "@/components/payment/TableSkeleton";
 
-const AttendanceTable = ({ data, loading, onClick }) => {
-  const [sorting, setSorting] = React.useState([]);
+const AttendeesTable = ({ data, loading, onClick }) => {
+    const [sorting, setSorting] = React.useState([]);
   const [columnFilters, setColumnFilters] = React.useState([]);
   const [columnVisibility, setColumnVisibility] = React.useState({});
   const [pagination, setPagination] = React.useState({
@@ -47,7 +45,7 @@ const AttendanceTable = ({ data, loading, onClick }) => {
 
   const table = useReactTable({
     data,
-    columns: attendanceColumns,
+    columns: attendeesColumns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     onPaginationChange: setPagination,
@@ -72,18 +70,14 @@ const AttendanceTable = ({ data, loading, onClick }) => {
       pageIndex: 0, // Reset to first page when page size changes
     }));
   };
-  const handleRowClick = (rowData) => {
-    onClick(rowData)
-    // You can navigate to another page or open a modal with the row data
-  };
   return (
     <>
       <div className="md:flex items-center justify-between py-4">
         <Input
-          placeholder="Filter event..."
-          value={table.getColumn("title")?.getFilterValue() ?? ""}
+          placeholder="Filter attendees..."
+          value={table.getColumn("fullname")?.getFilterValue() ?? ""}
           onChange={(event) =>
-            table.getColumn("title")?.setFilterValue(event.target.value)
+            table.getColumn("fullname")?.setFilterValue(event.target.value)
           }
           className="md:max-w-sm"
         />
@@ -191,7 +185,7 @@ const AttendanceTable = ({ data, loading, onClick }) => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default AttendanceTable;
+export default AttendeesTable

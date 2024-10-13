@@ -13,7 +13,7 @@ import {
 import { Ban, CheckCircle, LockKeyhole, LockKeyholeOpen } from "lucide-react";
 
 // Define the columns for the table
-export const columns = [
+export const attendanceColumns = [
   {
     accessorKey: "title",
     header: ({ column }) => {

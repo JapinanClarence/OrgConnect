@@ -101,7 +101,8 @@ export const getAttendance = async (req, res, next) => {
         );
         const fullname = `${data.firstname} ${data.middlename ? data.middlename[0] + '. ' : ''}${data.lastname}`;
         return {
-          student: data.studentId,
+          _id: attendance._id,
+          studentId: data.studentId,
           fullname,
           email: data.email,
           course: data.course,
@@ -111,8 +112,6 @@ export const getAttendance = async (req, res, next) => {
         }
       })
     );
-
-    
 
     // console.log(req.params.id);
     res.status(200).json({
