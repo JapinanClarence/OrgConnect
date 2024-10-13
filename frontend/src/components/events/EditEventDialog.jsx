@@ -35,6 +35,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const EditEventDialog = ({
   open,
@@ -229,6 +230,9 @@ const EditEventDialog = ({
                       </FormItem>
                     )}
                   />
+                </div>
+                <div>
+                    <Link to={`/events/attendance/?eventId=${eventData.id}`}>View More Details</Link>
                 </div>
 
                 <div className="flex justify-between mt-4">
