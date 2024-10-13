@@ -230,10 +230,11 @@ const EditEventDialog = ({
                       </FormItem>
                     )}
                   />
+                  <div className="m-0">
+                    <Link className="text-sm font-bold hover:underline" to={`/events/attendance/?eventId=${eventData.id}`}>Manage Attendees for This Event</Link>
                 </div>
-                <div>
-                    <Link to={`/events/attendance/?eventId=${eventData.id}`}>View More Details</Link>
                 </div>
+                
 
                 <div className="flex justify-between mt-4">
                   <div className="grid grid-flow-col gap-2">
