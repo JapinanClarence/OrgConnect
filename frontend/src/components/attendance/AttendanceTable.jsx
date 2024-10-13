@@ -36,7 +36,7 @@ import { columns } from "@/components/attendance/columns";
 
 // import TableSkeleton from "@/components/payment/TableSkeleton";
 
-const AttendanceTable = ({ data, loading }) => {
+const AttendanceTable = ({ data, loading, onClick }) => {
   const [sorting, setSorting] = React.useState([]);
   const [columnFilters, setColumnFilters] = React.useState([]);
   const [columnVisibility, setColumnVisibility] = React.useState({});
@@ -73,7 +73,7 @@ const AttendanceTable = ({ data, loading }) => {
     }));
   };
   const handleRowClick = (rowData) => {
-    console.log("Row data:", rowData);
+    onClick(rowData)
     // You can navigate to another page or open a modal with the row data
   };
   return (

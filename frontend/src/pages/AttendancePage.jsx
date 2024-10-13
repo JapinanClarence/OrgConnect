@@ -2,10 +2,12 @@ import AttendanceTable from '@/components/attendance/AttendanceTable';
 import React, {useEffect, useState} from 'react'
 import apiClient from '@/api/axios';
 import { formatSimpleDateTime, formatDate } from '@/util/helpers';
-  
+import { useNavigate } from 'react-router-dom';
+
 const AttendancePage = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] =useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchPayments();
@@ -44,13 +46,17 @@ const AttendancePage = () => {
     }
   };
   
+  const handleClickEventRow = (data) =>{
+    navigate(`/attendees/?eventId=${data.id}`)
+  }
+
   return (
     <div className="bg-[#fefefe] shadow-lg rounded-lg border border-gray-200 text-gray-900 px-6 py-5 flex flex-col relative">
       <h1 className="font-bold">Event Attendance Table</h1>
       <p className="text-sm text-muted-foreground">
         Manage your event attendance here
       </p>
-      <AttendanceTable data={data}/>
+      <AttendanceTable data={data} onClick={handleClickEventRow}/>
     </div>
   )
 }
