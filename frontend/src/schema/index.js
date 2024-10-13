@@ -50,7 +50,6 @@ export const OrgSchema = z.object({
 });
 
 export const EventSchema = z.object({
-  id: z.string().optional(),
   title: z.string().min(1, {
     message: "Event title is required",
   }),

@@ -106,7 +106,8 @@ const Eventpage = () => {
         endDate,
         active,
       };
-      const response = await apiClient.patch(`/admin/event/${id}`, formData, {
+
+      const response = await apiClient.patch(`/admin/event/${selectedEvent.id}`, formData, {
         headers: {
           Authorization: user.token,
         },
