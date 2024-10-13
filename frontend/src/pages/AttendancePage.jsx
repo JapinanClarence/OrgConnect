@@ -1,22 +1,76 @@
-import AttendanceTable from '@/components/attendance/AttendanceTable';
-import React, {useEffect, useState} from 'react'
-import apiClient from '@/api/axios';
-import { formatSimpleDateTime, formatDate } from '@/util/helpers';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import AttendanceTable from "@/components/attendance/AttendanceTable";
+import apiClient from "@/api/axios";
+import { formatSimpleDateTime, formatDate } from "@/util/helpers";
+import { Badge } from "@/components/ui/badge";
 
-const AttendancePage = () => {
+const statusMap = {
+  true: {
+    name: "Open",
+    color: "bg-green-600",
+  },
+  false: {
+    name: "Close",
+    color: "bg-red-500",
+  },
+};
+
+const AttendeesPage = () => {
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const eventId = searchParams.get("eventId");
   const [data, setData] = useState([]);
-  const [loading, setLoading] =useState(false);
-  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [currentEvent, setCurrentEvent] = useState("");
+  const [badgeStatus, setBadgeStatus] = useState(null);
 
   useEffect(() => {
-    fetchEvents();
+    fetchAttendees();
+    fetchCurrentEvent();
   }, []);
 
-  const fetchEvents = async () => {
+  useEffect(() => {
+    // Once currentEvent is fetched, check and set the badge status
+    if (currentEvent && typeof currentEvent.status === "boolean") {
+      setBadgeStatus(statusMap[currentEvent.status]);
+    }
+  }, [currentEvent]);
+
+  const fetchCurrentEvent = async () => {
+    const user = JSON.parse(localStorage.getItem("userData"));
+
+    try {
+      const { data } = await apiClient.get(`/admin/event/${eventId}`, {
+        headers: {
+          Authorization: user.token,
+        },
+      });
+
+      if (data.success) {
+        const eventData = {
+          id: data.data._id,
+          title: data.data.title,
+          description: data.data.description,
+          location: data.data.location,
+          startDate: data.data.startDate,
+          endDate: data.data.endDate,
+          status: data.data.active,
+        };
+        setCurrentEvent(eventData);
+      }
+
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
+  };
+
+  const fetchAttendees = async () => {
     const user = JSON.parse(localStorage.getItem("userData"));
     try {
-      const { data } = await apiClient.get("/admin/event", {
+      const { data } = await apiClient.get(`/attendance/${eventId}`, {
         headers: {
           Authorization: user.token,
         },
@@ -25,19 +79,18 @@ const AttendancePage = () => {
       if (!data.success) {
         setData([]);
       } else {
-        const tableData = data.data.map((data) => (
-          {
+        const tableData = data.data.map((data) => ({
           id: data._id,
-          title: data.title,
-          description: data.description,
-          location:data.location,
-          start: formatSimpleDateTime(data.startDate),
-          end: formatSimpleDateTime(data.endDate),
-          active:data.active
+          studentId: data.studentId,
+          fullname: data.fullname,
+          email: data.email,
+          course: data.course,
+          profilePicture: data.profilePicture,
+          checkIn: formatSimpleDateTime(data.checkIn),
+          checkOut: formatSimpleDateTime(data.checkOut),
         }));
         setData(tableData);
       }
-      console.log(data)
 
       setLoading(false);
     } catch (error) {
@@ -45,20 +98,31 @@ const AttendancePage = () => {
       setLoading(false);
     }
   };
-  
-  const handleClickEventRow = (data) =>{
-    navigate(`/events/attendance/?eventId=${data.id}`)
-  }
-
   return (
-    <div className="md:bg-[#fefefe] md:shadow-lg rounded-lg md:border md:border-gray-200 text-gray-900 px-6 py-5 flex flex-col relative">
-      <h1 className="font-bold">Event Attendance Overview</h1>
-      <p className="text-sm text-muted-foreground">
-        Monitor and manage event attendance.
-      </p>
-      <AttendanceTable data={data} onClick={handleClickEventRow}/>
-    </div>
-  )
-}
+    <div className="bg-[#fefefe] shadow-lg rounded-lg border border-gray-200 text-gray-900 px-6 py-5 flex flex-col relative">
+      <div className="leading-none mb-3">
+        <h1 className="font-bold text-2xl inline-flex items-center gap-1">
+          {currentEvent.title}{" "}
+          {badgeStatus && (
+            <Badge
+              className={`${badgeStatus.color} hover:${badgeStatus.color} text-xs`}
+            >
+              {badgeStatus.name}
+            </Badge>
+          )}
+        </h1>
+        <span className="text-xs font-normal block">{`${formatSimpleDateTime(
+          currentEvent.startDate
+        )} - ${formatSimpleDateTime(currentEvent.endDate)}`}</span>
+        <p className="mt-3 text-sm text-muted-foreground text-pretty">
+          {currentEvent.description}
+        </p>
+       
+      </div>
 
-export default AttendancePage
+      <AttendanceTable data={data} />
+    </div>
+  );
+};
+
+export default AttendeesPage;

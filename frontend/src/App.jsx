@@ -11,7 +11,6 @@ import Eventpage from "@/pages/Eventpage";
 import AnnouncementPage from "@/pages/AnnouncementPage";
 import PaymentPage from "@/pages/PaymentPage";
 import AttendancePage from "@/pages/AttendancePage";
-import AttendeesPage from "@/pages/AttendeesPage";
 
 const App = () => {
   return (
@@ -29,8 +28,7 @@ const App = () => {
             <Route path="/events" element={<Eventpage />} />
             <Route path="/announcements" element={<AnnouncementPage />} />
             <Route path="/payments" element={<PaymentPage />} />
-            {/* <Route path="/events" element={<AttendancePage />} /> */}
-            <Route path="/events/attendance" element={<AttendeesPage />} />
+            <Route path="/events/attendance" element={<AttendancePage />} />
           </Route>
         </Route>
       </Routes>

@@ -13,7 +13,7 @@ import {
 import { Ban, CheckCircle, LockKeyhole, LockKeyholeOpen } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 // Define the columns for the table
-export const attendeesColumns = [
+export const columns = [
   {
     id: "profilePicture",
     enableHiding: false,
