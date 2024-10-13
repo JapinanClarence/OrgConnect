@@ -17,6 +17,8 @@ import {
   DollarSign,
   CoinsIcon,
   Wallet,
+  View,
+  ScrollText,
 } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
@@ -164,7 +166,32 @@ const DesktopSidebar = () => {
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
-
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Link
+                to="/attendance"
+                className={`rounded-lg size-full flex items-center justify-start p-2 ${
+                  isActive("/attendance")
+                    ? "bg-white text-zinc-900"
+                    : "hover:bg-gray-800"
+                }`}
+              >
+                <ScrollText />
+                <span className="hidden lg:block ml-2 font-bold text-sm">
+                  Attendance
+                </span>
+              </Link>
+            </TooltipTrigger>
+            <TooltipContent
+              className="lg:hidden bg-white text-gray-900"
+              side="right"
+              sideOffset={5}
+            >
+              Attendance
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>

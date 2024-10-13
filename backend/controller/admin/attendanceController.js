@@ -24,13 +24,13 @@ export const createAttendance = async (req, res, next) => {
     }
 
     await Attendance.create({
-        event: eventId,
-        student: studentId
-    })
+      event: eventId,
+      student: studentId,
+    });
     res.status(201).json({
-        success: true,
-        message:"Attendance recorded"
-    })
+      success: true,
+      message: "Attendance recorded",
+    });
   } catch (err) {
     return res.status(500).json({
       success: false,
@@ -39,7 +39,7 @@ export const createAttendance = async (req, res, next) => {
   }
 };
 
-export const updateAttendance = async (req, res, next) =>{
+export const updateAttendance = async (req, res, next) => {
   const { eventId, studentId } = req.body;
   try {
     const student = await Student.findById(studentId);
@@ -60,49 +60,69 @@ export const updateAttendance = async (req, res, next) =>{
       });
     }
 
-    const attendance = await Attendance.findByIdAndUpdate(req.params.id,{
-        checkOut: Date.now()
-    })
+    const attendance = await Attendance.findByIdAndUpdate(req.params.id, {
+      checkOut: Date.now(),
+    });
 
-    if(!attendance){
+    if (!attendance) {
       return res.status(404).json({
         success: false,
         message: "Attendance not found",
       });
     }
     res.status(200).json({
-        success: true,
-        message:"Attendance recorded"
-    })
+      success: true,
+      message: "Attendance recorded",
+    });
   } catch (err) {
     return res.status(500).json({
       success: false,
       message: err.message,
     });
   }
-}
+};
 
-export const getAttendance = async (req, res, next) =>{
-    try {
-      //fetch attendees base on its event id
-      const attendance = await Attendance.find({event: req.params.id});
+export const getAttendance = async (req, res, next) => {
+  try {
+    //fetch attendees base on its event id
+    const attendance = await Attendance.find({ event: req.params.id });
 
-      if(attendance.length <= 0){
-        return res.status(200).json({
-          success: false,
-          message: "No attendees found",
-        });
-      }
-
-      // console.log(req.params.id);
-      res.status(200).json({
-        success: true,
-        data: attendance
-      })
-    } catch (err) {
-      return res.status(500).json({
+    if (attendance.length <= 0) {
+      return res.status(200).json({
         success: false,
-        message: err.message,
+        message: "No attendees found",
       });
     }
-}
+
+    const student = await Promise.all(
+      attendance.map(async (attendance) => {
+        const data = await Student.findById(attendance.student).select(
+          "studentId firstname lastname middlename email course profilePicture"
+        );
+        const fullname = `${data.firstname} ${data.middlename ? data.middlename[0] + '. ' : ''}${data.lastname}`;
+        return {
+          student: data.studentId,
+          fullname,
+          email: data.email,
+          course: data.course,
+          profilePicture : data.profilePicture,
+          checkIn: attendance.checkIn,
+          checkOut: attendance.checkOut
+        }
+      })
+    );
+
+    
+
+    // console.log(req.params.id);
+    res.status(200).json({
+      success: true,
+      data: student,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
+};

@@ -10,9 +10,10 @@ import ProtectedRoute from "@/components/auth/ProtectedRoutes";
 import Eventpage from "@/pages/Eventpage";
 import AnnouncementPage from "@/pages/AnnouncementPage";
 import PaymentPage from "@/pages/PaymentPage";
-
+import AttendancePage from "@/pages/AttendancePage";
 // for testing only
 import { Test } from "@/pages/Test";
+
 const App = () => {
   return (
     <>
@@ -29,6 +30,7 @@ const App = () => {
             <Route path="/events" element={<Eventpage />} />
             <Route path="/announcements" element={<AnnouncementPage />} />
             <Route path="/payments" element={<PaymentPage />} />
+            <Route path="/attendance" element={<AttendancePage />} />
           </Route>
         </Route>
       </Routes>
