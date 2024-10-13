@@ -79,7 +79,7 @@ const PaymentTable = ({ data, loading, onAdd, onEdit }) => {
     <>
       <div className="md:flex items-center justify-between py-4">
         <Input
-          placeholder="Filter payments..."
+          placeholder="Filter payment purpose..."
           value={table.getColumn("purpose")?.getFilterValue() ?? ""}
           onChange={(event) =>
             table.getColumn("purpose")?.setFilterValue(event.target.value)
