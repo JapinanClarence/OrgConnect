@@ -47,7 +47,7 @@ const AttendancePage = () => {
   };
   
   const handleClickEventRow = (data) =>{
-    navigate(`/attendees/?eventId=${data.id}`)
+    navigate(`/events/attendance/?eventId=${data.id}`)
   }
 
   return (

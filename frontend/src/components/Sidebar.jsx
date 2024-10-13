@@ -90,9 +90,9 @@ const DesktopSidebar = () => {
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
-                to="/events"
+                to="/calendar"
                 className={`rounded-lg size-full flex items-center justify-start p-2 ${
-                  isActive("/events")
+                  isActive("/calendar")
                     ? "bg-white text-zinc-900"
                     : "hover:bg-gray-800"
                 }`}
@@ -170,9 +170,9 @@ const DesktopSidebar = () => {
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
-                to="/attendance"
+                to="/events"
                 className={`rounded-lg size-full flex items-center justify-start p-2 ${
-                  isActive("/attendance")
+                  isActive("/events")
                     ? "bg-white text-zinc-900"
                     : "hover:bg-gray-800"
                 }`}
