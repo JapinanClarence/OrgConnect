@@ -10,7 +10,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
-import { Ban, CheckCircle } from "lucide-react";
+import { Ban, CheckCircle, LockKeyhole, LockKeyholeOpen } from "lucide-react";
 
 // Define the columns for the table
 export const columns = [
@@ -31,58 +31,28 @@ export const columns = [
   },
   {
     accessorKey: "description",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Description
-          <CaretSortIcon className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
+    header: "Description",
     cell: ({ row }) => <div className="">{row.getValue("description")}</div>,
   },
   {
     accessorKey: "location",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Location
-          <CaretSortIcon className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
+    header: "Location",
     cell: ({ row }) => <div className="">{row.getValue("location")}</div>,
   },
   {
     accessorKey: "active",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Status
-          <CaretSortIcon className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
+    header: "Status",
     cell: ({ row }) => {
       const active = row.getValue("active");
       return (
         <div className="">
           {active ? (
-            <div className="flex items-center justify-center">
-              <CheckCircle className="size-4 mr-2 text-green-500" /> Open
+            <div className="flex items-center">
+              <LockKeyholeOpen className="size-4 mr-2 text-green-500" /> Open
             </div>
           ) : (
-            <div className="flex items-center justify-center">
-              <Ban className="size-4 mr-2 text-red-500" /> Close
+            <div className="flex items-center">
+              <LockKeyhole className="size-4 mr-2 text-red-500" /> Close
             </div>
           )}
         </div>
@@ -91,32 +61,12 @@ export const columns = [
   },
   {
     accessorKey: "start",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Start
-          <CaretSortIcon className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
+    header: "Start",
     cell: ({ row }) => <div className="">{row.getValue("start")}</div>,
   },
   {
     accessorKey: "end",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          End
-          <CaretSortIcon className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
+    header: "End",
     cell: ({ row }) => <div className="">{row.getValue("end")}</div>,
   },
 ];
