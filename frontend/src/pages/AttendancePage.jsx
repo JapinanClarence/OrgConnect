@@ -51,7 +51,7 @@ const AttendancePage = () => {
   }
 
   return (
-    <div className="bg-[#fefefe] shadow-lg rounded-lg border border-gray-200 text-gray-900 px-6 py-5 flex flex-col relative">
+    <div className="md:bg-[#fefefe] md:shadow-lg rounded-lg md:border md:border-gray-200 text-gray-900 px-6 py-5 flex flex-col relative">
       <h1 className="font-bold">Event Attendance Overview</h1>
       <p className="text-sm text-muted-foreground">
         Monitor and manage event attendance.

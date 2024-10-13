@@ -12,7 +12,7 @@ const DashboardLayout = () => {
         >
           <Header title="" />
           {/* style={{height: `calc(100vh - 53px)`}} */}
-          <main className="md:px-4 md:py-7 bg-gray-100  dark:bg-dot-black/[0.2] bg-dot-black/[0.2]" style={{minHeight: `calc(100vh - 53px)`}} >
+          <main className="md:px-4 md:py-7 md:bg-gray-100  md:bg-dot-black/[0.2]" style={{minHeight: `calc(100vh - 53px)`}} >
             <div className="overlay-area  absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-black bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] -z-10"></div>
 
             <Outlet />
