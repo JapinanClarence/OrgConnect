@@ -145,7 +145,7 @@ const AnnouncementPage = () => {
         category,
       };
 
-      const res = await apiClient.patch(`/admin/announcement/${id}`, formData, {
+      const res = await apiClient.patch(`/admin/announcement/${currentAnnouncement.id}`, formData, {
         headers: {
           Authorization: user.token,
         },

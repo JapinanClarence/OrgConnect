@@ -63,7 +63,6 @@ export const EventSchema = z.object({
 });
 
 export const AnnouncementSchema = z.object({
-  id: z.string().optional(),
   title: z.string().min(1, {
     message: "Announcement title is required",
   }),
