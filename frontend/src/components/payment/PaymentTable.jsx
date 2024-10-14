@@ -183,7 +183,7 @@ const PaymentTable = ({ data, loading, onAdd, onEdit, onDelete }) => {
                   
                   <p className="text-sm text-gray-600">No results found</p>
                   <p className="text-xs text-gray-400">
-                    Try adjusting your filters or adding new data.
+                    Try adjusting your filters or add new data.
                   </p>
                 </div>
               </TableCell>
