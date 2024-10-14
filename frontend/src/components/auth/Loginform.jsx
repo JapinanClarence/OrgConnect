@@ -66,7 +66,7 @@ const Loginform = () => {
         navigate("/");
       }
     } catch (error) {
-      console.log(error.response.data.message);
+      console.log(error.response);
       const message = error.response.data.message;
       setErrorMessage(message);
       setIsSubmitting(false);
