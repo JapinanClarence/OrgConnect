@@ -8,7 +8,7 @@ export const createAttendance = async (req, res, next) => {
   try {
     const isMember = await Membership.findOne({student: studentId});
   
-    if(!isMember){
+    if(isMember.status == "0"){
       return res.status(403).json({
         success: false,
         message: "Student unauthorized",

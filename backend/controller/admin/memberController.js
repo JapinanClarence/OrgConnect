@@ -58,10 +58,10 @@ export const getMembers = async (req, res) => {
 
 export const updateMember = async (req, res) =>{
   try {
-    const memberId = req.params.id;
+    const studentId = req.params.id;
 
-    const member = await Membership.findByIdAndUpdate(
-      memberId,
+    const member = await Membership.findOneAndUpdate(
+      {student: studentId},
       {
         status: req.body.status,
         joinedDate: Date.now()
