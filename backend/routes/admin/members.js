@@ -6,6 +6,7 @@ import {
 
 import {
   getMembers,
+  updateMember,
 
 } from "../../controller/admin/memberController.js";
 
@@ -16,5 +17,12 @@ router.get("/members",
     authorizeRole("admin"),
     getMembers
 )
+router.patch("/members/:id", 
+    authenticate,
+    authorizeRole("admin"),
+    express.json(),
+    updateMember
+)
+
 
 export default router;

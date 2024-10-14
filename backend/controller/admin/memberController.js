@@ -55,3 +55,31 @@ export const getMembers = async (req, res) => {
     });
   }
 };
+
+export const updateMember = async (req, res) =>{
+  try {
+    const memberId = req.params.id;
+
+    const member = await Membership.findByIdAndUpdate(
+      memberId,
+      req.body
+    );
+
+    if (!member) {
+      return res.status(404).json({
+        success: false,
+        message: "Member not found!",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Member updated successfully!",
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
+}
