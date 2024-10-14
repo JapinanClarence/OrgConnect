@@ -6,7 +6,17 @@ import { StudentModel as Student } from "../../model/UserModel.js";
 export const createAttendance = async (req, res, next) => {
   const { eventId, studentId } = req.body;
   try {
-    const isMember = await Membership.findOne({student: studentId});
+
+    const student = await Student.findOne({studentId: studentId});
+
+    if(!student){
+      return res.status(404).json({
+        success:false,
+        message: "Student not found"
+      })
+    }
+
+    const isMember = await Membership.findOne({student: student.id});
   
     if(isMember.status == "0"){
       return res.status(403).json({
@@ -26,7 +36,7 @@ export const createAttendance = async (req, res, next) => {
 
     await Attendance.create({
       event: eventId,
-      student: studentId,
+      student: student.id,
     });
     res.status(201).json({
       success: true,
@@ -102,7 +112,7 @@ export const getAttendance = async (req, res, next) => {
         );
         const fullname = `${data.firstname} ${data.middlename ? data.middlename[0] + '. ' : ''}${data.lastname}`;
         return {
-          _id: attendance._id,
+          _id: data._id,
           studentId: data.studentId,
           fullname,
           email: data.email,
