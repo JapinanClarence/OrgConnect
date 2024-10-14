@@ -26,7 +26,7 @@ export const getMembers = async (req, res) => {
     const memberData = await Promise.all(
       members.map(async (members) => {
         const data = await Student.findById(members.student).select(
-          "studentId firstname lastname middlename email course profilePicture"
+          "studentId firstname lastname middlename email course profilePicture status"
         );
         const fullname = `${data.firstname} ${
           data.middlename ? data.middlename[0] + ". " : ""
@@ -38,6 +38,7 @@ export const getMembers = async (req, res) => {
           email: data.email,
           course: data.course,
           profilePicture: data.profilePicture,
+          status : members.status,
           joinDate: members.joinDate,
         };
       })

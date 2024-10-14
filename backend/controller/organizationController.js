@@ -12,7 +12,7 @@ export const joinOrg = async (req, res, next) => {
     if (membership) {
       return res.status(400).json({
         success: false,
-        message: "Already a member",
+        message: "Already joined",
       });
     }
 
@@ -41,7 +41,7 @@ export const getOrg = async (req, res, next) => {
     if (organization.length <= 0) {
       return res.status(200).json({
         success: false,
-        message: "No organizations foun",
+        message: "No organizations found",
       });
     }
 
@@ -61,7 +61,7 @@ export const studentOrgs = async (req, res, next) => {
   const student = req.user.userId;
 
   try {
-    const membership = await Membership.find({ student });
+    const membership = await Membership.find({ student, status:"1" });
 
     if (membership.length <= 0) {
       return res.status(200).json({
