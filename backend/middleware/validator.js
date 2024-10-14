@@ -7,6 +7,7 @@ export const studentValidationRules = () => [
     body("age").notEmpty().withMessage("Age is required"),
     body("contactNumber").notEmpty().withMessage("Contact number is required"),
     body("course").notEmpty().withMessage("Course is required"),
+    body("year").notEmpty().withMessage("Year is required"),
     body("username").notEmpty().withMessage("Username is required"),
     body("email").notEmpty().withMessage("Email is required"),
     body("password").notEmpty().withMessage("Password is required"),

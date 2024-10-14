@@ -14,6 +14,7 @@ export const findUser = async (req, res, next) => {
       "email",
       "contactNumber",
       "course",
+      "year",
       "profilePicture",
     ]);
 
@@ -49,7 +50,8 @@ export const updateUser = async (req, res, next) => {
         middlename,
         age, 
         contactNumber,
-        course
+        course,
+        year
     }
     //update student info
     const user = await Student.findByIdAndUpdate(userId, studentData);

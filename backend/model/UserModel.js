@@ -76,6 +76,7 @@ const StudentSchema = new mongoose.Schema({
   age: { type: String },
   contactNumber: { type: String },
   course: { type: String },
+  year: {type: String}
 });
 
 //organization admin specific schema 
