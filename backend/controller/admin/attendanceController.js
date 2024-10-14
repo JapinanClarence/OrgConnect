@@ -1,16 +1,17 @@
 import Attendance from "../../model/attendanceModel.js";
 import Events from "../../model/eventModel.js";
+import Membership from "../../model/membershipModel.js";
 import { StudentModel as Student } from "../../model/UserModel.js";
 
 export const createAttendance = async (req, res, next) => {
   const { eventId, studentId } = req.body;
   try {
-    const student = await Student.findById(studentId);
+    const isMember = await Membership.findOne({student: studentId});
 
-    if (!student) {
-      return res.status(404).json({
+    if(!isMember){
+      return res.status(403).json({
         success: false,
-        message: "Student not found",
+        message: "Student unauthorized",
       });
     }
 
