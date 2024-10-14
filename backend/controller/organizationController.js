@@ -4,10 +4,19 @@ import { StudentModel as Student } from "../model/UserModel.js";
 
 export const joinOrg = async (req, res, next) => {
   const organization = req.body.organization;
-  const student = req.user.userId;
+  const userId = req.user.userId;
 
   try {
-    const membership = await Membership.findOne({ organization });
+    const {studentId} = await Student.findById(userId).select("studentId");
+
+    if(!studentId){
+      return res.status(404).json({
+        success: false,
+        message: "Student not found"
+      })
+    }
+
+    const membership = await Membership.findOne({ student: studentId });
     //verifies if student already joined the organization
     if (membership) {
       return res.status(400).json({
@@ -17,7 +26,7 @@ export const joinOrg = async (req, res, next) => {
     }
 
     await Membership.create({
-      student,
+      student: studentId,
       organization,
     });
     res.status(200).json({
