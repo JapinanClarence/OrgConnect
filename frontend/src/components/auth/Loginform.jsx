@@ -157,7 +157,7 @@ const Loginform = () => {
               <div>
                 <Button
                   id="submit"
-                  className="bg-gray-900 hover:bg-gray-800 text-md text-white rounded-md px-3 py-2 w-full"
+                  className="bg-gray-900 hover:bg-gray-800 text-md text-white rounded-md w-full"
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? (
