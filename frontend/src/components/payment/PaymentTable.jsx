@@ -52,6 +52,9 @@ const PaymentTable = ({ data, loading, onAdd, onEdit, onDelete }) => {
     pageIndex: 0,
     pageSize: 10, // Default rows per page
   });
+  const [globalFilter, setGlobalFilter] = React.useState("");
+  // Define the columns where you want to apply the global filter
+  const filterColumns = ["purpose", "details", "amount"];
 
   const table = useReactTable({
     data,
@@ -64,12 +67,23 @@ const PaymentTable = ({ data, loading, onAdd, onEdit, onDelete }) => {
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
+    onGlobalFilterChange: setGlobalFilter,
     pageCount: Math.ceil(data.length / pagination.pageSize),
+    globalFilterFn: (row, columnIds, filterValue) => {
+      // This function will filter across multiple columns
+      return filterColumns.some((columnId) => {
+        const cellValue = row.getValue(columnId);
+        return String(cellValue)
+          .toLowerCase()
+          .includes(filterValue.toLowerCase());
+      });
+    },
     state: {
       pagination,
       sorting,
       columnFilters,
       columnVisibility,
+      globalFilter,
     },
   });
 
@@ -84,12 +98,10 @@ const PaymentTable = ({ data, loading, onAdd, onEdit, onDelete }) => {
   return (
     <>
       <div className="md:flex items-center justify-between py-4">
-        <Input
-          placeholder="Filter payment purpose..."
-          value={table.getColumn("purpose")?.getFilterValue() ?? ""}
-          onChange={(event) =>
-            table.getColumn("purpose")?.setFilterValue(event.target.value)
-          }
+      <Input
+          placeholder="Filter payment..."
+          value={globalFilter ?? ""}
+          onChange={(event) => setGlobalFilter(event.target.value)}
           className="md:max-w-sm"
         />
 
