@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Button } from "../../components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogDescription,
-} from "../../components/ui/dialog";
-import { DialogBody, DialogFooter } from "../..material-tailwind/react";
-import { Badge } from "../../components/ui/badge";
+} from "@/components/ui/dialog";
+import { DialogBody, DialogFooter } from "@material-tailwind/react";
+import { Badge } from "@/components/ui/badge";
 
 const AnnouncementDetails = ({ announcementData, open, onOpenChange, onEdit }) => {
   const [loading, setLoading] = useState(true);

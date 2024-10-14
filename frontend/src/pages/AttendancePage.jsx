@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import AttendanceTable from "../components/attendance/AttendanceTable";
-import apiClient from "../api/axios";
-import { formatSimpleDateTime, formatDate } from "../util/helpers";
-import { Badge } from "../components/ui/badge";
-import { Skeleton } from "../components/ui/skeleton";
+import AttendanceTable from "@/components/attendance/AttendanceTable";
+import apiClient from "@/api/axios";
+import { formatSimpleDateTime, formatDate } from "@/util/helpers";
+import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const statusMap = {
   true: {

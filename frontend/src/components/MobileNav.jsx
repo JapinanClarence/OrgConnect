@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { Button } from "../components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Sheet,
   SheetContent,
   SheetTrigger,
   SheetTitle,
-} from "../components/ui/sheet";
+} from "@/components/ui/sheet";
 import { MenuIcon } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 

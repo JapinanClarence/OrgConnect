@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import apiClient from "../api/axios";
-import AddOrganizationDialog from "../components/home/AddOrganizationDialog";
+import apiClient from "@/api/axios";
+import AddOrganizationDialog from "@/components/home/AddOrganizationDialog";
 import {
   Card,
   CardHeader,

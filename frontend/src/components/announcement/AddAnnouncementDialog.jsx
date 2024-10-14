@@ -13,7 +13,7 @@ import {
   FormLabel,
   FormControl,
   FormMessage,
-} from "../../components/ui/form";
+} from "@/components/ui/form";
 import {
   Select,
   SelectContent,
@@ -22,12 +22,12 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "../../components/ui/select";
-import { Input } from "../../components/ui/input";
-import { Textarea } from "../../components/ui/textarea";
-import { Button } from "../../components/ui/button";
+} from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
 import { LoaderCircle } from "lucide-react";
-import { Alert, AlertDescription } from "../../components/ui/alert";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const AddAnnouncementDialog = ({
   open,

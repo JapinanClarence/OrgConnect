@@ -3,11 +3,11 @@ import {
   CardContent,
   CardHeader,
   CardFooter,
-} from "../../components/ui/card";
-import { Button } from "../../components/ui/button";
-import { LoginSchema } from "../../schema";
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { LoginSchema } from "@/schema";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "../..hookform/resolvers/zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
   FormControl,
@@ -15,12 +15,12 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../../components/ui/form";
-import { Input } from "../../components/ui/input";
-import { Alert, AlertDescription, AlertTitle } from "../../components/ui/alert";
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { LoaderCircle, Eye, EyeOff } from "lucide-react";
-import { useAuth } from "../../context/AuthContext";
-import apiClient from "../../api/axios";
+import { useAuth } from "@/context/AuthContext";
+import apiClient from "@/api/axios";
 import { useLayoutEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";

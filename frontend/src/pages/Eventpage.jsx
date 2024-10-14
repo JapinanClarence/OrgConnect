@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import EventCalendar from "../components/events/EventCalendar";
+import EventCalendar from "@/components/events/EventCalendar";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "..hookform/resolvers/zod";
-import { EventSchema } from "../schema";
-import apiClient from "../api/axios";
-import EditEventDialog from "../components/events/EditEventDialog";
-import AddEventDialog from "../components/events/AddEventDialog";
-import { useToast } from "../hooks/use-toast";
-import { formatDate } from "../util/helpers";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { EventSchema } from "@/schema";
+import apiClient from "@/api/axios";
+import EditEventDialog from "@/components/events/EditEventDialog";
+import AddEventDialog from "@/components/events/AddEventDialog";
+import { useToast } from "@/hooks/use-toast";
+import { formatDate } from "@/util/helpers";
 
 const Eventpage = () => {
   const [showAddEvent, setShowAddEventDialog] = useState(false);

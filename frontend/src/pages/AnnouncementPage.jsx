@@ -7,20 +7,20 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "../components/ui/select";
-import { Skeleton } from "../components/ui/skeleton";
-import { Button } from "../components/ui/button";
-import AnnouncementCard from "../components/announcement/AnnouncementCard";
-import apiClient from "../api/axios";
-import { formatDate } from "../util/helpers";
-import AddAnnouncementDialog from "../components/announcement/AddAnnouncementDialog";
+} from "@/components/ui/select";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Button } from "@/components/ui/button";
+import AnnouncementCard from "@/components/announcement/AnnouncementCard";
+import apiClient from "@/api/axios";
+import { formatDate } from "@/util/helpers";
+import AddAnnouncementDialog from "@/components/announcement/AddAnnouncementDialog";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "..hookform/resolvers/zod";
-import { AnnouncementSchema } from "../schema";
-import { useToast } from "../hooks/use-toast";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { AnnouncementSchema } from "@/schema";
+import { useToast } from "@/hooks/use-toast";
 import { Plus } from "lucide-react";
-import AnnouncementDetails from "../components/announcement/AnnouncementDetails";
-import EditAnnouncementDialog from "../components/announcement/EditAnnouncementDialog";
+import AnnouncementDetails from "@/components/announcement/AnnouncementDetails";
+import EditAnnouncementDialog from "@/components/announcement/EditAnnouncementDialog";
 
 const AnnouncementPage = () => {
   const [announcements, setAnnouncement] = useState([]);

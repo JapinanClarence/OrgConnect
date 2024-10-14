@@ -1,13 +1,13 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import MobileNav from "../components/MobileNav";
+import MobileNav from "@/components/MobileNav";
 import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbSeparator,
-} from "../components/ui/breadcrumb";
+} from "@/components/ui/breadcrumb";
 
 
 const Header = ({ title }) => {

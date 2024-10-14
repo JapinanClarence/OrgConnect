@@ -1,13 +1,13 @@
 import { useForm } from "react-hook-form";
-import { zodResolver } from "../..hookform/resolvers/zod";
-import { EventSchema } from "../../schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { EventSchema } from "@/schema";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogDescription,
-} from "../../components/ui/dialog";
+} from "@/components/ui/dialog";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -18,7 +18,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "../../components/ui/alert-dialog";
+} from "@/components/ui/alert-dialog";
 import {
   Form,
   FormField,
@@ -27,13 +27,13 @@ import {
   FormControl,
   FormMessage,
   FormDescription,
-} from "../../components/ui/form";
-import { Input } from "../../components/ui/input";
-import { Textarea } from "../../components/ui/textarea";
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { LoaderCircle, Pen, Trash2 } from "lucide-react";
-import { Alert, AlertDescription } from "../../components/ui/alert";
-import { Button } from "../../components/ui/button";
-import { Switch } from "../../components/ui/switch";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import { Switch } from "@/components/ui/switch";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 

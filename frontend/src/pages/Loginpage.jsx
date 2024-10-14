@@ -1,4 +1,4 @@
-import Loginform from "../components/auth/Loginform";
+import Loginform from "@/components/auth/Loginform";
 
 const Loginpage = () => {
 

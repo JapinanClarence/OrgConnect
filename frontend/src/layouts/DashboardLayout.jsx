@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
-import DesktopSidebar from "../components/Sidebar";
-import Header from "../components/Header";
+import DesktopSidebar from "@/components/Sidebar";
+import Header from "@/components/Header";
 
 const DashboardLayout = () => {
   return (
