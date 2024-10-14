@@ -7,7 +7,7 @@ export const joinOrg = async (req, res, next) => {
   const student = req.user.userId;
 
   try {
-    const membership = await Membership.findOne({ organization });
+    const membership = await Membership.findOne({ student });
     //verifies if student already joined the organization
     if (membership) {
       return res.status(400).json({
