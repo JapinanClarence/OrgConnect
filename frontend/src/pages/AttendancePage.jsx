@@ -16,6 +16,12 @@ const statusMap = {
     color: "bg-red-500",
   },
 };
+const yearMap = {
+  1: "1st Year",
+  2: "2nd Year",
+  3: "3rd Year",
+  4: "4th Year"
+}
 
 const AttendeesPage = () => {
   const location = useLocation();
@@ -85,7 +91,7 @@ const AttendeesPage = () => {
           studentId: data.studentId,
           fullname: data.fullname,
           email: data.email,
-          year: data.year,
+          year: yearMap[data.year],
           course: data.course,
           profilePicture: data.profilePicture,
           checkIn: formatSimpleDateTime(data.checkIn),

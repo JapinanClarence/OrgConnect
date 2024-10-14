@@ -48,6 +48,9 @@ const AttendeesTable = ({ data, loading }) => {
     pageIndex: 0,
     pageSize: 10, // Default rows per page
   });
+  const [globalFilter, setGlobalFilter] = React.useState("");
+  // Define the columns where you want to apply the global filter
+  const filterColumns = ["studentId", "fullname", "email", "year", "course"];
 
   const table = useReactTable({
     data,
@@ -60,12 +63,23 @@ const AttendeesTable = ({ data, loading }) => {
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
+    onGlobalFilterChange: setGlobalFilter,
     pageCount: Math.ceil(data.length / pagination.pageSize),
+    globalFilterFn: (row, columnIds, filterValue) => {
+      // This function will filter across multiple columns
+      return filterColumns.some((columnId) => {
+        const cellValue = row.getValue(columnId);
+        return String(cellValue)
+          .toLowerCase()
+          .includes(filterValue.toLowerCase());
+      });
+    },
     state: {
       pagination,
       sorting,
       columnFilters,
       columnVisibility,
+      globalFilter,
     },
   });
 
@@ -81,10 +95,8 @@ const AttendeesTable = ({ data, loading }) => {
       <div className="md:flex items-center justify-between py-4">
         <Input
           placeholder="Filter attendees..."
-          value={table.getColumn("fullname")?.getFilterValue() ?? ""}
-          onChange={(event) =>
-            table.getColumn("fullname")?.setFilterValue(event.target.value)
-          }
+          value={globalFilter ?? ""}
+          onChange={(event) => setGlobalFilter(event.target.value)}
           className="md:max-w-sm"
         />
         <div className="flex-wrap-reverse mt-2 space-y-2 md:space-y-0 md:mt-0 md:space-x-2 md:flex md:items-center">
