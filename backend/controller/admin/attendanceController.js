@@ -7,7 +7,7 @@ export const createAttendance = async (req, res, next) => {
   const { eventId, studentId } = req.body;
   try {
     const isMember = await Membership.findOne({student: studentId});
-
+  
     if(!isMember){
       return res.status(403).json({
         success: false,

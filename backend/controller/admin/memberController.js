@@ -30,7 +30,7 @@ export const getMembers = async (req, res) => {
           data.middlename ? data.middlename[0] + ". " : ""
         }${data.lastname}`;
         return {
-          _id: members._id,
+          _id: data._id,
           studentId: data.studentId,
           fullname,
           email: data.email,
