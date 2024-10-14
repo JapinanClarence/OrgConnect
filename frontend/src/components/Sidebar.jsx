@@ -223,7 +223,7 @@ const DesktopSidebar = () => {
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
-                to="#"
+                to="/members"
                 className={`rounded-lg size-full flex items-center justify-start p-2 ${
                   isActive("/members")
                     ? "bg-white text-zinc-900"

@@ -11,6 +11,7 @@ import Eventpage from "./pages/Eventpage";
 import AnnouncementPage from "./pages/AnnouncementPage";
 import PaymentPage from "./pages/PaymentPage";
 import AttendancePage from "./pages/AttendancePage";
+import MembersPage from "./pages/MembersPage";
 
 const App = () => {
   return (
@@ -29,6 +30,7 @@ const App = () => {
             <Route path="/announcements" element={<AnnouncementPage />} />
             <Route path="/payments" element={<PaymentPage />} />
             <Route path="/events/attendance" element={<AttendancePage />} />
+            <Route path="/members" element={<MembersPage />} />
           </Route>
         </Route>
       </Routes>
