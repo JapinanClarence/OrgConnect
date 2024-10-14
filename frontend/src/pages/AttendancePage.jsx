@@ -4,6 +4,7 @@ import AttendanceTable from "@/components/attendance/AttendanceTable";
 import apiClient from "@/api/axios";
 import { formatSimpleDateTime, formatDate } from "@/util/helpers";
 import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const statusMap = {
   true: {
@@ -21,7 +22,7 @@ const AttendeesPage = () => {
   const searchParams = new URLSearchParams(location.search);
   const eventId = searchParams.get("eventId");
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [currentEvent, setCurrentEvent] = useState("");
   const [badgeStatus, setBadgeStatus] = useState(null);
 
@@ -100,27 +101,36 @@ const AttendeesPage = () => {
   };
   return (
     <div className="md:bg-[#fefefe] md:shadow-lg md:rounded-lg md:border md:border-gray-200 text-gray-900 px-6 py-5 flex flex-col relative">
-      <div className="leading-none mb-3">
-        <h1 className="font-bold text-2xl inline-flex items-center gap-1">
-          {currentEvent.title}{" "}
-          {badgeStatus && (
-            <Badge
-              className={`${badgeStatus.color} hover:${badgeStatus.color} text-xs`}
-            >
-              {badgeStatus.name}
-            </Badge>
-          )}
-        </h1>
-        <span className="text-xs font-normal block">{`${formatSimpleDateTime(
-          currentEvent.startDate
-        )} - ${formatSimpleDateTime(currentEvent.endDate)}`}</span>
-        <p className="mt-3 text-sm text-muted-foreground text-pretty">
-          {currentEvent.description}
-        </p>
-       
-      </div>
+      {loading ? (
+        <div className="space-y-2 mb-3">
+          <Skeleton className={"w-[300px] h-4"} />
+          <Skeleton className={"w-[200px] h-4"} />
+          <Skeleton className={"w-[500px] h-4"} />
+          <Skeleton className={"w-[600px] h-4"} />
+          <Skeleton className={"w-[400px] h-4"} />
+        </div>
+      ) : (
+        <div className="leading-none mb-3">
+          <h1 className="font-bold text-2xl inline-flex items-center gap-1">
+            {currentEvent.title}{" "}
+            {badgeStatus && (
+              <Badge
+                className={`${badgeStatus.color} hover:${badgeStatus.color} text-xs`}
+              >
+                {badgeStatus.name}
+              </Badge>
+            )}
+          </h1>
+          <span className="text-xs font-normal block">{`${formatSimpleDateTime(
+            currentEvent.startDate
+          )} - ${formatSimpleDateTime(currentEvent.endDate)}`}</span>
+          <p className="mt-3 text-sm text-muted-foreground text-pretty">
+            {currentEvent.description}
+          </p>
+        </div>
+      )}
 
-      <AttendanceTable data={data} />
+      <AttendanceTable data={data} loading={loading}/>
     </div>
   );
 };

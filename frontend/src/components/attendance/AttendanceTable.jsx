@@ -30,12 +30,18 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
-import { ChevronLeft, ChevronRight, QrCodeIcon, Settings2 } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  LoaderCircle,
+  QrCodeIcon,
+  Settings2,
+} from "lucide-react";
 import { columns } from "@/components/attendance/columns";
+import { Tab } from "@material-tailwind/react";
 
-
-const AttendeesTable = ({ data, loading, onClick }) => {
-    const [sorting, setSorting] = React.useState([]);
+const AttendeesTable = ({ data, loading }) => {
+  const [sorting, setSorting] = React.useState([]);
   const [columnFilters, setColumnFilters] = React.useState([]);
   const [columnVisibility, setColumnVisibility] = React.useState({});
   const [pagination, setPagination] = React.useState({
@@ -81,9 +87,9 @@ const AttendeesTable = ({ data, loading, onClick }) => {
           }
           className="md:max-w-sm"
         />
-         <div className="flex-wrap-reverse mt-2 space-y-2 md:space-y-0 md:mt-0 md:space-x-2 md:flex md:items-center">
+        <div className="flex-wrap-reverse mt-2 space-y-2 md:space-y-0 md:mt-0 md:space-x-2 md:flex md:items-center">
           <Button className="w-full md:w-fit">
-            <QrCodeIcon className="mr-2 size-5"/> Mark Attendance
+            <QrCodeIcon className="mr-2 size-5" /> Mark Attendance
           </Button>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -131,12 +137,20 @@ const AttendeesTable = ({ data, loading, onClick }) => {
             ))}
           </TableHeader>
           <TableBody className="">
-            {table.getRowModel().rows?.length ? (
+            {loading ? (
+              <TableRow className="hover:bg-transparent">
+                <TableCell
+                  colSpan={table.getVisibleLeafColumns().length || 5}
+                  className="h-32 text-center text-muted-foreground"
+                >
+                  <LoaderCircle className="animate-spin inline-flex items-center" />
+                </TableCell>
+              </TableRow>
+            ) : table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
-                  onClick={() => handleRowClick(row.original)} // Pass the original row data to the handler
-                  className="cursor-pointer "
+                  data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
@@ -157,7 +171,7 @@ const AttendeesTable = ({ data, loading, onClick }) => {
                   <div className="flex flex-col items-center justify-center">
                     <p className="text-sm text-gray-600">No results found</p>
                     <p className="text-xs text-gray-400">
-                      Try adjusting your filters or try again later.
+                      Try adjusting your filters or adding new data.
                     </p>
                   </div>
                 </TableCell>
@@ -216,7 +230,7 @@ const AttendeesTable = ({ data, loading, onClick }) => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default AttendeesTable
+export default AttendeesTable;
