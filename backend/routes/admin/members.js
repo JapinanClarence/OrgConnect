@@ -5,6 +5,7 @@ import {
 } from "./../../middleware/authMiddleware.js";
 
 import {
+    deleteMember,
   getMembers,
   updateMember,
 
@@ -23,6 +24,10 @@ router.patch("/members/:id",
     express.json(),
     updateMember
 )
-
+router.delete("/members/:id", 
+    authenticate,
+    authorizeRole("admin"),
+    deleteMember
+)
 
 export default router;
