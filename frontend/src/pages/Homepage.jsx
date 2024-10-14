@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import apiClient from "@/api/axios";
-import AddOrganizationDialog from "@/components/home/AddOrganizationDialog";
+// import AddOrganizationDialog from "@/components/home/AddOrganizationDialog";
 import {
   Card,
   CardHeader,
@@ -42,10 +42,10 @@ const Homepage = () => {
 
   return (
     <>
-      <AddOrganizationDialog
+      {/* <AddOrganizationDialog
         showDialog={showDialog}
         onClose={() => setShowDialog(false)}
-      />
+      /> */}
       <div className="h-full flex justify-center items-center">
         {/* <Card className="text-gray-900 mx-auto">
           <CardHeader>
