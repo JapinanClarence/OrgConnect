@@ -99,7 +99,7 @@ const AttendeesPage = () => {
     }
   };
   return (
-    <div className="bg-[#fefefe] shadow-lg rounded-lg border border-gray-200 text-gray-900 px-6 py-5 flex flex-col relative">
+    <div className="md:bg-[#fefefe] md:shadow-lg md:rounded-lg md:border md:border-gray-200 text-gray-900 px-6 py-5 flex flex-col relative">
       <div className="leading-none mb-3">
         <h1 className="font-bold text-2xl inline-flex items-center gap-1">
           {currentEvent.title}{" "}
