@@ -7,7 +7,8 @@ import mongoose from "mongoose";
 const membershipSchema = new mongoose.Schema(
   {
     student: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Student", // Reference to the Student model
       required: true,
     },
     organization: {
