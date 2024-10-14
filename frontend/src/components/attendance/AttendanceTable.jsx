@@ -171,7 +171,7 @@ const AttendeesTable = ({ data, loading }) => {
                   <div className="flex flex-col items-center justify-center">
                     <p className="text-sm text-gray-600">No results found</p>
                     <p className="text-xs text-gray-400">
-                      Try adjusting your filters or adding new data.
+                      Try adjusting your filters or log student attendance.
                     </p>
                   </div>
                 </TableCell>
