@@ -14,22 +14,22 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
+} from "../../components/ui/table";
+import { Button } from "../../components/ui/button";
 import {
   Select,
   SelectTrigger,
   SelectValue,
   SelectContent,
   SelectItem,
-} from "@/components/ui/select";
+} from "../../components/ui/select";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
+} from "../../components/ui/dropdown-menu";
+import { Input } from "../../components/ui/input";
 import {
   ChevronLeft,
   ChevronRight,
@@ -37,7 +37,7 @@ import {
   QrCodeIcon,
   Settings2,
 } from "lucide-react";
-import { columns } from "@/components/attendance/columns";
+import { columns } from "../../components/attendance/columns";
 import { Tab } from "@material-tailwind/react";
 
 const AttendeesTable = ({ data, loading }) => {

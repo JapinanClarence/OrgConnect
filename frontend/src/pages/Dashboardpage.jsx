@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import Statcard from "@/components/Statcard";
+import Statcard from "../components/Statcard";
 import { ChartCandlestick, ChartNoAxesColumn, ChartSpline, Users } from "lucide-react";
 
 const Dashboard = () => {

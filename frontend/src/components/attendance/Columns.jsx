@@ -1,7 +1,7 @@
 // PaymentColumns.js
 import React from "react";
 import { CaretSortIcon, DotsHorizontalIcon } from "@radix-ui/react-icons";
-import { Button } from "@/components/ui/button";
+import { Button } from "../../components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -9,9 +9,9 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-} from "@/components/ui/dropdown-menu";
+} from "../../components/ui/dropdown-menu";
 import { Ban, CheckCircle, LockKeyhole, LockKeyholeOpen } from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "../../components/ui/avatar";
 // Define the columns for the table
 export const columns = [
   {

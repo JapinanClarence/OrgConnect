@@ -4,7 +4,7 @@ import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@/components/ui/tooltip";
+} from "../components/ui/tooltip";
 import {
   Home,
   Calendar,
@@ -20,7 +20,7 @@ import {
   View,
   ScrollText,
 } from "lucide-react";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "../components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -28,9 +28,9 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
-import { useAuth } from "@/context/AuthContext";
+} from "../components/ui/dropdown-menu";
+import { Button } from "../components/ui/button";
+import { useAuth } from "../context/AuthContext";
 
 const DesktopSidebar = () => {
   const location = useLocation();

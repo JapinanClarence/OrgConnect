@@ -15,15 +15,15 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
+} from "../../components/ui/table";
+import { Button } from "../../components/ui/button";
 import {
   Select,
   SelectTrigger,
   SelectValue,
   SelectContent,
   SelectItem,
-} from "@/components/ui/select";
+} from "../../components/ui/select";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -32,17 +32,17 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
+} from "../../components/ui/dropdown-menu";
+import { Input } from "../../components/ui/input";
 import {
   ChevronLeft,
   ChevronRight,
   LoaderCircle,
   Settings2,
 } from "lucide-react";
-import { columns } from "@/components/payment/columns";
+import { columns } from "../../components/payment/columns";
 
-import TableSkeleton from "@/components/payment/TableSkeleton";
+import TableSkeleton from "../../components/payment/TableSkeleton";
 
 const PaymentTable = ({ data, loading, onAdd, onEdit, onDelete }) => {
   const [sorting, setSorting] = React.useState([]);

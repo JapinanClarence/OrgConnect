@@ -7,9 +7,9 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
-import { useAuth } from "@/context/AuthContext";
+} from "../components/ui/dropdown-menu";
+import { Button } from "../components/ui/button";
+import { useAuth } from "../context/AuthContext";
 
 const UserItem = () => {
     const { logout, userData } = useAuth();

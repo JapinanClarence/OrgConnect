@@ -1,4 +1,4 @@
-import { Card } from '@/components/ui/card';
+import { Card } from '../../components/ui/card';
 import React, {useState, useEffect} from 'react'
 import {
   Dialog,
@@ -6,7 +6,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogDescription,
-} from "@/components/ui/dialog";
+} from "../../components/ui/dialog";
 import {
   Form,
   FormField,
@@ -14,7 +14,7 @@ import {
   FormLabel,
   FormControl,
   FormMessage,
-} from "@/components/ui/form";
+} from "../../components/ui/form";
 import {
   Select,
   SelectContent,
@@ -23,15 +23,15 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
+} from "../../components/ui/select";
+import { Input } from "../../components/ui/input";
+import { Textarea } from "../../components/ui/textarea";
+import { Button } from "../../components/ui/button";
 import { LoaderCircle } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { AnnouncementSchema } from "@/schema";
-import { Alert, AlertDescription } from "@/components/ui/alert";
+import { zodResolver } from "../..hookform/resolvers/zod";
+import { AnnouncementSchema } from "../../schema";
+import { Alert, AlertDescription } from "../../components/ui/alert";
 
 const EditAnnouncementDialog = ({announcementData, open, onOpenChange, onSubmit, isSubmitting, errorMessage}) => {
 
