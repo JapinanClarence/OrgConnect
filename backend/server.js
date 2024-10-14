@@ -12,19 +12,29 @@ import attendanceRoutes from "./routes/admin/attendance.js"
 import adminAnnouncementRoutes from "./routes/admin/announcement.js";
 import adminPaymentRoutes from "./routes/admin/payment.js";
 
+const DB = process.env.DATABASE.replace("<PASSWORD>", process.env.DB_PASSWORD)
 const app = express();
 
 const PORT = process.env.PORT;
 
-//connect to local db
+//connect to db
 mongoose
-  .connect(process.env.DATABASE_LOCAL)
+  .connect(DB)
   .then(() => {
     console.log("DB connected successfully");
   })
   .catch((err) => {
     console.error("DB connection error:", err);
   });
+//connect to local db
+// mongoose
+//   .connect(process.env.DATABASE_LOCAL)
+//   .then(() => {
+//     console.log("DB connected successfully");
+//   })
+//   .catch((err) => {
+//     console.error("DB connection error:", err);
+//   });
 
 app.use(cors());
 
