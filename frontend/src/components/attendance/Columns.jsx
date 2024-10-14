@@ -75,6 +75,11 @@ export const columns = [
     cell: ({ row }) => <div className="text-xs">{row.getValue("email")}</div>,
   },
   {
+    accessorKey: "year",
+    header: "Year Level",
+    cell: ({ row }) => <div className="text-xs">{row.getValue("year")}</div>,
+  },
+  {
     accessorKey: "course",
     header: "Course",
     cell: ({ row }) => <div className="text-xs">{row.getValue("course")}</div>,

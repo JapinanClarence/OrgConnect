@@ -85,10 +85,11 @@ const AttendeesPage = () => {
           studentId: data.studentId,
           fullname: data.fullname,
           email: data.email,
+          year: data.year,
           course: data.course,
           profilePicture: data.profilePicture,
           checkIn: formatSimpleDateTime(data.checkIn),
-          checkOut: formatSimpleDateTime(data.checkOut),
+          checkOut: data.checkOut ? formatSimpleDateTime(data.checkOut) : null,
         }));
         setData(tableData);
       }
