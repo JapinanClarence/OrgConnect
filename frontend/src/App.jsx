@@ -1,16 +1,16 @@
 import { Route, Routes } from "react-router-dom";
-import { Toaster } from "@/components/ui/toaster";
-import DashboardLayout from "@/layouts/DashboardLayout";
-import Mainlayout from "@/layouts/Mainlayout";
-import Homepage from "@/pages/Homepage";
-import Dashboard from "@/pages/Dashboardpage";
-import Loginpage from "@/pages/Loginpage";
-import Signuppage from "@/pages/Signuppage";
-import ProtectedRoute from "@/components/auth/ProtectedRoutes";
-import Eventpage from "@/pages/Eventpage";
-import AnnouncementPage from "@/pages/AnnouncementPage";
-import PaymentPage from "@/pages/PaymentPage";
-import AttendancePage from "@/pages/AttendancePage";
+import { Toaster } from "./components/ui/toaster";
+import DashboardLayout from "./layouts/DashboardLayout";
+import Mainlayout from "./layouts/Mainlayout";
+import Homepage from "./pages/Homepage";
+import Dashboard from "./pages/Dashboardpage";
+import Loginpage from "./pages/Loginpage";
+import Signuppage from "./pages/Signuppage";
+import ProtectedRoute from "./components/auth/ProtectedRoutes";
+import Eventpage from "./pages/Eventpage";
+import AnnouncementPage from "./pages/AnnouncementPage";
+import PaymentPage from "./pages/PaymentPage";
+import AttendancePage from "./pages/AttendancePage";
 
 const App = () => {
   return (
