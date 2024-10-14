@@ -108,7 +108,7 @@ export const getAttendance = async (req, res, next) => {
     const student = await Promise.all(
       attendance.map(async (attendance) => {
         const data = await Student.findById(attendance.student).select(
-          "studentId firstname lastname middlename email course profilePicture"
+          "studentId firstname lastname middlename email year course profilePicture"
         );
         const fullname = `${data.firstname} ${data.middlename ? data.middlename[0] + '. ' : ''}${data.lastname}`;
         return {
@@ -117,6 +117,7 @@ export const getAttendance = async (req, res, next) => {
           fullname,
           email: data.email,
           course: data.course,
+          year: data.year,
           profilePicture : data.profilePicture,
           checkIn: attendance.checkIn,
           checkOut: attendance.checkOut
