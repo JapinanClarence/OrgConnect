@@ -1,9 +1,8 @@
 import mongoose from "mongoose";
 
 /**
- * 0 - Banned
+ * 0 - Pending
  * 1 - Approved
- * 2 - Pending
  */
 const membershipSchema = new mongoose.Schema(
   {
@@ -19,10 +18,10 @@ const membershipSchema = new mongoose.Schema(
     },
     status:{
       type: String,
-      enum: ["0", "1", "2"],
-      default: "2"
+      enum: ["0", "1"],
+      default: "0"
     },
-    joinDate: {
+    joinedDate: {
       type: Date,
     },
   },

@@ -25,9 +25,7 @@ export const getMembers = async (req, res) => {
 
     const memberData = await Promise.all(
       members.map(async (members) => {
-        const data = await Student.findById(members.student).select(
-          "studentId firstname lastname middlename email course profilePicture status"
-        );
+        const data = await Student.findById(members.student);
         const fullname = `${data.firstname} ${
           data.middlename ? data.middlename[0] + ". " : ""
         }${data.lastname}`;
@@ -36,6 +34,8 @@ export const getMembers = async (req, res) => {
           studentId: data.studentId,
           fullname,
           email: data.email,
+          age: data.age,
+          contact: data.contactNumber,
           course: data.course,
           profilePicture: data.profilePicture,
           status : members.status,
@@ -62,7 +62,10 @@ export const updateMember = async (req, res) =>{
 
     const member = await Membership.findByIdAndUpdate(
       memberId,
-      req.body
+      {
+        status: req.body.status,
+        joinedDate: Date.now()
+      }
     );
 
     if (!member) {
