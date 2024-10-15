@@ -92,12 +92,12 @@ export const columns =  (handleApprove, handleDelete) => [
         0: {
           name: "Pending",
           color: "bg-red-500",  
-          icon: (<Timer className="inline-block w-4 h-4 mr-1" /> )
+          icon: (<Timer size={18} strokeWidth={1.7} className="inline-block mr-1" /> )
         },
         1: {
           name: "Approved",
           color: "bg-green-600",
-          icon: ((<CircleCheck className="inline-block w-4 h-4 mr-1" /> ))
+          icon: ((<CircleCheck strokeWidth={2} size={15}  className="inline-block mr-1" /> ))
         },
       };
     

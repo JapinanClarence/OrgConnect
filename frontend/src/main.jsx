@@ -5,7 +5,6 @@ import "./index.css";
 // import "@radix-ui/themes/styles.css";
 import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
-import {Lines} from "react-preloaders";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

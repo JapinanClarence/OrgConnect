@@ -38,7 +38,6 @@ import {
   Settings2,
 } from "lucide-react";
 import { columns } from "@/components/attendance/columns";
-import { Tab } from "@material-tailwind/react";
 
 const AttendeesTable = ({ data, loading }) => {
   const [sorting, setSorting] = React.useState([]);

@@ -6,8 +6,8 @@ import {
   DialogHeader,
   DialogTitle,
   DialogDescription,
+  DialogFooter
 } from "@/components/ui/dialog";
-import { DialogBody, DialogFooter } from "@material-tailwind/react";
 import { Badge } from "@/components/ui/badge";
 
 const AnnouncementDetails = ({ announcementData, open, onOpenChange, onEdit }) => {
@@ -45,14 +45,14 @@ const AnnouncementDetails = ({ announcementData, open, onOpenChange, onEdit }) =
             </Badge>
           </div>
         </DialogHeader>
-        <DialogBody className="p-0 space-y-2 pb-2 border-b-[1px] border-zinc-300">
+        <div className="p-0 space-y-2 pb-2 border-b-[1px] border-zinc-300">
           <div>
             <h1 className="text-sm font-bold">Description</h1>
             <DialogDescription className="mt-2">
               {announcementData.description}
             </DialogDescription>
           </div>
-        </DialogBody>
+        </div>
         <DialogFooter className="justify-start p-0">
           <Button variant="link" className="w-min p-0 font-bold h-min" onClick={handleEdit}>
             Edit
