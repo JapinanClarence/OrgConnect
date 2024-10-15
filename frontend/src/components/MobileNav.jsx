@@ -73,12 +73,6 @@ const MobileNav = () => {
           >
             Payments
           </button>
-          {/* <button
-            onClick={() => handleNavigation("/events")}
-            className="rounded-lg hover:bg-gray-800 p-2 w-full text-left"
-          >
-            Attendance
-          </button> */}
           <button
             onClick={() => handleNavigation("#")}
             className="rounded-lg hover:bg-gray-800 p-2 w-full text-left"
@@ -87,13 +81,13 @@ const MobileNav = () => {
           </button>
 
           <button
-            onClick={() => handleNavigation("#")}
+            onClick={() => handleNavigation("/members")}
             className="rounded-lg hover:bg-gray-800 p-2 w-full text-left"
           >
             Members
           </button>
           <button
-            onClick={() => handleNavigation("/members")}
+            onClick={() => handleNavigation("#")}
             className="rounded-lg hover:bg-gray-800 p-2 w-full text-left"
           >
             Analytics
