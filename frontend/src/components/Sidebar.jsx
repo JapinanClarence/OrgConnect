@@ -38,8 +38,10 @@ const DesktopSidebar = () => {
   // Helper to check if a path is active
   const isActive = (path) => location.pathname === path;
 
+  const fullname = `${userData.firstname} ${
+    userData.middlename ? userData.middlename[0] + ". " : ""
+  }${userData.lastname}`;
   return (
-
     <aside className="fixed left-0 z-40 h-full flex-col border-r hidden md:flex lg:w-64 text-white bg-gray-900">
       <div className="border-b border-zinc-500 flex justify-start items-center py-2 px-4">
         <Link to={"/"} aria-label="Home">
@@ -78,8 +80,6 @@ const DesktopSidebar = () => {
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
-
-        
 
         <TooltipProvider>
           <Tooltip>
@@ -274,14 +274,30 @@ const DesktopSidebar = () => {
             <TooltipTrigger asChild>
               <div className="flex items-center">
                 {/* Avatar remains visible on all screen sizes */}
-                <Avatar className="size-10">
-                  <AvatarFallback className="text-gray-500">AD</AvatarFallback>
-                </Avatar>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Avatar className="cursor-pointer size-10">
+                      <AvatarFallback className="text-gray-500">
+                        AD
+                      </AvatarFallback>
+                    </Avatar>
+                  </DropdownMenuTrigger>
+
+                  <DropdownMenuContent align="start" className="bg-white">
+                    <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>Profile</DropdownMenuItem>
+                    <DropdownMenuItem>Settings</DropdownMenuItem>
+                    <DropdownMenuItem onSelect={handleLogout}>
+                      Logout
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
 
                 {/* Hide name on medium screens and above */}
                 <div className="hidden lg:inline lg:ml-3 text-sm font-bold">
-                  John Doe{" "}
-                  <span className="font-normal">johnDoe@gmail.com</span>
+                  {fullname}{" "}
+                  <span className="font-normal">{userData.email}</span>
                 </div>
 
                 {/* Hide dropdown menu on medium screens and above */}
@@ -291,7 +307,7 @@ const DesktopSidebar = () => {
                       className="hidden lg:inline w-min mr-0 ml-auto p-0 bg-inherit hover:bg-transparent"
                       size="icon"
                     >
-                      <MoreVertical size={23}/>
+                      <MoreVertical size={23} />
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end" className="bg-white">
@@ -299,12 +315,18 @@ const DesktopSidebar = () => {
                     <DropdownMenuSeparator />
                     <DropdownMenuItem>Profile</DropdownMenuItem>
                     <DropdownMenuItem>Settings</DropdownMenuItem>
-                    <DropdownMenuItem onSelect={handleLogout}>Logout</DropdownMenuItem>
+                    <DropdownMenuItem onSelect={handleLogout}>
+                      Logout
+                    </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </div>
             </TooltipTrigger>
-            <TooltipContent className="lg:hidden bg-white text-zinc-900" side="right" sideOffset={5}>
+            <TooltipContent
+              className="lg:hidden bg-white text-zinc-900"
+              side="right"
+              sideOffset={5}
+            >
               Account
             </TooltipContent>
           </Tooltip>
