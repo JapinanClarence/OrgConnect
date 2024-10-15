@@ -42,8 +42,8 @@ const Header = ({ title }) => {
     <header className="sticky top-0 z-30 flex h-[53px] items-center border-b bg-zinc-100 px-4 shadow-sm ">
       <MobileNav />
 
-      <Breadcrumb>
-        <BreadcrumbList>
+      <Breadcrumb >
+        <BreadcrumbList className="md:text-sm text-xs">
           {/* Home Breadcrumb */}
           <BreadcrumbItem>
             <BreadcrumbLink
