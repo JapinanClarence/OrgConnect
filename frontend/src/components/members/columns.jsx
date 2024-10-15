@@ -13,7 +13,7 @@ import {
 import { CircleCheck, Timer} from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 // Define the columns for the table
-export const columns =  (handleEdit, handleDelete) => [
+export const columns =  (handleApprove, handleDelete) => [
   {
     id: "profilePicture",
     enableHiding: false,
@@ -139,10 +139,10 @@ export const columns =  (handleEdit, handleDelete) => [
               Copy Member ID
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => handleEdit(member)}>
-              Manage Member
+            <DropdownMenuItem onClick={() => handleApprove(member.id)}>
+              Approve
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => handleDelete(member.id)}>Kick Member</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => handleDelete(member.id)}>Kick</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );
