@@ -92,7 +92,7 @@ export const deleteMember = async (req, res) =>{
   try {
     const memberId = req.params.id;
 
-    const member = await Membership.findByIdAndDelete(memberId);
+    const member = await Membership.findOneAndDelete({student: memberId});
 
     if (!member) {
       return res.status(404).json({
