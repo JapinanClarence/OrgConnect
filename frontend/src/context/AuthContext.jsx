@@ -68,7 +68,7 @@ export const AuthProvider = ({ children }) => {
 
   // If loading, do not render children yet
   if (isLoading) {
-    return <div>Loading...</div>; // Or a custom loading component
+    return <div className="h-screen my-auto mx-auto"></div>; 
   }
 
   return (
