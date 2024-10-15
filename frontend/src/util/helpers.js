@@ -23,3 +23,11 @@ export const formatSimpleDateTime = (dateString) => {
     hour12: true          // AM/PM format
   });
 };
+export const dateOnly = (dateString) =>{
+  const date = new Date(dateString); // Parse the date string into a Date object
+  return date.toLocaleString("en-US", {
+    year: "numeric",      // Full year
+    month: "2-digit",     // 2-digit month (MM)
+    day: "2-digit",       // Day of the month with leading zero (DD)
+  });
+}

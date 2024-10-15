@@ -36,10 +36,11 @@ export const getMembers = async (req, res) => {
           email: data.email,
           age: data.age,
           contact: data.contactNumber,
+          year: data.year,
           course: data.course,
           profilePicture: data.profilePicture,
           status : members.status,
-          joinDate: members.joinDate,
+          joinedDate: members.joinedDate,
         };
       })
     );
