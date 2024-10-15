@@ -43,7 +43,7 @@ import {
 import { columns } from "@/components/members/columns";
 import TableSkeleton from "@/components/members/TableSkeleton";
 
-const MembersTable = ({ data, loading, onApprove, onDelete }) => {
+const MembersTable = ({ data, loading, onApprove, onDelete, onClick }) => {
   const [sorting, setSorting] = React.useState([]);
   const [columnFilters, setColumnFilters] = React.useState([]);
   const [columnVisibility, setColumnVisibility] = React.useState({});
@@ -158,6 +158,7 @@ const MembersTable = ({ data, loading, onApprove, onDelete }) => {
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
+                  onClick={() => onClick(row.original)}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>

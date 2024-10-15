@@ -14,6 +14,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import MemberDialog from "@/components/members/MemberDialog";
 
 const yearMap = {
   1: "1st Year",
@@ -26,6 +27,7 @@ const MembersPage = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showAlert, setShowAlert] = useState(false);
+  const [showDialog, setShowDialog] = useState(false);
   const [currentMember, setCurrentMember] = useState("");
   const { toast } = useToast();
   const date = formatDate(Date.now());
@@ -52,6 +54,8 @@ const MembersPage = () => {
           fullname: data.fullname,
           email: data.email,
           year: yearMap[data.year],
+          age: data.age,
+          contact: data.contact,
           course: data.course,
           status: data.status,
           joinedDate: data.joinedDate ? dateOnly(data.joinedDate) : null,
@@ -131,14 +135,19 @@ const MembersPage = () => {
       });
     }
   }
+  const handleRowClick = (data) =>{
+    setShowDialog(true);
+    setCurrentMember(data);
+  }
+
   return (
     <div className="md:bg-[#fefefe] md:shadow-lg rounded-lg md:border md:border-gray-200 text-gray-900 px-6 py-5 flex flex-col relative">
       <h1 className="font-bold">Organization Members</h1>
       <p className="text-sm text-muted-foreground">
         View and manage organization members here.
       </p>
-      <MembersTable data={data} loading={loading} onApprove={handleApprove} onDelete={handleDeleteDialog}/>
-
+      <MembersTable data={data} loading={loading} onApprove={handleApprove} onDelete={handleDeleteDialog} onClick={handleRowClick}/>
+      <MemberDialog data={currentMember} open={showDialog} onOpenChange={setShowDialog} />
       <AlertDialog open={showAlert} onOpenChange={setShowAlert}>
         <AlertDialogContent className="bg-white">
           <AlertDialogHeader>
@@ -158,6 +167,7 @@ const MembersPage = () => {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
     </div>
   );
 };

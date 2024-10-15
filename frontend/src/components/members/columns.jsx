@@ -10,10 +10,10 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
-import { CircleCheck, Timer} from "lucide-react";
+import { CircleCheck, Timer } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 // Define the columns for the table
-export const columns =  (handleApprove, handleDelete) => [
+export const columns = (handleApprove, handleDelete) => [
   {
     id: "profilePicture",
     enableHiding: false,
@@ -91,24 +91,33 @@ export const columns =  (handleApprove, handleDelete) => [
       const statusMap = {
         0: {
           name: "Pending",
-          color: "bg-red-500",  
-          icon: (<Timer size={18} strokeWidth={1.7} className="inline-block mr-1" /> )
+          color: "bg-red-500",
+          icon: (
+            <Timer size={18} strokeWidth={1.7} className="inline-block mr-1" />
+          ),
         },
         1: {
           name: "Approved",
           color: "bg-green-600",
-          icon: ((<CircleCheck strokeWidth={2} size={15}  className="inline-block mr-1" /> ))
+          icon: (
+            <CircleCheck
+              strokeWidth={2}
+              size={15}
+              className="inline-block mr-1"
+            />
+          ),
         },
       };
-    
+
       const status = statusMap[row.getValue("status")];
-    
+
       return (
         <span className={`text-xs flex items-center`}>
-          {status?.icon}{status?.name}
+          {status?.icon}
+          {status?.name}
         </span>
       );
-    },    
+    },
   },
   {
     accessorKey: "joinedDate",
@@ -123,6 +132,21 @@ export const columns =  (handleApprove, handleDelete) => [
     cell: ({ row }) => {
       const member = row.original;
 
+      const handleCopy = (event) => {
+        event.stopPropagation(); // Prevent the row click event
+        navigator.clipboard.writeText(member.id);
+      };
+
+      const handleApprove = (event) => {
+        event.stopPropagation(); // Prevent the row click event
+        // Add your approve logic here
+      };
+
+      const handleDelete = (event) => {
+        event.stopPropagation(); // Prevent the row click event
+        // Add your delete logic here
+      };
+
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -133,16 +157,12 @@ export const columns =  (handleApprove, handleDelete) => [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(member.id)}
-            >
+            <DropdownMenuItem onClick={handleCopy}>
               Copy Member ID
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => handleApprove(member.id)}>
-              Approve
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => handleDelete(member.id)}>Kick</DropdownMenuItem>
+            <DropdownMenuItem onClick={handleApprove}>Approve</DropdownMenuItem>
+            <DropdownMenuItem onClick={handleDelete}>Kick</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );
