@@ -73,12 +73,10 @@ const Loginform = () => {
     }
   };
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
+    <div
+      className="w-full"
     >
-      <Card className="m-10 rounded-xl bg-white max-w-3xl w-[450px] shadow border border-gray-300">
+      <Card className="mx-auto border-none shadow-none  md:rounded-xl md:bg-white w-full md:max-w-lg md:shadow-md md:border md:border-gray-300">
         <CardHeader>
           <img
             src="OrgConnect-transparent.svg"
@@ -170,16 +168,16 @@ const Loginform = () => {
             </form>
           </Form>
         </CardContent>
-        <CardFooter className="flex justify-center items-center">
+        {/* <CardFooter className="flex justify-center items-center">
           <p className="text-sm text-slate-900 text-center">
             Don't have an account?{" "}
             <Link to="/signup" className="font-bold hover:underline">
               Create an account
             </Link>
           </p>
-        </CardFooter>
+        </CardFooter> */}
       </Card>
-    </motion.div>
+    </div>
   );
 };
 
