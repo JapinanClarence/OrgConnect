@@ -49,7 +49,7 @@ export const getMembers = async (req, res) => {
       success: true,
       data: memberData,
     });
-  } catch (error) {
+  } catch (err) {
     return res.status(500).json({
       success: false,
       message: err.message,
