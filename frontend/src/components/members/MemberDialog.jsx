@@ -46,7 +46,7 @@ const MemberDialog = ({ data, open, onOpenChange }) => {
           </div>
         </div>
         <div>
-          <div className="text-sm font-bold mb-2 border-b border-zinc-300">
+          <div className="text-sm font-semibold mb-2 border-b border-zinc-300">
             Basic Information
           </div>
           <div className="my-auto grid grid-cols-[90px_1fr] text-sm">
@@ -60,7 +60,7 @@ const MemberDialog = ({ data, open, onOpenChange }) => {
         </div>
 
         <div>
-          <div className="text-sm font-bold mb-2 border-b border-zinc-300">
+          <div className="text-sm font-semibold mb-2 border-b border-zinc-300">
             Contact Information
           </div>
           <div className="my-auto grid grid-cols-[90px_1fr] text-sm">
@@ -75,7 +75,7 @@ const MemberDialog = ({ data, open, onOpenChange }) => {
           </div>
         </div>
         <div>
-          <div className="text-sm font-bold mb-2 border-b border-zinc-300">
+          <div className="text-sm font-semibold mb-2 border-b border-zinc-300">
             Academic Information
           </div>
           <div className="my-auto grid grid-cols-[90px_1fr] text-sm">

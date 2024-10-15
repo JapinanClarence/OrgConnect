@@ -6,9 +6,9 @@ const ProtectedRoute = () => {
   const { isAuthenticated, isLoading } = useAuth();
 
   // Check if the authentication status is still loading
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  // if (isLoading) {
+  //   return <div className="h-screen my-auto mx-auto">Loading..</div>;
+  // }
 
   // Render the child routes if authenticated, otherwise redirect to login
   return isAuthenticated ? <Outlet /> : <Navigate to="/login" />;

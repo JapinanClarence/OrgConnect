@@ -13,12 +13,7 @@ import {
   Users,
   SquareTerminal,
   MoreVertical,
-  WalletCards,
-  DollarSign,
-  CoinsIcon,
   Wallet,
-  View,
-  ScrollText,
 } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {

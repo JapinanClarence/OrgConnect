@@ -225,11 +225,6 @@ const AnnouncementPage = () => {
         </div>
 
         {loading ? (
-          // <div className="flex flex-col items-center justify-center h-full">
-          //   <div className="text-zinc-400 flex items-center gap-2">
-          //     <LoaderCircle className="animate-spin" /> Loading...
-          //   </div>
-          // </div>
           <div className="flex flex-col gap-2 overflow-y-auto">
             <div className="shadow-sm bg-white border-[1px] rounded-lg border-zinc-300 p-5 flex flex-col gap-2">
               <div>
