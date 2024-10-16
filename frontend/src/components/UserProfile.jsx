@@ -42,7 +42,7 @@ const UserProfile = ({ userData, open, onOpenChange }) => {
       [fieldName]: !prev[fieldName], // Toggle only the specific field
     }));
   };
-  
+
   const form = useForm({
     resolver: zodResolver(AdminSchema),
     defaultValues: userData || {}, // Set default values at initialization
@@ -69,8 +69,8 @@ const UserProfile = ({ userData, open, onOpenChange }) => {
           </DialogDescription>
         </DialogHeader>
 
-        <div>
-          <div className="mt-10 flex gap-5 mb-5">
+        <div className="mt-3">
+          <div className="flex gap-5 mb-5">
             <Avatar className="size-16">
               <AvatarImage src={""} alt="User Profile" />
               <AvatarFallback className="bg-gray-200 text-gray-400 font-bold">
@@ -79,7 +79,7 @@ const UserProfile = ({ userData, open, onOpenChange }) => {
               </AvatarFallback>
             </Avatar>
             <div className="grid w-full max-w-sm items-center gap-1.5">
-              <Label htmlFor="picture text-sm">Picture</Label>
+              <Label htmlFor="picture text-sm">Profile Picture</Label>
               <Input id="picture" type="file" className="p-1" />
             </div>
           </div>
