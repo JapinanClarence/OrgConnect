@@ -56,7 +56,7 @@ const Eventpage = () => {
   };
 
   const onSubmit = async (data) => {
-    const user = JSON.parse(localStorage.getItem("userData"));
+    const  token = localStorage.getItem("token");
     try {
       setIsSubmitting(true);
       const { title, description, location } = EventSchema.parse(data);
@@ -71,7 +71,7 @@ const Eventpage = () => {
 
       const response = await apiClient.post("/admin/event", formData, {
         headers: {
-          Authorization: user.token,
+          Authorization: token,
         },
       });
       if (response) {
@@ -92,7 +92,7 @@ const Eventpage = () => {
   };
 
   const onEdit = async (data) => {
-    const user = JSON.parse(localStorage.getItem("userData"));
+    const  token = localStorage.getItem("token");
     try {
       setIsSubmitting(true);
       const { id, title, description, location, startDate, endDate, active } =
@@ -109,7 +109,7 @@ const Eventpage = () => {
 
       const response = await apiClient.patch(`/admin/event/${selectedEvent.id}`, formData, {
         headers: {
-          Authorization: user.token,
+          Authorization: token,
         },
       });
 
@@ -130,12 +130,12 @@ const Eventpage = () => {
     }
   };
   const handleDelete = async (eventId) => {
-    const user = JSON.parse(localStorage.getItem("userData"));
+    const  token = localStorage.getItem("token");
 
     try {
       const response = await apiClient.delete(`/admin/event/${eventId}`, {
         headers: {
-          Authorization: user.token,
+          Authorization: token,
         },
       });
 
@@ -158,10 +158,10 @@ const Eventpage = () => {
 
   const fetchEvents = async () => {
     try {
-      const user = JSON.parse(localStorage.getItem("userData"));
+      const  token = localStorage.getItem("token");
       const { data } = await apiClient.get("/admin/event/", {
         headers: {
-          Authorization: user.token,
+          Authorization: token,
         },
       });
 
