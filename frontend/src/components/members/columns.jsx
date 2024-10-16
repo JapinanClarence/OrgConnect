@@ -13,7 +13,7 @@ import {
 import { CircleCheck, Timer } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 // Define the columns for the table
-export const columns = (handleApprove, handleDelete) => [
+export const columns = (onApprove, onKick) => [
   {
     id: "profilePicture",
     enableHiding: false,
@@ -139,12 +139,12 @@ export const columns = (handleApprove, handleDelete) => [
 
       const handleApprove = (event) => {
         event.stopPropagation(); // Prevent the row click event
-        // Add your approve logic here
+        onApprove(member.id)
       };
 
       const handleDelete = (event) => {
         event.stopPropagation(); // Prevent the row click event
-        // Add your delete logic here
+        onKick(member.id)
       };
 
       return (
@@ -161,7 +161,7 @@ export const columns = (handleApprove, handleDelete) => [
               Copy Member ID
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={handleApprove}>Approve</DropdownMenuItem>
+            <DropdownMenuItem className={``} onClick={handleApprove}>Approve</DropdownMenuItem>
             <DropdownMenuItem onClick={handleDelete}>Kick</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

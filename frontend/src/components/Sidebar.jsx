@@ -26,8 +26,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/AuthContext";
+import { useState } from "react";
+import UserProfile from "./UserProfile";
 
 const DesktopSidebar = () => {
+  const [showUserDialog, setShowUserDialog] = useState(false);
   const location = useLocation();
   const { logout, userData } = useAuth();
 
@@ -42,7 +45,11 @@ const DesktopSidebar = () => {
     userData.middlename ? userData.middlename[0] + ". " : ""
   }${userData.lastname}`;
   return (
-    <aside className="fixed left-0 z-40 h-full flex-col border-r hidden md:flex lg:w-64 text-white bg-gray-900">
+    <aside
+      className={`fixed left-0 h-full flex-col border-r hidden md:flex lg:w-64 text-white bg-gray-900 ${
+        showUserDialog ? "pointer-events-none" : ""
+      }`}
+    >
       <div className="border-b border-zinc-500 flex justify-start items-center py-2 px-4">
         <Link to={"/"} aria-label="Home">
           <img
@@ -247,7 +254,6 @@ const DesktopSidebar = () => {
           <Tooltip>
             <TooltipTrigger asChild>
               <div className="flex items-center">
-                {/* Avatar remains visible on all screen sizes */}
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Avatar className="cursor-pointer size-10">
@@ -260,21 +266,20 @@ const DesktopSidebar = () => {
                   <DropdownMenuContent align="start" className="bg-white">
                     <DropdownMenuLabel>My Account</DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem>Profile</DropdownMenuItem>
-                    <DropdownMenuItem>Settings</DropdownMenuItem>
+                    <DropdownMenuItem onSelect={() => setShowUserDialog(true)}>
+                      Edit Profile
+                    </DropdownMenuItem>
                     <DropdownMenuItem onSelect={handleLogout}>
                       Logout
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
 
-                {/* Hide name on medium screens and above */}
                 <div className="hidden lg:inline lg:ml-3 text-sm font-bold">
                   {fullname}{" "}
                   <span className="font-normal">{userData.email}</span>
                 </div>
 
-                {/* Hide dropdown menu on medium screens and above */}
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button
@@ -287,9 +292,10 @@ const DesktopSidebar = () => {
                   <DropdownMenuContent align="end" className="bg-white">
                     <DropdownMenuLabel>My Account</DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem>Profile</DropdownMenuItem>
-                    <DropdownMenuItem>Settings</DropdownMenuItem>
-                    <DropdownMenuItem onSelect={handleLogout}>
+                    <DropdownMenuItem onClick={() => setShowUserDialog(true)}>
+                      Edit Profile
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={handleLogout}>
                       Logout
                     </DropdownMenuItem>
                   </DropdownMenuContent>
@@ -306,6 +312,7 @@ const DesktopSidebar = () => {
           </Tooltip>
         </TooltipProvider>
       </nav>
+      <UserProfile open={showUserDialog} onOpenChange={setShowUserDialog}/>
     </aside>
   );
 };

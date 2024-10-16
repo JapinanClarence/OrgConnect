@@ -38,6 +38,32 @@ export const SignupSchema = z.object({
     .string()
     .min(8, { message: "Password should be at least 8 characters" }),
 });
+
+export const AdminSchema = z.object({
+  firstname: z.string().min(1, {
+    message: "Firstname is required",
+  }),
+  lastname: z.string().min(1, {
+    message: "Lastname is required",
+  }),
+  middlename: z.string().optional(),
+  username: z.string().min(1,{
+    message: "Username is required"
+  }),
+  email: z.string().email({
+    message: "Invalid email",
+  }),
+})
+
+export const FileSchema = z
+  .object({
+    file: z
+      .instanceof(File)
+      .refine((file) => file.size <= 5000000, "File size should be 5MB or less") // max 5MB
+      .refine((file) => ["image/jpeg", "image/png"].includes(file.type), "File must be a JPG or PNG")
+  })
+  .required();
+
 export const OrgSchema = z.object({
   name: z.string().min(1, {
     message: "Organization name is required",

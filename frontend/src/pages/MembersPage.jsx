@@ -66,7 +66,7 @@ const MembersPage = () => {
 
       setLoading(false);
     } catch (error) {
-      console.log(error.response.message);
+      console.log(error);
       setLoading(false);
     }
   };
