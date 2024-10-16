@@ -47,7 +47,7 @@ const Header = () => {
   
   return (
     <>
-      <header className="top-0 flex h-[53px] items-center border-b bg-zinc-100 px-4 shadow-sm relative">
+      <header className="top-0 flex h-[53px] items-center border-b bg-zinc-100 px-4 shadow-sm sticky z-10">
         <MobileNav />
 
         <Breadcrumb>

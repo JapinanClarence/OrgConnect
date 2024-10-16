@@ -46,9 +46,7 @@ const DesktopSidebar = () => {
   }${userData.lastname}`;
   return (
     <aside
-      className={`fixed left-0 h-full flex-col border-r hidden md:flex lg:w-64 text-white bg-gray-900 ${
-        showUserDialog ? "pointer-events-none" : ""
-      }`}
+      className={`fixed left-0 h-full flex-col border-r hidden md:flex lg:w-64 text-white bg-gray-900`}
     >
       <div className="border-b border-zinc-500 flex justify-start items-center py-2 px-4">
         <Link to={"/"} aria-label="Home">
