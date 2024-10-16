@@ -20,10 +20,10 @@ const Homepage = () => {
   useEffect(() => {
     const getOrganizationData = async () => {
       try {
-        const user = JSON.parse(localStorage.getItem("userData"));
+        const  token = localStorage.getItem("token");
         const { data } = await apiClient.get("/admin/organization/", {
           headers: {
-            Authorization: user.token,
+            Authorization: token,
           },
         });
 

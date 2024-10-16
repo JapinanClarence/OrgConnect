@@ -23,6 +23,10 @@ import {
 } from "@/components/ui/form";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { LoaderCircle, Pen, Camera } from "lucide-react";
+import apiClient from "@/api/axios";
+import { useToast } from "@/hooks/use-toast";
+import { formatDate } from "@/util/helpers";
+import { useAuth } from "@/context/AuthContext";
 
 const UserProfile = ({ userData, open, onOpenChange }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -34,7 +38,8 @@ const UserProfile = ({ userData, open, onOpenChange }) => {
     username: false,
     email: false,
   });
-
+  const { toast } = useToast();
+  const date = formatDate(Date.now());
   // Function to toggle editability
   const handleEditToggle = (fieldName) => {
     setIsEditable((prev) => ({
@@ -49,7 +54,7 @@ const UserProfile = ({ userData, open, onOpenChange }) => {
   });
 
   const { reset } = form;
-
+  const {  setUserData } = useAuth();
   // Use effect to reset form when userData changes
   useEffect(() => {
     if (userData) {
@@ -57,7 +62,33 @@ const UserProfile = ({ userData, open, onOpenChange }) => {
     }
   }, [userData, reset]);
 
-  const onSubmit = () => {};
+  const onSubmit = async(data) => {
+    const token = localStorage.getItem("token");
+    try {
+      setIsSubmitting(true);
+
+      const res = await apiClient.patch(`/admin/profile/`, data, {
+        headers: {
+          Authorization: token,
+        },
+      });
+
+      if (res) {
+        setIsSubmitting(false);
+        onOpenChange(false)
+        form.reset();
+        toast({
+          title: "User info has been updated",
+          description: `${date}`,
+        });
+      }
+      onOpenChange(false)
+    } catch (error) {
+      console.log(error)
+      setErrorMessage(error.data.message)
+      onOpenChange(false);
+    }
+  };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>

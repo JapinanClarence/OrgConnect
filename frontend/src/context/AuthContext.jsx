@@ -17,9 +17,9 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    const storedData = JSON.parse(localStorage.getItem("userData"));
-    if (storedData) {
-      const { token, userData } = storedData;
+    const token = localStorage.getItem("token");
+    const userData = JSON.parse(localStorage.getItem("userData"));
+    if (token) {
       try {
         const decoded = jwtDecode(token);
         if (isTokenExpired(decoded)) {
@@ -42,7 +42,8 @@ export const AuthProvider = ({ children }) => {
       logout();
       return;
     }
-    localStorage.setItem("userData", JSON.stringify({ token: newToken, userData: newData }));
+    localStorage.setItem("token", newToken);
+    localStorage.setItem("userData",JSON.stringify(newData));
     setToken(newToken);
     setUserData(newData);
     setIsAuthenticated(true);
