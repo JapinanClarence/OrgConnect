@@ -54,7 +54,7 @@ const UserProfile = ({ userData, open, onOpenChange }) => {
   });
 
   const { reset } = form;
-  const {  setUserData } = useAuth();
+  const {  token } = useAuth();
   // Use effect to reset form when userData changes
   useEffect(() => {
     if (userData) {
@@ -63,7 +63,7 @@ const UserProfile = ({ userData, open, onOpenChange }) => {
   }, [userData, reset]);
 
   const onSubmit = async(data) => {
-    const token = localStorage.getItem("token");
+    
     try {
       setIsSubmitting(true);
 
@@ -74,6 +74,7 @@ const UserProfile = ({ userData, open, onOpenChange }) => {
       });
 
       if (res) {
+        localStorage.setItem("userData", JSON.stringify(data));
         setIsSubmitting(false);
         onOpenChange(false)
         form.reset();

@@ -56,7 +56,7 @@ export const AuthProvider = ({ children }) => {
     setIsAuthenticated(false);
     navigate("/login");
   };
-
+  
   useEffect(() => {
     if (isAuthenticated && token) {
       const decoded = jwtDecode(token);

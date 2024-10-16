@@ -21,6 +21,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Plus } from "lucide-react";
 import AnnouncementDetails from "@/components/announcement/AnnouncementDetails";
 import EditAnnouncementDialog from "@/components/announcement/EditAnnouncementDialog";
+import { useAuth } from "@/context/AuthContext";
 
 const AnnouncementPage = () => {
   const [announcements, setAnnouncement] = useState([]);
@@ -35,7 +36,7 @@ const AnnouncementPage = () => {
   const [showEditDialog, setShowEditDialog] = useState(false);
   const { toast } = useToast();
   const date = formatDate(Date.now());
-
+  const { token } = useAuth();
   const [visibleCount, setVisibleCount] = useState(10);
 
   const form = useForm({
@@ -56,7 +57,6 @@ const AnnouncementPage = () => {
   }, [announcements, selectedCategory]);
 
   const fetchAnnouncements = async () => {
-    const  token = localStorage.getItem("token");
     try {
       const { data } = await apiClient.get("/admin/announcement", {
         headers: {
@@ -104,8 +104,6 @@ const AnnouncementPage = () => {
   };
 
   const onAddEvent = async (data) => {
-    const  token = localStorage.getItem("token");
-
     try {
       setIsSubmitting(true);
       const res = await apiClient.post("/admin/announcement", data, {
@@ -132,8 +130,6 @@ const AnnouncementPage = () => {
     }
   };
   const onEdit = async (data) => {
-    const  token = localStorage.getItem("token");
-
     try {
       setIsSubmitting(true);
 
@@ -145,11 +141,15 @@ const AnnouncementPage = () => {
         category,
       };
 
-      const res = await apiClient.patch(`/admin/announcement/${currentAnnouncement.id}`, formData, {
-        headers: {
-          Authorization: token,
-        },
-      });
+      const res = await apiClient.patch(
+        `/admin/announcement/${currentAnnouncement.id}`,
+        formData,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
 
       if (res) {
         await fetchAnnouncements();
@@ -169,7 +169,6 @@ const AnnouncementPage = () => {
     }
   };
   const onDelete = async (id) => {
-    const  token = localStorage.getItem("token");
     try {
       const res = await apiClient.delete(`/admin/announcement/${id}`, {
         headers: {
