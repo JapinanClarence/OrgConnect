@@ -46,11 +46,11 @@ const PaymentPage = () => {
   }, []);
 
   const fetchPayments = async () => {
-    const user = JSON.parse(localStorage.getItem("userData"));
+    const  token = localStorage.getItem("token");
     try {
       const { data } = await apiClient.get("/admin/payment", {
         headers: {
-          Authorization: user.token,
+          Authorization: token,
         },
       });
 
@@ -74,12 +74,12 @@ const PaymentPage = () => {
   };
 
   const onAdd = async (data) => {
-    const user = JSON.parse(localStorage.getItem("userData"));
+    const  token = localStorage.getItem("token");
     try {
       setIsSubmitting(true);
       const res = await apiClient.post("/admin/payment", data, {
         headers: {
-          Authorization: user.token,
+          Authorization: token,
         },
       });
 
@@ -122,11 +122,11 @@ const PaymentPage = () => {
 
   const onDelete = async (paymentId) =>{
 
-    const user = JSON.parse(localStorage.getItem("userData"));
+    const  token = localStorage.getItem("token");
     try {
       const res = await apiClient.delete(`/admin/payment/${paymentId}`, {
         headers: {
-          Authorization: user.token,
+          Authorization: token,
         },
       });
 
@@ -148,13 +148,13 @@ const PaymentPage = () => {
   }
 
   const onEdit = async (data) =>{
-    const user = JSON.parse(localStorage.getItem("userData"));
+    const  token = localStorage.getItem("token");
 
     try {
       setIsSubmitting(true);
       const res = await apiClient.patch(`/admin/payment/${currenPayment.id}`, data, {
         headers: {
-          Authorization: user.token,
+          Authorization: token,
         },
       });
 
