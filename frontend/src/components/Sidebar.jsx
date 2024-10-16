@@ -320,7 +320,7 @@ const DesktopSidebar = () => {
           </Tooltip>
         </TooltipProvider>
       </nav>
-      <UserProfile userData={userData} open={showUserDialog} onOpenChange={setShowUserDialog} />
+      <UserProfile open={showUserDialog} onOpenChange={setShowUserDialog} />
     </aside>
   );
 };

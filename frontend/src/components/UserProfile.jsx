@@ -28,7 +28,7 @@ import { useToast } from "@/hooks/use-toast";
 import { formatDate } from "@/util/helpers";
 import { useAuth } from "@/context/AuthContext";
 
-const UserProfile = ({ userData, open, onOpenChange }) => {
+const UserProfile = ({ open, onOpenChange }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState(false);
   const [isEditable, setIsEditable] = useState({
@@ -40,6 +40,7 @@ const UserProfile = ({ userData, open, onOpenChange }) => {
   });
   const { toast } = useToast();
   const date = formatDate(Date.now());
+  const {  token, userData, setUserData } = useAuth();
   // Function to toggle editability
   const handleEditToggle = (fieldName) => {
     setIsEditable((prev) => ({
@@ -54,7 +55,7 @@ const UserProfile = ({ userData, open, onOpenChange }) => {
   });
 
   const { reset } = form;
-  const {  token } = useAuth();
+ 
   // Use effect to reset form when userData changes
   useEffect(() => {
     if (userData) {
@@ -75,6 +76,7 @@ const UserProfile = ({ userData, open, onOpenChange }) => {
 
       if (res) {
         localStorage.setItem("userData", JSON.stringify(data));
+        setUserData(data);
         setIsSubmitting(false);
         onOpenChange(false)
         form.reset();
