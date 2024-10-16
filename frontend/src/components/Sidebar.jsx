@@ -46,7 +46,7 @@ const DesktopSidebar = () => {
   }${userData.lastname}`;
   return (
     <aside
-      className={`fixed left-0 h-full flex-col border-r hidden md:flex lg:w-64 text-white bg-gray-900`}
+      className={`fixed left-0 h-full flex-col border-r hidden md:flex lg:w-64 text-white bg-gray-900 z-20`}
     >
       <div className="border-b border-zinc-500 flex justify-start items-center py-2 px-4">
         <Link to={"/"} aria-label="Home">
@@ -251,53 +251,63 @@ const DesktopSidebar = () => {
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
-              <div className="flex items-center">
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Avatar className="cursor-pointer size-10">
-                      <AvatarFallback className="text-gray-500">
-                        AD
-                      </AvatarFallback>
-                    </Avatar>
-                  </DropdownMenuTrigger>
+              <div className="">
+                <div className="flex items-center lg:hidden">
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Avatar className="cursor-pointer size-10">
+                        <AvatarFallback className="text-gray-500">
+                          AD
+                        </AvatarFallback>
+                      </Avatar>
+                    </DropdownMenuTrigger>
 
-                  <DropdownMenuContent align="start" className="bg-white">
-                    <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem onSelect={() => setShowUserDialog(true)}>
-                      Edit Profile
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onSelect={handleLogout}>
-                      Logout
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-
-                <div className="hidden lg:inline lg:ml-3 text-sm font-bold">
-                  {fullname}{" "}
-                  <span className="font-normal">{userData.email}</span>
+                    <DropdownMenuContent align="start" className="bg-white">
+                      <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem
+                        onSelect={() => setShowUserDialog(true)}
+                      >
+                        Edit Profile
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onSelect={handleLogout}>
+                        Logout
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 </div>
+                <div className="hidden lg:flex items-center">
+                  <Avatar className="size-10">
+                    <AvatarFallback className="text-gray-500">
+                      AD
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="hidden lg:inline lg:ml-3 text-sm font-bold">
+                    {fullname}{" "}
+                    <span className="font-normal">{userData.email}</span>
+                  </div>
 
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button
-                      className="hidden lg:inline w-min mr-0 ml-auto p-0 bg-inherit hover:bg-transparent"
-                      size="icon"
-                    >
-                      <MoreVertical size={23} />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="bg-white">
-                    <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={() => setShowUserDialog(true)}>
-                      Edit Profile
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={handleLogout}>
-                      Logout
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button
+                        className="hidden lg:inline w-min mr-0 ml-auto p-0 bg-inherit hover:bg-transparent"
+                        size="icon"
+                      >
+                        <MoreVertical size={23} />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end" className="bg-white">
+                      <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem onClick={() => setShowUserDialog(true)}>
+                        Edit Profile
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onClick={handleLogout}>
+                        Logout
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </div>
               </div>
             </TooltipTrigger>
             <TooltipContent
@@ -310,7 +320,7 @@ const DesktopSidebar = () => {
           </Tooltip>
         </TooltipProvider>
       </nav>
-      <UserProfile open={showUserDialog} onOpenChange={setShowUserDialog}/>
+      <UserProfile userData={userData} open={showUserDialog} onOpenChange={setShowUserDialog} />
     </aside>
   );
 };

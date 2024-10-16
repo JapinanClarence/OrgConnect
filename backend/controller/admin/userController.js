@@ -24,3 +24,31 @@ export const findUser = async (req, res, next) => {
       });
     }
   };
+
+  export const updateUser = async (req, res) =>{
+    const userId = req.user.userId;
+    try {
+      console.log(userId)
+      const user = await Admin.findByIdAndUpdate(
+        userId,
+        req.body
+      );
+  
+      if (!user) {
+        return res.status(404).json({
+          success: false,
+          message: "User not found!",
+        });
+      }
+  
+      res.status(200).json({
+        success: true,
+        message: "User updated successfully!",
+      });
+    } catch (err) {
+      return res.status(500).json({
+        success: false,
+        message: err.message,
+      });
+    }
+  }
