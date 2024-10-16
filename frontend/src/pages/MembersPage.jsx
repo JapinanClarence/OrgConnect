@@ -37,11 +37,11 @@ const MembersPage = () => {
   }, []);
 
   const fetchMembers = async () => {
-    const user = JSON.parse(localStorage.getItem("userData"));
+    const  token = localStorage.getItem("token");
     try {
       const { data } = await apiClient.get("/admin/members", {
         headers: {
-          Authorization: user.token,
+          Authorization: token,
         },
       });
 
@@ -71,12 +71,12 @@ const MembersPage = () => {
     }
   };
   const handleApprove = async (memberId) =>{
-    const user = JSON.parse(localStorage.getItem("userData"));
+    const  token = localStorage.getItem("token");
 
     try {
       const res = await apiClient.patch(`/admin/members/${memberId}`, {status: "1"}, {
         headers: {
-          Authorization: user.token,
+          Authorization: token,
         },
       });
 
@@ -109,15 +109,15 @@ const MembersPage = () => {
   };
 
   const onDelete = async (memberId) =>{
-    console.log(memberId)
-    const user = JSON.parse(localStorage.getItem("userData"));
+   
+    const  token = localStorage.getItem("token");
     try {
       const res = await apiClient.delete(`/admin/members/${memberId}`, {
         headers: {
-          Authorization: user.token,
+          Authorization: token,
         },
       });
-      console.log(res)
+
       if (res) {
         await fetchMembers();
 
@@ -128,7 +128,7 @@ const MembersPage = () => {
       }
     } catch (error) {
       const message = error.response.data.message;
-      console.log(message)
+
       toast({
         title: { message },
         description: `${date}`,
