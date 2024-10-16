@@ -8,6 +8,7 @@ import EditEventDialog from "@/components/events/EditEventDialog";
 import AddEventDialog from "@/components/events/AddEventDialog";
 import { useToast } from "@/hooks/use-toast";
 import { formatDate } from "@/util/helpers";
+import { useAuth } from "@/context/AuthContext";
 
 const Eventpage = () => {
   const [showAddEvent, setShowAddEventDialog] = useState(false);
@@ -21,6 +22,7 @@ const Eventpage = () => {
   const [isDeleting, setIsDeleting] = useState(false);
   const { toast } = useToast();
   const date = formatDate(Date.now());
+  const { token } = useAuth();
 
   const form = useForm({
     resolver: zodResolver(EventSchema),
@@ -56,7 +58,6 @@ const Eventpage = () => {
   };
 
   const onSubmit = async (data) => {
-    const  token = localStorage.getItem("token");
     try {
       setIsSubmitting(true);
       const { title, description, location } = EventSchema.parse(data);
@@ -92,7 +93,6 @@ const Eventpage = () => {
   };
 
   const onEdit = async (data) => {
-    const  token = localStorage.getItem("token");
     try {
       setIsSubmitting(true);
       const { id, title, description, location, startDate, endDate, active } =
@@ -107,11 +107,15 @@ const Eventpage = () => {
         active,
       };
 
-      const response = await apiClient.patch(`/admin/event/${selectedEvent.id}`, formData, {
-        headers: {
-          Authorization: token,
-        },
-      });
+      const response = await apiClient.patch(
+        `/admin/event/${selectedEvent.id}`,
+        formData,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
 
       if (response) {
         await fetchEvents();
@@ -130,8 +134,6 @@ const Eventpage = () => {
     }
   };
   const handleDelete = async (eventId) => {
-    const  token = localStorage.getItem("token");
-
     try {
       const response = await apiClient.delete(`/admin/event/${eventId}`, {
         headers: {
@@ -158,7 +160,6 @@ const Eventpage = () => {
 
   const fetchEvents = async () => {
     try {
-      const  token = localStorage.getItem("token");
       const { data } = await apiClient.get("/admin/event/", {
         headers: {
           Authorization: token,
@@ -190,7 +191,7 @@ const Eventpage = () => {
     <>
       <div className="bg-white md:shadow-lg md:rounded-lg border border-gray-200 text-gray-900 p-5 md:flex gap-2">
         <div className="rounded bg-gray-900 bg-opacity-10 md:w-[100px]"></div>
-        <div className="md:w-full" >
+        <div className="md:w-full">
           <EventCalendar
             onDateClick={handleDateClick}
             currentEvents={currentEvents}
