@@ -19,6 +19,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { useAuth } from "@/context/AuthContext";
 
 const PaymentPage = () => {
   const [data, setData] = useState([]);
@@ -31,7 +32,7 @@ const PaymentPage = () => {
   const [currenPayment, setCurrentPayment] = useState("");
   const { toast } = useToast();
   const date = formatDate(Date.now());
-
+  const { token } = useAuth();
   const form = useForm({
     resolver: zodResolver(PaymentSchema),
     defaultValues: {
@@ -46,7 +47,6 @@ const PaymentPage = () => {
   }, []);
 
   const fetchPayments = async () => {
-    const  token = localStorage.getItem("token");
     try {
       const { data } = await apiClient.get("/admin/payment", {
         headers: {
@@ -74,7 +74,6 @@ const PaymentPage = () => {
   };
 
   const onAdd = async (data) => {
-    const  token = localStorage.getItem("token");
     try {
       setIsSubmitting(true);
       const res = await apiClient.post("/admin/payment", data, {
@@ -101,15 +100,15 @@ const PaymentPage = () => {
     }
   };
 
-  const handleEditDialog = (data) =>{
+  const handleEditDialog = (data) => {
     setShowEditDialog(true);
     setCurrentPayment(data);
-  }
+  };
 
-  const handleDeleteDialog = (data) =>{
+  const handleDeleteDialog = (data) => {
     setShowAlert(true);
     setCurrentPayment(data);
-  }
+  };
 
   const confirmDelete = () => {
     onDelete(currenPayment); // Call the delete function
@@ -120,9 +119,7 @@ const PaymentPage = () => {
     setShowAlert(false); // Close the alert dialog without deleting
   };
 
-  const onDelete = async (paymentId) =>{
-
-    const  token = localStorage.getItem("token");
+  const onDelete = async (paymentId) => {
     try {
       const res = await apiClient.delete(`/admin/payment/${paymentId}`, {
         headers: {
@@ -145,18 +142,20 @@ const PaymentPage = () => {
         description: `${date}`,
       });
     }
-  }
+  };
 
-  const onEdit = async (data) =>{
-    const  token = localStorage.getItem("token");
-
+  const onEdit = async (data) => {
     try {
       setIsSubmitting(true);
-      const res = await apiClient.patch(`/admin/payment/${currenPayment.id}`, data, {
-        headers: {
-          Authorization: token,
-        },
-      });
+      const res = await apiClient.patch(
+        `/admin/payment/${currenPayment.id}`,
+        data,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
 
       if (res) {
         await fetchPayments();
@@ -174,14 +173,20 @@ const PaymentPage = () => {
       setErrorMessage(message);
       setIsSubmitting(false);
     }
-  }
+  };
   return (
     <div className="md:bg-[#fefefe] md:shadow-lg rounded-lg md:border md:border-gray-200 text-gray-900 px-6 py-5 flex flex-col relative">
       <h1 className="font-bold">Financial Records</h1>
       <p className="text-sm text-muted-foreground">
         Here are the recent financial records of your organization
       </p>
-      <PaymentTable data={data} loading={loading} onAdd={setShowAddDialog} onEdit={handleEditDialog} onDelete={handleDeleteDialog}/>
+      <PaymentTable
+        data={data}
+        loading={loading}
+        onAdd={setShowAddDialog}
+        onEdit={handleEditDialog}
+        onDelete={handleDeleteDialog}
+      />
 
       <AddPaymentDialog
         open={showAddDialog}
@@ -200,7 +205,7 @@ const PaymentPage = () => {
         isSubmitting={isSubmitting}
         errorMessage={errorMessage}
       />
-       <AlertDialog open={showAlert} onOpenChange={setShowAlert}>
+      <AlertDialog open={showAlert} onOpenChange={setShowAlert}>
         <AlertDialogContent className="bg-white">
           <AlertDialogHeader>
             <AlertDialogTitle>Are you sure?</AlertDialogTitle>
@@ -210,9 +215,7 @@ const PaymentPage = () => {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel onClick={cancelDelete}>
-              Cancel
-            </AlertDialogCancel>
+            <AlertDialogCancel onClick={cancelDelete}>Cancel</AlertDialogCancel>
             <AlertDialogAction onClick={confirmDelete}>
               Continue
             </AlertDialogAction>

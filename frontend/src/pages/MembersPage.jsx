@@ -1,5 +1,5 @@
 import MembersTable from "@/components/members/MembersTable";
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import apiClient from "@/api/axios";
 import { dateOnly, formatDate } from "@/util/helpers";
 import { useToast } from "@/hooks/use-toast";
@@ -15,13 +15,14 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import MemberDialog from "@/components/members/MemberDialog";
+import { useAuth } from "@/context/AuthContext";
 
 const yearMap = {
   1: "1st Year",
   2: "2nd Year",
   3: "3rd Year",
-  4: "4th Year"
-}
+  4: "4th Year",
+};
 
 const MembersPage = () => {
   const [data, setData] = useState([]);
@@ -31,13 +32,12 @@ const MembersPage = () => {
   const [currentMember, setCurrentMember] = useState("");
   const { toast } = useToast();
   const date = formatDate(Date.now());
-
+  const { token } = useAuth();
   useEffect(() => {
     fetchMembers();
   }, []);
 
   const fetchMembers = async () => {
-    const  token = localStorage.getItem("token");
     try {
       const { data } = await apiClient.get("/admin/members", {
         headers: {
@@ -70,15 +70,17 @@ const MembersPage = () => {
       setLoading(false);
     }
   };
-  const handleApprove = async (memberId) =>{
-    const  token = localStorage.getItem("token");
-
+  const handleApprove = async (memberId) => {
     try {
-      const res = await apiClient.patch(`/admin/members/${memberId}`, {status: "1"}, {
-        headers: {
-          Authorization: token,
-        },
-      });
+      const res = await apiClient.patch(
+        `/admin/members/${memberId}`,
+        { status: "1" },
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
 
       if (res) {
         await fetchMembers();
@@ -90,14 +92,14 @@ const MembersPage = () => {
       }
     } catch (error) {
       const message = error;
-      console.log(message)
+      console.log(message);
     }
-  }
+  };
 
-  const handleDeleteDialog = (data) =>{
+  const handleDeleteDialog = (data) => {
     setShowAlert(true);
     setCurrentMember(data);
-  }
+  };
 
   const confirmDelete = () => {
     onDelete(currentMember); // Call the delete function
@@ -108,9 +110,7 @@ const MembersPage = () => {
     setShowAlert(false); // Close the alert dialog without deleting
   };
 
-  const onDelete = async (memberId) =>{
-   
-    const  token = localStorage.getItem("token");
+  const onDelete = async (memberId) => {
     try {
       const res = await apiClient.delete(`/admin/members/${memberId}`, {
         headers: {
@@ -134,11 +134,11 @@ const MembersPage = () => {
         description: `${date}`,
       });
     }
-  }
-  const handleRowClick = (data) =>{
+  };
+  const handleRowClick = (data) => {
     setShowDialog(true);
     setCurrentMember(data);
-  }
+  };
 
   return (
     <div className="md:bg-[#fefefe] md:shadow-lg rounded-lg md:border md:border-gray-200 text-gray-900 px-6 py-5 flex flex-col relative">
@@ -146,8 +146,18 @@ const MembersPage = () => {
       <p className="text-sm text-muted-foreground">
         View and manage organization members here.
       </p>
-      <MembersTable data={data} loading={loading} onApprove={handleApprove} onDelete={handleDeleteDialog} onClick={handleRowClick}/>
-      <MemberDialog data={currentMember} open={showDialog} onOpenChange={setShowDialog} />
+      <MembersTable
+        data={data}
+        loading={loading}
+        onApprove={handleApprove}
+        onDelete={handleDeleteDialog}
+        onClick={handleRowClick}
+      />
+      <MemberDialog
+        data={currentMember}
+        open={showDialog}
+        onOpenChange={setShowDialog}
+      />
       <AlertDialog open={showAlert} onOpenChange={setShowAlert}>
         <AlertDialogContent className="bg-white">
           <AlertDialogHeader>
@@ -158,16 +168,13 @@ const MembersPage = () => {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel onClick={cancelDelete}>
-              Cancel
-            </AlertDialogCancel>
+            <AlertDialogCancel onClick={cancelDelete}>Cancel</AlertDialogCancel>
             <AlertDialogAction onClick={confirmDelete}>
               Continue
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-
     </div>
   );
 };

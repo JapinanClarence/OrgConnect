@@ -5,6 +5,7 @@ import apiClient from "@/api/axios";
 import { formatSimpleDateTime, formatDate } from "@/util/helpers";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useAuth } from "@/context/AuthContext";
 
 const statusMap = {
   true: {
@@ -20,8 +21,8 @@ const yearMap = {
   1: "1st Year",
   2: "2nd Year",
   3: "3rd Year",
-  4: "4th Year"
-}
+  4: "4th Year",
+};
 
 const AttendeesPage = () => {
   const location = useLocation();
@@ -31,7 +32,7 @@ const AttendeesPage = () => {
   const [loading, setLoading] = useState(true);
   const [currentEvent, setCurrentEvent] = useState("");
   const [badgeStatus, setBadgeStatus] = useState(null);
-
+  const { token } = useAuth();
   useEffect(() => {
     fetchAttendees();
     fetchCurrentEvent();
@@ -45,8 +46,6 @@ const AttendeesPage = () => {
   }, [currentEvent]);
 
   const fetchCurrentEvent = async () => {
-    const  token = localStorage.getItem("token");
-
     try {
       const { data } = await apiClient.get(`/admin/event/${eventId}`, {
         headers: {
@@ -75,7 +74,6 @@ const AttendeesPage = () => {
   };
 
   const fetchAttendees = async () => {
-    const  token = localStorage.getItem("token");
     try {
       const { data } = await apiClient.get(`/attendance/${eventId}`, {
         headers: {
@@ -137,7 +135,7 @@ const AttendeesPage = () => {
         </div>
       )}
 
-      <AttendanceTable data={data} loading={loading}/>
+      <AttendanceTable data={data} loading={loading} />
     </div>
   );
 };
