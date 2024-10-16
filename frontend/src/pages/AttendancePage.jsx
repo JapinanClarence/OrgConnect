@@ -45,12 +45,12 @@ const AttendeesPage = () => {
   }, [currentEvent]);
 
   const fetchCurrentEvent = async () => {
-    const user = JSON.parse(localStorage.getItem("userData"));
+    const  token = localStorage.getItem("token");
 
     try {
       const { data } = await apiClient.get(`/admin/event/${eventId}`, {
         headers: {
-          Authorization: user.token,
+          Authorization: token,
         },
       });
 
@@ -75,11 +75,11 @@ const AttendeesPage = () => {
   };
 
   const fetchAttendees = async () => {
-    const user = JSON.parse(localStorage.getItem("userData"));
+    const  token = localStorage.getItem("token");
     try {
       const { data } = await apiClient.get(`/attendance/${eventId}`, {
         headers: {
-          Authorization: user.token,
+          Authorization: token,
         },
       });
 
