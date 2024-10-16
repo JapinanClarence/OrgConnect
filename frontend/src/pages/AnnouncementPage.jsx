@@ -56,11 +56,11 @@ const AnnouncementPage = () => {
   }, [announcements, selectedCategory]);
 
   const fetchAnnouncements = async () => {
-    const user = JSON.parse(localStorage.getItem("userData"));
+    const  token = localStorage.getItem("token");
     try {
       const { data } = await apiClient.get("/admin/announcement", {
         headers: {
-          Authorization: user.token,
+          Authorization: token,
         },
       });
 
@@ -104,13 +104,13 @@ const AnnouncementPage = () => {
   };
 
   const onAddEvent = async (data) => {
-    const user = JSON.parse(localStorage.getItem("userData"));
+    const  token = localStorage.getItem("token");
 
     try {
       setIsSubmitting(true);
       const res = await apiClient.post("/admin/announcement", data, {
         headers: {
-          Authorization: user.token,
+          Authorization: token,
         },
       });
 
@@ -132,7 +132,7 @@ const AnnouncementPage = () => {
     }
   };
   const onEdit = async (data) => {
-    const user = JSON.parse(localStorage.getItem("userData"));
+    const  token = localStorage.getItem("token");
 
     try {
       setIsSubmitting(true);
@@ -147,7 +147,7 @@ const AnnouncementPage = () => {
 
       const res = await apiClient.patch(`/admin/announcement/${currentAnnouncement.id}`, formData, {
         headers: {
-          Authorization: user.token,
+          Authorization: token,
         },
       });
 
@@ -169,11 +169,11 @@ const AnnouncementPage = () => {
     }
   };
   const onDelete = async (id) => {
-    const user = JSON.parse(localStorage.getItem("userData"));
+    const  token = localStorage.getItem("token");
     try {
       const res = await apiClient.delete(`/admin/announcement/${id}`, {
         headers: {
-          Authorization: user.token,
+          Authorization: token,
         },
       });
 
