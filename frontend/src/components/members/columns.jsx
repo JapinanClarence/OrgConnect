@@ -161,7 +161,7 @@ export const columns = (onApprove, onKick) => [
               Copy Member ID
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className={``} onClick={handleApprove}>Approve</DropdownMenuItem>
+            <DropdownMenuItem className={member.status == 1 && `hidden`} onClick={handleApprove}>Approve</DropdownMenuItem>
             <DropdownMenuItem onClick={handleDelete}>Kick</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
