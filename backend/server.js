@@ -12,7 +12,7 @@ import attendanceRoutes from "./routes/admin/attendance.js"
 import adminAnnouncementRoutes from "./routes/admin/announcement.js";
 import adminPaymentRoutes from "./routes/admin/payment.js";
 import adminMembersRoutes from "./routes/admin/members.js";
-
+import adminOfficerRoutes from "./routes/admin/officer.js"
 const DB = process.env.DATABASE.replace("<PASSWORD>", process.env.DB_PASSWORD)
 const app = express();
 
@@ -51,6 +51,7 @@ app.use("/api/admin/", adminEventRoutes)
 app.use("/api/admin/", adminAnnouncementRoutes)
 app.use("/api/admin/", adminPaymentRoutes)
 app.use("/api/admin/", adminMembersRoutes);
+app.use("/api/admin/", adminOfficerRoutes);
 //attendance routes
 app.use("/api/attendance", attendanceRoutes)
 //user routes

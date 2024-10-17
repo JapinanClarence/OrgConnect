@@ -34,7 +34,6 @@ export const createOrg = async (req, res, next) => {
 
     await Organization.create({
       name,
-      description,
       about,
       contact,
       user: userId,

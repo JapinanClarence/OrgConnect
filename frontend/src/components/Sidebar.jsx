@@ -170,7 +170,7 @@ const DesktopSidebar = () => {
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
-                to="#"
+                to="/officers"
                 className={`rounded-lg size-full flex items-center justify-start p-2 ${
                   isActive("/officers")
                     ? "bg-white text-zinc-900"

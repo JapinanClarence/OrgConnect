@@ -6,9 +6,6 @@ const organizationSchema = new mongoose.Schema(
       type: String,
       required: [true, "Name is required"],
     },
-    description: {
-      type: String,
-    },
     about: {
       type: String,
     },
@@ -29,8 +26,14 @@ const organizationSchema = new mongoose.Schema(
         middlename: {
           type: String
         },
-        role: {
+        position: {
           type: String
+        },
+        rank:{
+          type: Number
+        },
+        profilePicture:{
+          type:String
         }
       }
     ],

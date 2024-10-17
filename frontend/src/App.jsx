@@ -13,6 +13,7 @@ import PaymentPage from "./pages/PaymentPage";
 import AttendancePage from "./pages/AttendancePage";
 import MembersPage from "./pages/MembersPage";
 import ProfilePage from "./pages/ProfilePage";
+import OfficersPage from "./pages/OfficersPage";
 
 const App = () => {
   return (
@@ -32,6 +33,7 @@ const App = () => {
             <Route path="/announcements" element={<AnnouncementPage />} />
             <Route path="/payments" element={<PaymentPage />} />
             <Route path="/events/attendance" element={<AttendancePage />} />
+            <Route path="/officers" element={<OfficersPage />} />
             <Route path="/members" element={<MembersPage />} />
           </Route>
         </Route>

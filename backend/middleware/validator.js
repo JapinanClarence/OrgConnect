@@ -18,7 +18,12 @@ export const userValidationRules = () => [
   body("email").notEmpty().withMessage("Email is required"),
   body("password").notEmpty().withMessage("Password is required"),
 ]
-
+export const officerValidationRules = () =>[
+  body("firstname").notEmpty().withMessage("Firstname is required"),
+  body("lastname").notEmpty().withMessage("Lastname is required"),
+  body("position").notEmpty().withMessage("Position is required"),
+  body("rank").notEmpty().withMessage("Rank is required"),
+]
 export const organizationValidationRules = () => [
   body("name").notEmpty().withMessage("Organization name is required"),
 ]
