@@ -34,7 +34,7 @@ export const columns = (onEdit, onDelete) =>  [
     },
   },
   {
-    accessorKey: "fullname",
+    accessorKey: "name",
     header: ({ column }) => {
       return (
         <Button
@@ -56,13 +56,67 @@ export const columns = (onEdit, onDelete) =>  [
     },
   },
   {
+    accessorKey: "course",
+    header:({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="px-0"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Course
+          <CaretSortIcon className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => <div className="text-xs">{row.getValue("course")}</div>,
+  },
+  {
+    accessorKey: "year",
+    header:({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="px-0"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Year
+          <CaretSortIcon className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => <div className="text-xs">{row.getValue("year")}</div>,
+  },
+  {
     accessorKey: "position",
-    header: "Position",
+    header:({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="px-0"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Position
+          <CaretSortIcon className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
     cell: ({ row }) => <div className="text-xs">{row.getValue("position")}</div>,
   },
   {
     accessorKey: "rank",
-    header: "Rank",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="px-0"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Rank
+          <CaretSortIcon className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
     cell: ({ row }) => (
       <div className="text-xs">{row.getValue("rank")}</div>
     ),

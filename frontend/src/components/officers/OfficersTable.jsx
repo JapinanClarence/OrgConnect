@@ -40,7 +40,7 @@ import {
   Settings2,
 } from "lucide-react";
 import { columns } from "@/components/officers/Columns";
-import TableSkeleton from "./TableSkeleton";
+import TableSkeleton from "@/components/skeleton/TableSkeleton";
 const OfficersTable = ({ data, loading, onClick, handleDelete, handleEdit }) => {
   const [sorting, setSorting] = React.useState([]);
   const [columnFilters, setColumnFilters] = React.useState([]);
@@ -150,7 +150,7 @@ const OfficersTable = ({ data, loading, onClick, handleDelete, handleEdit }) => 
           </TableHeader>
           <TableBody className="">
             {loading ? (
-              <TableSkeleton />
+              <TableSkeleton rowCount={6} cellCount={6}/>
             ) : table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow

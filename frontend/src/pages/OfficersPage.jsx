@@ -16,6 +16,14 @@ import {
 } from "@/components/ui/alert-dialog";
 import { useAuth } from "@/context/AuthContext";
 
+
+const yearMap = {
+  1: "1st Year",
+  2: "2nd Year",
+  3: "3rd Year",
+  4: "4th Year",
+};
+
 const OfficersPage = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -43,10 +51,14 @@ const OfficersPage = () => {
         setData([]);
       } else {
         const tableData = data.data.map((data) => ({
-          id: data._id,
+          id: data.id,
           firstname: data.firstname,
           lastname: data.lastname,
           position: data.position,
+          age: data.age,
+          email: data.email,
+          year:yearMap[data.year],
+          course:data.course,
           rank: data.rank,
           profilePicture: data.profilePicture,
         }));
