@@ -63,7 +63,7 @@ const OfficersPage = () => {
       if (!data.success) {
         setData([]);
       } else {
-        const tableData = data.data.map((data) => ({
+        const officerData = data.data.map((data) => ({
           id: data.id,
           fullname: data.fullname,
           position: data.position.charAt(0).toUpperCase() + data.position.slice(1).toLowerCase(),
@@ -71,11 +71,10 @@ const OfficersPage = () => {
           email: data.email,
           year: yearMap[data.year],
           course: data.course,
-          rank: data.rank,
           profilePicture: data.profilePicture,
         }));
 
-        setData(tableData);
+        setData(officerData);
       }
 
       setLoading(false);
@@ -95,10 +94,13 @@ const OfficersPage = () => {
 
   const onEdit = (data) => {};
   const onAdd = async (data) => {
-
+    const {officerId, position, rank} = data;
     try {
       setIsSubmitting(true);
-      const res = await apiClient.post("/admin/officer", data, {
+      const res = await apiClient.patch(`/admin/officer/${officerId}`, {
+        position: position.toLowerCase(),
+        rank
+      }, {
         headers: {
           Authorization: token,
         },
