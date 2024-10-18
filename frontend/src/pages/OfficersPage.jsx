@@ -65,9 +65,8 @@ const OfficersPage = () => {
       } else {
         const tableData = data.data.map((data) => ({
           id: data.id,
-          firstname: data.firstname,
-          lastname: data.lastname,
-          position: data.position,
+          fullname: data.fullname,
+          position: data.position.charAt(0).toUpperCase() + data.position.slice(1).toLowerCase(),
           age: data.age,
           email: data.email,
           year: yearMap[data.year],

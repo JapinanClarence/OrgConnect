@@ -19,14 +19,14 @@ export const columns = (onEdit, onDelete) =>  [
     enableHiding: false,
     cell: ({ row }) => {
       const officer = row.original;
-      const { profilePicture, firstname } = officer;
+      const { profilePicture, fullname } = officer;
 
       return (
         <div className="flex justify-center">
           <Avatar className="size-9">
             <AvatarImage src={profilePicture} alt="User Profile" />
             <AvatarFallback className="bg-gray-200 text-gray-400 font-bold">
-              {firstname?.[0].toUpperCase()}
+              {fullname?.[0].toUpperCase()}
             </AvatarFallback>
           </Avatar>
         </div>
@@ -34,7 +34,7 @@ export const columns = (onEdit, onDelete) =>  [
     },
   },
   {
-    accessorKey: "name",
+    accessorKey: "fullname",
     header:({ column }) => {
       return (
         <Button
@@ -47,13 +47,7 @@ export const columns = (onEdit, onDelete) =>  [
         </Button>
       );
     },
-    cell: ({ row }) => {
-      const data = row.original;
-      const fullname = `${data.firstname} ${
-        data.middlename ? data.middlename[0] + ". " : ""
-      }${data.lastname}`;
-      return <div className="text-xs">{fullname}</div>;
-    },
+    cell: ({ row }) => <div className="text-xs">{row.getValue("fullname")}</div>,
   },
   {
     accessorKey: "course",
