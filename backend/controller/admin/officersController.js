@@ -10,7 +10,7 @@ export const createOfficer = async (req, res) => {
   const userId = req.user.userId;
   const memberId = req.params.id;
   try {
-    const { position, rank } = req.body;
+    const { position } = req.body;
 
     // Fetch organization
     const organization = await Organization.findOne({ user: userId }).populate(
@@ -23,45 +23,51 @@ export const createOfficer = async (req, res) => {
         message: "User or organization not found",
       });
     }
-    console.log(req.body)
-    const memberPositionValidity = await Membership.find();
- 
-    const validate = memberPositionValidity.map((validity) => {
-      if (validity?.position === position) {
-        return `Position ${position} was already taken`;
-      } else if (validity?.rank === rank) {
-        return `Rank ${rank} was already taken`;
-      }
-    }).filter((msg) => msg !== undefined);;
-   
-    if (validate.length > 0) {
+    const validPositions = organization.officerPositions;
+
+    // Validate position
+    const existingPositions = validPositions.map((officer) => officer.position);
+
+    // Check if the provided position exists in the list of existing positions
+    if (!existingPositions.includes(position.toLowerCase())) {
       return res.status(400).json({
         success: false,
-        message: validate.join(", ")
+        message: `Position "${position}" is not valid. Valid positions are: ${existingPositions.join(
+          ", "
+        )}.`,
       });
     }
-    
+
+    const positionAvailability = await Membership.find();
+
+    // Check if the position is taken
+    const takenPosition = positionAvailability.find(
+      (takenPosition) => takenPosition?.position === position
+    );
+
+    if (takenPosition) {
+      return res.status(400).json({
+        success: false,
+        message: `Position ${position} is already taken.`,
+      });
+    }
     const member = await Membership.findOne({ student: memberId });
 
     if (member.status === "0") {
       return res.status(400).json({
         success: false,
-        message: `Member should be approved`,
+        message: `Officer should be an approved member`,
       });
     }
 
-    if (member.position !== "member" || member.rank !== "999") {
+    if (member.position !== "member") {
       return res.status(400).json({
         success: false,
         message: `Member was already assigned`,
       });
     }
 
-
-    await Membership.findOneAndUpdate(
-      { student: memberId },
-      { position, rank }
-    );
+    await Membership.findOneAndUpdate({ student: memberId }, { position });
     res.status(200).json({
       success: true,
       message: "Role added successfully!",
@@ -75,7 +81,60 @@ export const createOfficer = async (req, res) => {
     });
   }
 };
+export const updateOfficer = async (req, res) => {
+  const userId = req.user.userId;
+  const memberId = req.params.id;
+  try {
+    const { position, rank } = req.body;
 
+    // Fetch organization
+    const organization = await Organization.findOne({ user: userId }).populate(
+      "user"
+    );
+
+    if (!organization) {
+      return res.status(404).json({
+        success: false,
+        message: "User or organization not found",
+      });
+    }
+
+    const memberPositionValidity = await Membership.find();
+
+    const validate = memberPositionValidity
+      .map((validity) => {
+        if (validity?.position === position) {
+          return `Position ${position} was already taken`;
+        } else if (validity?.rank === rank) {
+          return `Rank ${rank} was already taken`;
+        }
+      })
+      .filter((msg) => msg !== undefined);
+
+    if (validate.length > 0) {
+      return res.status(400).json({
+        success: false,
+        message: validate.join(", "),
+      });
+    }
+
+    await Membership.findOneAndUpdate(
+      { student: memberId },
+      { position, rank }
+    );
+    res.status(200).json({
+      success: true,
+      message: "Role updated successfully!",
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: "Server error",
+      error: error.message,
+    });
+  }
+};
 export const revokeRole = async (req, res) => {
   const memberId = req.params.id;
   const userId = req.user.userId;
@@ -97,7 +156,6 @@ export const revokeRole = async (req, res) => {
       { student: memberId },
       {
         position: "member",
-        rank: "999",
       }
     );
     console.log(memberId);

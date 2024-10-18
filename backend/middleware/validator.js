@@ -20,7 +20,6 @@ export const userValidationRules = () => [
 ]
 export const officerValidationRules = () =>[
   body("position").notEmpty().withMessage("Position is required"),
-  body("rank").notEmpty().withMessage("Rank is required"),
 ]
 export const organizationValidationRules = () => [
   body("name").notEmpty().withMessage("Organization name is required"),
