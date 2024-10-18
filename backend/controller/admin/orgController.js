@@ -2,7 +2,7 @@ import Organization from "../../model/organizationModel.js";
 import { OrgAdminModel as Admin } from "../../model/UserModel.js";
 
 export const createOrg = async (req, res, next) => {
-  const { name, description, about, contact } = req.body;
+  const { name, about, contact,type } = req.body;
 
   const userId = req.user.userId;
   try {
@@ -36,6 +36,7 @@ export const createOrg = async (req, res, next) => {
       name,
       about,
       contact,
+      type,
       user: userId,
     });
 

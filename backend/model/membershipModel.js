@@ -5,7 +5,7 @@ import mongoose from "mongoose";
  * 1 - Approved
  * position
  * 0- member
- * rank 
+ * rank
  * 0 -member
  */
 const membershipSchema = new mongoose.Schema(
@@ -27,11 +27,19 @@ const membershipSchema = new mongoose.Schema(
     },
     position: {
       type: String,
-      default: "member",
-    },
-    rank: {
-      type: String,
-      default: "999",
+      default: "member", // Default to member; can be updated to specific officer positions
+      enum: [
+        "governor",
+        "vice-governor",
+        "secretary",
+        "treasurer",
+        "auditor",
+        "business manager",
+        "pio",
+        "president",
+        "vice-president",
+        "member",
+      ],
     },
     joinedDate: {
       type: Date,
