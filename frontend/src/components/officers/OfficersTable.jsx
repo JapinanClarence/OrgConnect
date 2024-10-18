@@ -96,7 +96,7 @@ const OfficersTable = ({ data, loading, onAdd, onClick, handleDelete, handleEdit
     <>
       <div className="md:flex items-center justify-between py-4">
         <Input
-          placeholder="Filter members..."
+          placeholder="Filter officers..."
           value={globalFilter ?? ""}
           onChange={(event) => setGlobalFilter(event.target.value)}
           className="md:max-w-sm"

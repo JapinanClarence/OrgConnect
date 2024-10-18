@@ -170,6 +170,32 @@ const DesktopSidebar = () => {
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
+                to="/members"
+                className={`rounded-lg size-full flex items-center justify-start p-2 ${
+                  isActive("/members")
+                    ? "bg-white text-zinc-900"
+                    : "hover:bg-gray-800"
+                }`}
+              >
+                <Users />
+                <span className="hidden lg:block ml-2 font-bold text-sm">
+                  Members
+                </span>
+              </Link>
+            </TooltipTrigger>
+            <TooltipContent
+              className="lg:hidden bg-white text-gray-900"
+              side="right"
+              sideOffset={5}
+            >
+              Members
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Link
                 to="/officers"
                 className={`rounded-lg size-full flex items-center justify-start p-2 ${
                   isActive("/officers")
@@ -193,32 +219,7 @@ const DesktopSidebar = () => {
           </Tooltip>
         </TooltipProvider>
 
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Link
-                to="/members"
-                className={`rounded-lg size-full flex items-center justify-start p-2 ${
-                  isActive("/members")
-                    ? "bg-white text-zinc-900"
-                    : "hover:bg-gray-800"
-                }`}
-              >
-                <Users />
-                <span className="hidden lg:block ml-2 font-bold text-sm">
-                  Members
-                </span>
-              </Link>
-            </TooltipTrigger>
-            <TooltipContent
-              className="lg:hidden bg-white text-gray-900"
-              side="right"
-              sideOffset={5}
-            >
-              Members
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
+        
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>

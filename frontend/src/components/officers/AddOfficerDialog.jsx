@@ -118,7 +118,7 @@ const AddOfficerDialog = ({
                               ? members.find(
                                   (member) => member.value === field.value
                                 )?.label
-                              : "Select members"}
+                              : "Select member"}
                             <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                           </Button>
                         </FormControl>

@@ -35,7 +35,7 @@ export const columns = (onEdit, onDelete) =>  [
   },
   {
     accessorKey: "name",
-    header: ({ column }) => {
+    header:({ column }) => {
       return (
         <Button
           variant="ghost"

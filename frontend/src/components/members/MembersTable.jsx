@@ -43,7 +43,7 @@ import {
 import { columns } from "@/components/members/columns";
 import TableSkeleton from "@/components/skeleton/TableSkeleton";
 
-const MembersTable = ({ data, loading, onApprove, onDelete, onClick }) => {
+const MembersTable = ({ data, loading, onApprove, onDelete, onManage, onClick }) => {
   const [sorting, setSorting] = React.useState([]);
   const [columnFilters, setColumnFilters] = React.useState([]);
   const [columnVisibility, setColumnVisibility] = React.useState({});
@@ -57,7 +57,7 @@ const MembersTable = ({ data, loading, onApprove, onDelete, onClick }) => {
 
   const table = useReactTable({
     data,
-    columns: columns(onApprove, onDelete),
+    columns: columns(onApprove, onDelete, onManage),
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     onPaginationChange: setPagination,

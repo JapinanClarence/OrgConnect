@@ -13,7 +13,7 @@ import {
 import { CircleCheck, Timer } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 // Define the columns for the table
-export const columns = (onApprove, onKick) => [
+export const columns = (onApprove, onKick, onManage) => [
   {
     id: "profilePicture",
     enableHiding: false,
@@ -147,6 +147,11 @@ export const columns = (onApprove, onKick) => [
         onKick(member.id)
       };
 
+      const handleManage = (event) =>{
+        event.stopPropagation();
+        onManage(member);
+      }
+
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -162,6 +167,7 @@ export const columns = (onApprove, onKick) => [
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem className={member.status == 1 && `hidden`} onClick={handleApprove}>Approve</DropdownMenuItem>
+            <DropdownMenuItem onClick={handleManage}>Add Role</DropdownMenuItem>
             <DropdownMenuItem onClick={handleDelete}>Kick</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
