@@ -24,7 +24,10 @@ export const createOfficer = async (req, res) => {
       });
     }
 
-    const memberPositionValidity = await Membership.findOne({ position: position, rank: rank });
+    const memberPositionValidity = await Membership.findOne({
+      position: position,
+      rank: rank,
+    });
     if (memberPositionValidity?.position === position) {
       return res.status(400).json({
         success: false,
@@ -39,25 +42,26 @@ export const createOfficer = async (req, res) => {
       });
     }
 
-    const member =  await Membership.findOne(
-      { student: memberId }
-    );
+    const member = await Membership.findOne({ student: memberId });
 
-    if(member.status === "0"){
+    if (member.status === "0") {
       return res.status(400).json({
         success: false,
         message: `Member should be approved`,
       });
     }
 
-    if(member.position !== "member" || member.rank !== "999"){
+    if (member.position !== "member" || member.rank !== "999") {
       return res.status(400).json({
         success: false,
         message: `Member was already assigned`,
       });
     }
-  
-    await Membership.findOneAndUpdate({student: memberId}, {position, rank});
+
+    await Membership.findOneAndUpdate(
+      { student: memberId },
+      { position, rank }
+    );
     res.status(200).json({
       success: true,
       message: "Role added successfully!",
@@ -72,46 +76,40 @@ export const createOfficer = async (req, res) => {
   }
 };
 
-export const deleteOfficer = async (req, res) => {
-  const officerId = req.params.id;
+export const revokeRole = async (req, res) => {
+  const memberId = req.params.id;
   const userId = req.user.userId;
 
   try {
-    const user = await Admin.findById(userId);
-    if (!user) {
-      return res.status(404).json({
-        success: false,
-        message: "User not found",
-      });
-    }
+    // Fetch organization
+    const organization = await Organization.findOne({ user: userId }).populate(
+      "user"
+    );
 
-    const organization = await Organization.findOne({ user });
     if (!organization) {
       return res.status(404).json({
         success: false,
-        message: "Organization not found",
+        message: "User or organization not found",
       });
     }
 
-    // Find and remove the officer from the organization’s officers array
-    const updatedOfficers = organization.officers.filter(
-      (officer) => officer._id.toString() !== officerId
+    const officer = await Membership.findOneAndUpdate(
+      { student: memberId },
+      {
+        position: "member",
+        rank: "999",
+      }
     );
-
-    if (updatedOfficers.length === organization.officers.length) {
+    console.log(memberId)
+    if (!officer) {
       return res.status(404).json({
         success: false,
         message: "Officer not found",
       });
     }
-
-    // Update the officers array and save the organization
-    organization.officers = updatedOfficers;
-    await organization.save();
-
     res.status(200).json({
       success: true,
-      message: "Officer removed successfully!",
+      message: "Role revoked",
     });
   } catch (err) {
     return res.status(500).json({

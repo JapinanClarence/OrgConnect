@@ -9,8 +9,8 @@ import {
 } from "../../middleware/validator.js";
 import {
  createOfficer,
- deleteOfficer,
- getOfficer
+ revokeRole,
+ getOfficer,
 } from "../../controller/admin/officersController.js";
 
 const router = express.Router();
@@ -26,5 +26,5 @@ router.patch(
   createOfficer
 );
 router.get("/officer", authenticate, authorizeRole("admin"), getOfficer);
-router.delete("/officer/:id", authenticate, authorizeRole("admin"), deleteOfficer);
+router.patch("/officer/:id/revokeRole", authenticate, authorizeRole("admin"), revokeRole);
 export default router;
