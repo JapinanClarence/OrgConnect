@@ -162,7 +162,7 @@ const validateOfficer = async (officerId, position, rank, organization) => {
   // Check if the officer exists and their status is "1" (approved)
   const officerExists = await Membership.findOne({ student: officerId });
   if (!officerExists || officerExists.status !== "1") {
-    errorMessage = `Officer with ID ${officerId} is not an approved member.`;
+    errorMessage = `Officer is not an approved member.`;
   }
 
   // Check for duplicate position or rank
@@ -180,7 +180,7 @@ const validateOfficer = async (officerId, position, rank, organization) => {
     (off) => off.officerId.toString() === officerId
   );
   if (officerAlreadyAssigned) {
-    errorMessage = `Officer with ID ${officerId} has already been assigned.`;
+    errorMessage = `Officer has already been assigned.`;
   }
 
   return errorMessage;
