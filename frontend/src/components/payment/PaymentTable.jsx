@@ -42,7 +42,7 @@ import {
 } from "lucide-react";
 import { columns } from "@/components/payment/columns";
 
-import TableSkeleton from "@/components/payment/TableSkeleton";
+import TableSkeleton from "@/components/skeleton/TableSkeleton";
 
 const PaymentTable = ({ data, loading, onAdd, onEdit, onDelete }) => {
   const [sorting, setSorting] = React.useState([]);
@@ -156,7 +156,7 @@ const PaymentTable = ({ data, loading, onAdd, onEdit, onDelete }) => {
           </TableHeader>
           <TableBody className="">
             {loading ? (
-              <TableSkeleton/>
+              <TableSkeleton rowCount={5} cellCount={3}/>
             ) : table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow

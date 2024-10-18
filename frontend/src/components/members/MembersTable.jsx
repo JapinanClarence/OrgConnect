@@ -41,7 +41,7 @@ import {
   Settings2,
 } from "lucide-react";
 import { columns } from "@/components/members/columns";
-import TableSkeleton from "@/components/members/TableSkeleton";
+import TableSkeleton from "@/components/skeleton/TableSkeleton";
 
 const MembersTable = ({ data, loading, onApprove, onDelete, onClick }) => {
   const [sorting, setSorting] = React.useState([]);
@@ -152,7 +152,7 @@ const MembersTable = ({ data, loading, onApprove, onDelete, onClick }) => {
           </TableHeader>
           <TableBody className="">
             {loading ? (
-              <TableSkeleton />
+              <TableSkeleton rowCount={5} cellCount={8} />
             ) : table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow

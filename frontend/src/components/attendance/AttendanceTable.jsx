@@ -38,6 +38,7 @@ import {
   Settings2,
 } from "lucide-react";
 import { columns } from "@/components/attendance/columns";
+import TableSkeleton from "@/components/skeleton/TableSkeleton";
 
 const AttendeesTable = ({ data, loading }) => {
   const [sorting, setSorting] = React.useState([]);
@@ -149,14 +150,15 @@ const AttendeesTable = ({ data, loading }) => {
           </TableHeader>
           <TableBody className="">
             {loading ? (
-              <TableRow className="hover:bg-transparent">
-                <TableCell
-                  colSpan={table.getVisibleLeafColumns().length || 5}
-                  className="h-32 text-center text-muted-foreground"
-                >
-                  <LoaderCircle className="animate-spin inline-flex items-center" />
-                </TableCell>
-              </TableRow>
+              // <TableRow className="hover:bg-transparent">
+              //   <TableCell
+              //     colSpan={table.getVisibleLeafColumns().length || 5}
+              //     className="h-32 text-center text-muted-foreground"
+              //   >
+              //     <LoaderCircle className="animate-spin inline-flex items-center" />
+              //   </TableCell>
+              // </TableRow>
+              <TableSkeleton rowCount={5} cellCount={8}/>
             ) : table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
