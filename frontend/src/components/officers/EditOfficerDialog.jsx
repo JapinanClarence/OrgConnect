@@ -20,12 +20,12 @@ import { Button } from "@/components/ui/button";
 import { LoaderCircle, PhilippinePeso } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { OfficerSchmea } from "@/schema";
+import { OfficerSchema } from "@/schema";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const EditOfficerDialog = ({ officerData, open, onOpenChange, onSubmit, isSubmitting, errorMessage }) => {
   const form = useForm({
-    resolver: zodResolver(OfficerSchmea),
+    resolver: zodResolver(OfficerSchema),
     defaultValues: officerData,
   });
 

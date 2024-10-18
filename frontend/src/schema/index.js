@@ -64,10 +64,8 @@ export const FileSchema = z
   })
   .required();
 
-export const OfficerSchmea = z.object({
-  firstname: z.string().min(1, {message: "Firstname is required"}),
-  lastname: z.string().min(1, {message: "Lastname is required"}),
-  middlename: z.string().optional(),
+export const OfficerSchema = z.object({
+  officerId: z.string().min(1, {message: "Officer is required"}),
   position: z.string().min(1, {message: "Position is required"}),
   rank: z.string().min(1, {message: "Rank is required"}),
 })
