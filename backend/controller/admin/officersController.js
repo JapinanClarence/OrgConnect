@@ -23,9 +23,9 @@ export const createOfficer = async (req, res) => {
         message: "User or organization not found",
       });
     }
-    console.log(req.body);
+    console.log(req.body)
     const memberPositionValidity = await Membership.find();
-
+ 
     const validate = memberPositionValidity.map((validity) => {
       if (validity?.position === position) {
         return `Position ${position} was already taken`;
@@ -33,57 +33,39 @@ export const createOfficer = async (req, res) => {
         return `Rank ${rank} was already taken`;
       }
     }).filter((msg) => msg !== undefined);;
-    
-    if (validate.length > 1) {
+   
+    if (validate.length > 0) {
       return res.status(400).json({
         success: false,
         message: validate.join(", ")
       });
-    }else if (validate){
+    }
+    
+    const member = await Membership.findOne({ student: memberId });
+
+    if (member.status === "0") {
       return res.status(400).json({
         success: false,
-        message: validate
+        message: `Member should be approved`,
       });
     }
 
-    // if (memberPositionValidity?.position === position) {
-    //   return res.status(400).json({
-    //     success: false,
-    //     message: `Position ${position} was already taken.`,
-    //   });
-    // }
+    if (member.position !== "member" || member.rank !== "999") {
+      return res.status(400).json({
+        success: false,
+        message: `Member was already assigned`,
+      });
+    }
 
-    // if (memberPositionValidity?.rank === rank) {
-    //   return res.status(400).json({
-    //     success: false,
-    //     message: `Rank ${rank} was already taken.`,
-    //   });
-    // }
 
-    // const member = await Membership.findOne({ student: memberId });
-
-    // if (member.status === "0") {
-    //   return res.status(400).json({
-    //     success: false,
-    //     message: `Member should be approved`,
-    //   });
-    // }
-
-    // if (member.position !== "member" || member.rank !== "999") {
-    //   return res.status(400).json({
-    //     success: false,
-    //     message: `Member was already assigned`,
-    //   });
-    // }
-
-    // await Membership.findOneAndUpdate(
-    //   { student: memberId },
-    //   { position, rank }
-    // );
-    // res.status(200).json({
-    //   success: true,
-    //   message: "Role added successfully!",
-    // });
+    await Membership.findOneAndUpdate(
+      { student: memberId },
+      { position, rank }
+    );
+    res.status(200).json({
+      success: true,
+      message: "Role added successfully!",
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({
