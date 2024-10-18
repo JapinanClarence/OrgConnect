@@ -1,5 +1,8 @@
 import Organization from "../../model/organizationModel.js";
-import { OrgAdminModel as Admin, OrgAdminModel } from "../../model/UserModel.js";
+import {
+  OrgAdminModel as Admin,
+  OrgAdminModel,
+} from "../../model/UserModel.js";
 
 export const createOfficer = async (req, res) => {
   const userId = req.user.userId;
@@ -43,7 +46,7 @@ export const createOfficer = async (req, res) => {
   }
 };
 
-export const deleteOfficer = async (req, res) =>{
+export const deleteOfficer = async (req, res) => {
   const officerId = req.params.id;
   const userId = req.user.userId;
 
@@ -64,10 +67,10 @@ export const deleteOfficer = async (req, res) =>{
       });
     }
 
-    
-
     // Find and remove the officer from the organization’s officers array
-    const updatedOfficers = organization.officers.filter(officer => officer._id.toString() !== officerId);
+    const updatedOfficers = organization.officers.filter(
+      (officer) => officer._id.toString() !== officerId
+    );
 
     if (updatedOfficers.length === organization.officers.length) {
       return res.status(404).json({
@@ -90,12 +93,11 @@ export const deleteOfficer = async (req, res) =>{
       message: err.message,
     });
   }
-}
+};
 
-export const getOfficer = async (req, res) =>{
+export const getOfficer = async (req, res) => {
   const userId = req.user.userId;
   try {
-
     const user = await Admin.findById(userId);
     if (!user) {
       return res.status(404).json({
@@ -104,7 +106,9 @@ export const getOfficer = async (req, res) =>{
       });
     }
 
-    const organization = await Organization.findOne({ user });
+    const organization = await Organization.findOne({ user }).select(
+      "officers"
+    );
     if (!organization) {
       return res.status(404).json({
         success: false,
@@ -112,10 +116,13 @@ export const getOfficer = async (req, res) =>{
       });
     }
 
+    // Sort officers by rank in ascending order
+    organization.officers.sort((a, b) => a.rank - b.rank);
+
     res.status(200).json({
-      success:true,
-      data: organization.officers
-    })
+      success: true,
+      data: organization.officers,
+    });
 
   } catch (err) {
     return res.status(500).json({
@@ -123,11 +130,13 @@ export const getOfficer = async (req, res) =>{
       message: err.message,
     });
   }
-}
+};
 
 function validateOfficer(newOfficers, existingOfficers) {
-  const positionsSet = new Set(existingOfficers.map(officer => officer.position));
-  const ranksSet = new Set(existingOfficers.map(officer => officer.rank));
+  const positionsSet = new Set(
+    existingOfficers.map((officer) => officer.position)
+  );
+  const ranksSet = new Set(existingOfficers.map((officer) => officer.rank));
 
   const data = newOfficers.map((officer) => {
     if (positionsSet.has(officer.position)) {
@@ -147,7 +156,7 @@ function validateOfficer(newOfficers, existingOfficers) {
       middlename: officer.middlename,
       position: officer.position,
       rank: officer.rank,
-      profilePicture: officer.profilePicture || null,  // Optional, if provided
+      profilePicture: officer.profilePicture || null, // Optional, if provided
     };
   });
 
