@@ -200,10 +200,14 @@ export const getOfficer = async (req, res) => {
       });
     }
 
-    // console.log(officers)
+    // Validate position
+    const validPositions = organization.officerPositions;
+    //create a map of positions to their rank
+    const positionRankMap = validPositions.reduce((acc, pos) => {
+      acc[pos.position.toLowerCase()] = pos.rank; // Convert to lower case for consistency
+      return acc;
+    }, {});
 
-    // Sort officers by rank in ascending order
-    officers.sort((a, b) => a.rank - b.rank);
     // Clean and format the returned data
     const cleanedOfficers = officers.map((officer) => {
       const fullname = `${officer.student.firstname} ${
@@ -222,6 +226,13 @@ export const getOfficer = async (req, res) => {
       };
     });
 
+    // Sort the cleaned officers based on their rank in descending order
+    cleanedOfficers.sort((a, b) => {
+      return (
+        (positionRankMap[a.position.toLowerCase()] || -Infinity) -
+        (positionRankMap[b.position.toLowerCase()] || -Infinity) 
+      );
+    });
     res.status(200).json({
       success: true,
       data: cleanedOfficers,
