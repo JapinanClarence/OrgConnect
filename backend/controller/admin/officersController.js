@@ -23,49 +23,67 @@ export const createOfficer = async (req, res) => {
         message: "User or organization not found",
       });
     }
+    console.log(req.body);
+    const memberPositionValidity = await Membership.find();
 
-    const memberPositionValidity = await Membership.findOne({
-      position: position,
-      rank: rank,
-    });
-    if (memberPositionValidity?.position === position) {
+    const validate = memberPositionValidity.map((validity) => {
+      if (validity?.position === position) {
+        return `Position ${position} was already taken`;
+      } else if (validity?.rank === rank) {
+        return `Rank ${rank} was already taken`;
+      }
+    }).filter((msg) => msg !== undefined);;
+    
+    if (validate.length > 1) {
       return res.status(400).json({
         success: false,
-        message: `Position ${position} was already taken.`,
+        message: validate.join(", ")
+      });
+    }else if (validate){
+      return res.status(400).json({
+        success: false,
+        message: validate
       });
     }
 
-    if (memberPositionValidity?.rank === rank) {
-      return res.status(400).json({
-        success: false,
-        message: `Rank ${rank} was already taken.`,
-      });
-    }
+    // if (memberPositionValidity?.position === position) {
+    //   return res.status(400).json({
+    //     success: false,
+    //     message: `Position ${position} was already taken.`,
+    //   });
+    // }
 
-    const member = await Membership.findOne({ student: memberId });
+    // if (memberPositionValidity?.rank === rank) {
+    //   return res.status(400).json({
+    //     success: false,
+    //     message: `Rank ${rank} was already taken.`,
+    //   });
+    // }
 
-    if (member.status === "0") {
-      return res.status(400).json({
-        success: false,
-        message: `Member should be approved`,
-      });
-    }
+    // const member = await Membership.findOne({ student: memberId });
 
-    if (member.position !== "member" || member.rank !== "999") {
-      return res.status(400).json({
-        success: false,
-        message: `Member was already assigned`,
-      });
-    }
+    // if (member.status === "0") {
+    //   return res.status(400).json({
+    //     success: false,
+    //     message: `Member should be approved`,
+    //   });
+    // }
 
-    await Membership.findOneAndUpdate(
-      { student: memberId },
-      { position, rank }
-    );
-    res.status(200).json({
-      success: true,
-      message: "Role added successfully!",
-    });
+    // if (member.position !== "member" || member.rank !== "999") {
+    //   return res.status(400).json({
+    //     success: false,
+    //     message: `Member was already assigned`,
+    //   });
+    // }
+
+    // await Membership.findOneAndUpdate(
+    //   { student: memberId },
+    //   { position, rank }
+    // );
+    // res.status(200).json({
+    //   success: true,
+    //   message: "Role added successfully!",
+    // });
   } catch (error) {
     console.error(error);
     res.status(500).json({
@@ -100,7 +118,7 @@ export const revokeRole = async (req, res) => {
         rank: "999",
       }
     );
-    console.log(memberId)
+    console.log(memberId);
     if (!officer) {
       return res.status(404).json({
         success: false,
