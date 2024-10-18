@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Mongoose } from "mongoose";
 
 const organizationSchema = new mongoose.Schema(
   {
@@ -17,23 +17,16 @@ const organizationSchema = new mongoose.Schema(
     },
     officers : [
       {
-        firstname: {
-          type: String
-        },
-        lastname: {
-          type: String
-        },
-        middlename: {
-          type: String
+        officerId: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "User",
+          required: true,
         },
         position: {
           type: String
         },
         rank:{
-          type: Number
-        },
-        profilePicture:{
-          type:String
+          type: String
         }
       }
     ],
