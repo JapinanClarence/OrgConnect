@@ -8,8 +8,9 @@ import {
 
 export const createOfficer = async (req, res) => {
   const userId = req.user.userId;
+  const memberId = req.params.id;
   try {
-    const { officerId, position, rank } = req.body;
+    const { position, rank } = req.body;
 
     // Fetch organization
     const organization = await Organization.findOne({ user: userId }).populate(
@@ -19,40 +20,47 @@ export const createOfficer = async (req, res) => {
     if (!organization) {
       return res.status(404).json({
         success: false,
-        message: "Organization not found",
+        message: "User or organization not found",
       });
     }
 
-    // Initialize officers array if it's null or undefined
-    organization.officers = organization.officers || [];
-
-    const errorMessage = await validateOfficer(
-      officerId,
-      position,
-      rank,
-      organization
-    );
-
-    if (errorMessage) {
+    const memberPositionValidity = await Membership.findOne({ position: position, rank: rank });
+    if (memberPositionValidity?.position === position) {
       return res.status(400).json({
         success: false,
-        message: errorMessage,
+        message: `Position ${position} was already taken.`,
       });
     }
 
-    // Add the validated officer
-    organization.officers.push({
-      officerId: officerId,
-      position: position,
-      rank: rank,
-    });
+    if (memberPositionValidity?.rank === rank) {
+      return res.status(400).json({
+        success: false,
+        message: `Rank ${rank} was already taken.`,
+      });
+    }
 
-    // Save the updated organization
-    await organization.save();
+    const member =  await Membership.findOne(
+      { student: memberId }
+    );
 
+    if(member.status === "0"){
+      return res.status(400).json({
+        success: false,
+        message: `Member should be approved`,
+      });
+    }
+
+    if(member.position !== "member" || member.rank !== "999"){
+      return res.status(400).json({
+        success: false,
+        message: `Member was already assigned`,
+      });
+    }
+  
+    await Membership.findOneAndUpdate({student: memberId}, {position, rank});
     res.status(200).json({
       success: true,
-      message: "Officer added successfully!",
+      message: "Role added successfully!",
     });
   } catch (error) {
     console.error(error);
@@ -116,10 +124,7 @@ export const deleteOfficer = async (req, res) => {
 export const getOfficer = async (req, res) => {
   const userId = req.user.userId;
   try {
-    // Fetch organization
-    const organization = await Organization.findOne({ user: userId }).populate(
-      "officers.officerId"
-    );
+    const organization = await Organization.findOne({ user: userId });
 
     if (!organization) {
       return res.status(404).json({
@@ -127,23 +132,39 @@ export const getOfficer = async (req, res) => {
         message: "Organization not found",
       });
     }
+    const officers = await Membership.find({
+      organization: organization._id,
+      position: { $ne: "member" }, // Exclude members with position "Member"
+    }).populate("student");
+
+    if (officers.length <= 0) {
+      return res.status(200).json({
+        success: false,
+        message: "No members found",
+      });
+    }
+
+    // console.log(officers)
 
     // Sort officers by rank in ascending order
-    organization.officers.sort((a, b) => a.rank - b.rank);
+    officers.sort((a, b) => a.rank - b.rank);
     // Clean and format the returned data
-    const cleanedOfficers = organization.officers.map((officer) => ({
-      id: officer.officerId.id, // Rename officerId to officer
-      firstname: officer.officerId.firstname,
-      lastname: officer.officerId.lastname,
-      middlename: officer.officerId.middlename,
-      course: officer.officerId.course,
-      year: officer.officerId.year,
-      age: officer.officerId.age,
-      email: officer.officerId.email,
-      profilePicture: officer.officerId.profilePicture,
-      position: officer.position,
-      rank: officer.rank
-    }));
+    const cleanedOfficers = officers.map((officer) => {
+      const fullname = `${officer.student.firstname} ${
+        officer.student.middlename ? officer.student.middlename[0] + ". " : ""
+      }${officer.student.lastname}`;
+      return {
+        id: officer.student._id,
+        fullname: fullname,
+        course: officer.student.course,
+        year: officer.student.year,
+        age: officer.student.age,
+        email: officer.student.email,
+        profilePicture: officer.student.profilePicture,
+        position: officer.position,
+        rank: officer.rank,
+      };
+    });
 
     res.status(200).json({
       success: true,
@@ -155,33 +176,4 @@ export const getOfficer = async (req, res) => {
       message: err.message,
     });
   }
-};
-
-const validateOfficer = async (officerId, position, rank, organization) => {
-  let errorMessage;
-  // Check if the officer exists and their status is "1" (approved)
-  const officerExists = await Membership.findOne({ student: officerId });
-  if (!officerExists || officerExists.status !== "1") {
-    errorMessage = `Officer is not an approved member.`;
-  }
-
-  // Check for duplicate position or rank
-  const duplicatePosition = organization.officers.some(
-    (off) => off.position === position
-  );
-  const duplicateRank = organization.officers.some((off) => off.rank === rank);
-
-  if (duplicatePosition || duplicateRank) {
-    errorMessage = `Position ${position} or rank ${rank} already exists.`;
-  }
-
-  // Ensure the officer hasn't been added already
-  const officerAlreadyAssigned = organization.officers.some(
-    (off) => off.officerId.toString() === officerId
-  );
-  if (officerAlreadyAssigned) {
-    errorMessage = `Officer has already been assigned.`;
-  }
-
-  return errorMessage;
 };

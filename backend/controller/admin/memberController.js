@@ -14,7 +14,7 @@ export const getMembers = async (req, res) => {
       });
     }
 
-    const members = await Membership.find({ organization: organization._id });
+    const members = await Membership.find({ organization: organization._id});
    
     if (members.length <= 0) {
       return res.status(200).json({
@@ -41,6 +41,7 @@ export const getMembers = async (req, res) => {
           profilePicture: data.profilePicture,
           status : members.status,
           joinedDate: members.joinedDate,
+          position: members.position,
         };
       })
     );

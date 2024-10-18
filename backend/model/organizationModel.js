@@ -15,21 +15,6 @@ const organizationSchema = new mongoose.Schema(
     banner: {
         type:String,
     },
-    officers : [
-      {
-        officerId: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "User",
-          required: true,
-        },
-        position: {
-          type: String
-        },
-        rank:{
-          type: String
-        }
-      }
-    ],
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",

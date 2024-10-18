@@ -1,14 +1,18 @@
 import mongoose from "mongoose";
 
-/**
+/**status
  * 0 - Pending
  * 1 - Approved
+ * position
+ * 0- member
+ * rank 
+ * 0 -member
  */
 const membershipSchema = new mongoose.Schema(
   {
     student: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Student", // Reference to the Student model
+      ref: "User", // Reference to the Student model
       required: true,
     },
     organization: {
@@ -16,10 +20,18 @@ const membershipSchema = new mongoose.Schema(
       ref: "Organization", // Reference to the Organization model
       required: true,
     },
-    status:{
+    status: {
       type: String,
       enum: ["0", "1"],
-      default: "0"
+      default: "0",
+    },
+    position: {
+      type: String,
+      default: "member",
+    },
+    rank: {
+      type: String,
+      default: "999",
     },
     joinedDate: {
       type: Date,

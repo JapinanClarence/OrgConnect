@@ -16,13 +16,13 @@ import {
 const router = express.Router();
 
 //create organization routes
-router.post(
-  "/officer",
+router.patch(
+  "/officer/:id",
   authenticate,
   authorizeRole("admin"),
   express.json(),
-//   officerValidationRules(),
-//   validate,
+  officerValidationRules(),
+  validate,
   createOfficer
 );
 router.get("/officer", authenticate, authorizeRole("admin"), getOfficer);
