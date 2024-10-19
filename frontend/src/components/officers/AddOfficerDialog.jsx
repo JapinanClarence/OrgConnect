@@ -218,7 +218,7 @@ const AddOfficerDialog = ({
                         <SelectGroup>
                           <SelectLabel>Positions</SelectLabel>
                           {positions.map((position) => (
-                            <SelectItem className="" value={position}>
+                            <SelectItem key={position} className="" value={position}>
                               {position.charAt(0).toUpperCase() +
                                 position.slice(1).toLowerCase()}
                             </SelectItem>

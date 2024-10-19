@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   TooltipProvider,
   Tooltip,
@@ -27,13 +27,12 @@ import {
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/AuthContext";
 import { useState } from "react";
-import UserProfile from "./UserProfile";
 
 const DesktopSidebar = () => {
   const [showUserDialog, setShowUserDialog] = useState(false);
   const location = useLocation();
   const { logout, userData } = useAuth();
-
+  const navigate = useNavigate();
   const handleLogout = () => {
     logout();
   };
@@ -267,9 +266,9 @@ const DesktopSidebar = () => {
                       <DropdownMenuLabel>My Account</DropdownMenuLabel>
                       <DropdownMenuSeparator />
                       <DropdownMenuItem
-                        onSelect={() => setShowUserDialog(true)}
+                        onSelect={() => navigate("/settings")}
                       >
-                        Edit Profile
+                        Settings
                       </DropdownMenuItem>
                       <DropdownMenuItem onSelect={handleLogout}>
                         Logout
@@ -300,8 +299,8 @@ const DesktopSidebar = () => {
                     <DropdownMenuContent align="end" className="bg-white">
                       <DropdownMenuLabel>My Account</DropdownMenuLabel>
                       <DropdownMenuSeparator />
-                      <DropdownMenuItem onClick={() => setShowUserDialog(true)}>
-                        Edit Profile
+                      <DropdownMenuItem onClick={() => navigate("/settings")}>
+                        Settings
                       </DropdownMenuItem>
                       <DropdownMenuItem onClick={handleLogout}>
                         Logout
@@ -321,7 +320,7 @@ const DesktopSidebar = () => {
           </Tooltip>
         </TooltipProvider>
       </nav>
-      <UserProfile open={showUserDialog} onOpenChange={setShowUserDialog} />
+    
     </aside>
   );
 };

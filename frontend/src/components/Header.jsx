@@ -19,7 +19,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import UserProfile from "./UserProfile";
 
 const Header = () => {
   const { logout, userData } = useAuth();
@@ -43,8 +42,6 @@ const Header = () => {
     userData.middlename ? userData.middlename[0] + ". " : ""
   }${userData.lastname}`;
 
-  
-  
   return (
     <>
       <header className="top-0 flex h-[53px] items-center border-b bg-zinc-100 px-4 shadow-sm sticky z-10">
@@ -93,16 +90,14 @@ const Header = () => {
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>{fullname}</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={() => setShowUserDialog(true)}>
-                Edit Profile
+              <DropdownMenuItem onSelect={() => navigate("/settings")}>
+                Settings
               </DropdownMenuItem>
               <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
       </header>
-
-     <UserProfile userData={userData} open={showUserDialog} onOpenChange={setShowUserDialog}/>
     </>
   );
 };

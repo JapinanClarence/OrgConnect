@@ -7,7 +7,6 @@ import {
   CardContent,
   CardFooter,
 } from "@/components/ui/card";
-import UserProfile from "@/components/UserProfile";
 import { Button } from "@/components/ui/button";
 
 const Homepage = () => {
@@ -41,18 +40,14 @@ const Homepage = () => {
     };
     getOrganizationData();
   }, []);
-  const [showUser, setShowUser] =useState(false);
-  const handleTest = () =>{
-    setShowUser(true);
-  }
+
   return (
     <>
       <AddOrganizationDialog
         showDialog={showDialog}
         onClose={() => setShowDialog(false)}
       />
-      <Button onClick={handleTest}>Test</Button>
-      <UserProfile open={showUser} onOpenChange={setShowUser}/>
+     
       <div className="h-full flex justify-center items-center">
         {/* <Card className="text-gray-900 mx-auto">
           <CardHeader>

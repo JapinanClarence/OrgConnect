@@ -69,7 +69,7 @@ const AnnouncementCard = ({
 
   return (
     <>
-      <Card className="shadow-sm border-zinc-300" onClick={handleClick}>
+      <Card className="shadow-sm border border-slate-200" onClick={handleClick}>
         <CardContent className="p-3 md:p-5 relative">
           <div className="absolute top-1 right-1 p-0 m-0">
             <Button

@@ -12,7 +12,7 @@ import AnnouncementPage from "./pages/AnnouncementPage";
 import PaymentPage from "./pages/PaymentPage";
 import AttendancePage from "./pages/AttendancePage";
 import MembersPage from "./pages/MembersPage";
-import ProfilePage from "./pages/ProfilePage";
+import SettingsPage from "./pages/SettingsPage";
 import OfficersPage from "./pages/OfficersPage";
 
 const App = () => {
@@ -28,7 +28,7 @@ const App = () => {
         <Route element={<ProtectedRoute />}>
           <Route element={<DashboardLayout />}>
             <Route index element={<Homepage />} />
-            <Route path="/profile" element={<ProfilePage/>}/>
+            <Route path="/settings" element={<SettingsPage/>}/>
             <Route path="/events" element={<Eventpage />} />
             <Route path="/announcements" element={<AnnouncementPage />} />
             <Route path="/payments" element={<PaymentPage />} />

@@ -7,7 +7,7 @@ import {
   validate,
   organizationValidationRules,
 } from "../../middleware/validator.js";
-import { createOrg, findOrg } from "../../controller/admin/orgController.js";
+import { createOrg, findOrg, updateOrg } from "../../controller/admin/orgController.js";
 
 const router = express.Router();
 
@@ -26,6 +26,12 @@ router.get("/organization",
   authenticate,
   authorizeRole("admin"),
   findOrg
+)
+router.patch("/organization",
+  authenticate,
+  authorizeRole("admin"),
+  express.json(),
+  updateOrg
 )
 
 export default router;

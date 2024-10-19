@@ -73,9 +73,6 @@ export const OrgSchema = z.object({
   name: z.string().min(1, {
     message: "Organization name is required",
   }),
-  description: z.string().min(1, {
-    message: "Description is required",
-  }),
   about: z.string(),
   contact: z.string(),
 });
