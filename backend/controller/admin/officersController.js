@@ -230,13 +230,37 @@ export const getOfficer = async (req, res) => {
     cleanedOfficers.sort((a, b) => {
       return (
         (positionRankMap[a.position.toLowerCase()] || -Infinity) -
-        (positionRankMap[b.position.toLowerCase()] || -Infinity) 
+        (positionRankMap[b.position.toLowerCase()] || -Infinity)
       );
     });
     res.status(200).json({
       success: true,
       data: cleanedOfficers,
     });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
+};
+export const getPositions = async (req, res) => {
+  const userId = req.user.userId;
+  try {
+    const organization = await Organization.findOne({ user: userId });
+
+    if (!organization) {
+      return res.status(404).json({
+        success: false,
+        message: "Organization not found",
+      });
+    }
+
+    const cleanData = organization.officerPositions.map((positions) => positions.position)
+    res.status(200).json({
+      success:true,
+      data: cleanData
+    })
   } catch (err) {
     return res.status(500).json({
       success: false,

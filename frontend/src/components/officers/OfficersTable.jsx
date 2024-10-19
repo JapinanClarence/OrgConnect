@@ -103,6 +103,9 @@ const OfficersTable = ({ data, loading, onAdd, onClick, handleDelete, handleEdit
         />
 
         <div className="flex-wrap-reverse mt-2 space-y-2 md:space-y-0 md:mt-0 md:space-x-2 md:flex md:items-center">
+        <Button className="w-full md:w-fit" onClick={onAdd}>
+            Add Officer
+          </Button>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" className="w-full md:w-fit">

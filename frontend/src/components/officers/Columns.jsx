@@ -50,6 +50,24 @@ export const columns = (onEdit, onDelete) =>  [
     cell: ({ row }) => <div className="text-xs">{row.getValue("fullname")}</div>,
   },
   {
+    accessorKey: "email",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="px-0"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Email
+          <CaretSortIcon className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => (
+      <div className="text-xs">{row.getValue("email")}</div>
+    ),
+  },
+  {
     accessorKey: "course",
     header:({ column }) => {
       return (
@@ -97,24 +115,7 @@ export const columns = (onEdit, onDelete) =>  [
     },
     cell: ({ row }) => <div className="text-xs">{row.getValue("position")}</div>,
   },
-  {
-    accessorKey: "rank",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          className="px-0"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Rank
-          <CaretSortIcon className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => (
-      <div className="text-xs">{row.getValue("rank")}</div>
-    ),
-  },
+  
   {
     id: "actions",
     enableHiding: false,

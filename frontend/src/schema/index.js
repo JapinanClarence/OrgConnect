@@ -66,8 +66,7 @@ export const FileSchema = z
 
 export const OfficerSchema = z.object({
   officerId: z.string().min(1, {message: "Officer is required"}),
-  position: z.string().min(1, {message: "Position is required"}),
-  rank: z.string().min(1, {message: "Rank is required"}),
+  position: z.string().min(1, {message: "Position is required"})
 })
 
 export const OrgSchema = z.object({

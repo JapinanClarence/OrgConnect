@@ -32,7 +32,13 @@ import {
 } from "@/components/ui/command";
 import { Input } from "@/components/ui/input";
 import { LoaderCircle } from "lucide-react";
-
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useAuth } from "@/context/AuthContext";
 import apiClient from "@/api/axios";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -46,12 +52,34 @@ const AddOfficerDialog = ({
   errorMessage,
 }) => {
   const [members, setMembers] = useState([]);
+  const [positions, setPositions] = useState([]);
   const { token } = useAuth();
- 
+
   useEffect(() => {
     fetchMembers();
+    fetchPositons();
   }, []);
 
+  const fetchPositons = async () => {
+    try {
+      const response = await apiClient.get("/admin/officer/positions", {
+        headers: {
+          Authorization: token,
+        },
+      });
+
+      if (response.data.success) {
+        const labelData = response.data.data.map((data) => {
+          return data;
+        });
+        setPositions(labelData);
+      } else {
+        console.log(response.data.message);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
   const fetchMembers = async () => {
     try {
       const response = await apiClient.get("/admin/members", {
@@ -170,30 +198,28 @@ const AddOfficerDialog = ({
                     <FormLabel className="text-gray-600 text-sm">
                       Position
                     </FormLabel>
-                    <FormControl>
-                      <Input {...field} type="text" />
-                    </FormControl>
-                    <FormMessage className="text-xs" />
-                  </FormItem>
-                )}
-              />
-
-              {/* Rank Field */}
-              <FormField
-                control={form.control}
-                name="rank"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-gray-600 text-sm">
-                      Rank{" "}
-                      <span className="text-xs">
-                        (Basis for hierarchy level)
-                      </span>
-                    </FormLabel>
-                    <FormControl>
-                      <Input {...field} type="number" min="1" />
-                    </FormControl>
-                    <FormMessage className="text-xs" />
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger
+                          className={cn(
+                            "text-xs",
+                            !field.value && "text-muted-foreground"
+                          )}
+                        >
+                          <SelectValue placeholder="Select officer position" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {positions.map((position) => (
+                          <SelectItem className="" value={position}>
+                            {position.charAt(0).toUpperCase() + position.slice(1).toLowerCase()}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </FormItem>
                 )}
               />
