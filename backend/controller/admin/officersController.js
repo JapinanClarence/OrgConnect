@@ -85,7 +85,9 @@ export const updateOfficer = async (req, res) => {
   const userId = req.user.userId;
   const memberId = req.params.id;
   try {
-    const { position, rank } = req.body;
+
+    const { position } = req.body;
+ 
 
     // Fetch organization
     const organization = await Organization.findOne({ user: userId }).populate(
@@ -98,33 +100,39 @@ export const updateOfficer = async (req, res) => {
         message: "User or organization not found",
       });
     }
+    const validPositions = organization.officerPositions;
 
-    const memberPositionValidity = await Membership.find();
+    // Validate position
+    const existingPositions = validPositions.map((officer) => officer.position);
 
-    const validate = memberPositionValidity
-      .map((validity) => {
-        if (validity?.position === position) {
-          return `Position ${position} was already taken`;
-        } else if (validity?.rank === rank) {
-          return `Rank ${rank} was already taken`;
-        }
-      })
-      .filter((msg) => msg !== undefined);
-
-    if (validate.length > 0) {
+    // Check if the provided position exists in the list of existing positions
+    if (!existingPositions.includes(position.toLowerCase())) {
       return res.status(400).json({
         success: false,
-        message: validate.join(", "),
+        message: `Position "${position}" is not valid. Valid positions are: ${existingPositions.join(
+          ", "
+        )}.`,
       });
     }
 
-    await Membership.findOneAndUpdate(
-      { student: memberId },
-      { position, rank }
+    const positionAvailability = await Membership.find();
+
+    // Check if the position is taken
+    const takenPosition = positionAvailability.find(
+      (takenPosition) => takenPosition?.position === position
     );
+
+    if (takenPosition) {
+      return res.status(400).json({
+        success: false,
+        message: `Position ${position} is already taken.`,
+      });
+    }
+  
+    await Membership.findOneAndUpdate({ student: memberId }, { position });
     res.status(200).json({
       success: true,
-      message: "Role updated successfully!",
+      message: "Role added successfully!",
     });
   } catch (error) {
     console.error(error);
@@ -256,11 +264,13 @@ export const getPositions = async (req, res) => {
       });
     }
 
-    const cleanData = organization.officerPositions.map((positions) => positions.position)
+    const cleanData = organization.officerPositions.map(
+      (positions) => positions.position
+    );
     res.status(200).json({
-      success:true,
-      data: cleanData
-    })
+      success: true,
+      data: cleanData,
+    });
   } catch (err) {
     return res.status(500).json({
       success: false,

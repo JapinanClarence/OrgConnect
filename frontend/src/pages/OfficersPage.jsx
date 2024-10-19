@@ -66,7 +66,9 @@ const OfficersPage = () => {
         const officerData = data.data.map((data) => ({
           id: data.id,
           fullname: data.fullname,
-          position: data.position.charAt(0).toUpperCase() + data.position.slice(1).toLowerCase(),
+          position:
+            data.position.charAt(0).toUpperCase() +
+            data.position.slice(1).toLowerCase(),
           age: data.age,
           email: data.email,
           year: yearMap[data.year],
@@ -88,23 +90,99 @@ const OfficersPage = () => {
     setShowDialog(true);
   };
   const handleDelete = (data) => {
-    console.log(data);
+    setShowAlert(true);
+    setCurrentOfficer(data);
+  };
+
+  const confirmDelete = () => {
+    onDelete(currentOfficer); // Call the delete function
+    setShowAlert(false); // Close the alert dialog after deleting
+  };
+
+  const cancelDelete = () => {
+    setShowAlert(false); // Close the alert dialog without deleting
   };
   const handleRowClick = (data) => {};
 
-  const onEdit = (data) => {};
-  const onAdd = async (data) => {
-    const {officerId, position, rank} = data;
+  const onDelete = async (officerId) => {
+    console.log(officerId);
     try {
       setIsSubmitting(true);
-      const res = await apiClient.patch(`/admin/officer/${officerId}`, {
-        position: position.toLowerCase(),
-        rank
-      }, {
-        headers: {
-          Authorization: token,
+      const res = await apiClient.patch(
+        `/admin/officer/${officerId}/revokeRole`,{},
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+
+      if (res) {
+        await fetchOfficers();
+        setShowAlert(false);
+        form.reset();
+
+        toast({
+          title: "Officer has been removed",
+          description: `${date}`,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      const message = error.response.data.message;
+      setErrorMessage(message);
+      setIsSubmitting(false);
+    }
+  };
+  const onEdit = async (data) => {
+    const { officerId, position } = data;
+    try {
+      setIsSubmitting(true);
+      const res = await apiClient.patch(
+        `/admin/officer/${officerId}/updateRole`,
+        {
+          position: position.toLowerCase(),
         },
-      });
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+
+      if (res) {
+        await fetchOfficers();
+        setIsSubmitting(false);
+        setShowDialog(false);
+        form.reset();
+
+        toast({
+          title: "Officer position has been updated",
+          description: `${date}`,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      const message = error.response.data.message;
+      setErrorMessage(message);
+      setIsSubmitting(false);
+    }
+  };
+  const onAdd = async (data) => {
+    const { officerId, position } = data;
+    try {
+      setIsSubmitting(true);
+      const res = await apiClient.patch(
+        `/admin/officer/${officerId}`,
+        {
+          position: position.toLowerCase(),
+        },
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
 
       if (res) {
         await fetchOfficers();
@@ -137,7 +215,14 @@ const OfficersPage = () => {
         handleEdit={handleEdit}
         handleDelete={handleDelete}
       />
-      <AddOfficerDialog form={form} open={showAddDialog} onOpenChange={setShowAddDialog} onSubmit={onAdd} isSubmitting={isSubmitting} errorMessage={errorMessage}/>
+      <AddOfficerDialog
+        form={form}
+        open={showAddDialog}
+        onOpenChange={setShowAddDialog}
+        onSubmit={onAdd}
+        isSubmitting={isSubmitting}
+        errorMessage={errorMessage}
+      />
       <EditOfficerDialog
         officerData={currentOfficer}
         open={showDialog}
@@ -146,6 +231,24 @@ const OfficersPage = () => {
         isSubmitting={isSubmitting}
         errorMessage={errorMessage}
       />
+
+      <AlertDialog open={showAlert} onOpenChange={setShowAlert}>
+        <AlertDialogContent className="bg-white">
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This action cannot be undone. This will permanently remove/revoke
+              the officer
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={cancelDelete}>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={confirmDelete}>
+              Continue
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };

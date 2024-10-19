@@ -15,6 +15,13 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { Input } from "@/components/ui/input";
 import { LoaderCircle } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -65,25 +72,6 @@ const ManagePosition = ({
                 )}
               />
 
-              {/* Rank Field */}
-              <FormField
-                control={form.control}
-                name="rank"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-gray-600 text-sm">
-                      Rank{" "}
-                      <span className="text-xs">
-                        (Basis for hierarchy level)
-                      </span>
-                    </FormLabel>
-                    <FormControl>
-                      <Input {...field} type="number" min="1" />
-                    </FormControl>
-                    <FormMessage className="text-xs" />
-                  </FormItem>
-                )}
-              />
             </div>
 
             <div className="flex justify-between mt-4">

@@ -12,6 +12,7 @@ import {
  revokeRole,
  getOfficer,
  getPositions,
+ updateOfficer,
 } from "../../controller/admin/officersController.js";
 
 const router = express.Router();
@@ -26,6 +27,7 @@ router.patch(
   validate,
   createOfficer
 );
+router.patch("/officer/:id/updateRole", authenticate, authorizeRole("admin"), express.json(), updateOfficer);
 router.get("/officer", authenticate, authorizeRole("admin"), getOfficer);
 router.get("/officer/positions", authenticate, authorizeRole("admin"), getPositions);
 router.patch("/officer/:id/revokeRole", authenticate, authorizeRole("admin"), revokeRole);

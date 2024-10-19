@@ -37,7 +37,9 @@ import {
   SelectContent,
   SelectItem,
   SelectTrigger,
+  SelectLabel,
   SelectValue,
+  SelectGroup,
 } from "@/components/ui/select";
 import { useAuth } from "@/context/AuthContext";
 import apiClient from "@/api/axios";
@@ -213,11 +215,15 @@ const AddOfficerDialog = ({
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        {positions.map((position) => (
-                          <SelectItem className="" value={position}>
-                            {position.charAt(0).toUpperCase() + position.slice(1).toLowerCase()}
-                          </SelectItem>
-                        ))}
+                        <SelectGroup>
+                          <SelectLabel>Positions</SelectLabel>
+                          {positions.map((position) => (
+                            <SelectItem className="" value={position}>
+                              {position.charAt(0).toUpperCase() +
+                                position.slice(1).toLowerCase()}
+                            </SelectItem>
+                          ))}
+                        </SelectGroup>
                       </SelectContent>
                     </Select>
                   </FormItem>

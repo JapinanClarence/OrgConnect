@@ -14,134 +14,155 @@ import {
   FormControl,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { LoaderCircle, PhilippinePeso } from "lucide-react";
+import { LoaderCircle } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { OfficerSchema } from "@/schema";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { useAuth } from "@/context/AuthContext";
+import apiClient from "@/api/axios";
+import { cn } from "@/lib/utils";
+import {
+  Select,
+  SelectContent,
+  SelectLabel,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
-const EditOfficerDialog = ({ officerData, open, onOpenChange, onSubmit, isSubmitting, errorMessage }) => {
+const EditOfficerDialog = ({
+  officerData,
+  open,
+  onOpenChange,
+  onSubmit,
+  isSubmitting,
+  errorMessage,
+}) => {
+  const { token } = useAuth();
   const form = useForm({
     resolver: zodResolver(OfficerSchema),
-    defaultValues: officerData,
+    defaultValues: {
+      officerId: officerData?.id || "", // Ensure officerId is set
+      position: officerData?.position || "", // Ensure position is set
+    },
   });
-
+  const [positions, setPositions] = useState([]);
   const { reset } = form;
 
   // Use effect to reset form when officerData changes
   useEffect(() => {
     if (officerData) {
-      reset(officerData); // This will reset the form with new event data
+      reset({
+        officerId: officerData.id,
+        position: officerData.position,
+      }); // Reset the form with new officer data
     }
   }, [officerData, reset]);
+
+  useEffect(() => {
+    fetchPositions();
+  }, []);
+
+  const fetchPositions = async () => {
+    try {
+      const response = await apiClient.get("/admin/officer/positions", {
+        headers: {
+          Authorization: token,
+        },
+      });
+
+      if (response.data.success) {
+        setPositions(response.data.data);
+      } else {
+        console.log(response.data.message);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Update Officer Information</DialogTitle>
+          <DialogTitle>Edit Role</DialogTitle>
           <DialogDescription>
-            Please fill in all required fields to edit officer information.
+            Please fill in all required fields to edit role.
           </DialogDescription>
         </DialogHeader>
-        <div>
-          <Form {...form}>
+        <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-              {errorMessage && (
-                <Alert
-                  variant="destructive"
-                  className="py-2 px-3 bg-red-500 bg-opacity-20"
-                >
-                  <AlertDescription>{errorMessage}</AlertDescription>
-                </Alert>
-              )}
-              <div className="space-y-2">
-                {/* Purpose Field */}
-                <FormField
-                  control={form.control}
-                  name="purpose"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-gray-600 text-sm">
-                        Purpose
-                      </FormLabel>
+            {errorMessage && (
+              <Alert
+                variant="destructive"
+                className="py-2 px-3 bg-red-500 bg-opacity-20"
+              >
+                <AlertDescription>{errorMessage}</AlertDescription>
+              </Alert>
+            )}
+            <div className="space-y-2">
+              {/* Position Field */}
+              <FormField
+                control={form.control}
+                name="position"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-gray-600 text-sm">
+                      Position
+                    </FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value} // Set the default value for the select
+                    >
                       <FormControl>
-                        <Input {...field} type="text" />
+                        <SelectTrigger className={"text-xs"}>
+                          <SelectValue placeholder="Select officer position" />
+                        </SelectTrigger>
                       </FormControl>
-                      <FormMessage className="text-xs" />
-                    </FormItem>
-                  )}
-                />
+                      <SelectContent>
+                      <SelectGroup>
+                          <SelectLabel>Positions</SelectLabel>
+                          {positions.map((position) => (
+                            <SelectItem key={position} className="" value={position}>
+                              {position.charAt(0).toUpperCase() +
+                                position.slice(1).toLowerCase()}
+                            </SelectItem>
+                          ))}
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
 
-                {/* Details Field */}
-                <FormField
-                  control={form.control}
-                  name="details"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-gray-600 text-sm">
-                        Details{" "}
-                      </FormLabel>
-                      <FormControl>
-                        <div className="relative w-full ">
-                          <Textarea className="resize-y" {...field} />
-                        </div>
-                      </FormControl>
-                      <FormMessage className="text-xs" />
-                    </FormItem>
-                  )}
-                />
-
-                {/* amount Field */}
-                <FormField
-                  control={form.control}
-                  name="amount"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-gray-600 text-sm">
-                        Amount{" "}
-                      </FormLabel>
-                      <FormControl>
-                        <div className="relative w-full ">
-                          <div className="absolute left-0 top-0 p-[10px]  ">
-                            <PhilippinePeso className="h-4 w-4 text-muted-foreground" />
-                          </div>
-                          <Input {...field} type="number" min="0.00" placeholder="0.00" className="pl-8"/>
-                        </div>
-                      </FormControl>
-                      <FormMessage className="text-xs" />
-                    </FormItem>
-                  )}
-                />
-              </div>
-
-              <div className="flex justify-between mt-4">
-                <Button
-                  type="submit"
-                  className="w-[140px]"
-                  disabled={isSubmitting}
-                >
-                  {isSubmitting ? (
-                    <LoaderCircle className="animate-spin" />
-                  ) : (
-                    "Update Officer"
-                  )}
-                </Button>
-                <Button
-                  type="button"
-                  variant="outline"
-                  className="border border-gray-500 hover:bg-gray-100"
-                  onClick={() => onOpenChange(false)}
-                >
-                  Cancel
-                </Button>
-              </div>
-            </form>
-          </Form>
-        </div>
+            <div className="flex justify-between mt-4">
+              <Button
+                type="submit"
+                className="w-[100px]"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? (
+                  <LoaderCircle className="animate-spin" />
+                ) : (
+                  "Submit"
+                )}
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                className="border border-gray-500 hover:bg-gray-100"
+                onClick={() => onOpenChange(false)}
+              >
+                Cancel
+              </Button>
+            </div>
+          </form>
+        </Form>
       </DialogContent>
     </Dialog>
   );
