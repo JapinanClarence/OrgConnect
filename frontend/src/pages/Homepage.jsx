@@ -48,24 +48,35 @@ const chartConfig = {
     color: "hsl(var(--chart-5))",
   },
 };
-const eventData = [];
-const memberData =[];
+
 const Homepage = () => {
   const [showDialog, setShowDialog] = useState(false);
-  const [orgData, setOrgData] = useState("");
+  const [eventCount, setEventCount] = useState(0);
+  const [announcementCount, setAnnouncmentCount] = useState(0);
+  const [membersCount, setMembersCount] = useState(0);
+  const [paymentCount, setPaymentcount] = useState(0);
+  // const [chartData, setChartData] = useState("");
+  const [eventData, setEventData] = useState("");
+  const [memberData, setMemberData] = useState("")
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
         const token = localStorage.getItem("token");
-        const { data } = await apiClient.get("/admin/organization/", {
+        const { data } = await apiClient.get("/admin/dashboard/", {
           headers: {
             Authorization: token,
           },
         });
         if (data.success) {
-          setOrgData(data.data);
+          setEventCount(data.eventCount);
+          setAnnouncmentCount(data.announcementCount);
+          setPaymentcount(data.paymentCount);
+          setMembersCount(data.memberCount);
+          setEventData(data.events);
+          setMemberData(data.members);
+          // setChartData(data.eventAttendees);
         }
         setLoading(false);
       } catch (error) {
@@ -96,28 +107,28 @@ const Homepage = () => {
             <Statcard
               name="Total Members"
               icon={Users}
-              value="1,234"
+              value={membersCount}
               color="#8B5CF6"
               loading={loading}
             />
             <Statcard
               name="Total Events"
               icon={ChartCandlestick}
-              value="$12,345"
+              value={eventCount}
               color="#6366F1"
               loading={loading}
             />
             <Statcard
               name="Total Announcements"
               icon={ChartSpline}
-              value="567"
+              value={announcementCount}
               color="#EC4899"
               loading={loading}
             />
             <Statcard
               name="Total Payments"
               icon={ChartNoAxesColumn}
-              value="12.5%"
+              value={paymentCount}
               color="#10B981"
               loading={loading}
             />

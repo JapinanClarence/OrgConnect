@@ -37,6 +37,7 @@ export const dashboardEventColumns = [
   {
     accessorKey: "location",
     header: ({ column }) => {
+    
       return (
         <div className="flex justify-end">
           <Button
@@ -51,7 +52,8 @@ export const dashboardEventColumns = [
       );
     },
     cell: ({ row }) => {
-      <div className="">{row.getValue("location")}</div>;
+
+     return  <div className="">{row.getValue("location")}</div>;
     },
   },
   {
