@@ -56,7 +56,7 @@ const Homepage = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const getOrganizationData = async () => {
+    const fetchDashboardData = async () => {
       try {
         const token = localStorage.getItem("token");
         const { data } = await apiClient.get("/admin/organization/", {
@@ -75,7 +75,7 @@ const Homepage = () => {
         setLoading(false);
       }
     };
-    getOrganizationData();
+    fetchDashboardData();
   }, []);
 
   return (
@@ -126,14 +126,14 @@ const Homepage = () => {
         <div className="flex gap-3 flex-col-reverse md:flex-row ">
           <div className="flex-1 bg-white shadow-sm md:shadow-lg rounded-lg border border-gray-200 text-gray-900 p-5 md:flex flex-col">
             {/* <OrgDetailsCard name={orgData.name} about={orgData.about} contact={orgData.contact}/> */}
-            <TableComponent title={"Recent Events"} columns={dashboardEventColumns} data={eventData} loading={true} rowCount = {5} cellCount={3}/>
+            <TableComponent title={"Recent Events"} columns={dashboardEventColumns} data={eventData} loading={loading} rowCount = {5} cellCount={3}/>
           </div>
           <div className="flex-none  bg-white shadow-sm md:shadow-lg rounded-lg border border-gray-200 text-gray-900">
             <AttendeesChart chartData={chartData} chartConfig={chartConfig} />
           </div>
         </div>
         <div className=" bg-white md:shadow-lg rounded-lg border border-gray-200 text-gray-900 p-5 md:flex flex-col">
-          <TableComponent title={"New Members"} columns={dashboardMemberColumns} data={memberData} loading={true} rowCount = {5} cellCount={7}/>
+          <TableComponent title={"New Members"} columns={dashboardMemberColumns} data={memberData} loading={loading} rowCount = {5} cellCount={7}/>
         </div>
       </div>
     </>
