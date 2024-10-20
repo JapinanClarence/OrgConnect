@@ -42,7 +42,7 @@ const SettingsPage = () => {
           <AccountForm />
         </TabsContent>
         <TabsContent value="organization">
-          {orgData && <OrganizationForm orgData={orgData} />}
+          {orgData && <OrganizationForm orgData={orgData} updateData={() => getOrganizationData()}/>}
         </TabsContent>
       </Tabs>
     </div>

@@ -71,10 +71,10 @@ module.exports = {
         "accordion-up": "accordion-up 0.2s ease-out",
       },
     },
-    gridTemplateColumns: {
-      "70/30": "70% 28%",
-      "30/70" : "28% 70%"
-    },
+    // gridTemplateColumns: {
+    //   "70/30": "70% 28%",
+    //   "30/70" : "28% 70%"
+    // },
   },
   plugins: [
     require("tailwindcss-animate"),

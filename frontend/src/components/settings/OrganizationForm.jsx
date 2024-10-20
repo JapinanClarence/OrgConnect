@@ -27,7 +27,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useToast } from "@/hooks/use-toast";
 import { formatDate } from "@/util/helpers";
 
-const OrganizationForm = ({orgData}) => {
+const OrganizationForm = ({orgData, updateData}) => {
   const { token, userData } = useAuth();
   const [loading, setLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -62,11 +62,11 @@ const OrganizationForm = ({orgData}) => {
           title: "Organization updated successfuly",
           description: `${date}`,
         });
-        getOrganizationData(); // Refresh organization data
+        updateData(); // Refresh organization data
       }
     } catch (error) {
       console.log(error);
-      setErrorMessage("Failed to update organization details.");
+      setErrorMessage(error.data.message);
     } finally {
       setIsSubmitting(false);
     }

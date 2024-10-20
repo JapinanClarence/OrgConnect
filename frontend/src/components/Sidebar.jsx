@@ -69,9 +69,9 @@ const DesktopSidebar = () => {
                   isActive("/") ? "bg-white text-zinc-900" : "hover:bg-gray-800"
                 }`}
               >
-                <Home />
+                <SquareTerminal />
                 <span className="hidden lg:block ml-2 font-bold text-sm">
-                  Home
+                  Dashboard
                 </span>
               </Link>
             </TooltipTrigger>
@@ -80,7 +80,7 @@ const DesktopSidebar = () => {
               side="right"
               sideOffset={5}
             >
-              Home
+              Dashboard
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
@@ -218,33 +218,7 @@ const DesktopSidebar = () => {
           </Tooltip>
         </TooltipProvider>
 
-        
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Link
-                to="#"
-                className={`rounded-lg size-full flex items-center justify-start p-2 ${
-                  isActive("/analytics")
-                    ? "bg-white text-zinc-900"
-                    : "hover:bg-gray-800"
-                }`}
-              >
-                <SquareTerminal />
-                <span className="hidden lg:block ml-2 font-bold text-sm">
-                  Analytics
-                </span>
-              </Link>
-            </TooltipTrigger>
-            <TooltipContent
-              className="lg:hidden bg-white text-gray-900"
-              side="right"
-              sideOffset={5}
-            >
-              Analytics
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
+
       </nav>
 
       <nav className="mt-auto grid gap-1 p-3 border-t-[1px] border-gray-500">
