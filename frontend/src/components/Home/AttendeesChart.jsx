@@ -32,15 +32,15 @@ const AttendeesChart = ({ chartData, chartConfig }) => {
     return chartData.reduce((acc, curr) => acc + curr.visitors, 0);
   }, []);
   return (
-    <Card className="flex h-full flex-col">
+    <Card className="flex justify-between h-full md:max-w-[500px] flex-col">
       <CardHeader className="items-start pb-0">
         <CardTitle>Event Attendees</CardTitle>
         <CardDescription>January 2024</CardDescription>
       </CardHeader>
-      <CardContent className="flex-1 pb-0 flex items-center ">
+      <CardContent className="flex-1 pb-0 h-full">
         <ChartContainer
           config={chartConfig}
-          className="mx-auto  aspect-square max-h-[300px]"
+          className="mx-auto my-auto aspect-square max-h-[300px] "
         >
           <PieChart>
             <ChartTooltip
@@ -52,7 +52,8 @@ const AttendeesChart = ({ chartData, chartConfig }) => {
               dataKey="visitors"
               nameKey="browser"
               innerRadius={60}
-              strokeWidth={5}
+              outerRadius={90}
+              strokeWidth={10}
             >
               <Label
                 content={({ viewBox }) => {
@@ -76,7 +77,7 @@ const AttendeesChart = ({ chartData, chartConfig }) => {
                           y={(viewBox.cy || 0) + 24}
                           className="fill-muted-foreground"
                         >
-                          Visitors
+                          Attendees
                         </tspan>
                       </text>
                     );
@@ -89,7 +90,7 @@ const AttendeesChart = ({ chartData, chartConfig }) => {
       </CardContent>
       <CardFooter className="text-sm">
         <div className="leading-none text-muted-foreground">
-          Showing total visitors for the month of January
+          Showing total attendees for the month of January
         </div>
       </CardFooter>
     </Card>
