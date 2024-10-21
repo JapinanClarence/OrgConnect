@@ -13,7 +13,7 @@ const LoginPage = () => {
         />
       </div>
 
-      <div className="w-full h-full flex flex-col justify-center gap-10">
+      <div className="w-full h-full flex flex-col justify-center gap-8">
         <div className="">
           <h1 className="text-lg font-medium">Welcome to</h1>
           <h2 className="text-4xl h-12 font-bold font-accent bg-clip-text text-transparent bg-gradient-to-r  from-orange-400 to-yellow-500">

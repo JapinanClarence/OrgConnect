@@ -25,9 +25,7 @@ export const SignupSchema = z.object({
   studentId: z.string().min(1, {
     message: "Student Id is required",
   }),
-  username: z.string().min(1, {
-    message: "Username is required",
-  }),
+  username: z.string().optional(),
   email: z.string().email({
     message: "Invalid email",
   }),
