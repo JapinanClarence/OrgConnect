@@ -4,7 +4,6 @@ import DashboardLayout from "./layouts/DashboardLayout";
 import Mainlayout from "./layouts/Mainlayout";
 import Homepage from "./pages/Homepage";
 import Loginpage from "./pages/Loginpage";
-import Signuppage from "./pages/Signuppage";
 import ProtectedRoute from "./components/auth/ProtectedRoutes";
 import Eventpage from "./pages/Eventpage";
 import AnnouncementPage from "./pages/AnnouncementPage";
@@ -22,7 +21,6 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Mainlayout />}>
           <Route path="/login" element={<Loginpage />} />
-          <Route path="/signup" element={<Signuppage />} />
         </Route>
         <Route element={<ProtectedRoute />}>
           <Route element={<DashboardLayout />}>
