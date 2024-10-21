@@ -9,7 +9,7 @@ import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { LoginSchema } from "@/schema";
 import { useForm } from "react-hook-form";
-// import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
@@ -24,7 +24,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { LoaderCircle, Eye, EyeOff } from "lucide-react";
 
 const LoginForm = () => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const [showPass, setShowPass] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -63,7 +63,7 @@ const LoginForm = () => {
   };
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="">
         {errorMessage && (
           <Alert
             variant="destructive"
@@ -120,7 +120,7 @@ const LoginForm = () => {
             )}
           />
         </div>
-        <div>
+        <div className="space-y-5 mt-20">
           <Button
             id="submit"
             className="bg-gray-900 hover:bg-gray-800 text-md text-white rounded-md w-full"
@@ -131,6 +131,23 @@ const LoginForm = () => {
             ) : (
               "Login"
             )}
+          </Button>
+          <div className="relative flex items-center">
+            <div className="flex-grow border-b"></div>
+            <span className="text-center px-4 bg-white text-muted-foreground">
+              or
+            </span>
+            <div className="flex-grow border-b"></div>
+          </div>
+          <Button
+            id="button"
+            variant="outline"
+            className="text-md rounded-md w-full "
+            onClick={() => {
+              navigate("/signup")
+            }}
+          >
+            Signup
           </Button>
         </div>
       </form>
