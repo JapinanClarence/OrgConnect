@@ -13,9 +13,9 @@ const SignupPage = () => {
         />
       </div>
 
-      <div className="w-full h-full mt-12 py-10">
+      <div className="w-full h-full mt-12 py-10 ">
         <div className="mb-2">
-          <h1 className="text-3xl font-bold">Welcome to  <span className="h-12 font-bold font-accent bg-clip-text text-transparent bg-gradient-to-r  from-orange-400 to-yellow-500">
+          <h1 className="text-2xl font-bold">Welcome to  <span className="h-12 font-bold font-accent bg-clip-text text-transparent bg-gradient-to-r  from-orange-400 to-yellow-500">
             OrgConnect
           </span></h1>
          

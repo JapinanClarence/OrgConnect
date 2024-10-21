@@ -122,7 +122,7 @@ const LoginForm = () => {
             )}
           />
         </div>
-        <div className="space-y-5 mt-20">
+        <div className="space-y-5 mt-12">
           <Button
             id="submit"
             className="bg-gray-900 hover:bg-gray-800 text-md text-white rounded-md w-full"

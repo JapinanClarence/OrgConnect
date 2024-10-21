@@ -269,7 +269,7 @@ const SignupForm = () => {
             )}
           />
         </div>
-        <div className="space-y-5 mt-5">
+        <div className="space-y-5 mt-10">
           <Button
             id="submit"
             className="bg-gray-900 hover:bg-gray-800 text-md text-white rounded-md w-full"
