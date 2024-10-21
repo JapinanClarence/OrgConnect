@@ -15,16 +15,17 @@ export const SignupSchema = z.object({
   lastname: z.string().min(1, {
     message: "Lastname is required",
   }),
-  middlename: z.string(),
+  middlename: z.string().optional(),
   course: z.string().min(1, {
     message: "Course is required",
   }),
   year: z.string().min(1, {
     message: "Year is required",
   }),
-  studentId: z.string().min(1, {
-    message: "Student Id is required",
-  }),
+  studentId: z.string().regex(/^\d{4}-\d{4}$/, {
+    message: "Invalid ID number format",
+  })
+  .max(9),
   username: z.string().optional(),
   email: z.string().email({
     message: "Invalid email",

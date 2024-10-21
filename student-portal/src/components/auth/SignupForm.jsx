@@ -12,9 +12,19 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { LoaderCircle, Eye, EyeOff } from "lucide-react";
+import apiClient from "@/api/axios";
 
 const SignupForm = () => {
   const navigate = useNavigate();
@@ -24,6 +34,13 @@ const SignupForm = () => {
   const form = useForm({
     resolver: zodResolver(SignupSchema),
     defaultValues: {
+      firstname: "",
+      lastname: "",
+      middlename: "",
+      studentId: "",
+      year: "",
+      course: "",
+      email: "",
       username: "",
       password: "",
     },
@@ -32,7 +49,21 @@ const SignupForm = () => {
     setShowPass(!showPass);
   };
   const onSubmit = async (data) => {
-    console.log(data);
+    try {
+      setIsSubmitting(true);
+      const formData = SignupSchema.parse(data);
+      
+      const response = await apiClient.post("/register", formData);
+      if (response) {
+        setIsSubmitting(false);
+        navigate("/login");
+      }
+    } catch (error) {
+      console.log(error);
+      const message = error.response.data.message;
+      setErrorMessage(message);
+      setIsSubmitting(false);
+    }
   };
   return (
     <Form {...form}>
@@ -84,7 +115,8 @@ const SignupForm = () => {
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="text-gray-600 text-sm">
-                  Middlename
+                  Middlename{" "}
+                  <span className="text-xs text-muted-foreground">{`(Optional)`}</span>
                 </FormLabel>
                 <FormControl>
                   <Input {...field} type="text" />
@@ -102,7 +134,7 @@ const SignupForm = () => {
                   Student Id
                 </FormLabel>
                 <FormControl>
-                  <Input {...field} type="text" />
+                  <Input {...field} type="text" placeholder={"0000-0000"} />
                 </FormControl>
                 <FormMessage className="text-xs " />
               </FormItem>
@@ -117,9 +149,39 @@ const SignupForm = () => {
                   <FormLabel className="text-gray-600 text-sm">
                     Course
                   </FormLabel>
-                  <FormControl>
-                    <Input {...field} type="text" />
-                  </FormControl>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger className="">
+                        <SelectValue placeholder="Select a course" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectLabel>Courses</SelectLabel>
+                        <SelectItem value="BSIT">
+                          Bachelor of Science in Information Technology
+                        </SelectItem>
+                        <SelectItem value="BSCE">
+                          Bachelor of Science in Civil Engineering
+                        </SelectItem>
+                        <SelectItem value="BSMATH">
+                          Bachelor of Science in Mathematics
+                        </SelectItem>
+                        <SelectItem value="BITM">
+                          Bachelor of Science in Industrial Mathematics
+                        </SelectItem>
+                        <SelectItem value="BPED">
+                          Bachelor of Science in Physical Education
+                        </SelectItem>
+                        <SelectItem value="BSN">
+                          Bachelor of Science in Nursing
+                        </SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
                   <FormMessage className="text-xs " />
                 </FormItem>
               )}
@@ -129,12 +191,34 @@ const SignupForm = () => {
               name="year"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-gray-600 text-sm">
-                    Year
-                  </FormLabel>
-                  <FormControl>
-                    <Input {...field} type="text" />
-                  </FormControl>
+                  <FormLabel className="text-gray-600 text-sm">Year</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger className="">
+                        <SelectValue placeholder="Select a year" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectLabel>Year</SelectLabel>
+                        <SelectItem value="1">
+                          1st Year
+                        </SelectItem>
+                        <SelectItem value="2">
+                          2nd Year
+                        </SelectItem>
+                        <SelectItem value="3">
+                          3rd Year
+                        </SelectItem>
+                        <SelectItem value="4">
+                          4th Year
+                        </SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
                   <FormMessage className="text-xs " />
                 </FormItem>
               )}
@@ -145,9 +229,7 @@ const SignupForm = () => {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-gray-600 text-sm">
-                  Email
-                </FormLabel>
+                <FormLabel className="text-gray-600 text-sm">Email</FormLabel>
                 <FormControl>
                   <Input {...field} type="text" />
                 </FormControl>

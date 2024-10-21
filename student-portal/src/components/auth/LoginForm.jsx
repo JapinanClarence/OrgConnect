@@ -81,10 +81,10 @@ const LoginForm = () => {
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="text-gray-600 text-sm">
-                  Username
+                  Email
                 </FormLabel>
                 <FormControl>
-                  <Input {...field} type="text" />
+                  <Input {...field} type="text" placeholder={"Email or Username"}/>
                 </FormControl>
                 <FormMessage className="text-xs " />
               </FormItem>

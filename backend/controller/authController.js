@@ -1,3 +1,4 @@
+import { contextsKey } from "express-validator/lib/base.js";
 import {
   UserModel as User,
   StudentModel as Student,
@@ -15,10 +16,7 @@ export const register = async (req, res, next) => {
     firstname,
     lastname,
     middlename,
-    age,
-    contactNumber,
     course,
-    username,
     email,
     password,
   } = req.body;
@@ -37,21 +35,19 @@ export const register = async (req, res, next) => {
             : "Email already taken",
       });
     }
-
+   
+    const username = `${firstname}${lastname}`;
     const studentData = {
       studentId,
       firstname,
       lastname,
       middlename,
-      age,
-      contactNumber,
       course,
       username,
       email,
       password,
-      profilePicture: null,
     };
-
+   
     await Student.create(studentData);
 
     //return status
