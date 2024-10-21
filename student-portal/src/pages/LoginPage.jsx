@@ -1,20 +1,33 @@
 import LoginForm from "@/components/auth/LoginForm";
-import { Label } from "@/components/ui/label";
+
 
 const LoginPage = () => {
   return (
-    <div className="w-full h-screen relative flex justify-center">
-      <div className="absolute left-0 p-2">
+    <div className="w-full h-screen relative px-7">
+      <div className="absolute left-0 pt-4 px-5 top-0 right-0 ">
         <img
-          src="OrgConnect-transparent.svg"
+          src="navlogo lightmode.svg"
           alt="OrgConnect logo"
-          className="size-14 mx-auto"
+          className="w-36 ml-0 mr-auto"
         />
       </div>
-       
-      <div className="p-10 my-auto w-full">
-        <Label>Welcome Back</Label>
+
+      <div className="w-full h-full flex flex-col justify-center gap-10">
+        <div className="">
+          <h1 className="text-2xl font-semibold">Welcome Back 👋</h1>
+          <p className="text-sm text-muted-foreground">
+            Fill in the form to get started.
+          </p>
+        </div>
         <LoginForm />
+        <div className="">
+          <p className="text-sm text-zinc-800 text-center align-middle ">
+            Dont have an account?{" "}
+            <a href="/signup" className="font-semibold">
+              Signup.
+            </a>
+          </p>
+        </div>
       </div>
     </div>
   );
