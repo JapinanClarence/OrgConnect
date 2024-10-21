@@ -119,7 +119,7 @@ const Homepage = () => {
               cellCount={3}
             />
           </div>
-          <div className="w-1/3  bg-white shadow-sm md:shadow-lg rounded-lg border border-gray-200 text-gray-900">
+          <div className="md:w-1/3  bg-white shadow-sm md:shadow-lg rounded-lg border border-gray-200 text-gray-900">
             <AttendeesChart
               data={chartData}
               currentMonth={currentMonth}
