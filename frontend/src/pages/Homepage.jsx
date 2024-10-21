@@ -13,41 +13,10 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import AttendeesChart from "@/components/home/AttendeesChart";
 import TableComponent from "@/components/home/Table";
-import { dashboardEventColumns, dashboardMemberColumns } from "@/components/home/Columns";
-
-const chartData = [
-  { browser: "chrome", visitors: 275, fill: "var(--color-chrome)" },
-  { browser: "safari", visitors: 200, fill: "var(--color-safari)" },
-  { browser: "firefox", visitors: 287, fill: "var(--color-firefox)" },
-  { browser: "edge", visitors: 173, fill: "var(--color-edge)" },
-  { browser: "other", visitors: 190, fill: "var(--color-other)" },
-];
-
-const chartConfig = {
-  visitors: {
-    label: "Visitors",
-  },
-  chrome: {
-    label: "Chrome",
-    color: "hsl(var(--chart-1))",
-  },
-  safari: {
-    label: "Safari",
-    color: "hsl(var(--chart-2))",
-  },
-  firefox: {
-    label: "Firefox",
-    color: "hsl(var(--chart-3))",
-  },
-  edge: {
-    label: "Edge",
-    color: "hsl(var(--chart-4))",
-  },
-  other: {
-    label: "Other",
-    color: "hsl(var(--chart-5))",
-  },
-};
+import {
+  dashboardEventColumns,
+  dashboardMemberColumns,
+} from "@/components/home/Columns";
 
 const Homepage = () => {
   const [showDialog, setShowDialog] = useState(false);
@@ -55,10 +24,12 @@ const Homepage = () => {
   const [announcementCount, setAnnouncmentCount] = useState(0);
   const [membersCount, setMembersCount] = useState(0);
   const [paymentCount, setPaymentcount] = useState(0);
-  // const [chartData, setChartData] = useState("");
+  const [chartData, setChartData] = useState([]);
   const [eventData, setEventData] = useState("");
-  const [memberData, setMemberData] = useState("")
+  const [memberData, setMemberData] = useState("");
   const [loading, setLoading] = useState(true);
+  const [currentMonth, setCurrentMonth] = useState("");
+  const [currentYear, setCurrentYear] = useState("");
 
   useEffect(() => {
     const fetchDashboardData = async () => {
@@ -76,7 +47,9 @@ const Homepage = () => {
           setMembersCount(data.memberCount);
           setEventData(data.events);
           setMemberData(data.members);
-          // setChartData(data.eventAttendees);
+          setChartData(data.eventAttendees);
+          setCurrentYear(data.currentYear);
+          setCurrentMonth(data.currentMonth);
         }
         setLoading(false);
       } catch (error) {
@@ -137,14 +110,32 @@ const Homepage = () => {
         <div className="flex gap-3 flex-col-reverse md:flex-row ">
           <div className="flex-1 bg-white shadow-sm md:shadow-lg rounded-lg border border-gray-200 text-gray-900 p-5 md:flex flex-col">
             {/* <OrgDetailsCard name={orgData.name} about={orgData.about} contact={orgData.contact}/> */}
-            <TableComponent title={"Recent Events"} columns={dashboardEventColumns} data={eventData} loading={loading} rowCount = {5} cellCount={3}/>
+            <TableComponent
+              title={"Recent Events"}
+              columns={dashboardEventColumns}
+              data={eventData}
+              loading={loading}
+              rowCount={5}
+              cellCount={3}
+            />
           </div>
-          <div className="flex-none  bg-white shadow-sm md:shadow-lg rounded-lg border border-gray-200 text-gray-900">
-            <AttendeesChart chartData={chartData} chartConfig={chartConfig} />
+          <div className="w-1/3  bg-white shadow-sm md:shadow-lg rounded-lg border border-gray-200 text-gray-900">
+            <AttendeesChart
+              data={chartData}
+              currentMonth={currentMonth}
+              currentYear={currentYear}
+            />
           </div>
         </div>
         <div className=" bg-white md:shadow-lg rounded-lg border border-gray-200 text-gray-900 p-5 md:flex flex-col">
-          <TableComponent title={"New Members"} columns={dashboardMemberColumns} data={memberData} loading={loading} rowCount = {5} cellCount={7}/>
+          <TableComponent
+            title={"New Members"}
+            columns={dashboardMemberColumns}
+            data={memberData}
+            loading={loading}
+            rowCount={5}
+            cellCount={7}
+          />
         </div>
       </div>
     </>

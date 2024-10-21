@@ -24,7 +24,10 @@ export const getDashboardData = async (req, res) => {
   const currentDate = new Date();
   const currentMonth = currentDate.getMonth() + 1; // Get the current month (1-12)
   const currentYear = currentDate.getFullYear();
-
+  const monthString = currentDate.toLocaleDateString("en-US", {
+      month: "long"
+  });
+ 
   try {
     const organization = await Organization.findOne({ user: userId });
 
@@ -96,8 +99,8 @@ export const getDashboardData = async (req, res) => {
       },
       {
         $project: {
-          eventName: "$title",
-          attendeesCount: { $size: "$attendees" }, // Count attendees
+          event: "$title",
+          attendees: { $size: "$attendees" }, // Count attendees
         },
       },
       {
@@ -113,7 +116,7 @@ export const getDashboardData = async (req, res) => {
       title: event.title,
       description:
         event.description.length > 80
-          ? event.description.substring(0, 80) + "..."
+          ? event.description.substring(0, 20) + "..."
           : event.description,
       location: event.location,
     }));
@@ -127,6 +130,8 @@ export const getDashboardData = async (req, res) => {
       events: trimmedEvents,
       members: cleanMemberData,
       eventAttendees: eventsAttendees,
+      currentMonth: monthString,
+      currentYear,
     });
   } catch (err) {
     return res.status(500).json({

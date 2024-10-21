@@ -27,15 +27,45 @@ import {
   PieChart,
 } from "recharts";
 
-const AttendeesChart = ({ chartData, chartConfig }) => {
-  const totalVisitors = React.useMemo(() => {
-    return chartData.reduce((acc, curr) => acc + curr.visitors, 0);
-  }, []);
+const AttendeesChart = ({ data, currentMonth, currentYear }) => {
+  const chartConfig = useMemo(() => {
+    return data.reduce((acc, event, index) => {
+      const colorIndex = index + 1; // Get the color index dynamically
+
+      // Resolve CSS variable values dynamically
+      const rootStyles = getComputedStyle(document.documentElement);
+      const color = rootStyles.getPropertyValue(`--chart-${colorIndex}`).trim();
+
+      acc[event.event] = {
+        label: event.event, // Event name becomes the label
+        color: `hsl(${color})`, // Dynamically assign color from resolved value
+      };
+
+      return acc;
+    }, {});
+  }, [data]);
+  
+  // Map backend data to include 'fill' color dynamically
+  const chartData = data.map((item, index) => ({
+    ...item,
+    fill: chartConfig[item.event]?.color || "hsl(var(--chart-5))", // Assign a color or fallback if undefined
+  }));
+
+  const totalAttendees = useMemo(() => {
+    if (!chartData || chartData.length === 0) {
+      return 0;
+    }
+
+    return chartData.reduce((acc, curr) => acc + curr.attendees, 0);
+  }, [chartData]);
+
   return (
     <Card className="flex justify-between h-full md:max-w-[500px] flex-col">
       <CardHeader className="items-start pb-0">
         <CardTitle>Event Attendees</CardTitle>
-        <CardDescription>January 2024</CardDescription>
+        <CardDescription>
+          {currentMonth} {currentYear}
+        </CardDescription>
       </CardHeader>
       <CardContent className="flex-1 pb-0 h-full">
         <ChartContainer
@@ -49,8 +79,8 @@ const AttendeesChart = ({ chartData, chartConfig }) => {
             />
             <Pie
               data={chartData}
-              dataKey="visitors"
-              nameKey="browser"
+              dataKey="attendees"
+              nameKey="event"
               innerRadius={60}
               outerRadius={90}
               strokeWidth={10}
@@ -70,7 +100,7 @@ const AttendeesChart = ({ chartData, chartConfig }) => {
                           y={viewBox.cy}
                           className="fill-foreground text-3xl font-bold"
                         >
-                          {totalVisitors.toLocaleString()}
+                          {totalAttendees.toLocaleString()}
                         </tspan>
                         <tspan
                           x={viewBox.cx}
@@ -90,7 +120,7 @@ const AttendeesChart = ({ chartData, chartConfig }) => {
       </CardContent>
       <CardFooter className="text-sm">
         <div className="leading-none text-muted-foreground">
-          Showing total attendees for the month of January
+          Showing total attendees for the month of {currentMonth}
         </div>
       </CardFooter>
     </Card>
