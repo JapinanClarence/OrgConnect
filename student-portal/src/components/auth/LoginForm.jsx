@@ -22,12 +22,15 @@ import {
 import { Input } from "@/components/ui/input";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { LoaderCircle, Eye, EyeOff } from "lucide-react";
+import apiClient from "@/api/axios";
+import { useAuth } from "@/context/AuthContext";
 
 const LoginForm = () => {
   const navigate = useNavigate();
   const [showPass, setShowPass] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { login} = useAuth();
   const form = useForm({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
@@ -40,26 +43,25 @@ const LoginForm = () => {
   };
   //handle form submit
   const onSubmit = async (data) => {
-    console.log(data);
-    // try {
-    //   setIsSubmitting(true);
-    //   const formData = LoginSchema.parse(data);
 
-    //   const response = await apiClient.post("/login", formData);
-
-    //   if (response.data.data.role == "2") {
-    //     setErrorMessage("Invalid Credentials");
-    //     setIsSubmitting(false);
-    //   } else {
-    //     login(response.data.token, response.data.data );
-    //     navigate("/");
-    //   }
-    // } catch (error) {
-    //   console.log(error.response);
-    //   const message = error.response.data.message;
-    //   setErrorMessage(message);
-    //   setIsSubmitting(false);
-    // }
+    try {
+      setIsSubmitting(true);
+      const formData = LoginSchema.parse(data);
+      
+      const response = await apiClient.post("/login", formData);
+      if (response.data.data.role == "1") {
+        setErrorMessage("Invalid Credentials");
+        setIsSubmitting(false);
+      } else {
+        login(response.data.token, response.data.data );
+        navigate("/");
+      }
+    } catch (error) {
+      console.log(error.response);
+      const message = error.response.data.message;
+      setErrorMessage(message);
+      setIsSubmitting(false);
+    }
   };
   return (
     <Form {...form}>
