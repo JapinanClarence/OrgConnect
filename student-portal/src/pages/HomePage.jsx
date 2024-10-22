@@ -8,6 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Calendar, MapPin } from "lucide-react";
 
 const HomePage = () => {
   return (
@@ -46,11 +47,12 @@ const HomePage = () => {
               <div className="flex overflow-x-auto snap-x snap-mandatory gap-5 ml-5 pb-2">
                 <Card className="overflow-hidden min-w-[250px]  scroll-ml-5 snap-center">
                   <CardHeader className="p-0 ">
-                    <img
+                    {/* <img
                       src="sample.jpg"
                       className="h-32 object-cover"
                       alt=""
-                    />
+                    /> */}
+                    <div className="h-32 bg-slate-200"></div>
                   </CardHeader>
                   <CardContent className="p-4">
                     <CardTitle className="text-lg">DEVmovers </CardTitle>
@@ -121,11 +123,28 @@ const HomePage = () => {
                       <CardTitle className="text-lg">DEVmovers Meet</CardTitle>
                     </CardHeader>
                     <CardContent className="px-4 pb-4">
-                      <CardDescription>
+                      <CardDescription className="mb-2">
                         DEVmovers week long celebration dedicated on showcasing
                         the talents, innovations, and achievements of the
                         organization.
                       </CardDescription>
+                      <p className="text-sm">
+                        <Calendar
+                          size={13}
+                          strokeWidth={2}
+                          className=" inline mr-1"
+                        />{" "}
+                        Oct 10,2024 8:00am - 9:00am
+                      </p>
+                      <p className="text-sm">
+                        {" "}
+                        <MapPin
+                          size={13}
+                          strokeWidth={2}
+                          className=" inline mr-1"
+                        />{" "}
+                        DOrSU Main Campus
+                      </p>
                     </CardContent>
                   </Card>
                   <Card>
@@ -133,83 +152,28 @@ const HomePage = () => {
                       <CardTitle className="text-lg">DEVmovers Meet</CardTitle>
                     </CardHeader>
                     <CardContent className="px-4 pb-4">
-                      <CardDescription>
+                      <CardDescription className="mb-2">
                         DEVmovers week long celebration dedicated on showcasing
                         the talents, innovations, and achievements of the
                         organization.
                       </CardDescription>
-                    </CardContent>
-                  </Card>
-                  <Card>
-                    <CardHeader className="p-4 pb-0">
-                      <CardTitle className="text-lg">DEVmovers Meet</CardTitle>
-                    </CardHeader>
-                    <CardContent className="px-4 pb-4">
-                      <CardDescription>
-                        DEVmovers week long celebration dedicated on showcasing
-                        the talents, innovations, and achievements of the
-                        organization.
-                      </CardDescription>
-                    </CardContent>
-                  </Card>
-                  <Card>
-                    <CardHeader className="p-4 pb-0">
-                      <CardTitle className="text-lg">DEVmovers Meet</CardTitle>
-                    </CardHeader>
-                    <CardContent className="px-4 pb-4">
-                      <CardDescription>
-                        DEVmovers week long celebration dedicated on showcasing
-                        the talents, innovations, and achievements of the
-                        organization.
-                      </CardDescription>
-                    </CardContent>
-                  </Card>
-                  <Card>
-                    <CardHeader className="p-4 pb-0">
-                      <CardTitle className="text-lg">DEVmovers Meet</CardTitle>
-                    </CardHeader>
-                    <CardContent className="px-4 pb-4">
-                      <CardDescription>
-                        DEVmovers week long celebration dedicated on showcasing
-                        the talents, innovations, and achievements of the
-                        organization.
-                      </CardDescription>
-                    </CardContent>
-                  </Card>
-                  <Card>
-                    <CardHeader className="p-4 pb-0">
-                      <CardTitle className="text-lg">DEVmovers Meet</CardTitle>
-                    </CardHeader>
-                    <CardContent className="px-4 pb-4">
-                      <CardDescription>
-                        DEVmovers week long celebration dedicated on showcasing
-                        the talents, innovations, and achievements of the
-                        organization.
-                      </CardDescription>
-                    </CardContent>
-                  </Card>
-                  <Card>
-                    <CardHeader className="p-4 pb-0">
-                      <CardTitle className="text-lg">DEVmovers Meet</CardTitle>
-                    </CardHeader>
-                    <CardContent className="px-4 pb-4">
-                      <CardDescription>
-                        DEVmovers week long celebration dedicated on showcasing
-                        the talents, innovations, and achievements of the
-                        organization.
-                      </CardDescription>
-                    </CardContent>
-                  </Card>
-                  <Card>
-                    <CardHeader className="p-4 pb-0">
-                      <CardTitle className="text-lg">DEVmovers Meet</CardTitle>
-                    </CardHeader>
-                    <CardContent className="px-4 pb-4">
-                      <CardDescription>
-                        DEVmovers week long celebration dedicated on showcasing
-                        the talents, innovations, and achievements of the
-                        organization.
-                      </CardDescription>
+                      <p className="text-sm">
+                        <Calendar
+                          size={13}
+                          strokeWidth={2}
+                          className=" inline mr-1"
+                        />{" "}
+                        Oct 10,2024 8:00am - 9:00am
+                      </p>
+                      <p className="text-sm">
+                        {" "}
+                        <MapPin
+                          size={13}
+                          strokeWidth={2}
+                          className=" inline mr-1"
+                        />{" "}
+                        DOrSU Main Campus
+                      </p>
                     </CardContent>
                   </Card>
                 </div>
