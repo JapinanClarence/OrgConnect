@@ -1,14 +1,8 @@
 import React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Calendar, MapPin } from "lucide-react";
+import OrgCards from "@/components/home/OrgCards";
+import EventCards from "@/components/home/EventCards";
 
 const HomePage = () => {
   return (
@@ -16,7 +10,7 @@ const HomePage = () => {
       <div className="">
         <div className=" flex justify-start items-center gap-3 p-5">
           <Avatar className="cursor-pointer size-14">
-            <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+            <AvatarImage src="" alt="@shadcn" />
             <AvatarFallback className="text-gray-500 font-bold bg-gray-200">
               AD
             </AvatarFallback>
@@ -42,59 +36,34 @@ const HomePage = () => {
             </div>
           </div>
           <div className="flex overflow-x-auto snap-x snap-mandatory gap-5 ml-5 pb-2">
-            <Card className="overflow-hidden min-w-[250px]  scroll-ml-5 snap-center">
-              <CardHeader className="p-0 ">
-                {/* <img
-                      src="sample.jpg"
-                      className="h-32 object-cover"
-                      alt=""
-                    /> */}
-                <div className="h-32 bg-slate-200"></div>
-              </CardHeader>
-              <CardContent className="p-4">
-                <CardTitle className="text-lg">DEVmovers </CardTitle>
-                <CardDescription>
-                  DEVmovers is a dynamic organization of developers dedicated to
-                  fostering innovation and collaboration....
-                </CardDescription>
-              </CardContent>
-            </Card>
-            <Card className="overflow-hidden min-w-[250px]  scroll-ml-5 snap-center">
-              <CardHeader className="p-0 ">
-                <img src="sample.jpg" className="h-32 object-cover" alt="" />
-              </CardHeader>
-              <CardContent className="p-4">
-                <CardTitle className="text-lg">DEVmovers </CardTitle>
-                <CardDescription>
-                  DEVmovers is a dynamic organization of developers dedicated to
-                  fostering innovation and collaboration....
-                </CardDescription>
-              </CardContent>
-            </Card>
-            <Card className="overflow-hidden min-w-[250px]  scroll-ml-5 snap-center">
-              <CardHeader className="p-0 ">
-                <img src="sample.jpg" className="h-32 object-cover" alt="" />
-              </CardHeader>
-              <CardContent className="p-4">
-                <CardTitle className="text-lg">DEVmovers </CardTitle>
-                <CardDescription>
-                  DEVmovers is a dynamic organization of developers dedicated to
-                  fostering innovation and collaboration....
-                </CardDescription>
-              </CardContent>
-            </Card>
-            <Card className="overflow-hidden min-w-[250px]  scroll-ml-5 snap-center">
-              <CardHeader className="p-0 ">
-                <img src="sample.jpg" className="h-32 object-cover" alt="" />
-              </CardHeader>
-              <CardContent className="p-4">
-                <CardTitle className="text-lg">DEVmovers </CardTitle>
-                <CardDescription>
-                  DEVmovers is a dynamic organization of developers dedicated to
-                  fostering innovation and collaboration....
-                </CardDescription>
-              </CardContent>
-            </Card>
+            <OrgCards
+              orgImage={null}
+              title={"DEVmovers"}
+              description={
+                "DEVmovers is a dynamic organization of developers dedicated to fostering innovation and collaboration...."
+              }
+            />
+            <OrgCards
+              orgImage={null}
+              title={"DEVmovers"}
+              description={
+                "DEVmovers is a dynamic organization of developers dedicated to fostering innovation and collaboration...."
+              }
+            />
+            <OrgCards
+              orgImage={null}
+              title={"DEVmovers"}
+              description={
+                "DEVmovers is a dynamic organization of developers dedicated to fostering innovation and collaboration...."
+              }
+            />
+            <OrgCards
+              orgImage={null}
+              title={"DEVmovers"}
+              description={
+                "DEVmovers is a dynamic organization of developers dedicated to fostering innovation and collaboration...."
+              }
+            />
           </div>
 
           <div className="px-5 mt-5">
@@ -103,174 +72,14 @@ const HomePage = () => {
               <span className="text-muted-foreground">See all</span>
             </div>
             <div className="space-y-2">
-              <Card>
-                <CardHeader className="p-4 pb-0">
-                  <CardTitle className="text-lg">DEVmovers Meet</CardTitle>
-                </CardHeader>
-                <CardContent className="px-4 pb-4">
-                  <CardDescription className="mb-2">
-                    DEVmovers week long celebration dedicated on showcasing the
-                    talents, innovations, and achievements of the organization.
-                  </CardDescription>
-                  <p className="text-sm">
-                    <Calendar
-                      size={13}
-                      strokeWidth={2}
-                      className=" inline mr-1"
-                    />{" "}
-                    Oct 10,2024 8:00am - 9:00am
-                  </p>
-                  <p className="text-sm">
-                    {" "}
-                    <MapPin
-                      size={13}
-                      strokeWidth={2}
-                      className=" inline mr-1"
-                    />{" "}
-                    DOrSU Main Campus
-                  </p>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardHeader className="p-4 pb-0">
-                  <CardTitle className="text-lg">DEVmovers Meet</CardTitle>
-                </CardHeader>
-                <CardContent className="px-4 pb-4">
-                  <CardDescription className="mb-2">
-                    DEVmovers week long celebration dedicated on showcasing the
-                    talents, innovations, and achievements of the organization.
-                  </CardDescription>
-                  <p className="text-sm">
-                    <Calendar
-                      size={13}
-                      strokeWidth={2}
-                      className=" inline mr-1"
-                    />{" "}
-                    Oct 10,2024 8:00am - 9:00am
-                  </p>
-                  <p className="text-sm">
-                    {" "}
-                    <MapPin
-                      size={13}
-                      strokeWidth={2}
-                      className=" inline mr-1"
-                    />{" "}
-                    DOrSU Main Campus
-                  </p>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardHeader className="p-4 pb-0">
-                  <CardTitle className="text-lg">DEVmovers Meet</CardTitle>
-                </CardHeader>
-                <CardContent className="px-4 pb-4">
-                  <CardDescription className="mb-2">
-                    DEVmovers week long celebration dedicated on showcasing the
-                    talents, innovations, and achievements of the organization.
-                  </CardDescription>
-                  <p className="text-sm">
-                    <Calendar
-                      size={13}
-                      strokeWidth={2}
-                      className=" inline mr-1"
-                    />{" "}
-                    Oct 10,2024 8:00am - 9:00am
-                  </p>
-                  <p className="text-sm">
-                    {" "}
-                    <MapPin
-                      size={13}
-                      strokeWidth={2}
-                      className=" inline mr-1"
-                    />{" "}
-                    DOrSU Main Campus
-                  </p>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardHeader className="p-4 pb-0">
-                  <CardTitle className="text-lg">DEVmovers Meet</CardTitle>
-                </CardHeader>
-                <CardContent className="px-4 pb-4">
-                  <CardDescription className="mb-2">
-                    DEVmovers week long celebration dedicated on showcasing the
-                    talents, innovations, and achievements of the organization.
-                  </CardDescription>
-                  <p className="text-sm">
-                    <Calendar
-                      size={13}
-                      strokeWidth={2}
-                      className=" inline mr-1"
-                    />{" "}
-                    Oct 10,2024 8:00am - 9:00am
-                  </p>
-                  <p className="text-sm">
-                    {" "}
-                    <MapPin
-                      size={13}
-                      strokeWidth={2}
-                      className=" inline mr-1"
-                    />{" "}
-                    DOrSU Main Campus
-                  </p>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardHeader className="p-4 pb-0">
-                  <CardTitle className="text-lg">DEVmovers Meet</CardTitle>
-                </CardHeader>
-                <CardContent className="px-4 pb-4">
-                  <CardDescription className="mb-2">
-                    DEVmovers week long celebration dedicated on showcasing the
-                    talents, innovations, and achievements of the organization.
-                  </CardDescription>
-                  <p className="text-sm">
-                    <Calendar
-                      size={13}
-                      strokeWidth={2}
-                      className=" inline mr-1"
-                    />{" "}
-                    Oct 10,2024 8:00am - 9:00am
-                  </p>
-                  <p className="text-sm">
-                    {" "}
-                    <MapPin
-                      size={13}
-                      strokeWidth={2}
-                      className=" inline mr-1"
-                    />{" "}
-                    DOrSU Main Campus
-                  </p>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardHeader className="p-4 pb-0">
-                  <CardTitle className="text-lg">DEVmovers Meet</CardTitle>
-                </CardHeader>
-                <CardContent className="px-4 pb-4">
-                  <CardDescription className="mb-2">
-                    DEVmovers week long celebration dedicated on showcasing the
-                    talents, innovations, and achievements of the organization.
-                  </CardDescription>
-                  <p className="text-sm">
-                    <Calendar
-                      size={13}
-                      strokeWidth={2}
-                      className=" inline mr-1"
-                    />{" "}
-                    Oct 10,2024 8:00am - 9:00am
-                  </p>
-                  <p className="text-sm">
-                    {" "}
-                    <MapPin
-                      size={13}
-                      strokeWidth={2}
-                      className=" inline mr-1"
-                    />{" "}
-                    DOrSU Main Campus
-                  </p>
-                </CardContent>
-              </Card>
+              <EventCards
+                title={"DEVmovers Meet"}
+                description={
+                  "DEVmovers week long celebration dedicated on showcasing the talents, innovations, and achievements of the organization."
+                }
+                date={"Oct 10,2024 8:00am - 9:00am"}
+                location={"DOrSU Main Campus"}
+              />
             </div>
           </div>
         </div>
