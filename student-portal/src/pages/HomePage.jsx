@@ -3,8 +3,11 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
 import OrgCards from "@/components/home/OrgCards";
 import EventCards from "@/components/home/EventCards";
-
+import { useAuth } from "@/context/AuthContext";
 const HomePage = () => {
+  const { token, userData } = useAuth();
+
+
   return (
     <div className="pt-16 pb-16  ">
       <div className="">
