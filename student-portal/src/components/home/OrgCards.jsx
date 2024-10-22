@@ -7,7 +7,7 @@ import {
     CardTitle,
   } from "@/components/ui/card";
 
-const OrgCards = ({ orgImage, title, description }) => {
+const OrgCards = ({ orgImage, title, about, loading }) => {
   return (
     <Card className="overflow-hidden min-w-[250px] w-[250px]  scroll-ml-5 snap-center">
       <CardHeader className="p-0 ">
@@ -19,8 +19,8 @@ const OrgCards = ({ orgImage, title, description }) => {
       </CardHeader>
       <CardContent className="p-4">
         <CardTitle className="text-lg">{title} </CardTitle>
-        <CardDescription>
-         {description}
+        <CardDescription className="text-pretty">
+         {about.length > 100 ? `${about.slice(0, 100)}...` : about.length}
         </CardDescription>
       </CardContent>
     </Card>

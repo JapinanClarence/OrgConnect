@@ -14,30 +14,30 @@ import adminPaymentRoutes from "./routes/admin/payment.js";
 import adminMembersRoutes from "./routes/admin/members.js";
 import adminOfficerRoutes from "./routes/admin/officer.js"
 import dashbordRoute from "./routes/admin/dashboard.js"
-
+import eventRoutes from "./routes/events.js";
 const DB = process.env.DATABASE.replace("<PASSWORD>", process.env.DB_PASSWORD)
 const app = express();
 
 const PORT = process.env.PORT;
 
 //connect to db
-// mongoose
-//   .connect(DB)
-//   .then(() => {
-//     console.log("DB connected successfully");
-//   })
-//   .catch((err) => {
-//     console.error("DB connection error:", err);
-//   });
-//connect to local db
 mongoose
-  .connect(process.env.DATABASE_LOCAL)
+  .connect(DB)
   .then(() => {
     console.log("DB connected successfully");
   })
   .catch((err) => {
     console.error("DB connection error:", err);
   });
+//connect to local db
+// mongoose
+//   .connect(process.env.DATABASE_LOCAL)
+//   .then(() => {
+//     console.log("DB connected successfully");
+//   })
+//   .catch((err) => {
+//     console.error("DB connection error:", err);
+//   });
 
 app.use(cors());
 
@@ -60,6 +60,7 @@ app.use("/api/attendance", attendanceRoutes)
 //user routes
 app.use("/api/user/", userRoutes);
 app.use("/api/user/", organizationRoutes);
+app.use("/api/user/", eventRoutes)
 
 // Handle 404 errors for undefined routes
 app.use((req, res, next) => {

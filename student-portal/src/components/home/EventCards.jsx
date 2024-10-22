@@ -15,7 +15,7 @@ const EventCards = ({ title, description, location, date }) => {
         <CardTitle className="text-lg">{title}</CardTitle>
       </CardHeader>
       <CardContent className="px-4 pb-4">
-        <CardDescription className="mb-2">
+        <CardDescription className="mb-2 text-pretty">
           {description}
         </CardDescription>
         <p className="text-sm">
