@@ -111,5 +111,6 @@
   }
   ::-webkit-scrollbar:horizontal {
     height: 5px; /* Smaller height for horizontal scrollbar */
+    margin-top: 3px;
   }
 }
