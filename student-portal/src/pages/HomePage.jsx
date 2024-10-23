@@ -8,7 +8,8 @@ import apiClient from "@/api/axios";
 import { timeOnly, shortMonth } from "@/util/helpers";
 import OrgCardSkeleton from "@/components/skeleton/OrgCardSkeleton";
 import EventSkeleton from "@/components/skeleton/EventSkeleton";
-
+import { Link } from "react-router-dom";
+import Header from "@/components/nav/Header";
 const HomePage = () => {
   const { token, userData } = useAuth();
   const [orgData, setOrgData] = useState([]);
@@ -89,8 +90,9 @@ const HomePage = () => {
     fetchEvents();
   }, []);
   return (
-    <div className="pt-16 pb-16  ">
-      <div className="">
+    <div >
+      <Header />
+      <div className="py-16  ">
         <div className=" flex justify-start items-center gap-3 p-5">
           <Avatar className="cursor-pointer size-14">
             <AvatarImage src={userData.profilePicture} alt="@shadcn" />
@@ -115,7 +117,9 @@ const HomePage = () => {
             />
             <div className="flex justify-between">
               <h1 className="font-semibold mb-2 "> Your Organizations</h1>
-              <span className="text-muted-foreground">See all</span>
+              <Link to="/organization" className="text-muted-foreground">
+                See all
+              </Link>
             </div>
           </div>
 
