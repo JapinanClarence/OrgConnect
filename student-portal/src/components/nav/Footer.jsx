@@ -40,10 +40,10 @@ const Footer = () => {
         </div>
         <div
           className={`mx-auto ${
-            isActive("/my-qr") ? "text-gray-900" : "text-muted-foreground"
+            isActive("/qr") ? "text-gray-900" : "text-muted-foreground"
           }`}
         >
-          <Link to="/my-qr">
+          <Link to="/qr">
             <QrCode className="mx-auto " />
             <span className="text-center block text-xs">My QR</span>
           </Link>

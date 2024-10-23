@@ -57,7 +57,7 @@ const LoginForm = () => {
         navigate("/");
       }
     } catch (error) {
-      console.log(error.response);
+      console.log(error);
       const message = error.response.data.message;
       setErrorMessage(message);
       setIsSubmitting(false);

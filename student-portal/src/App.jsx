@@ -6,6 +6,7 @@ import ProtectedRoute from "./components/auth/ProtectedRoutes";
 import MainLayout from "./layout/MainLayout";
 import HomePage from "./pages/HomePage";
 import WelcomePage from "./pages/WelcomePage";
+import QrPage from "./pages/QrPage";
 
 function App() {
   const [isInstalled, setIsInstalled] = useState(false);
@@ -28,6 +29,7 @@ function App() {
         <Route path="/" element={<ProtectedRoute />}>
           <Route element={<MainLayout />}>
             <Route index element={<HomePage />} />
+            <Route path="/qr" element={<QrPage />} />
           </Route>
         </Route>
       </Route>
