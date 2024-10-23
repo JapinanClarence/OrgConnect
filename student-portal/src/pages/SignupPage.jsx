@@ -3,8 +3,8 @@ import SignupForm from '@/components/auth/SignupForm'
 const SignupPage = () => {
   return (
     // bg-grid-small-black/[0.2]
-    <div className="w-full relative px-7   flex justify-center items-center">
-      {/* <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-black bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] -z-10"></div> */}
+    <div className="w-full px-7   flex justify-center items-center bg-grid-small-black/[0.2] relative">
+      <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-black bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] -z-10"></div>
       <div className="absolute left-0 pt-4 px-5 top-0 right-0 ">
         <img
           src="NavLogo lightmode.svg"
