@@ -26,7 +26,7 @@ const WelcomePage = () => {
           </h2>
         </div>
         <div className="">
-          <Button variant="outline" className="mx-auto" size="sm">
+          <Button variant="outline" className="mx-auto">
             <Download /> Install OrgConnect
           </Button>
         </div>

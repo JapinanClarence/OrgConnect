@@ -61,7 +61,7 @@ export const studentOrgs = async (req, res, next) => {
   const student = req.user.userId;
 
   try {
-    const membership = await Membership.find({ student, status:"1" });
+    const membership = await Membership.find({ student, status:"1" }).populate("organization");
 
     if (membership.length <= 0) {
       return res.status(200).json({
@@ -70,18 +70,20 @@ export const studentOrgs = async (req, res, next) => {
       });
     }
 
-    // return all organizations joined by the student
-    const organizations = await Promise.all(
-      membership.map(async (membership) => {
-        return await Organization.findById(membership.organization).select(
-          "name description about contact banner"
-        );
-      })
-    );
+    const cleanData = membership.map((data) => {
+     
+      return {
+        id: data.organization._id,
+        name: data.organization.name,
+        about: data.organization.about,
+        banner: data.organization.banner,
+        contact: data.organization.contact,
+      }
+    })
 
     res.status(200).json({
       success: true,
-      data: organizations,
+      data: cleanData,
     });
   } catch (err) {
     return res.status(500).json({
