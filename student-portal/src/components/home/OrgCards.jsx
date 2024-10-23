@@ -6,8 +6,9 @@ import {
     CardHeader,
     CardTitle,
   } from "@/components/ui/card";
+import { Skeleton } from "../ui/skeleton";
 
-const OrgCards = ({ orgImage, title, about, loading }) => {
+const OrgCards = ({ orgImage, title, about }) => {
   return (
     <Card className="overflow-hidden min-w-[250px] w-[250px]  scroll-ml-5 snap-center">
       <CardHeader className="p-0 ">
