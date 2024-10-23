@@ -13,8 +13,8 @@ const HomePage = () => {
   const { token, userData } = useAuth();
   const [orgData, setOrgData] = useState([]);
   const [eventData, setEventData] = useState([]);
-  // const [loading, setLoading] = useState(true);
-  const loading = true;
+  const [loading, setLoading] = useState(true);
+  // const loading = true;
   const fetchStudentOrgs = async () => {
     try {
       const { data } = await apiClient.get("/user/organization/?my_orgs=true", {
