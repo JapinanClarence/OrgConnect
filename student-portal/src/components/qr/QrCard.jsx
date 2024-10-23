@@ -61,7 +61,7 @@ const QrCard = () => {
         </>
       )}
 
-      <div className="p-10">
+      <div className="p-16">
         {loading ? (
           <Skeleton className="h-[200px]  bg-zinc-300 " />
         ) : (

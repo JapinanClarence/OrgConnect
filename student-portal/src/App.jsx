@@ -8,6 +8,7 @@ import HomePage from "./pages/HomePage";
 import WelcomePage from "./pages/WelcomePage";
 import QrPage from "./pages/QrPage";
 import OrganizationsPage from "./pages/OrganizationsPage";
+import EventsPage from "./pages/EventsPage";
 
 function App() {
   const [isInstalled, setIsInstalled] = useState(false);
@@ -32,6 +33,7 @@ function App() {
             <Route index element={<HomePage />} />
             <Route path="/qr" element={<QrPage />} />
             <Route path="/organization" element={<OrganizationsPage />} />
+            <Route path="/event" element={<EventsPage />} />
           </Route>
         </Route>
       </Route>

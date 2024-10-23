@@ -90,7 +90,7 @@ const HomePage = () => {
     fetchEvents();
   }, []);
   return (
-    <div >
+    <div>
       <Header />
       <div className="py-16  ">
         <div className=" flex justify-start items-center gap-3 p-5">
@@ -143,7 +143,9 @@ const HomePage = () => {
           <div className="px-5 mt-5">
             <div className="sticky top-[3.6rem] bg-slate-50 pb-2 flex justify-between z-10">
               <h1 className="font-semibold ">Recent Events</h1>
-              <span className="text-muted-foreground">See all</span>
+              <Link to="/event" className="text-muted-foreground">
+                See all
+              </Link>
             </div>
             <div className="space-y-2">
               {loading ? (
