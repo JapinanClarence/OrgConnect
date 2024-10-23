@@ -11,6 +11,7 @@ function App() {
   const [isInstalled, setIsInstalled] = useState(false);
   const navigate = useNavigate(); // React Router v6 useNavigate for redirection
 
+
   useEffect(() => {
     // Check if the app is running as a PWA (standalone)
     if (window.matchMedia("(display-mode: standalone)").matches) {
@@ -26,6 +27,8 @@ function App() {
       navigate("/login");
     }
   }, [isInstalled, navigate]);
+
+  console.log(isInstalled)
   return (
     <Routes>
       <Route path="/" element={<WelcomePage />} >
