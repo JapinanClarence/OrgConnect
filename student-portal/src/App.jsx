@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Route, Routes, useNavigate} from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import ProtectedRoute from "./components/auth/ProtectedRoutes";
@@ -11,33 +11,20 @@ function App() {
   const [isInstalled, setIsInstalled] = useState(false);
   const navigate = useNavigate(); // React Router v6 useNavigate for redirection
 
-
   useEffect(() => {
     // Check if the app is running as a PWA (standalone)
     if (window.matchMedia("(display-mode: standalone)").matches) {
       setIsInstalled(true);
-    } else {
-      setIsInstalled(false);
-    }
+    } 
   }, []);
 
-  useEffect(() => {
-    // Redirect to login if app is installed
-    if (isInstalled) {
-      navigate("/login");
-    }
-  }, [isInstalled, navigate]);
-
-  console.log(isInstalled)
   return (
     <Routes>
-      <Route path="/" element={<WelcomePage />} >
-
+      <Route path="/">
+        <Route path="/welcome" element={<WelcomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
-   
 
-        
         <Route path="/" element={<ProtectedRoute />}>
           <Route element={<MainLayout />}>
             <Route index element={<HomePage />} />
