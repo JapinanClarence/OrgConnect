@@ -1,15 +1,25 @@
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { Download } from "lucide-react";
+import { useAuth } from "@/context/AuthContext";
+import { useLayoutEffect } from "react";
+
 const WelcomePage = () => {
+  const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
+  // if already logged in navigate to homepage
+  useLayoutEffect(() => {
+    if (isAuthenticated) {
+      navigate("/");
+    }
+  });
 
   const [deferredPrompt, setDeferredPrompt] = useState(null);
 
   useEffect(() => {
     // Listen for the "beforeinstallprompt" event
-    window.addEventListener('beforeinstallprompt', (e) => {
+    window.addEventListener("beforeinstallprompt", (e) => {
       e.preventDefault(); // Prevent the mini-infobar from appearing
       setDeferredPrompt(e); // Save the event for triggering later
     });
@@ -19,10 +29,10 @@ const WelcomePage = () => {
     if (deferredPrompt) {
       deferredPrompt.prompt(); // Show the install prompt
       deferredPrompt.userChoice.then((choiceResult) => {
-        if (choiceResult.outcome === 'accepted') {
-          console.log('User accepted the install prompt');
+        if (choiceResult.outcome === "accepted") {
+          console.log("User accepted the install prompt");
         } else {
-          console.log('User dismissed the install prompt');
+          console.log("User dismissed the install prompt");
         }
         setDeferredPrompt(null); // Clear the prompt
       });
@@ -37,9 +47,13 @@ const WelcomePage = () => {
           alt="OrgConnect logo"
           className="w-36 ml-0 mr-auto"
         />
-                <div>
-          <Button variant="outline" size="sm" onClick={() => navigate("/login")}>
-              Login
+        <div>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => navigate("/login")}
+          >
+            Login
           </Button>
         </div>
       </div>
@@ -51,7 +65,12 @@ const WelcomePage = () => {
           </h2>
         </div>
         <div className="">
-          <Button variant="outline" className="mx-auto " size="sm" onClick={handleInstallClick}>
+          <Button
+            variant="outline"
+            className="mx-auto "
+            size="sm"
+            onClick={handleInstallClick}
+          >
             <Download /> Install App
           </Button>
         </div>

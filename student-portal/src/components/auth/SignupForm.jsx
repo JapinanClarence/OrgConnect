@@ -231,7 +231,7 @@ const SignupForm = () => {
               <FormItem>
                 <FormLabel className="text-gray-600 text-sm">Email</FormLabel>
                 <FormControl>
-                  <Input {...field} type="text" />
+                  <Input {...field} type="text" autoComplete="email"/>
                 </FormControl>
                 <FormMessage className="text-xs " />
               </FormItem>
@@ -247,7 +247,7 @@ const SignupForm = () => {
                 </FormLabel>
                 <FormControl>
                   <div className="relative w-full ">
-                    <Input {...field} type={showPass ? "text" : "password"} />
+                    <Input {...field} type={showPass ? "text" : "password"} autoComplete="current-password"/>
                     <Button
                       type="button"
                       size="icon"
@@ -283,7 +283,7 @@ const SignupForm = () => {
           </Button>
           <div className="relative flex items-center">
             <div className="flex-grow border-b"></div>
-            <span className="text-center px-4 bg-white text-muted-foreground">
+            <span className="text-center px-4 text-muted-foreground">
               or
             </span>
             <div className="flex-grow border-b"></div>
