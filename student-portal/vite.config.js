@@ -13,7 +13,6 @@ export default defineConfig({
       manifest: {
         name: "OrgConnect",
         short_name:"OrgConnect",
-        description:"OrgConnect web application",
         theme_color: "#ffffff",
         icons: [
           {
