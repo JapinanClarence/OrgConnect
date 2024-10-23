@@ -13,8 +13,8 @@ const HomePage = () => {
   const { token, userData } = useAuth();
   const [orgData, setOrgData] = useState([]);
   const [eventData, setEventData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  // const loading = true;
+  // const [loading, setLoading] = useState(true);
+  const loading = true;
   const fetchStudentOrgs = async () => {
     try {
       const { data } = await apiClient.get("/user/organization/?my_orgs=true", {
@@ -137,7 +137,7 @@ const HomePage = () => {
           )}
 
           <div className="px-5 mt-5">
-            <div className="sticky top-[3.6rem] bg-inherit pb-2 flex justify-between">
+            <div className="sticky top-[3.6rem] bg-slate-50 pb-2 flex justify-between z-10">
               <h1 className="font-semibold ">Recent Events</h1>
               <span className="text-muted-foreground">See all</span>
             </div>
