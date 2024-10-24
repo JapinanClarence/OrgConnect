@@ -60,8 +60,8 @@ const ProfilePage = () => {
   };
 
   return (
-    <div className="">
-      <div className="shadow-sm rounded-lg border m-5 p-4 grid grid-flow-col grid-cols-5 text-white">
+    <div className="p-5">
+      <div className="shadow-sm rounded-lg border  p-4 grid grid-flow-col grid-cols-5 text-white">
         <Avatar className="size-14 col-span-auto">
           <AvatarImage src={userData.profilePicture} alt="@shadcn" />
           <AvatarFallback className="text-gray-500 font-bold bg-gray-300">
@@ -76,7 +76,7 @@ const ProfilePage = () => {
       </div>
 
       {/* <div className="border-b m-5 border-zinc-300"></div> */}
-      <div className="mx-5 flex justify-between font-medium items-center">
+      <div className="flex justify-between font-medium items-center">
         <h1>Personal Information</h1>
         <Button variant="link" className="font-medium">
           <PencilLine />
@@ -84,9 +84,9 @@ const ProfilePage = () => {
         </Button>
       </div>
       <ProfileCard age={userData.age} gender={userData.gender} username={userData.username} email={userData.email} year={userData.year} phone={userData.contactNumber} course={userData.course} />
-      <div className="border-b m-5 border-zinc-300"></div>
+      <div className="border-b my-5 border-zinc-300"></div>
       <div
-        className="shadow-sm rounded-lg border m-5 p-4 flex gap-3 font-medium text-gray-900"
+        className="shadow-sm rounded-lg border p-4 flex gap-3 font-medium text-gray-900"
         onClick={handleLogout}
       >
         <LogOut size={20} className="my-auto" /> Log out
