@@ -94,8 +94,8 @@ const HomePage = () => {
       <Header />
       <div className="py-16  ">
         <div className=" flex justify-start items-center gap-3 p-5">
-          <Avatar className="cursor-pointer size-14">
-            <AvatarImage src={userData.profilePicture} alt="@shadcn" />
+          <Avatar className="size-14">
+            <AvatarImage src={userData.profilePicture} alt="user profile" />
             <AvatarFallback className="text-gray-500 font-bold bg-gray-200">
               {userData.firstname.charAt(0) + userData.lastname.charAt(0)}
             </AvatarFallback>

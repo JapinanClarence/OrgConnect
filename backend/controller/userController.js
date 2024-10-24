@@ -10,7 +10,7 @@ export const findUser = async (req, res, next) => {
       "firstname",
       "lastname",
       "middlename",
-      "age",
+      "birthday",
       "email",
       "contactNumber",
       "course",

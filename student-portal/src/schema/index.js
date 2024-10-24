@@ -26,6 +26,8 @@ export const SignupSchema = z.object({
     message: "Invalid ID number format",
   })
   .max(9),
+  gender: z.string().optional(),
+  birthday: z.string().optional(),
   username: z.string().optional(),
   email: z.string().email({
     message: "Invalid email",

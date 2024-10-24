@@ -9,7 +9,7 @@ import WelcomePage from "./pages/WelcomePage";
 import QrPage from "./pages/QrPage";
 import OrganizationsPage from "./pages/OrganizationsPage";
 import EventsPage from "./pages/EventsPage";
-
+import ProfilePage from "./pages/ProfilePage";
 function App() {
   const [isInstalled, setIsInstalled] = useState(false);
   const navigate = useNavigate(); // React Router v6 useNavigate for redirection
@@ -34,6 +34,7 @@ function App() {
             <Route path="/qr" element={<QrPage />} />
             <Route path="/organization" element={<OrganizationsPage />} />
             <Route path="/event" element={<EventsPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
           </Route>
         </Route>
       </Route>
