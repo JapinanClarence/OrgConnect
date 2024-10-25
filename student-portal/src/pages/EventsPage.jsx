@@ -69,7 +69,7 @@ const EventsPage = () => {
   }, []);
   return (
     <div className="py-16">
-      <PageHead />
+
 
       <div className="px-5 mt-5 space-y-2">
         {loading ? (

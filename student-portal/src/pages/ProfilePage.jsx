@@ -84,6 +84,9 @@ const ProfilePage = () => {
     setShowAlert(false); // Close the alert dialog without logout
   };
 
+  const fullname = `${userData.firstname} ${
+    userData.middlename ? userData.middlename[0] + ". " : ""
+  }${userData.lastname}`;
   return (
     <div className="p-5">
       <div className="shadow-sm rounded-lg border bg-white p-4 grid grid-flow-col grid-cols-5 text-white">
@@ -95,8 +98,8 @@ const ProfilePage = () => {
           </AvatarFallback>
         </Avatar>
         <div className="col-span-3 flex flex-col justify-center ">
-          <h1 className="text-gray-900 font-semibold">Jane Doe</h1>
-          <h1 className="text-sm text-muted-foreground">2024-0001</h1>
+          <h1 className="text-gray-900 font-semibold">{fullname}</h1>
+          <h1 className="text-sm text-muted-foreground">{userData.studentId}</h1>
         </div>
       </div>
 
