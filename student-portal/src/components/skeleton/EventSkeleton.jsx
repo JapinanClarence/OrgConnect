@@ -19,9 +19,10 @@ const EventSkeleton = ({ items }) => {
           </CardHeader>
           <CardContent className="px-4 pb-4">
             <div className="mt-4 space-y-1">
-              <Skeleton className="h-5 max-w-24" />
-              <Skeleton className="h-5 w-full" />
-              <Skeleton className="h-5 max-w-32" />
+              <Skeleton className="h-3 max-w-24" />
+              <Skeleton className="h-3 max-w-52" />
+              <Skeleton className="h-3 max-w-64" />
+              <Skeleton className="h-3 max-w-40" />
             </div>
           </CardContent>
         </Card>

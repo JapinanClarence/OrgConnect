@@ -25,9 +25,9 @@ const OrgCardSkeleton = ({ items,  variant }) => {
               <Skeleton className="h-5 max-w-44" /> {/* Use Skeleton directly */}
             </CardTitle>
             <div className="space-y-1">
-              <Skeleton className="h-5 max-w-24" />
-              <Skeleton className="h-5 max-w-full" />
-              <Skeleton className="h-5 max-w-32" />
+              <Skeleton className="h-3 max-w-24" />
+              <Skeleton className="h-3 max-w-full" />
+              <Skeleton className="h-3 max-w-32" />
             </div>
           </CardContent>
         </Card>
