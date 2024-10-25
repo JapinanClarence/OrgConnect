@@ -12,6 +12,8 @@ export const findUser = async (req, res, next) => {
       "middlename",
       "birthday",
       "email",
+      "username",
+      "gender",
       "contactNumber",
       "course",
       "year",
@@ -40,19 +42,45 @@ export const findUser = async (req, res, next) => {
 export const updateUser = async (req, res, next) => {
   const userId = req.user.userId;
   //ensures that these fields are only updated
-  const { firstname, lastname, middlename, age, contactNumber, course } =
-    req.body;
+  const {
+    firstname,
+    lastname,
+    middlename,
+    email,
+    gender,
+    username,
+    birthday,
+    contactNumber,
+    course,
+    year
+  } = req.body;
   try {
+    const student = await Student.findById(userId);
+
+    let studentEmail;
+    if (student.email !== email) {
+      const isExists = await Student.findOne({ email });
+      if (isExists) {
+        return res.status(400).json({
+          success: false,
+          message: "Email already taken!",
+        });
+      }
+    }
+
     //student data
     const studentData = {
-        firstname, 
-        lastname, 
-        middlename,
-        age, 
-        contactNumber,
-        course,
-        year
-    }
+      firstname,
+      lastname,
+      middlename,
+      birthday,
+      username,
+      gender,
+      email,
+      contactNumber,
+      course,
+      year,
+    };
     //update student info
     const user = await Student.findByIdAndUpdate(userId, studentData);
 

@@ -7,14 +7,14 @@ const yearMap = {
     4: "4th Year"
   }
   
-const ProfileCard = ({ age,username, email, phone, course, year, gender }) => {
+const ProfileCard = ({ birthday,username, email, phone, course, year, gender }) => {
   return (
     <div className="shadow-sm rounded-lg border bg-white space-y-4 p-4 font-normal text-sm text-gray-900 ">
       <div className="flex justify-between">
         <div className="flex-shrink text-sm">
           <Calendar1 className="my-auto inline" size={18} /> Birthday
         </div>
-        <p className="col-span-4 font-medium">{age}</p>
+        <p className="col-span-4 font-medium">{birthday}</p>
       </div>
       <div className="flex justify-between">
         <div className="flex-shrink text-sm">

@@ -16,13 +16,19 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import apiClient from "@/api/axios";
-
+import EditProfileForm from "@/components/profile/EditProfileForm";
+import { useNavigate } from "react-router-dom";
+import {formatSimpleDate } from "@/util/helpers";;
 
 const ProfilePage = () => {
   const { token, logout } = useAuth();
   const [showAlert, setShowAlert] = useState(false);
-  const [userData, setUserData] = useState("");
   const [loading, setLoading] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showEditDialog, setShowEditDialog] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [userData, setUserData] = useState("");
+  const navigate = useNavigate();
 
   const fetchUserData = async () => {
     try {
@@ -34,7 +40,25 @@ const ProfilePage = () => {
       if (!data) {
         return console.log(data);
       }
-      setUserData(data.data);
+      const userData = {
+        _id: data.data._id,
+        studentId: data.data.studentId,
+        firstname: data.data.firstname,
+        lastname: data.data.lastname,
+        middlename: data.data.middlename,
+        birthday: formatSimpleDate(data.data.birthday),
+        email: data.data.email,
+        username: data.data.username,
+        gender:
+          data.data.gender.charAt(0).toUpperCase() +
+          data.data.gender.slice(1).toLowerCase(),
+        contactNumber: data.data.contactNumber,
+        year: data.data.year,
+        course: data.data.course,
+        profilePicture: data.data.profilePicture,
+      };
+
+      setUserData(userData);
       setLoading(false);
     } catch (error) {
       console.log(error);
@@ -46,16 +70,17 @@ const ProfilePage = () => {
     fetchUserData();
   }, []);
 
+
   const handleLogout = () => {
     setShowAlert(true);
   };
 
-  const confirmDelete = () => {
+  const confirmLogout = () => {
     logout(); // Call the logout function
     setShowAlert(false); // Close the alert dialog after logout
   };
 
-  const cancelDelete = () => {
+  const cancelLogout = () => {
     setShowAlert(false); // Close the alert dialog without logout
   };
 
@@ -78,12 +103,27 @@ const ProfilePage = () => {
       {/* <div className="border-b m-5 border-zinc-300"></div> */}
       <div className="flex mt-5 justify-between font-medium items-center">
         <h1>Personal Information</h1>
-        <Button variant="link" className="font-medium">
+        <Button
+          variant="link"
+          className="font-medium"
+          onClick={() => {
+            navigate("/profile/edit");
+            // setShowEditDialog(true)
+          }}
+        >
           <PencilLine />
           Edit
         </Button>
       </div>
-      <ProfileCard age={userData.age} gender={userData.gender} username={userData.username} email={userData.email} year={userData.year} phone={userData.contactNumber} course={userData.course} />
+      <ProfileCard
+        birthday={userData.birthday}
+        gender={userData.gender}
+        username={userData.username}
+        email={userData.email}
+        year={userData.year}
+        phone={userData.contactNumber}
+        course={userData.course}
+      />
       <div className="border-b my-5 border-zinc-300"></div>
       <div
         className="shadow-sm rounded-lg bg-white border p-4 flex gap-3 font-medium text-gray-900"
@@ -91,6 +131,14 @@ const ProfilePage = () => {
       >
         <LogOut size={20} className="my-auto" /> Log out
       </div>
+      {/* <EditProfileForm
+        userData={userData}
+        open={showEditDialog}
+        onOpenChange={setShowEditDialog}
+        onSubmit={onEdit}
+        errorMessage={errorMessage}
+        isSubmitting={isSubmitting}
+      /> */}
       <AlertDialog open={showAlert} onOpenChange={setShowAlert} className="">
         <AlertDialogContent className="w-[300px] rounded-lg">
           <AlertDialogHeader className={"text-start"}>
@@ -102,10 +150,10 @@ const ProfilePage = () => {
           <AlertDialogFooter
             className={"w-full flex flex-row items-center justify-around"}
           >
-            <AlertDialogAction onClick={confirmDelete}>
+            <AlertDialogAction onClick={confirmLogout}>
               Continue
             </AlertDialogAction>
-            <AlertDialogCancel className="mt-0 " onClick={cancelDelete}>
+            <AlertDialogCancel className="mt-0 " onClick={cancelLogout}>
               Cancel
             </AlertDialogCancel>
           </AlertDialogFooter>
