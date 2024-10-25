@@ -24,10 +24,10 @@ import { Skeleton } from "@/components/ui/skeleton";
 const ProfilePage = () => {
   const { token, logout } = useAuth();
   const [showAlert, setShowAlert] = useState(false);
-  // const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const [userData, setUserData] = useState("");
   const navigate = useNavigate();
-  const loading = true;
+
   const fetchUserData = async () => {
     try {
       const { data } = await apiClient.get("/user", {
