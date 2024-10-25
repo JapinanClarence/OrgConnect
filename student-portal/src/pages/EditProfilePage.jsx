@@ -94,7 +94,7 @@ const EditProfilePage = () => {
         </div>
       ) : (
         userData && (
-          <div className="mt-5">
+          <div className="py-5">
           <EditProfileForm
             userData={userData}
             onSubmit={onSubmit}
