@@ -30,10 +30,13 @@ const AnnouncementPage = () => {
           Authorization: token,
         },
       });
-      if (data) {
+      
+      if (!data.success) {
+        setAnnouncementData([]);
+      } else {
         setAnnouncementData(data.data);
-        setLoading(false);
       }
+      setLoading(false);
     } catch (error) {
       console.log(error);
       setLoading(false);
@@ -53,9 +56,10 @@ const AnnouncementPage = () => {
       const filtered = announcementData.filter(
         (announcement) => announcement.category === selectedCategory
       );
-      setFilteredAnnouncements([filtered]);
+      setFilteredAnnouncements(filtered);
     }
   };
+  
   useEffect(() => {
     fetchAnnouncements();
   }, []);
@@ -106,7 +110,7 @@ const AnnouncementPage = () => {
                 />
               ))}
             {visibleCount < filteredAnnouncements.length && (
-              <div className="flex h-screen justify-center items-center">
+              <div className="flex justify-center mt-4">
                 <Button
                   onClick={handleSeeMore}
                   className="bg-zinc-200 hover:bg-zinc-100 w-full text-zinc-900"

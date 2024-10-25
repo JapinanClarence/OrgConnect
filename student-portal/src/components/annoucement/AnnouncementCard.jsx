@@ -31,7 +31,7 @@ const AnnouncementCard = ({ onClick, id, title, description, category, datePoste
     console.log(id)
   }
   return (
-    <Card className="shadow-sm border border-slate-200" onClick={handleClick}>
+    <Card key={id} className="shadow-sm border border-slate-200" onClick={handleClick}>
       <CardContent className="p-3 md:p-5">
         <CardHeader className="flex text-xs flex-col md:flex-row p-0">
           <span className="font-bold text-xs mr-2">Posted on:</span>
