@@ -18,18 +18,16 @@ import {
 import apiClient from "@/api/axios";
 import EditProfileForm from "@/components/profile/EditProfileForm";
 import { useNavigate } from "react-router-dom";
-import {formatSimpleDate } from "@/util/helpers";;
-
+import { formatSimpleDate } from "@/util/helpers";
+import ProfileCardSkeleton from "@/components/skeleton/ProfileCardSkeleton";
+import { Skeleton } from "@/components/ui/skeleton";
 const ProfilePage = () => {
   const { token, logout } = useAuth();
   const [showAlert, setShowAlert] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [showEditDialog, setShowEditDialog] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
   const [userData, setUserData] = useState("");
   const navigate = useNavigate();
-
+ 
   const fetchUserData = async () => {
     try {
       const { data } = await apiClient.get("/user", {
@@ -70,7 +68,6 @@ const ProfilePage = () => {
     fetchUserData();
   }, []);
 
-
   const handleLogout = () => {
     setShowAlert(true);
   };
@@ -98,8 +95,20 @@ const ProfilePage = () => {
           </AvatarFallback>
         </Avatar>
         <div className="col-span-3 flex flex-col justify-center ">
-          <h1 className="text-gray-900 font-semibold">{fullname}</h1>
-          <h1 className="text-sm text-muted-foreground">{userData.studentId}</h1>
+          <h1 className="text-gray-900 font-semibold">
+            {loading ? (
+              <Skeleton className={"h-5 w-42 bg-gray-300"} />
+            ) : (
+              fullname
+            )}
+          </h1>
+          <h1 className="text-sm text-muted-foreground">
+            {loading ? (
+              <Skeleton className={"mt-2 h-5 w-24 bg-gray-300"} />
+            ) : (
+              userData.studentId
+            )}
+          </h1>
         </div>
       </div>
 
@@ -118,15 +127,20 @@ const ProfilePage = () => {
           Edit
         </Button>
       </div>
-      <ProfileCard
-        birthday={userData.birthday}
-        gender={userData.gender}
-        username={userData.username}
-        email={userData.email}
-        year={userData.year}
-        phone={userData.contactNumber}
-        course={userData.course}
-      />
+      {loading ? (
+        <ProfileCardSkeleton />
+      ) : (
+        <ProfileCard
+          birthday={userData.birthday}
+          gender={userData.gender}
+          username={userData.username}
+          email={userData.email}
+          year={userData.year}
+          phone={userData.contactNumber}
+          course={userData.course}
+        />
+      )}
+
       <div className="border-b my-5 border-zinc-300"></div>
       <div
         className="shadow-sm rounded-lg bg-white border p-4 flex gap-3 font-medium text-gray-900"
