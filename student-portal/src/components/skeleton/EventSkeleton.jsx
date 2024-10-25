@@ -14,14 +14,14 @@ const EventSkeleton = ({ items }) => {
         <Card key={itemIndex}>
           <CardHeader className="p-4 pb-0">
             <CardTitle className="text-lg">
-              <Skeleton className="h-5 w-44" />
+              <Skeleton className="h-5 max-w-44" />
             </CardTitle>
           </CardHeader>
           <CardContent className="px-4 pb-4">
             <div className="mt-4 space-y-1">
-              <Skeleton className="h-5 w-24" />
+              <Skeleton className="h-5 max-w-24" />
               <Skeleton className="h-5 w-full" />
-              <Skeleton className="h-5 w-32" />
+              <Skeleton className="h-5 max-w-32" />
             </div>
           </CardContent>
         </Card>

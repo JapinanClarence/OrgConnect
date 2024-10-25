@@ -14,6 +14,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
+import AnnouncementSkeleton from "@/components/skeleton/AnnouncementSkeleton";
 const AnnouncementPage = () => {
   const { token, userData } = useAuth();
   const [announcementData, setAnnouncementData] = useState([]);
@@ -52,7 +53,7 @@ const AnnouncementPage = () => {
       const filtered = announcementData.filter(
         (announcement) => announcement.category === selectedCategory
       );
-      setFilteredAnnouncements(filtered);
+      setFilteredAnnouncements([filtered]);
     }
   };
   useEffect(() => {
@@ -88,7 +89,9 @@ const AnnouncementPage = () => {
         </Select>
       </div>
       <div className="space-y-2">
-        {filteredAnnouncements.length > 0 ? (
+        {loading ? (
+          <AnnouncementSkeleton items={5} />
+        ) : filteredAnnouncements.length > 0 ? (
           <div className="flex flex-col gap-2 overflow-y-auto ">
             {filteredAnnouncements
               .slice(0, visibleCount)
@@ -103,7 +106,7 @@ const AnnouncementPage = () => {
                 />
               ))}
             {visibleCount < filteredAnnouncements.length && (
-              <div className="flex justify-center mt-2">
+              <div className="flex h-screen justify-center items-center">
                 <Button
                   onClick={handleSeeMore}
                   className="bg-zinc-200 hover:bg-zinc-100 w-full text-zinc-900"
