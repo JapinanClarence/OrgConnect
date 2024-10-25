@@ -15,6 +15,8 @@ import adminMembersRoutes from "./routes/admin/members.js";
 import adminOfficerRoutes from "./routes/admin/officer.js"
 import dashbordRoute from "./routes/admin/dashboard.js"
 import eventRoutes from "./routes/events.js";
+import announcementRoutes from "./routes/announcements.js";
+
 const DB = process.env.DATABASE.replace("<PASSWORD>", process.env.DB_PASSWORD)
 const app = express();
 
@@ -61,7 +63,7 @@ app.use("/api/attendance", attendanceRoutes)
 app.use("/api/user/", userRoutes);
 app.use("/api/user/", organizationRoutes);
 app.use("/api/user/", eventRoutes)
-
+app.use("/api/user/", announcementRoutes)
 // Handle 404 errors for undefined routes
 app.use((req, res, next) => {
  

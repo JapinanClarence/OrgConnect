@@ -1,4 +1,3 @@
-import { response } from "express";
 import Announcements from "../../model/announcementModel.js";
 import Organization from "../../model/organizationModel.js";
 import { OrgAdminModel as Admin } from "../../model/UserModel.js";

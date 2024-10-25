@@ -1,14 +1,14 @@
 import express from "express";
 import { authorizeRole, authenticate } from "../middleware/authMiddleware.js";
 
-import { getEvents } from "../controller/eventController.js";
+import { getAnnouncement } from "../controller/announcementController.js";
 
 const router = express.Router();
 router.get(
-    "/events",
+    "/announcement",
     authenticate,
     authorizeRole("student"),
-    getEvents
+    getAnnouncement
   );
   
 

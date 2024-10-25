@@ -50,14 +50,14 @@ const Footer = () => {
         </div>
         <div
           className={`mx-auto ${
-            isActive("/notifications")
+            isActive("/announcements")
               ? "text-gray-900"
               : "text-muted-foreground"
           }`}
         >
-          <Link to={"/notifications"}>
-            <Bell className="mx-auto" />
-            <span className="text-center block text-xs">Notifications </span>
+          <Link to={"/announcements"}>
+            <Newspaper className="mx-auto" />
+            <span className="text-center block text-xs">Updates </span>
           </Link>
         </div>
         <div

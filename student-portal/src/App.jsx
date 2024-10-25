@@ -13,6 +13,7 @@ import EventsPage from "./pages/EventsPage";
 import ProfilePage from "./pages/ProfilePage";
 import EditProfilePage from "./pages/EditProfilePage";
 import { Toaster } from "./components/ui/toaster";
+import AnnouncementPage from "./pages/AnnouncementPage";
 
 function App() {
   const [isInstalled, setIsInstalled] = useState(false);
@@ -38,7 +39,7 @@ function App() {
             <Route element={<MainLayout />}>
               <Route index element={<HomePage />} />
               <Route path="/qr" element={<QrPage />} />
-
+              <Route path="/announcements" element={<AnnouncementPage />} />
               <Route path="/profile" element={<ProfilePage />} />
             </Route>
             <Route path="/profile/edit" element={<EditProfilePage />} />
