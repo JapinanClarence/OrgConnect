@@ -10,6 +10,8 @@ import OrgCardSkeleton from "@/components/skeleton/OrgCardSkeleton";
 import EventSkeleton from "@/components/skeleton/EventSkeleton";
 import { Link } from "react-router-dom";
 import Header from "@/components/nav/Header";
+import { Plus } from "lucide-react";
+import { Button } from "@/components/ui/button";
 const HomePage = () => {
   const { token, userData } = useAuth();
   const [orgData, setOrgData] = useState([]);
@@ -23,13 +25,13 @@ const HomePage = () => {
           Authorization: token,
         },
       });
-      if (data) {
+      if (!data.success) {
+        setOrgData([]);
+      } else {
         setOrgData(data.data.slice(0, 5));
-        setLoading(false);
       }
     } catch (error) {
       console.log(error);
-      setLoading(false);
     }
   };
 
@@ -40,7 +42,9 @@ const HomePage = () => {
           Authorization: token,
         },
       });
-      if (data) {
+      if (!data.success) {
+        setEventData([]);
+      } else {
         const event = data.data;
         const cleanedData = event.map((data) => {
           const date = preProcessDate(data.startDate, data.endDate);
@@ -56,13 +60,19 @@ const HomePage = () => {
           };
         });
         setEventData(cleanedData.slice(0, 10));
-        setLoading(false);
       }
     } catch (error) {
       console.log(error);
-      setLoading(false);
     }
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await Promise.all([fetchStudentOrgs(), fetchEvents()]);
+      setLoading(false);
+    };
+    fetchData();
+  }, [token]);
 
   const preProcessDate = (startDate, endDate) => {
     const sDate = new Date(startDate);
@@ -84,16 +94,11 @@ const HomePage = () => {
       return `${shortMonth(startDate)} - ${timeOnly(endDate)}`;
     }
   };
-
-  useEffect(() => {
-    fetchStudentOrgs();
-    fetchEvents();
-  }, []);
   return (
     <div>
       <Header />
-      <div className="py-16  ">
-        <div className=" flex justify-start items-center gap-3 p-5">
+      <div className="py-16 px-5 ">
+        <div className=" flex justify-start items-center gap-3 py-5">
           <Avatar className="size-14">
             <AvatarImage src={userData.profilePicture} alt="user profile" />
             <AvatarFallback className="text-gray-500 font-bold bg-gray-200">
@@ -110,48 +115,56 @@ const HomePage = () => {
         </div>
 
         <div className="mt-4">
-          <div className="px-5 py-2 mb-2 space-y-4 ">
+          <div className="py-2 mb-2 space-y-4 ">
             <Input
               className="rounded-full border-none bg-slate-200 "
               placeholder="Search organizations..."
             />
-            <div className="flex justify-between">
-              <h1 className="font-semibold mb-2 "> Your Organizations</h1>
-              <Link to="/organization" className="text-muted-foreground">
-                See all
-              </Link>
-            </div>
           </div>
 
           {loading ? (
-            <div className="flex overflow-x-clip snap-x snap-mandatory gap-5 ml-5 pb-2">
+            <div className="flex overflow-x-clip snap-x snap-mandatory gap-5 pb-2">
               <OrgCardSkeleton items={2} />
             </div>
-          ) : (
-            <div className="flex overflow-x-auto snap-x snap-mandatory gap-5 ml-5 pb-2">
-              {orgData.map((data) => (
-                <OrgCards
-                  key={data.id}
-                  orgImage={data.banner}
-                  title={data.name}
-                  about={data.about}
-                />
-              ))}
+          ) : orgData <= 0 ? (
+            <div className="w-full h-[200px] bg-slate-200 rounded-lg flex items-center justify-center">
+              <Button variant="link" className="" size="sm">
+                <Plus /> Join Organizaton
+              </Button>
             </div>
+          ) : (
+            <>
+              <div className="flex justify-between">
+                <h1 className="font-semibold mb-2 "> Your Organizations</h1>
+                <Link to="/organization" className="text-muted-foreground">
+                  See all
+                </Link>
+              </div>
+              <div className="flex overflow-x-auto snap-x snap-mandatory gap-5 pb-2">
+                {orgData.map((data) => (
+                  <OrgCards
+                    key={data.id}
+                    orgImage={data.banner}
+                    title={data.name}
+                    about={data.about}
+                  />
+                ))}
+              </div>
+            </>
           )}
-
-          <div className="px-5 mt-5">
-            <div className="sticky top-[3.6rem] bg-slate-50 pb-2 flex justify-between z-10">
+          <div className="border-b my-5"></div>
+          <div className="">
+            <div className="sticky top-[3.6rem] bg-slate-50 pb-2 flex justify-start z-10">
               <h1 className="font-semibold ">Recent Events</h1>
-              <Link to="/event" className="text-muted-foreground">
-                See all
-              </Link>
             </div>
             <div className="space-y-2">
               {loading ? (
                 <EventSkeleton items={5} />
+              ) : eventData <= 0 ? (
+                <div className="w-full py-10 flex justify-center content-center text-muted-foreground">
+                  No recent events
+                </div>
               ) : (
-                eventData &&
                 eventData.map((data) => (
                   <EventCards
                     key={data.id}
