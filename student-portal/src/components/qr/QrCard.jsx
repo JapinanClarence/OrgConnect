@@ -35,7 +35,7 @@ const QrCard = () => {
   return (
     <div className="bg-slate-100 w-full border border-zinc-300 shadow-md  rounded-lg p-5 text-gray-900 bg-grid-small-white/[0.2]">
       {loading ? (
-        <div className="flex justify-center py-10">
+        <div className="flex justify-center ">
           <div className=" space-y-5">
             <Skeleton className={"w-32 h-6 mx-auto bg-zinc-300 rounded-lg"} />
             <Skeleton className={"w-52 h-5 bg-zinc-300 rounded-lg "} />
