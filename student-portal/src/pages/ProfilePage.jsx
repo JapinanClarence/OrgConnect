@@ -24,10 +24,10 @@ import { Skeleton } from "@/components/ui/skeleton";
 const ProfilePage = () => {
   const { token, logout } = useAuth();
   const [showAlert, setShowAlert] = useState(false);
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
   const [userData, setUserData] = useState("");
   const navigate = useNavigate();
- 
+  const loading = true;
   const fetchUserData = async () => {
     try {
       const { data } = await apiClient.get("/user", {
@@ -94,7 +94,7 @@ const ProfilePage = () => {
               userData.firstname.charAt(0) + userData.lastname.charAt(0)}
           </AvatarFallback>
         </Avatar>
-        <div className="col-span-3 flex flex-col justify-center ">
+        <div className="flex flex-col justify-center ">
           <h1 className="text-gray-900 font-semibold">
             {loading ? (
               <Skeleton className={"h-5 w-42 bg-gray-300"} />
