@@ -86,8 +86,8 @@ const ProfilePage = () => {
   }${userData.lastname}`;
   return (
     <div className="p-5">
-      <div className="shadow-sm rounded-lg border bg-white p-4 grid grid-flow-col grid-cols-5 text-white">
-        <Avatar className="size-14 col-span-auto">
+      <div className="shadow-sm rounded-lg border bg-white p-4 flex gap-2 text-white">
+        <Avatar className="size-14 flex-shrink">
           <AvatarImage src={userData.profilePicture} alt="@shadcn" />
           <AvatarFallback className="text-gray-500 font-bold bg-gray-300">
             {userData &&
