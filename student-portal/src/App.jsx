@@ -41,11 +41,12 @@ function App() {
               <Route path="/qr" element={<QrPage />} />
               <Route path="/announcements" element={<AnnouncementPage />} />
               <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/event" element={<EventsPage />} />
             </Route>
             <Route path="/profile/edit" element={<EditProfilePage />} />
             <Route path="/" element={<SecondaryLayout />}>
               <Route path="/organization" element={<OrganizationsPage />} />
-              <Route path="/event" element={<EventsPage />} />
+              
             </Route>
           </Route>
         </Route>

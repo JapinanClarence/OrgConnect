@@ -30,10 +30,10 @@ const Footer = () => {
         </div>
         <div
           className={`mx-auto ${
-            isActive("/events") ? "text-gray-900" : "text-muted-foreground"
+            isActive("/event") ? "text-gray-900" : "text-muted-foreground"
           }`}
         >
-          <Link to={"/events"}>
+          <Link to={"/event"}>
             <Calendar className="mx-auto" />
             <span className="text-center block text-xs">Calendar</span>
           </Link>
