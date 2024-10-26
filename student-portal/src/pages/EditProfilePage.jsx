@@ -79,15 +79,6 @@ const EditProfilePage = () => {
 
   return (
     <div className="pt-[2.8rem] h-screen p-5">
-      <header className="fixed top-0 left-0 w-full z-10 ">
-        <div className="px-3 py-2   bg-slate-50 shadow-sm border-b  flex items-center justify-between">
-          <div className="h-7 inline-flex justify-center items-center">
-            <Link to={"/profile"}>
-              <ChevronLeft className="" size={25} />
-            </Link>
-          </div>
-        </div>
-      </header>
       {loading ? (
         <div className="h-full flex justify-center items-center">
           <LoaderCircle size={20} className="animate-spin "/>

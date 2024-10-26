@@ -14,6 +14,7 @@ import ProfilePage from "./pages/ProfilePage";
 import EditProfilePage from "./pages/EditProfilePage";
 import { Toaster } from "./components/ui/toaster";
 import AnnouncementPage from "./pages/AnnouncementPage";
+import OrganizationDetailsPage from "./pages/OrganizationDetailsPage";
 
 function App() {
   const [isInstalled, setIsInstalled] = useState(false);
@@ -43,10 +44,14 @@ function App() {
               <Route path="/profile" element={<ProfilePage />} />
               <Route path="/event" element={<EventsPage />} />
             </Route>
-            <Route path="/profile/edit" element={<EditProfilePage />} />
+
             <Route path="/" element={<SecondaryLayout />}>
+              <Route path="/profile/edit" element={<EditProfilePage />} />
               <Route path="/organization" element={<OrganizationsPage />} />
-              
+              <Route
+                path="/organization/:d"
+                element={<OrganizationDetailsPage />}
+              />
             </Route>
           </Route>
         </Route>

@@ -8,7 +8,7 @@ import apiClient from "@/api/axios";
 import { timeOnly, shortMonth } from "@/util/helpers";
 import OrgCardSkeleton from "@/components/skeleton/OrgCardSkeleton";
 import EventSkeleton from "@/components/skeleton/EventSkeleton";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Header from "@/components/nav/Header";
 import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -17,6 +17,7 @@ const HomePage = () => {
   const [orgData, setOrgData] = useState([]);
   const [eventData, setEventData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
   // const loading = true;
   const fetchStudentOrgs = async () => {
     try {
@@ -94,6 +95,11 @@ const HomePage = () => {
       return `${shortMonth(startDate)} - ${timeOnly(endDate)}`;
     }
   };
+
+  const handleClick = async (data) =>{
+    console.log(data)
+    navigate(`/organization/${data}`)
+  }
   return (
     <div>
       <Header />
@@ -144,9 +150,11 @@ const HomePage = () => {
                 {orgData.map((data) => (
                   <OrgCards
                     key={data.id}
+                    id={data.id}
                     orgImage={data.banner}
                     title={data.name}
                     about={data.about}
+                    onClick={handleClick}
                   />
                 ))}
               </div>
