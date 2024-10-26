@@ -11,17 +11,17 @@ import {
   } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
 
-const ProfileDrawer = ({ open, onOpenChange }) => {
+const ProfileDrawer = ({ open, onOpenChange, onConfirm }) => {
   return (
     <Drawer open={open} onOpenChange={onOpenChange}>
       {/* <DrawerTrigger>Joined</DrawerTrigger> */}
       <DrawerContent>
         <DrawerHeader>
-          <DrawerTitle>Are you absolutely sure?</DrawerTitle>
-          <DrawerDescription>This action cannot be undone.</DrawerDescription>
+          <DrawerTitle>Log out?</DrawerTitle>
+          <DrawerDescription> Are you sure you want to logout.</DrawerDescription>
         </DrawerHeader>
         <DrawerFooter >
-          <Button>Leave</Button>
+          <Button onClick={onConfirm}>Log out</Button>
           <DrawerClose asChild>
             <Button variant="outline" className="w-full">
               Cancel

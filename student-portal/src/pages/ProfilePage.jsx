@@ -4,23 +4,12 @@ import { Button } from "@/components/ui/button";
 import { LogOut, PencilLine } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import ProfileCard from "@/components/profile/ProfileCard";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
 import apiClient from "@/api/axios";
-import EditProfileForm from "@/components/profile/EditProfileForm";
 import { useNavigate } from "react-router-dom";
 import { formatSimpleDate } from "@/util/helpers";
 import ProfileCardSkeleton from "@/components/skeleton/ProfileCardSkeleton";
 import { Skeleton } from "@/components/ui/skeleton";
+import ProfileDrawer from "@/components/profile/ProfileDrawer";
 const ProfilePage = () => {
   const { token, logout } = useAuth();
   const [showAlert, setShowAlert] = useState(false);
@@ -77,9 +66,9 @@ const ProfilePage = () => {
     setShowAlert(false); // Close the alert dialog after logout
   };
 
-  const cancelLogout = () => {
-    setShowAlert(false); // Close the alert dialog without logout
-  };
+  // const cancelLogout = () => {
+  //   setShowAlert(false); // Close the alert dialog without logout
+  // };
 
   const fullname = `${userData.firstname} ${
     userData.middlename ? userData.middlename[0] + ". " : ""
@@ -123,7 +112,7 @@ const ProfilePage = () => {
             // setShowEditDialog(true)
           }}
         >
-          <PencilLine />
+          <PencilLine size={15} className="mr-2" />
           Edit
         </Button>
       </div>
@@ -148,34 +137,8 @@ const ProfilePage = () => {
       >
         <LogOut size={20} className="my-auto" /> Log out
       </div>
-      {/* <EditProfileForm
-        userData={userData}
-        open={showEditDialog}
-        onOpenChange={setShowEditDialog}
-        onSubmit={onEdit}
-        errorMessage={errorMessage}
-        isSubmitting={isSubmitting}
-      /> */}
-      <AlertDialog open={showAlert} onOpenChange={setShowAlert} className="">
-        <AlertDialogContent className="w-[300px] rounded-lg">
-          <AlertDialogHeader className={"text-start"}>
-            <AlertDialogTitle>Log out?</AlertDialogTitle>
-            <AlertDialogDescription>
-              Are you sure you want to logout.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter
-            className={"w-full flex flex-row items-center justify-around"}
-          >
-            <AlertDialogAction onClick={confirmLogout}>
-              Continue
-            </AlertDialogAction>
-            <AlertDialogCancel className="mt-0 " onClick={cancelLogout}>
-              Cancel
-            </AlertDialogCancel>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+      <ProfileDrawer open={showAlert} onOpenChange={setShowAlert} onConfirm={confirmLogout}/>
+
     </div>
   );
 };
