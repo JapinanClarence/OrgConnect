@@ -15,6 +15,7 @@ import EditProfilePage from "./pages/EditProfilePage";
 import { Toaster } from "./components/ui/toaster";
 import AnnouncementPage from "./pages/AnnouncementPage";
 import OrganizationDetailsPage from "./pages/OrganizationDetailsPage";
+import PaymentPage from "./pages/PaymentPage";
 
 function App() {
   const [isInstalled, setIsInstalled] = useState(false);
@@ -49,8 +50,12 @@ function App() {
               <Route path="/profile/edit" element={<EditProfilePage />} />
               <Route path="/organization" element={<OrganizationsPage />} />
               <Route
-                path="/organization/:d"
+                path="/organization/:id"
                 element={<OrganizationDetailsPage />}
+              />
+              <Route
+                path="/organization/:id/payments"
+                element={<PaymentPage />}
               />
             </Route>
           </Route>

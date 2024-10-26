@@ -4,12 +4,13 @@ import { useAuth } from "@/context/AuthContext";
 import apiClient from "@/api/axios";
 import OrgCardSkeleton from "@/components/skeleton/OrgCardSkeleton";
 import PageHead from "@/components/nav/PageHead";
-
+import { useNavigate } from "react-router-dom";
 const OrganizationsPage = () => {
   const { token, userData } = useAuth();
   const [orgData, setOrgData] = useState([]);
   const [loading, setLoading] = useState(true);
-  // const loading = true;
+  const navigate = useNavigate();
+
   const fetchStudentOrgs = async () => {
     try {
       const { data } = await apiClient.get("/user/organization/?my_orgs=true", {
@@ -30,6 +31,11 @@ const OrganizationsPage = () => {
   useEffect(() => {
     fetchStudentOrgs();
   }, []);
+
+  const handleClick = async (data) =>{
+    console.log(data)
+    navigate(`/organization/${data}`)
+  }
   return (
     <div className="py-16">
       <PageHead/>
@@ -43,10 +49,12 @@ const OrganizationsPage = () => {
             {orgData.map((data) => (
               <OrgCards
                 key={data.id}
+                id={data.id}
                 orgImage={data.banner}
                 title={data.name}
                 about={data.about}
                 variant="horizontal"
+                onClick={handleClick}
               />
             ))}
           </div>
