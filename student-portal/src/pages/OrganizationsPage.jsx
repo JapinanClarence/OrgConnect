@@ -3,6 +3,7 @@ import OrgCards from "@/components/home/OrgCards";
 import { useAuth } from "@/context/AuthContext";
 import apiClient from "@/api/axios";
 import OrgCardSkeleton from "@/components/skeleton/OrgCardSkeleton";
+import PageHead from "@/components/nav/PageHead";
 
 const OrganizationsPage = () => {
   const { token, userData } = useAuth();
@@ -31,6 +32,7 @@ const OrganizationsPage = () => {
   }, []);
   return (
     <div className="py-16">
+      <PageHead/>
       <div className="px-5 mt-5">
         {loading ? (
           <div className="space-y-2 ">

@@ -6,6 +6,7 @@ import apiClient from "@/api/axios";
 import { useAuth } from "@/context/AuthContext";
 import { formatToDateInput, formatDate } from "@/util/helpers";
 import { useToast } from "@/hooks/use-toast";
+import PageHead from "@/components/nav/PageHead";
 
 const EditProfilePage = () => {
   const [loading, setLoading] = useState(true);
@@ -79,6 +80,7 @@ const EditProfilePage = () => {
 
   return (
     <div className="pt-[2.8rem] h-screen p-5">
+      <PageHead/>
       {loading ? (
         <div className="h-full flex justify-center items-center">
           <LoaderCircle size={20} className="animate-spin "/>
