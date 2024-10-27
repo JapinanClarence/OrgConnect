@@ -16,6 +16,7 @@ import { Toaster } from "./components/ui/toaster";
 import AnnouncementPage from "./pages/AnnouncementPage";
 import OrganizationDetailsPage from "./pages/OrganizationDetailsPage";
 import PaymentPage from "./pages/PaymentPage";
+import OfficersPage from "./pages/OfficersPage";
 
 function App() {
   const [isInstalled, setIsInstalled] = useState(false);
@@ -56,6 +57,10 @@ function App() {
               <Route
                 path="/organization/:id/payments"
                 element={<PaymentPage />}
+              />
+                <Route
+                path="/organization/:id/officers"
+                element={<OfficersPage />}
               />
             </Route>
           </Route>
