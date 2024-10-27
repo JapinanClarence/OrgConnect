@@ -7,6 +7,10 @@ import OrganizationDrawer from "@/components/organization/OrganizationDrawer";
 import { useLocation, useParams } from "react-router-dom";
 import apiClient from "@/api/axios";
 import { useAuth } from "@/context/AuthContext";
+import { Skeleton } from "@/components/ui/skeleton";
+import AboutCard from "@/components/organization/AboutCard";
+import AboutSkeleton from "@/components/skeleton/AboutSkeleton";
+import OrgHeader from "@/components/organization/OrgHeader";
 const OrganizationDetailsPage = () => {
   const navigate = useNavigate();
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -59,25 +63,22 @@ const OrganizationDetailsPage = () => {
         className="relative mt-10 h-[180px] overflow-hidden bg-cover bg-center border-b-yellow-500 border-b-4"
         style={{ backgroundImage: `url(${orgData.banner})` }}
       >
-        <div className="bg-gradient-to-r from-gray-800 to-gray-900 absolute h-full w-full opacity-80"></div>
-        <div className=" absolute top-0 h-full w-full flex justify-center items-center ">
-          <h1 className="font-medium text-2xl text-white font-accent">
-            {orgData.name}
-          </h1>
-        </div>
+        {loading ? (
+          <Skeleton className={"h-full w-full "} />
+        ) : (
+          <OrgHeader orgData={orgData} />
+        )}
       </div>
-      <OrganizationDrawer open={openDrawer} onOpenChange={setOpenDrawer} id={orgData._id}/>
 
       <div className="px-5 py-5 space-y-2">
-        <div className="rounded-lg px-5 py-4 shadow-sm border space-y-2">
-          <h2 className="text-lg font-medium">About</h2>
-          <p className="text-pretty text-sm">{orgData.about}</p>
-        </div>
-        <div className="rounded-lg px-5 py-4 shadow-sm border space-y-2">
-          <h2 className="text-lg font-medium">Contact</h2>
-          <p className="text-pretty text-sm">{orgData.contact}</p>
-        </div>
+        {loading ? <AboutSkeleton /> : <AboutCard orgData={orgData} />}
       </div>
+
+      <OrganizationDrawer
+        open={openDrawer}
+        onOpenChange={setOpenDrawer}
+        id={orgData._id}
+      />
     </div>
   );
 };
