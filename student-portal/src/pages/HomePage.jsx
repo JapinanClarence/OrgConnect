@@ -133,8 +133,8 @@ const HomePage = () => {
               <OrgCardSkeleton items={2} />
             </div>
           ) : orgData <= 0 ? (
-            <div className="w-full h-[200px] bg-slate-200 rounded-lg flex items-center justify-center">
-              <Button variant="link" className="" size="sm">
+            <div className="w-full h-[200px] border bg-slate-200 shadow-sm  border-zinc-300 rounded-lg flex items-center justify-center">
+              <Button variant="link" className=" " size="sm">
                 <Plus /> Join Organizaton
               </Button>
             </div>

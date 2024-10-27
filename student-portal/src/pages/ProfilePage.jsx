@@ -112,7 +112,7 @@ const ProfilePage = () => {
             // setShowEditDialog(true)
           }}
         >
-          <PencilLine size={15} className="mr-2" />
+          <PencilLine size={15} className="" />
           Edit
         </Button>
       </div>
