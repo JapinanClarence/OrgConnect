@@ -33,10 +33,10 @@ const ProfilePage = () => {
         firstname: data.data.firstname,
         lastname: data.data.lastname,
         middlename: data.data.middlename,
-        birthday: formatSimpleDate(data.data.birthday),
+        birthday: data.data.birthday && formatSimpleDate(data.data.birthday),
         email: data.data.email,
         username: data.data.username,
-        gender:
+        gender: data.data.gender &&
           data.data.gender.charAt(0).toUpperCase() +
           data.data.gender.slice(1).toLowerCase(),
         contactNumber: data.data.contactNumber,

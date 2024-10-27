@@ -30,7 +30,7 @@ const AnnouncementPage = () => {
           Authorization: token,
         },
       });
-      
+
       if (!data.success) {
         setAnnouncementData([]);
       } else {
@@ -59,7 +59,7 @@ const AnnouncementPage = () => {
       setFilteredAnnouncements(filtered);
     }
   };
-  
+
   useEffect(() => {
     fetchAnnouncements();
   }, []);
@@ -69,9 +69,9 @@ const AnnouncementPage = () => {
   }, [announcementData, selectedCategory]);
 
   return (
-    <div className="px-5 py-16">
+    <div className="px-5 pt-16 h-full flex flex-col gap-5">
       <Header />
-      <div className="mt-3 mb-5 flex justify-end">
+      <div className="mt-3 flex justify-end">
         <Select
           value={selectedCategory} // Set the selected value for controlled component
           onValueChange={(value) => setSelectedCategory(value)} // Set the selected category
@@ -92,40 +92,39 @@ const AnnouncementPage = () => {
           </SelectContent>
         </Select>
       </div>
-      <div className="space-y-2">
-        {loading ? (
+
+      {loading ? (
+        <div className="space-y-2 pb-20">
           <AnnouncementSkeleton items={5} />
-        ) : filteredAnnouncements.length > 0 ? (
-          <div className="flex flex-col gap-2 overflow-y-auto ">
-            {filteredAnnouncements
-              .slice(0, visibleCount)
-              .map((announcement) => (
-                <AnnouncementCard
-                  key={announcement._id}
-                  id={announcement._id}
-                  title={announcement.title}
-                  description={announcement.description}
-                  category={announcement.category}
-                  datePosted={formatDate(announcement.createdAt)}
-                />
-              ))}
-            {visibleCount < filteredAnnouncements.length && (
-              <div className="flex justify-center mt-4">
-                <Button
-                  onClick={handleSeeMore}
-                  className="bg-zinc-200 hover:bg-zinc-100 w-full text-zinc-900"
-                >
-                  See more announcements
-                </Button>
-              </div>
-            )}
-          </div>
-        ) : (
-          <div className="flex items-center justify-center h-full">
-            <p className="text-zinc-400">No Announcements available.</p>
-          </div>
-        )}
-      </div>
+        </div>
+      ) : filteredAnnouncements.length > 0 ? (
+        <div className="space-y-2 pb-20">
+          {filteredAnnouncements.slice(0, visibleCount).map((announcement) => (
+            <AnnouncementCard
+              key={announcement._id}
+              id={announcement._id}
+              title={announcement.title}
+              description={announcement.description}
+              category={announcement.category}
+              datePosted={formatDate(announcement.createdAt)}
+            />
+          ))}
+          {visibleCount < filteredAnnouncements.length && (
+            <div className="flex justify-center mt-4">
+              <Button
+                onClick={handleSeeMore}
+                className="bg-zinc-200 hover:bg-zinc-100 w-full text-zinc-900"
+              >
+                See more announcements
+              </Button>
+            </div>
+          )}
+        </div>
+      ) : (
+        <div className="flex items-center justify-center h-1/2">
+          <p className="text-zinc-400">No Announcements available.</p>
+        </div>
+      )}
     </div>
   );
 };
