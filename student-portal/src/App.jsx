@@ -9,7 +9,7 @@ import HomePage from "./pages/HomePage";
 import WelcomePage from "./pages/WelcomePage";
 import QrPage from "./pages/QrPage";
 import OrganizationsPage from "./pages/OrganizationsPage";
-import EventsPage from "./pages/EventsPage";
+import CalendarPage from "./pages/CalendarPage";
 import ProfilePage from "./pages/ProfilePage";
 import EditProfilePage from "./pages/EditProfilePage";
 import { Toaster } from "./components/ui/toaster";
@@ -17,6 +17,7 @@ import AnnouncementPage from "./pages/AnnouncementPage";
 import OrganizationDetailsPage from "./pages/OrganizationDetailsPage";
 import PaymentPage from "./pages/PaymentPage";
 import OfficersPage from "./pages/OfficersPage";
+import EventsPage from "./pages/EventsPage";
 
 function App() {
   const [isInstalled, setIsInstalled] = useState(false);
@@ -44,7 +45,7 @@ function App() {
               <Route path="/qr" element={<QrPage />} />
               <Route path="/announcements" element={<AnnouncementPage />} />
               <Route path="/profile" element={<ProfilePage />} />
-              <Route path="/event" element={<EventsPage />} />
+              <Route path="/calendar" element={<CalendarPage />} />
             </Route>
 
             <Route path="/" element={<SecondaryLayout />}>
@@ -58,9 +59,13 @@ function App() {
                 path="/organization/:id/payments"
                 element={<PaymentPage />}
               />
-                <Route
+              <Route
                 path="/organization/:id/officers"
                 element={<OfficersPage />}
+              />
+              <Route
+                path="/organization/:id/events"
+                element={<EventsPage />}
               />
             </Route>
           </Route>

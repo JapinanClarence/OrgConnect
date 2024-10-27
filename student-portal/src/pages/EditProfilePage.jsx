@@ -80,7 +80,7 @@ const EditProfilePage = () => {
 
   return (
     <div className="pt-[2.8rem] h-screen p-5">
-      <PageHead/>
+      <PageHead />
       {loading ? (
         <div className="h-full flex justify-center items-center">
           <LoaderCircle size={20} className="animate-spin "/>

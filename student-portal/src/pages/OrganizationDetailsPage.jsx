@@ -44,15 +44,15 @@ const OrganizationDetailsPage = () => {
   }, []);
   return (
     <div className="">
-      <header className="fixed top-0 left-0 w-full h-10 z-10 ">
+      <header className="fixed top-0 left-0 w-full z-10 ">
         <div className="px-3 py-2 bg-slate-50 shadow-sm border-b  flex items-center justify-between">
-          <button className="" onClick={handleClick}>
-            <ChevronLeft size={25} />
-          </button>
+          <Button variant="ghost" size="icon" className="" onClick={handleClick}>
+            <ChevronLeft />
+          </Button>
 
           <Button
-            variant="icon"
-            className="h-5 item-center border-zinc-300 text-md flex-shrink"
+            variant="ghost"
+            size="icon"
             onClick={() => setOpenDrawer(true)}
           >
             <Ellipsis />

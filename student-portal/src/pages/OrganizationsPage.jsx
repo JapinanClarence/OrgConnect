@@ -38,7 +38,7 @@ const OrganizationsPage = () => {
   };
   return (
     <div className="px-5 pt-16 h-full flex flex-col gap-5">
-      <PageHead />
+      <PageHead title={"Organizations"}/>
       {loading ? (
         <div className="space-y-2 pb-5">
           <OrgCardSkeleton items={6} variant={"horizontal"} />

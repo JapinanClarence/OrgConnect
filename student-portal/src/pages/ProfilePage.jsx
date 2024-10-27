@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { LogOut, PencilLine } from "lucide-react";
+import { LogOut, PencilLine, UserPen } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import ProfileCard from "@/components/profile/ProfileCard";
 import apiClient from "@/api/axios";
@@ -112,7 +112,7 @@ const ProfilePage = () => {
             // setShowEditDialog(true)
           }}
         >
-          <PencilLine size={15} className="" />
+          <UserPen size={15} className="mr-1" />
           Edit
         </Button>
       </div>

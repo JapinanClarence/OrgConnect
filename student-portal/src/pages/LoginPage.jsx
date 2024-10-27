@@ -25,7 +25,7 @@ const LoginPage = () => {
           className="w-36 ml-0 mr-auto"
         />
          <Button variant="outline" size="sm" >
-            <Download/>    Install App
+            <Download  className="h-4 w-4 mr-1"/>    Install App
           </Button>
       </div>
 

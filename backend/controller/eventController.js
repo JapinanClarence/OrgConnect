@@ -49,28 +49,18 @@ export const getAllEvents = async (req, res) => {
 
 export const getEvents = async (req, res) =>{
   const student = req.user.userId;
+  const organization = req.params.id;
   try {
-    const membership = await Membership.find({ student, status: "1" });
+    const membership = await Membership.findOne({ student, organization });
 
-    if (membership.length <= 0) {
+    if (!membership) {
       return res.status(200).json({
         success: false,
-        message: "No joined organizations found",
+        message: "Organization not found",
       });
     }
-
-    // Find student organization events
-    const events = await Promise.all(
-      membership.map(async (data) => {
-        const eventList = await Events.find({
-          organization: data.organization,
-        });
-        return eventList; // Return the list of events for each organization
-      })
-    );
-
-    // `events` is now an array of arrays, so you might want to flatten it
-    const flattenedEvents = events.flat(); // Flatten the array if needed
+   
+    const events = await Events.find({organization});
 
     if (events.length <= 0) {
       return res.status(200).json({
@@ -81,7 +71,7 @@ export const getEvents = async (req, res) =>{
 
     res.status(200).json({
       success: true,
-      data: flattenedEvents,
+      data: events,
     });
   } catch (err) {
     return res.status(500).json({

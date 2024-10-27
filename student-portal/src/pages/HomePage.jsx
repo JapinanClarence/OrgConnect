@@ -97,7 +97,7 @@ const HomePage = () => {
   };
 
   const handleClick = async (data) => {
-    console.log(data);
+
     navigate(`/organization/${data}`);
   };
   return (

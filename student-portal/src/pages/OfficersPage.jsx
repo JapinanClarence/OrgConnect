@@ -37,11 +37,11 @@ const OfficersPage = () => {
   }, []);
   return (
     <div className="pt-16 pb-10">
-      <PageHead />
+      <PageHead title={"Officers"} />
       <div className="px-5">
-        <h1 className="text-gray-900 text-2xl font-semibold text-center font-accent underline underline-offset-4">
+        {/* <h1 className="text-gray-900 text-2xl font-semibold text-center font-accent underline underline-offset-4">
           Officers
-        </h1>
+        </h1> */}
         <div className="mt-5 flex flex-col gap-4 items-center">
           {loading ? (
             <OfficerCardSkeleton items={5}/>

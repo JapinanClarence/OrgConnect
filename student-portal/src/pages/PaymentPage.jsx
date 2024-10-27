@@ -37,7 +37,7 @@ const PaymentPage = () => {
   }, []);
   return (
     <div className="pt-16">
-      <PageHead />
+      <PageHead title={"Payments"}/>
       <div className="px-5">
         <DataTable data={paymentData} loading={loading}/>
       </div>
