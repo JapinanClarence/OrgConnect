@@ -20,7 +20,7 @@ const OrgCardSkeleton = ({ items,  variant }) => {
               <LoaderCircle className="animate-spin text-gray-400" size={24} />
             </div>
           </CardHeader>
-          <CardContent className="p-4">
+          <CardContent className="p-4 w-full">
             <CardTitle className="text-lg mb-3">
               <Skeleton className="h-5 max-w-44" /> {/* Use Skeleton directly */}
             </CardTitle>

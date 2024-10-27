@@ -32,34 +32,32 @@ const OrganizationsPage = () => {
     fetchStudentOrgs();
   }, []);
 
-  const handleClick = async (data) =>{
-    console.log(data)
-    navigate(`/organization/${data}`)
-  }
+  const handleClick = async (data) => {
+    console.log(data);
+    navigate(`/organization/${data}`);
+  };
   return (
-    <div className="py-16">
-      <PageHead/>
-      <div className="px-5 mt-5">
-        {loading ? (
-          <div className="space-y-2 ">
-            <OrgCardSkeleton items={20} variant={"horizontal"} />
-          </div>
-        ) : (
-          <div className="">
-            {orgData.map((data) => (
-              <OrgCards
-                key={data.id}
-                id={data.id}
-                orgImage={data.banner}
-                title={data.name}
-                about={data.about}
-                variant="horizontal"
-                onClick={handleClick}
-              />
-            ))}
-          </div>
-        )}
-      </div>
+    <div className="px-5 pt-16 h-full flex flex-col gap-5">
+      <PageHead />
+      {loading ? (
+        <div className="space-y-2 pb-5">
+          <OrgCardSkeleton items={6} variant={"horizontal"} />
+        </div>
+      ) : (
+        <div className="space-y-2 pb-5">
+          {orgData.map((data) => (
+            <OrgCards
+              key={data.id}
+              id={data.id}
+              orgImage={data.banner}
+              title={data.name}
+              about={data.about}
+              variant="horizontal"
+              onClick={handleClick}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };
