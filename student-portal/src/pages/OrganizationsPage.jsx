@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import OrgCards from "@/components/home/OrgCards";
+import OrgCards from "@/components/organization/OrgCards";
 import { useAuth } from "@/context/AuthContext";
 import apiClient from "@/api/axios";
 import OrgCardSkeleton from "@/components/skeleton/OrgCardSkeleton";

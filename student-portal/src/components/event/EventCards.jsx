@@ -16,7 +16,7 @@ const EventCards = ({ title, description, location, date }) => {
       </CardHeader>
       <CardContent className="px-4 pb-4">
         <CardDescription className="mb-2 text-pretty">
-          {description}
+          {description ? description : "No description."}
         </CardDescription>
         <p className="text-sm">
           <Calendar size={13} strokeWidth={2} className=" inline mr-1" /> {date}

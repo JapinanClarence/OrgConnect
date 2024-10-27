@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
-import OrgCards from "@/components/home/OrgCards";
-import EventCards from "@/components/home/EventCards";
+import OrgCards from "@/components/organization/OrgCards";
+import EventCards from "@/components/event/EventCards";
 import { useAuth } from "@/context/AuthContext";
 import apiClient from "@/api/axios";
 import { timeOnly, shortMonth } from "@/util/helpers";

@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from "react";
-import EventCards from "@/components/home/EventCards";
 import { useAuth } from "@/context/AuthContext";
 import apiClient from "@/api/axios";
-import { timeOnly, shortMonth } from "@/util/helpers";
-import EventSkeleton from "@/components/skeleton/EventSkeleton";
-import PageHead from "@/components/nav/PageHead";
 import Header from "@/components/nav/Header";
 import Calendar from "@/components/event/Calendar";
 
