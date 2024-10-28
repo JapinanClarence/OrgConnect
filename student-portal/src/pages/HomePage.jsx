@@ -5,13 +5,12 @@ import OrgCards from "@/components/organization/OrgCards";
 import EventCards from "@/components/event/EventCards";
 import { useAuth } from "@/context/AuthContext";
 import apiClient from "@/api/axios";
-import { timeOnly, shortMonth } from "@/util/helpers";
 import OrgCardSkeleton from "@/components/skeleton/OrgCardSkeleton";
 import EventSkeleton from "@/components/skeleton/EventSkeleton";
 import { Link, useNavigate } from "react-router-dom";
 import Header from "@/components/nav/Header";
-import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
+
 const HomePage = () => {
   const { token, userData } = useAuth();
   const [orgData, setOrgData] = useState([]);
@@ -47,20 +46,8 @@ const HomePage = () => {
         setEventData([]);
       } else {
         const event = data.data;
-        const cleanedData = event.map((data) => {
-          const date = preProcessDate(data.startDate, data.endDate);
-          return {
-            id: data._id,
-            title: data.title,
-            description:
-              data.description.length > 100
-                ? `${data.description.slice(0, 100)}...`
-                : data.description,
-            location: data.location,
-            date,
-          };
-        });
-        setEventData(cleanedData.slice(0, 10));
+
+        setEventData(event.slice(0, 10));
       }
     } catch (error) {
       console.log(error);
@@ -75,30 +62,10 @@ const HomePage = () => {
     fetchData();
   }, [token]);
 
-  const preProcessDate = (startDate, endDate) => {
-    const sDate = new Date(startDate);
-    const eDate = new Date(endDate);
-    const s = sDate.toLocaleString("en-US", {
-      year: "numeric", // Full year
-      month: "2-digit", // 2-digit month (MM)
-      day: "2-digit", // Day of the month with leading zero (DD)
-    });
-    const e = eDate.toLocaleString("en-US", {
-      year: "numeric", // Full year
-      month: "2-digit", // 2-digit month (MM)
-      day: "2-digit", // Day of the month with leading zero (DD)
-    });
-
-    if (s !== e) {
-      return `${sDate} - ${eDate}`;
-    } else {
-      return `${shortMonth(startDate)} - ${timeOnly(endDate)}`;
-    }
-  };
-
   const handleClick = async (data) => {
     navigate(`/organization/${data}`);
   };
+
   return (
     <div className="pt-16">
       <Header />
@@ -173,11 +140,14 @@ const HomePage = () => {
           ) : (
             eventData.map((data) => (
               <EventCards
-                key={data.id}
+                key={data._id}
                 title={data.title}
                 description={data.description}
                 date={data.date}
+                startDate={data.startDate}
+                endDate={data.endDate}
                 location={data.location}
+                postedBy={data.organization.name}
               />
             ))
           )}

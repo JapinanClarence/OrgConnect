@@ -21,7 +21,7 @@ const AnnouncementDialog = ({
 }) => {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="bg-white p-6 max-w-[320px] rounded-lg">
+      <DialogContent className="bg-white p-5 max-w-[340px] rounded-lg">
         <DialogHeader className="text-start pb-2 border-b-[1px] border-zinc-300">
           {/* <h1 className="text-sm font-bold">Title</h1> */}
           <DialogTitle className="">{title}</DialogTitle>
@@ -39,8 +39,8 @@ const AnnouncementDialog = ({
         <div className="p-0 space-y-2 ">
           <div>
             <h1 className="text-sm font-bold">Description</h1>
-            <DialogDescription className="mt-2">
-              {description}
+            <DialogDescription className="mt-2 ">
+              {description ? description : "No description."}
             </DialogDescription>
           </div>
         </div>

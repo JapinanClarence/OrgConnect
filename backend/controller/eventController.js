@@ -20,7 +20,7 @@ export const getAllEvents = async (req, res) => {
       membership.map(async (data) => {
         const eventList = await Events.find({
           organization: data.organization,
-        });
+        }).populate("organization", "name");
         return eventList; // Return the list of events for each organization
       })
     );
@@ -60,7 +60,7 @@ export const getEvents = async (req, res) =>{
       });
     }
    
-    const events = await Events.find({organization});
+    const events = await Events.find({organization}).populate("organization", "name");
 
     if (events.length <= 0) {
       return res.status(200).json({

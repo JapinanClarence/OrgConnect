@@ -18,7 +18,14 @@ const categoryMap = {
   4: { name: "Alerts", color: "bg-red-500" },
 };
 
-const AnnouncementCard = ({ id, title, description, category, datePosted, postedBy }) => {
+const AnnouncementCard = ({
+  id,
+  title,
+  description,
+  category,
+  datePosted,
+  postedBy,
+}) => {
   const [showDialog, setShowDialog] = useState(false);
   const categoryMap = {
     0: { name: "General Info", color: "bg-blue-500" },
@@ -59,9 +66,11 @@ const AnnouncementCard = ({ id, title, description, category, datePosted, posted
             )}
           </CardTitle>
           <CardDescription className="text-pretty md:text-wrap overflow-hidden whitespace-nowrap text-ellipsis max-w-full">
-            {description.length > 50
-              ? `${description.slice(0, 100)}...`
-              : description}
+            {description
+              ? description.length > 50
+                ? `${description.slice(0, 100)}...`
+                : description
+              : "No description."}
           </CardDescription>
           <CardFooter className="inline md:hidden p-0">
             {badgeCategory && (
