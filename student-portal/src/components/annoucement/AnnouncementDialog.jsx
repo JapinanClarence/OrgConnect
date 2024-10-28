@@ -21,7 +21,7 @@ const AnnouncementDialog = ({
 }) => {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="bg-white p-8 max-w-[320px] rounded-lg">
+      <DialogContent className="bg-white p-8 max-w-[350px] rounded-lg">
         <DialogHeader className="text-start pb-2 border-b-[1px] border-zinc-300">
           {/* <h1 className="text-sm font-bold">Title</h1> */}
           <DialogTitle className="">{title}</DialogTitle>
