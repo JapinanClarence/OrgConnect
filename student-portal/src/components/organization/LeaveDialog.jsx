@@ -14,7 +14,7 @@ import {
 const LeaveDialog = ({ open, onOpenChange, onConfirm, isSubmitting }) => {
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
-      <AlertDialogContent className="w-[350px] rounded-lg">
+      <AlertDialogContent className="w-[320px] rounded-lg">
         <AlertDialogHeader>
           <AlertDialogTitle>Leave group?</AlertDialogTitle>
           <AlertDialogDescription>
