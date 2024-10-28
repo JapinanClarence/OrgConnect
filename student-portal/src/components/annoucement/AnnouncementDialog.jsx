@@ -36,7 +36,7 @@ const AnnouncementDialog = ({
             </div>
           </div>
         </DialogHeader>
-        <div className="p-0 space-y-2 pb-2 border-b-[1px] border-zinc-300">
+        <div className="p-0 space-y-2 ">
           <div>
             <h1 className="text-sm font-bold">Description</h1>
             <DialogDescription className="mt-2">
