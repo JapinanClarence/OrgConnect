@@ -19,6 +19,7 @@ const OrganizationDetailsPage = () => {
   const navigate = useNavigate();
   const [openDrawer, setOpenDrawer] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const params = useParams();
   const [orgData, setOrgData] = useState("");
   const { token } = useAuth();
@@ -59,6 +60,7 @@ const OrganizationDetailsPage = () => {
 
   const onLeave = async () => {
     try {
+      setIsSubmitting(true);
       const { data } = await apiClient.delete(`/user/organization/${orgData._id}`, {
         headers: {
           Authorization: token,
@@ -70,6 +72,7 @@ const OrganizationDetailsPage = () => {
           description: `${date}`,
         });
         navigate(-1);
+        setIsSubmitting(false);
       }
     } catch (error) {
       console.log(error);
@@ -123,6 +126,7 @@ const OrganizationDetailsPage = () => {
         open={showAlert}
         onOpenChange={setShowAlert}
         onConfirm={onLeave}
+        isSubmitting={isSubmitting}
       />
     </div>
   );

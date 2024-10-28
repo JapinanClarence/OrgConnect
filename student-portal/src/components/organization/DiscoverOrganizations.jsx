@@ -128,9 +128,9 @@ const DiscoverOrganizations = () => {
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
-            <Button onClick={handleJoin}>
+            <Button onClick={handleJoin} disabled={isSubmitting}>
               {isSubmitting ? (
-                <LoaderCircle className="animate-spin" />
+                <LoaderCircle className="animate-spin w-4 h-4" />
               ) : (
                 "Join"
               )}

@@ -1,15 +1,5 @@
 import React from "react";
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer";
-import { Button } from "@/components/ui/button";
+import { LoaderCircle } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogHeader,
@@ -21,7 +11,7 @@ import {
   AlertDialogAction,
 } from "@/components/ui/alert-dialog";
 
-const LeaveDialog = ({ open, onOpenChange, onConfirm }) => {
+const LeaveDialog = ({ open, onOpenChange, onConfirm, isSubmitting }) => {
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
       <AlertDialogContent className="w-[350px] rounded-lg">
@@ -33,7 +23,11 @@ const LeaveDialog = ({ open, onOpenChange, onConfirm }) => {
         </AlertDialogHeader>
         <AlertDialogFooter >
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={onConfirm}>Leave</AlertDialogAction>
+          <AlertDialogAction disabled={isSubmitting} onClick={onConfirm}>{isSubmitting ? (
+                <LoaderCircle className="animate-spin h-4 w-4" />
+              ) : (
+                "Leave"
+              )}</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
