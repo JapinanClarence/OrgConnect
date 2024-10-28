@@ -18,7 +18,7 @@ export const getOfficers = async (req, res) => {
     }
 
     const officers = await Membership.find({
-      role: { $ne: "member" },
+      position: { $ne: "member" },
     }).populate("student");
 
     if (officers.length <= 0) {

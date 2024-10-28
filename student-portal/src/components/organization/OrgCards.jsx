@@ -11,10 +11,10 @@ const OrgCards = ({ orgImage, title, about, variant, onClick, id }) => {
  
   const isHorizontal = variant === "horizontal";
   return (
-    <Card className={`overflow-hidden ${isHorizontal ? 'flex' : 'min-w-[250px] w-[250px]  scroll-ml-5 snap-center' }`} onClick={() => onClick(id)}>
+    <Card className={`overflow-hidden ${isHorizontal ? 'flex min-h-[150px]' : 'min-w-[250px] max-w-[250px] scroll-ml-5 snap-center' }`} onClick={() => onClick(id)}>
       <CardHeader className="p-0 ">
         {orgImage ? (
-          <img src="sample.jpg" className={`${isHorizontal ? 'h-full w-32' : 'h-32'} object-cover`}alt="" />
+          <img src={orgImage} className={`${isHorizontal ? 'h-full w-32' : 'h-32'} object-cover`}alt="" />
         ) : (
           <div className={`${isHorizontal ? 'h-full w-32' : 'h-32'} bg-slate-200`}></div>
         )}
@@ -22,7 +22,7 @@ const OrgCards = ({ orgImage, title, about, variant, onClick, id }) => {
       <CardContent className="p-4">
         <CardTitle className="text-lg">{title} </CardTitle>
         <CardDescription className="text-pretty">
-         {about.length > 100 ? `${about.slice(0, 100)}...` : about.length}
+         {about.length > 100 ? `${about.slice(0, 100)}...` : about}
         </CardDescription>
       </CardContent>
     </Card>

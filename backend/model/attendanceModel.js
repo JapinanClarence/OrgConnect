@@ -4,7 +4,7 @@ const attendanceSchema = new mongoose.Schema(
   {
     student: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Student", // Reference to the Student model
+      ref: "User", // Reference to the user model
       required: true,
     },
     event: {
