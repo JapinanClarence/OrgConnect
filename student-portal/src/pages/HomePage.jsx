@@ -131,17 +131,21 @@ const HomePage = () => {
         </Link>
       </div>
       {loading ? (
-        <div className="flex overflow-x-auto snap-x snap-mandatory gap-5 pb-2 mx-5">
+        <div className="flex overflow-x-auto snap-x snap-mandatory gap-5 px-5 scrollbar-hidden">
           <OrgCardSkeleton items={2} />
         </div>
       ) : orgData <= 0 ? (
         <div className="mx-5 h-[200px] border bg-slate-200 shadow-sm  border-zinc-300 rounded-lg flex items-center justify-center">
-          <Button variant="link" className="text-muted-foreground text-md" size="lg">
+          <Button
+            variant="link"
+            className="text-muted-foreground text-md"
+            size="lg"
+          >
             Click see more to discover
           </Button>
         </div>
       ) : (
-        <div className="flex overflow-x-auto snap-x snap-mandatory gap-5 pb-2 mx-5">
+        <div className="flex overflow-x-auto snap-x snap-mandatory gap-5  px-5 scrollbar-hidden">
           {orgData.map((data) => (
             <OrgCards
               key={data.id}
@@ -154,7 +158,7 @@ const HomePage = () => {
           ))}
         </div>
       )}
-      <div className="border-b my-5 mx-5"></div>
+      <div className="border-b my-6 mx-5"></div>
       <div className="mx-5 pb-20">
         <div className="sticky top-[3.6rem] bg-slate-50 pb-2 flex justify-start z-10">
           <h1 className="font-semibold ">Recent Events</h1>
