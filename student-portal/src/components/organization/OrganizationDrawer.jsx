@@ -69,7 +69,7 @@ const OrganizationDrawer = ({ open, onOpenChange, id, onLeave }) => {
           </div>
           <div
             className="flex items-center gap-4 px-5 py-2 hover:bg-slate-200 "
-            onClick={onLeave}
+            onClick={() => onLeave(id)}
           >
             <div className="rounded-full bg-zinc-300 p-3">
               <DoorOpen className="size-5" />

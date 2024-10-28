@@ -130,3 +130,30 @@ export const findOrg = async (req, res, next) => {
     });
   }
 };
+export const leaveOrg = async (req, res) => {
+  const organization = req.params.id;
+  const student = req.user.userId;
+
+  try {
+    const membership = await Membership.findOneAndDelete({
+      student,
+      organization,
+    });
+
+    if (!membership) {
+      return res.status(200).json({
+        success: false,
+        message: "Organization not found",
+      });
+    }
+    res.status(200).json({
+      success: true,
+      message: "Leave successful",
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
+};

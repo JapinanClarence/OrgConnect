@@ -3,6 +3,7 @@ import {
   findOrg,
   getOrg,
   joinOrg,
+  leaveOrg,
   studentOrgs,
 } from "../controller/organizationController.js";
 import { authorizeRole, authenticate } from "../middleware/authMiddleware.js";
@@ -44,5 +45,6 @@ router.post(
   validate,
   joinOrg
 );
+router.delete("/organization/:id", authenticate, authorizeRole("student"), leaveOrg);
 
 export default router;

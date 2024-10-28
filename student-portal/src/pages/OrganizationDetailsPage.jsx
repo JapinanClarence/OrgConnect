@@ -11,6 +11,9 @@ import { Skeleton } from "@/components/ui/skeleton";
 import AboutCard from "@/components/organization/AboutCard";
 import AboutSkeleton from "@/components/skeleton/AboutSkeleton";
 import OrgHeader from "@/components/organization/OrgHeader";
+import { useToast } from "@/hooks/use-toast";
+import { formatDate } from "@/util/helpers";
+
 const OrganizationDetailsPage = () => {
   const navigate = useNavigate();
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -18,6 +21,8 @@ const OrganizationDetailsPage = () => {
   const params = useParams();
   const [orgData, setOrgData] = useState("");
   const { token } = useAuth();
+  const { toast } = useToast();
+  const date = formatDate(Date.now());
   const handleClick = () => {
     navigate(-1);
   };
@@ -29,10 +34,12 @@ const OrganizationDetailsPage = () => {
           Authorization: token,
         },
       });
-      if (data) {
+      if (!data.success) {
+        setOrgData([]);
+      } else {
         setOrgData(data.data);
-        setLoading(false);
       }
+      setLoading(false);
     } catch (error) {
       console.log(error);
       setLoading(false);
@@ -42,11 +49,36 @@ const OrganizationDetailsPage = () => {
   useEffect(() => {
     fetchData();
   }, []);
+
+  const handleLeave = async (orgId) => {
+    try {
+      const { data } = await apiClient.delete(`/user/organization/${orgId}`, {
+        headers: {
+          Authorization: token,
+        },
+      });
+      if (data.success) {
+        toast({
+          title: "You have left the organization",
+          description: `${date}`,
+        });
+        navigate(-1);
+      }
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
+  };
   return (
     <div className="">
       <header className="fixed top-0 left-0 w-full z-10 ">
         <div className="px-3 py-2 bg-slate-50 shadow-sm border-b  flex items-center justify-between">
-          <Button variant="ghost" size="icon" className="" onClick={handleClick}>
+          <Button
+            variant="ghost"
+            size="icon"
+            className=""
+            onClick={handleClick}
+          >
             <ChevronLeft />
           </Button>
 
@@ -77,6 +109,7 @@ const OrganizationDetailsPage = () => {
       <OrganizationDrawer
         open={openDrawer}
         onOpenChange={setOpenDrawer}
+        onLeave={handleLeave}
         id={orgData._id}
       />
     </div>

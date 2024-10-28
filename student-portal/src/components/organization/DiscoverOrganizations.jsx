@@ -81,6 +81,7 @@ const DiscoverOrganizations = () => {
           description: `${date}`,
         });
         setJoinDialog(false)
+        fetchAllOrgs();
       }
     } catch (error) {
       console.log(error);
