@@ -18,7 +18,7 @@ const ProfileDrawer = ({ open, onOpenChange, onConfirm }) => {
       <DrawerContent>
         <DrawerHeader>
           <DrawerTitle>Log out?</DrawerTitle>
-          <DrawerDescription> Are you sure you want to logout.</DrawerDescription>
+          <DrawerDescription> Are you sure you want to logout?</DrawerDescription>
         </DrawerHeader>
         <DrawerFooter >
           <Button onClick={onConfirm}>Log out</Button>

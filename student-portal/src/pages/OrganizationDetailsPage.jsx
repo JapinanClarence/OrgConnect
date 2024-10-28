@@ -13,6 +13,7 @@ import AboutSkeleton from "@/components/skeleton/AboutSkeleton";
 import OrgHeader from "@/components/organization/OrgHeader";
 import { useToast } from "@/hooks/use-toast";
 import { formatDate } from "@/util/helpers";
+import LeaveDialog from "@/components/organization/LeaveDialog";
 
 const OrganizationDetailsPage = () => {
   const navigate = useNavigate();
@@ -23,6 +24,7 @@ const OrganizationDetailsPage = () => {
   const { token } = useAuth();
   const { toast } = useToast();
   const date = formatDate(Date.now());
+  const [showAlert, setShowAlert] = useState(false);
   const handleClick = () => {
     navigate(-1);
   };
@@ -50,9 +52,14 @@ const OrganizationDetailsPage = () => {
     fetchData();
   }, []);
 
-  const handleLeave = async (orgId) => {
+  const handleLeave = () => {
+    setShowAlert(true);
+    setOpenDrawer(false);
+  };
+
+  const onLeave = async () => {
     try {
-      const { data } = await apiClient.delete(`/user/organization/${orgId}`, {
+      const { data } = await apiClient.delete(`/user/organization/${orgData._id}`, {
         headers: {
           Authorization: token,
         },
@@ -111,6 +118,11 @@ const OrganizationDetailsPage = () => {
         onOpenChange={setOpenDrawer}
         onLeave={handleLeave}
         id={orgData._id}
+      />
+      <LeaveDialog
+        open={showAlert}
+        onOpenChange={setShowAlert}
+        onConfirm={onLeave}
       />
     </div>
   );
