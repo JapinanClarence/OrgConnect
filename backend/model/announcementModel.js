@@ -27,6 +27,7 @@ const announcementSchema = new mongoose.Schema({
     },
     organization:{
         type: mongoose.Schema.ObjectId,
+        ref: "Organization",
         required: [true, "Organization is required"]
     }
 }, { timestamps: true });

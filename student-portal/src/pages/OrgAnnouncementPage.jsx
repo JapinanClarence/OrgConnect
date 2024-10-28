@@ -112,6 +112,7 @@ const OrgAnnouncementPage = () => {
               description={announcement.description}
               category={announcement.category}
               datePosted={formatDate(announcement.createdAt)}
+              postedBy={announcement.organization.name}
             />
           ))}
           {visibleCount < filteredAnnouncements.length && (

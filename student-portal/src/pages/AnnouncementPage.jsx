@@ -22,7 +22,6 @@ const AnnouncementPage = () => {
   const [visibleCount, setVisibleCount] = useState(10);
   const [selectedCategory, setSelectedCategory] = useState("5");
   const [filteredAnnouncements, setFilteredAnnouncements] = useState([]);
-
   const fetchAnnouncements = async () => {
     try {
       const { data } = await apiClient.get("/user/announcement/", {
@@ -34,6 +33,7 @@ const AnnouncementPage = () => {
       if (!data.success) {
         setAnnouncementData([]);
       } else {
+
         setAnnouncementData(data.data);
       }
       setLoading(false);
@@ -107,6 +107,7 @@ const AnnouncementPage = () => {
               description={announcement.description}
               category={announcement.category}
               datePosted={formatDate(announcement.createdAt)}
+              postedBy={announcement.organization.name}
             />
           ))}
           {visibleCount < filteredAnnouncements.length && (

@@ -20,32 +20,32 @@ export const getAllAnnouncement = async (req, res) => {
       membership.map(async (data) => {
         const announcementList = await Announcements.find({
           organization: data.organization,
-        });
+        }).populate("organization", "name");
         return announcementList; //
       })
     );
 
     const flattenedAnnouncements = announcements.flat(); // Flatten the array if needed
-
+  
     if (announcements.length <= 0) {
       return res.status(200).json({
         success: false,
         message: "No announcement found",
       });
     }
-
+    console.log(flattenedAnnouncements)
     res.status(200).json({
       success: true,
       data: flattenedAnnouncements,
     });
   } catch (err) {
     return res.status(500).json({
-        success: false,
-        message: err.message,
-      });
+      success: false,
+      message: err.message,
+    });
   }
 };
-export const getAnnouncement = async (req,res) =>{
+export const getAnnouncement = async (req, res) => {
   const student = req.user.userId;
   const organization = req.params.id;
   try {
@@ -57,8 +57,10 @@ export const getAnnouncement = async (req,res) =>{
         message: "Organization not found",
       });
     }
-   
-    const announcements = await Announcements.find({organization});
+
+    const announcements = await Announcements.find({ organization }).populate(
+      "organization", "name"
+    );
 
     if (announcements.length <= 0) {
       return res.status(200).json({
@@ -66,7 +68,7 @@ export const getAnnouncement = async (req,res) =>{
         message: "No announcements found",
       });
     }
-
+   
     res.status(200).json({
       success: true,
       data: announcements,
@@ -77,4 +79,4 @@ export const getAnnouncement = async (req,res) =>{
       message: err.message,
     });
   }
-}
+};
