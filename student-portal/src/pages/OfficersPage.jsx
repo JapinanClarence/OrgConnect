@@ -22,10 +22,12 @@ const OfficersPage = () => {
           },
         }
       );
-      if (data) {
+      if (!data.success) {
+        setData([]);
+      } else {
         setData(data.data);
-        setLoading(false);
       }
+      setLoading(false);
     } catch (error) {
       console.log(error);
       setLoading(false);
@@ -36,20 +38,24 @@ const OfficersPage = () => {
     fetchData();
   }, []);
   return (
-    <div className="pt-16 pb-10">
+    <div className="pt-16 pb-10 h-full">
       <PageHead title={"Officers"} />
-      <div className="px-5">
-        {/* <h1 className="text-gray-900 text-2xl font-semibold text-center font-accent underline underline-offset-4">
-          Officers
-        </h1> */}
-        <div className="mt-5 flex flex-col gap-4 items-center">
-          {loading ? (
-            <OfficerCardSkeleton items={5}/>
-          ) : (
-            data &&
-            data.map((officerData) => <OfficerCard key={officerData.id} data={officerData} />)
-          )}
-        </div>
+      <div className="px-5 h-full">
+        {loading ? (
+          <div className="mt-5 flex flex-col gap-4 items-center">
+            <OfficerCardSkeleton items={5} />
+          </div>
+        ) : data.length <= 0 ? (
+          <div className="flex items-center justify-center h-1/2">
+            <p className="text-zinc-400">No officers found.</p>
+          </div>
+        ) : (
+          <div className="mt-5 flex flex-col gap-4 items-center">
+            {data.map((officerData) => (
+              <OfficerCard key={officerData.id} data={officerData} />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

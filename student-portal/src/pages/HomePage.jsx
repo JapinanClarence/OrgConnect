@@ -127,7 +127,7 @@ const HomePage = () => {
       <div className="flex justify-between mx-5">
         <h1 className="font-semibold mb-2 "> Your Organizations</h1>
         <Link to="/organization" className="text-muted-foreground">
-          See all
+          See More
         </Link>
       </div>
       {loading ? (
@@ -135,9 +135,9 @@ const HomePage = () => {
           <OrgCardSkeleton items={2} />
         </div>
       ) : orgData <= 0 ? (
-        <div className="w-full h-[200px] border bg-slate-200 shadow-sm  border-zinc-300 rounded-lg flex items-center justify-center">
-          <Button variant="link" className=" " size="sm">
-            <Plus /> Join Organizaton
+        <div className="mx-5 h-[200px] border bg-slate-200 shadow-sm  border-zinc-300 rounded-lg flex items-center justify-center">
+          <Button variant="link" className="text-muted-foreground text-md" size="lg">
+            Click see more to discover
           </Button>
         </div>
       ) : (

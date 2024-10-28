@@ -18,6 +18,7 @@ export const getOfficers = async (req, res) => {
     }
 
     const officers = await Membership.find({
+      organization,
       position: { $ne: "member" },
     }).populate("student");
 

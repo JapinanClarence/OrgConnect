@@ -10,11 +10,11 @@ const PageHead = ({ title }) => {
   };
   return (
     <header className="fixed top-0 left-0 w-full h-10 z-10 ">
-      <div className="px-3 py-2 bg-slate-50 shadow-sm border-b  flex items-center j">
+      <div className="px-3 py-2 bg-slate-50 shadow-sm border-b  flex gap-2 items-center ">
         <Button variant="ghost" size="icon" className="" onClick={handleClick}>
-          <ChevronLeft />
+          <ChevronLeft size={23}/>
         </Button>
-        <div className="flex-1 text-center font-medium ">
+        <div className="flex-1  font-medium ">
           <h1>{title}</h1>
         </div>
       </div>

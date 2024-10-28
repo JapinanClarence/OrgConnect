@@ -22,10 +22,12 @@ const PaymentPage = () => {
         }
       );
 
-      if (data) {
+      if (!data.success) {
+        setPaymentData([]);
+      } else {
         setPaymentData(data.data);
-        setLoading(false);
       }
+      setLoading(false);
     } catch (error) {
       console.log(error);
       setLoading(false);
@@ -37,9 +39,9 @@ const PaymentPage = () => {
   }, []);
   return (
     <div className="pt-16">
-      <PageHead title={"Payments"}/>
+      <PageHead title={"Payments"} />
       <div className="px-5">
-        <DataTable data={paymentData} loading={loading}/>
+        <DataTable data={paymentData} loading={loading} />
       </div>
     </div>
   );

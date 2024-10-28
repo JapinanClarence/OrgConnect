@@ -15,8 +15,8 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
-import { formatDate } from "@fullcalendar/core";
 import { LoaderCircle } from "lucide-react";
+import { formatDate } from "@/util/helpers";
 
 const DiscoverOrganizations = () => {
   const { token, userData } = useAuth();
@@ -56,6 +56,7 @@ const DiscoverOrganizations = () => {
 
   const handleClick = (data) => {
     setCurrentOrg(data);
+
     setJoinDialog(true);
   };
   const handleJoin = async () => {
@@ -76,9 +77,10 @@ const DiscoverOrganizations = () => {
       if (data.success) {
         setIsSubmitting(false);
         toast({
-          title: "Joined organization successfully!",
+          title: "Joined organization successfully. Please wait for approval.",
           description: `${date}`,
         });
+        setJoinDialog(false)
       }
     } catch (error) {
       console.log(error);
@@ -86,7 +88,6 @@ const DiscoverOrganizations = () => {
       toast({
         variant: "destructive",
         title: message,
-        description: `${date}`,
       });
       setIsSubmitting(false);
     }
@@ -106,8 +107,8 @@ const DiscoverOrganizations = () => {
           {orgData.map((data) => (
             <OrgCards
               variant={"horizontal"}
-              key={data.id}
-              id={data.id}
+              key={data._id}
+              id={data._id}
               orgImage={data.banner}
               title={data.name}
               about={data.about}

@@ -13,7 +13,7 @@ const OrganizationsPage = () => {
       <Tabs defaultValue="orgs" className="px-5">
         <TabsList className="grid grid-cols-2  bg-zinc-200 mb-3">
           <TabsTrigger value="orgs">Your organizations</TabsTrigger>
-          <TabsTrigger value="discover">Disover</TabsTrigger>
+          <TabsTrigger value="discover">Discover</TabsTrigger>
         </TabsList>
         <TabsContent value="orgs">
           <YourOrganizations />

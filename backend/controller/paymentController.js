@@ -19,6 +19,7 @@ export const getPayments = async (req, res) =>{
    
     const payments = await Payments.find({organization});
 
+
     if (payments.length <= 0) {
       return res.status(200).json({
         success: false,
