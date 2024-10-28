@@ -26,20 +26,8 @@ const EventsPage = () => {
 
       if (data) {
         const event = data.data;
-        const cleanedData = event.map((data) => {
-          const date = preProcessDate(data.startDate, data.endDate);
-          return {
-            id: data._id,
-            title: data.title,
-            description:
-              data.description.length > 100
-                ? `${data.description.slice(0, 100)}...`
-                : data.description,
-            location: data.location,
-            date,
-          };
-        });
-        setEventData(cleanedData);
+        
+        setEventData(event);
         setLoading(false);
       }
     } catch (error) {
@@ -51,27 +39,6 @@ const EventsPage = () => {
   useEffect(() => {
     fetchData();
   }, []);
-
-  const preProcessDate = (startDate, endDate) => {
-    const sDate = new Date(startDate);
-    const eDate = new Date(endDate);
-    const s = sDate.toLocaleString("en-US", {
-      year: "numeric", // Full year
-      month: "2-digit", // 2-digit month (MM)
-      day: "2-digit", // Day of the month with leading zero (DD)
-    });
-    const e = eDate.toLocaleString("en-US", {
-      year: "numeric", // Full year
-      month: "2-digit", // 2-digit month (MM)
-      day: "2-digit", // Day of the month with leading zero (DD)
-    });
-
-    if (s !== e) {
-      return `${sDate} - ${eDate}`;
-    } else {
-      return `${shortMonth(startDate)} - ${timeOnly(endDate)}`;
-    }
-  };
 
   return (
     <div className="pt-16">
@@ -87,11 +54,14 @@ const EventsPage = () => {
           ) : (
             eventData.map((data) => (
               <EventCards
-                key={data.id}
-                title={data.title}
-                description={data.description}
-                date={data.date}
-                location={data.location}
+              key={data._id}
+              title={data.title}
+              description={data.description}
+              date={data.date}
+              startDate={data.startDate}
+              endDate={data.endDate}
+              location={data.location}
+              postedBy={data.organization.name}
               />
             ))
           )}
