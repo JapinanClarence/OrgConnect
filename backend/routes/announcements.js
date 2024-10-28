@@ -1,7 +1,7 @@
 import express from "express";
 import { authorizeRole, authenticate } from "../middleware/authMiddleware.js";
 
-import { getAllAnnouncement } from "../controller/announcementController.js";
+import { getAllAnnouncement, getAnnouncement } from "../controller/announcementController.js";
 
 const router = express.Router();
 router.get(
@@ -10,6 +10,13 @@ router.get(
     authorizeRole("student"),
     getAllAnnouncement
   );
+  router.get(
+    "/organization/:id/announcements",
+    authenticate,
+    authorizeRole("student"),
+    getAnnouncement
+  );
+  
   
 
 export default router;

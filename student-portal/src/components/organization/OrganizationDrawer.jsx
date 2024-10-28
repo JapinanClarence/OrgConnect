@@ -43,12 +43,12 @@ const OrganizationDrawer = ({ open, onOpenChange, id, onLeave }) => {
             </div>
             <div> Events</div>
           </div>
-          {/* <div className="flex items-center gap-4 px-5 py-2 hover:bg-slate-200 ">
+          <div className="flex items-center gap-4 px-5 py-2 hover:bg-slate-200 " onClick={() => handleClick("announcements")}>
             <div className="rounded-full bg-zinc-300 p-3">
               <Newspaper className="size-5" />
             </div>
-            <div> Announcement</div>
-          </div> */}
+            <div> Announcements</div>
+          </div>
           <div
             className="flex items-center gap-4 px-5 py-2 hover:bg-slate-200 "
             onClick={() => handleClick("payments")}

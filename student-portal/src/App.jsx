@@ -18,6 +18,7 @@ import OrganizationDetailsPage from "./pages/OrganizationDetailsPage";
 import PaymentPage from "./pages/PaymentPage";
 import OfficersPage from "./pages/OfficersPage";
 import EventsPage from "./pages/EventsPage";
+import OrgAnnouncementPage from "./pages/OrgAnnouncementPage";
 
 function App() {
   const [isInstalled, setIsInstalled] = useState(false);
@@ -66,6 +67,10 @@ function App() {
               <Route
                 path="/organization/:id/events"
                 element={<EventsPage />}
+              />
+               <Route
+                path="/organization/:id/announcements"
+                element={<OrgAnnouncementPage />}
               />
             </Route>
           </Route>
