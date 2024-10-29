@@ -8,6 +8,7 @@ import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
 import AnnouncementPage from "./pages/AnnouncementPage";
 import MembersPage from "./pages/MembersPage";
+import PaymentPage from "./pages/PaymentPage";
 import SettingsPage from "./pages/SettingsPage";
 function App() {
 
@@ -25,7 +26,7 @@ function App() {
               <Route path="/settings" element={<SettingsPage/>}/>
             {/* <Route path="/events" element={<Eventpage />} /> */}
             <Route path="/announcements" element={<AnnouncementPage />} />
-            {/* <Route path="/payments" element={<PaymentPage />} /> */}
+            <Route path="/payments" element={<PaymentPage />} />
             {/* <Route path="/events/attendance" element={<AttendancePage />} /> */}
             {/* <Route path="/officers" element={<OfficersPage />} /> */}
             <Route path="/members" element={<MembersPage />} />
