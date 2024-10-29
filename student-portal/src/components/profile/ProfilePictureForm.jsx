@@ -16,6 +16,7 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
+import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription } from "@/components/ui/alert-dialog";
 import { useToast } from "@/hooks/use-toast";
 
 const ProfilePictureForm = ({ imgSrc }) => {
@@ -97,18 +98,18 @@ const ProfilePictureForm = ({ imgSrc }) => {
           </div>
         </div>
       </form>
-      <Dialog open={isSubmitting} onOpenChange={setIsSubmitting}>
-        <DialogContent className="max-w-[250px] rounded-lg">
-          <DialogHeader>
-            <DialogTitle>Image uploading</DialogTitle>
+      <AlertDialog open={isSubmitting} onOpenChange={setIsSubmitting}>
+        <AlertDialogContent className="max-w-[250px] rounded-lg">
+          <AlertDialogHeader>
+            <AlertDialogTitle>Image uploading</AlertDialogTitle>
 
-            <DialogDescription>Please wait...</DialogDescription>
+            <AlertDialogDescription>Please wait...</AlertDialogDescription>
             <div>
               <LoaderCircle className="animate-spin mx-auto size-5 text-muted-foreground" />
             </div>
-          </DialogHeader>
-        </DialogContent>
-      </Dialog>
+          </AlertDialogHeader>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
   );
 };

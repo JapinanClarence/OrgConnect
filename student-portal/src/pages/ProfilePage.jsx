@@ -77,7 +77,7 @@ const ProfilePage = () => {
   return (
     <div className="p-5">
       <div className="shadow-sm rounded-lg border bg-white p-4 flex gap-2 text-white">
-        <Avatar className="size-14 flex-shrink">
+        <Avatar className="size-14 flex-shrink overflow-clip">
           <AvatarImage src={userData.profilePicture} alt="user-profile" className="object-cover" />
           <AvatarFallback className="text-gray-500 font-bold bg-gray-300">
             {userData &&

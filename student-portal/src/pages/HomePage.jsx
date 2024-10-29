@@ -83,7 +83,7 @@ const HomePage = () => {
     <div className="pt-16">
       <Header />
       <div className="flex justify-start items-center gap-3 py-5 px-5">
-        <Avatar className="size-14">
+        <Avatar className="size-14 overflow-clip">
           <AvatarImage
             src={userData.profilePicture}
             alt="user profile"
