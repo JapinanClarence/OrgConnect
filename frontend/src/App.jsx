@@ -12,6 +12,7 @@ import PaymentPage from "./pages/PaymentPage";
 import SettingsPage from "./pages/SettingsPage";
 import OfficersPage from "./pages/OfficersPage";
 import EventPage from "./pages/EventPage";
+import AttendancePage from "./pages/AttendancePage";
 function App() {
 
   return (
@@ -29,7 +30,7 @@ function App() {
             <Route path="/events" element={<EventPage />} />
             <Route path="/announcements" element={<AnnouncementPage />} />
             <Route path="/payments" element={<PaymentPage />} />
-            {/* <Route path="/events/attendance" element={<AttendancePage />} /> */}
+            <Route path="/events/attendance" element={<AttendancePage />} />
             <Route path="/officers" element={<OfficersPage />} />
             <Route path="/members" element={<MembersPage />} />
             </Route>
