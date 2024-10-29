@@ -8,9 +8,8 @@ import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
 import AnnouncementPage from "./pages/AnnouncementPage";
 import MembersPage from "./pages/MembersPage";
-
+import SettingsPage from "./pages/SettingsPage";
 function App() {
-  const [count, setCount] = useState(0);
 
   return (
     <>
@@ -23,7 +22,7 @@ function App() {
           <Route element={<ProtectedRoutes />}>
             <Route element={<DashboardLayout />}>
               <Route index element={<HomePage />} />
-              {/* <Route path="/settings" element={<SettingsPage/>}/> */}
+              <Route path="/settings" element={<SettingsPage/>}/>
             {/* <Route path="/events" element={<Eventpage />} /> */}
             <Route path="/announcements" element={<AnnouncementPage />} />
             {/* <Route path="/payments" element={<PaymentPage />} /> */}
