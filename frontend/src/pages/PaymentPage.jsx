@@ -3,7 +3,7 @@ import { PaymentSchema } from "@/schema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import apiClient from "@/api/axios";
-import PaymentTable from "@/components/payment/paymenttable";
+import PaymentTable from "@/components/payment/PaymentTable";
 import AddPaymentDialog from "@/components/payment/AddPaymentDialog";
 import { useToast } from "@/hooks/use-toast";
 import { formatDate } from "@/util/helpers";
