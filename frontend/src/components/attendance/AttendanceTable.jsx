@@ -37,7 +37,7 @@ import {
   QrCodeIcon,
   Settings2,
 } from "lucide-react";
-import { columns } from "@/components/attendance/columns";
+import { columns } from "@/components/attendance/Columns";
 import TableSkeleton from "@/components/skeleton/TableSkeleton";
 
 const AttendeesTable = ({ data, loading }) => {
