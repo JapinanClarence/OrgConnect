@@ -4,7 +4,7 @@ import MainLayout from "./layout/MainLayout";
 import DashboardLayout from "./layout/DashboardLayout";
 import ProtectedRoutes from "./components/auth/ProtectedRoutes";
 import LoginPage from "./pages/LoginPage";
-
+import HomePage from "./pages/HomePage";
 function App() {
   const [count, setCount] = useState(0);
 
@@ -17,7 +17,7 @@ function App() {
           </Route>
           <Route element={<ProtectedRoutes />}>
             <Route element={<DashboardLayout />}>
-              {/* <Route index element={<Homepage />} /> */}
+              <Route index element={<HomePage />} />
               {/* <Route path="/settings" element={<SettingsPage/>}/>
             <Route path="/events" element={<Eventpage />} />
             <Route path="/announcements" element={<AnnouncementPage />} />
