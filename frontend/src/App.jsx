@@ -1,42 +1,35 @@
-import { Route, Routes } from "react-router-dom";
-import { Toaster } from "./components/ui/toaster";
-import DashboardLayout from "./layouts/DashboardLayout";
-import Mainlayout from "./layouts/Mainlayout";
-import Homepage from "./pages/Homepage";
-import Loginpage from "./pages/Loginpage";
-import ProtectedRoute from "./components/auth/ProtectedRoutes";
-import Eventpage from "./pages/Eventpage";
-import AnnouncementPage from "./pages/AnnouncementPage";
-import PaymentPage from "./pages/PaymentPage";
-import AttendancePage from "./pages/AttendancePage";
-import MembersPage from "./pages/MembersPage";
-import SettingsPage from "./pages/SettingsPage";
-import OfficersPage from "./pages/OfficersPage";
+import { useState } from 'react'
+import reactLogo from './assets/react.svg'
+import viteLogo from '/vite.svg'
+import './App.css'
 
-const App = () => {
+function App() {
+  const [count, setCount] = useState(0)
+
   return (
     <>
-      <Toaster />
-
-      <Routes>
-        <Route path="/" element={<Mainlayout />}>
-          <Route path="/login" element={<Loginpage />} />
-        </Route>
-        <Route element={<ProtectedRoute />}>
-          <Route element={<DashboardLayout />}>
-            <Route index element={<Homepage />} />
-            <Route path="/settings" element={<SettingsPage/>}/>
-            <Route path="/events" element={<Eventpage />} />
-            <Route path="/announcements" element={<AnnouncementPage />} />
-            <Route path="/payments" element={<PaymentPage />} />
-            <Route path="/events/attendance" element={<AttendancePage />} />
-            <Route path="/officers" element={<OfficersPage />} />
-            <Route path="/members" element={<MembersPage />} />
-          </Route>
-        </Route>
-      </Routes>
+      <div>
+        <a href="https://vite.dev" target="_blank">
+          <img src={viteLogo} className="logo" alt="Vite logo" />
+        </a>
+        <a href="https://react.dev" target="_blank">
+          <img src={reactLogo} className="logo react" alt="React logo" />
+        </a>
+      </div>
+      <h1>Vite + React</h1>
+      <div className="card">
+        <button onClick={() => setCount((count) => count + 1)}>
+          count is {count}
+        </button>
+        <p>
+          Edit <code>src/App.jsx</code> and save to test HMR
+        </p>
+      </div>
+      <p className="read-the-docs">
+        Click on the Vite and React logos to learn more
+      </p>
     </>
-  );
-};
+  )
+}
 
-export default App;
+export default App
