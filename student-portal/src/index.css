@@ -92,4 +92,11 @@
     height: 5px; /* Smaller height for horizontal scrollbar */
   ;
   }
+
+  .scrollbar-hidden {
+    scrollbar-width: none; /* Firefox */
+  }
+  .scrollbar-hidden::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
+  }
 }

@@ -57,7 +57,7 @@ const LoginForm = () => {
         navigate("/");
       }
     } catch (error) {
-      console.log(error.response);
+      console.log(error);
       const message = error.response.data.message;
       setErrorMessage(message);
       setIsSubmitting(false);
@@ -84,7 +84,7 @@ const LoginForm = () => {
                   Email
                 </FormLabel>
                 <FormControl>
-                  <Input {...field} type="text" placeholder={"Email or Username"}/>
+                  <Input {...field} type="text" placeholder={"Email or Username"} autoComplete="username"/>
                 </FormControl>
                 <FormMessage className="text-xs " />
               </FormItem>
@@ -100,19 +100,19 @@ const LoginForm = () => {
                 </FormLabel>
                 <FormControl>
                   <div className="relative w-full ">
-                    <Input {...field} type={showPass ? "text" : "password"} />
+                    <Input {...field} type={showPass ? "text" : "password"} autoComplete="current-password"/>
                     <Button
                       type="button"
                       size="icon"
                       variant="ghost"
-                      className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                      className="absolute right-0 top-0 h-full px-3 w-min hover:bg-transparent"
                       onClick={tooglePasswordVisibility}
                       aria-label={showPass ? "Hide Password" : "Show Password"}
                     >
                       {showPass ? (
-                        <Eye className="text-gray-500" />
+                        <Eye className="text-gray-500 size-4" />
                       ) : (
-                        <EyeOff className="text-gray-500" />
+                        <EyeOff className="text-gray-500 size-4" />
                       )}
                     </Button>
                   </div>
@@ -125,7 +125,8 @@ const LoginForm = () => {
         <div className="space-y-5 mt-12">
           <Button
             id="submit"
-            className="bg-gray-900 hover:bg-gray-800 text-md text-white rounded-md w-full"
+            size="default"
+            className="bg-gray-900 hover:bg-gray-800 text-white rounded-md w-full"
             disabled={isSubmitting}
           >
             {isSubmitting ? (
@@ -136,7 +137,7 @@ const LoginForm = () => {
           </Button>
           <div className="relative flex items-center">
             <div className="flex-grow border-b"></div>
-            <span className="text-center px-4 bg-white text-muted-foreground">
+            <span className="text-center px-4  text-muted-foreground">
               or
             </span>
             <div className="flex-grow border-b"></div>
@@ -144,7 +145,8 @@ const LoginForm = () => {
           <Button
             id="button"
             variant="outline"
-            className="text-md rounded-md w-full "
+            size="default"
+            className=" rounded-md w-full "
             onClick={() => {
               navigate("/signup")
             }}

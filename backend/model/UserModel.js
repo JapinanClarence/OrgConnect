@@ -73,7 +73,7 @@ const UserModel = mongoose.model("User", userSchema);
 //Student specific schema
 const StudentSchema = new mongoose.Schema({
   studentId: { type: String },
-  age: { type: String },
+  birthday: { type: Date },
   gender: {type: String},
   contactNumber: { type: String },
   course: { type: String },

@@ -17,6 +17,7 @@ export const register = async (req, res, next) => {
     lastname,
     middlename,
     course,
+    year,
     email,
     password,
   } = req.body;
@@ -45,6 +46,7 @@ export const register = async (req, res, next) => {
       course,
       username,
       email,
+      year,
       password,
     };
    

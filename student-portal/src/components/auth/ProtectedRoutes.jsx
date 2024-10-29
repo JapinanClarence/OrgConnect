@@ -11,7 +11,7 @@ const ProtectedRoute = () => {
   }
 
   // Render the child routes if authenticated, otherwise redirect to login
-  return isAuthenticated ? <Outlet /> : <Navigate to="/login" />;
+  return isAuthenticated ? <Outlet /> : <Navigate to="/welcome" />;
 };
 
 export default ProtectedRoute;

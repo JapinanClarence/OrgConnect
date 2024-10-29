@@ -14,8 +14,8 @@ export const getMembers = async (req, res) => {
       });
     }
 
-    const members = await Membership.find({ organization: organization._id});
-   
+    const members = await Membership.find({ organization: organization._id });
+
     if (members.length <= 0) {
       return res.status(200).json({
         success: false,
@@ -39,7 +39,7 @@ export const getMembers = async (req, res) => {
           year: data.year,
           course: data.course,
           profilePicture: data.profilePicture,
-          status : members.status,
+          status: members.status,
           joinedDate: members.joinedDate,
           position: members.position,
         };
@@ -58,15 +58,24 @@ export const getMembers = async (req, res) => {
   }
 };
 
-export const updateMember = async (req, res) =>{
+export const updateMember = async (req, res) => {
+  const userId = req.user.userId;
   try {
+    const organization = await Organization.findOne({ user: userId });
+
+    if (!organization) {
+      return res.status(404).json({
+        success: false,
+        message: "Organization not found",
+      });
+    }
     const studentId = req.params.id;
 
     const member = await Membership.findOneAndUpdate(
-      {student: studentId},
+      { student: studentId, organization: organization._id },
       {
         status: req.body.status,
-        joinedDate: Date.now()
+        joinedDate: Date.now(),
       }
     );
 
@@ -87,13 +96,25 @@ export const updateMember = async (req, res) =>{
       message: err.message,
     });
   }
-}
+};
 
-export const deleteMember = async (req, res) =>{
+export const deleteMember = async (req, res) => {
+  const userId = req.user.userId;
   try {
+    const organization = await Organization.findOne({ user: userId });
+
+    if (!organization) {
+      return res.status(404).json({
+        success: false,
+        message: "Organization not found",
+      });
+    }
     const memberId = req.params.id;
 
-    const member = await Membership.findOneAndDelete({student: memberId});
+    const member = await Membership.findOneAndDelete({
+      student: memberId,
+      organization: organization._id,
+    });
 
     if (!member) {
       return res.status(404).json({
@@ -112,4 +133,4 @@ export const deleteMember = async (req, res) =>{
       message: err.message,
     });
   }
-}
+};

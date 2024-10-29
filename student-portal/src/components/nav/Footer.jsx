@@ -30,34 +30,34 @@ const Footer = () => {
         </div>
         <div
           className={`mx-auto ${
-            isActive("/events") ? "text-gray-900" : "text-muted-foreground"
+            isActive("/calendar") ? "text-gray-900" : "text-muted-foreground"
           }`}
         >
-          <Link to={"/events"}>
+          <Link to={"/calendar"}>
             <Calendar className="mx-auto" />
             <span className="text-center block text-xs">Calendar</span>
           </Link>
         </div>
         <div
           className={`mx-auto ${
-            isActive("/my-qr") ? "text-gray-900" : "text-muted-foreground"
+            isActive("/qr") ? "text-gray-900" : "text-muted-foreground"
           }`}
         >
-          <Link to="/my-qr">
+          <Link to="/qr">
             <QrCode className="mx-auto " />
             <span className="text-center block text-xs">My QR</span>
           </Link>
         </div>
         <div
           className={`mx-auto ${
-            isActive("/notifications")
+            isActive("/announcements")
               ? "text-gray-900"
               : "text-muted-foreground"
           }`}
         >
-          <Link to={"/notifications"}>
-            <Bell className="mx-auto" />
-            <span className="text-center block text-xs">Notifications </span>
+          <Link to={"/announcements"}>
+            <Newspaper className="mx-auto" />
+            <span className="text-center block text-xs">Updates </span>
           </Link>
         </div>
         <div

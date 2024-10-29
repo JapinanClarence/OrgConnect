@@ -28,11 +28,12 @@ import {
 import { LoaderCircle } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-
+import { useAuth } from "@/context/AuthContext";
 const AddOrganizationDialog = ({ showDialog, onClose  }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
+  const {token} = useAuth();
   const form = useForm({
     resolver: zodResolver(OrgSchema),
     defaultValues: {
@@ -51,7 +52,7 @@ const AddOrganizationDialog = ({ showDialog, onClose  }) => {
 
       const response = await apiClient.post("/admin/organization", formData, {
         headers: {
-          Authorization: user.token,
+          Authorization: token,
         },
       });
 

@@ -33,6 +33,20 @@ export const formatSimpleDateTime = (dateString) => {
     hour12: true          // AM/PM format
   });
 };
+export const formatSimpleDate = (dateString) =>{
+  const date = new Date(dateString); // Parse the date string into a Date object
+  return date.toLocaleString("en-US", {
+    year: "numeric",      // Full year
+    month: "long",     // full month
+    day: "2-digit",       // Day of the month with leading zero (DD)
+  });
+}
+
+
+export const formatToDateInput = (date) => {
+  if (!date) return ""; // Handle the case when there's no date
+  return new Date(date).toISOString().split("T")[0]; // Formats the date to "yyyy-MM-dd"
+};
 export const dateOnly = (dateString) =>{
   const date = new Date(dateString); // Parse the date string into a Date object
   return date.toLocaleString("en-US", {

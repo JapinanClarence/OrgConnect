@@ -5,8 +5,7 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 const MainLayout = () => {
   return (
-    <div className="h-screen">
-      <Header />
+    <div className="h-screen bg-slate-50">
       <Outlet />
       <Footer/>
     </div>

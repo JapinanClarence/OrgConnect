@@ -1,4 +1,6 @@
 import { StudentModel as Student } from "../model/UserModel.js";
+import { getCloudinaryPublicId } from "../util/helper.js";
+import { v2 as cloudinary } from "cloudinary";
 
 export const findUser = async (req, res, next) => {
   //token user id
@@ -10,8 +12,10 @@ export const findUser = async (req, res, next) => {
       "firstname",
       "lastname",
       "middlename",
-      "age",
+      "birthday",
       "email",
+      "username",
+      "gender",
       "contactNumber",
       "course",
       "year",
@@ -40,19 +44,44 @@ export const findUser = async (req, res, next) => {
 export const updateUser = async (req, res, next) => {
   const userId = req.user.userId;
   //ensures that these fields are only updated
-  const { firstname, lastname, middlename, age, contactNumber, course } =
-    req.body;
+  const {
+    firstname,
+    lastname,
+    middlename,
+    email,
+    gender,
+    username,
+    birthday,
+    contactNumber,
+    course,
+    year,
+  } = req.body;
   try {
+    const student = await Student.findById(userId);
+
+    if (student.email !== email) {
+      const isExists = await Student.findOne({ email });
+      if (isExists) {
+        return res.status(400).json({
+          success: false,
+          message: "Email already taken!",
+        });
+      }
+    }
+
     //student data
     const studentData = {
-        firstname, 
-        lastname, 
-        middlename,
-        age, 
-        contactNumber,
-        course,
-        year
-    }
+      firstname,
+      lastname,
+      middlename,
+      birthday,
+      username,
+      gender,
+      email,
+      contactNumber,
+      course,
+      year,
+    };
     //update student info
     const user = await Student.findByIdAndUpdate(userId, studentData);
 
@@ -73,5 +102,45 @@ export const updateUser = async (req, res, next) => {
       success: false,
       message: error.message,
     });
+  }
+};
+
+export const uploadPicture = async (req, res) => {
+  const userId = req.user.userId;
+  
+  const profilePicture = req.file?.path;
+
+  try {
+    const student = await Student.findById(userId);
+
+  
+    // If the student has an existing profile picture in Cloudinary, delete it
+    if (student.profilePicture) {
+      const publicId = `orgconnect/${getCloudinaryPublicId(
+        student.profilePicture
+      )}`;
+
+      await cloudinary.uploader.destroy(publicId);
+      console.log("Old profile picture deleted from Cloudinary");
+    }
+
+
+    const user = await Student.findByIdAndUpdate(userId, {profilePicture});
+
+    //verify if user exists
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+    //send response message
+    res.status(200).json({
+      success: true,
+      message: "User updated successfully",
+      data: profilePicture
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
   }
 };
