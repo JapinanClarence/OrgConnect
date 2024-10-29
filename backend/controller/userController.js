@@ -1,4 +1,6 @@
 import { StudentModel as Student } from "../model/UserModel.js";
+import { getCloudinaryPublicId } from "../util/helper.js";
+import { v2 as cloudinary } from "cloudinary";
 
 export const findUser = async (req, res, next) => {
   //token user id
@@ -52,12 +54,11 @@ export const updateUser = async (req, res, next) => {
     birthday,
     contactNumber,
     course,
-    year
+    year,
   } = req.body;
   try {
     const student = await Student.findById(userId);
 
-    let studentEmail;
     if (student.email !== email) {
       const isExists = await Student.findOne({ email });
       if (isExists) {
@@ -101,5 +102,80 @@ export const updateUser = async (req, res, next) => {
       success: false,
       message: error.message,
     });
+  }
+};
+
+export const uploadPicture = async (req, res) => {
+  const userId = req.user.userId;
+  const {
+    firstname,
+    lastname,
+    middlename,
+    gender,
+    birthday,
+    email,
+    username,
+    contactNumber,
+    course,
+    year,
+  } = req.body;
+  const profilePicture = req.file?.path;
+
+  try {
+    const student = await Student.findById(userId);
+
+    if (student.email !== email) {
+      const isExists = await Student.findOne({ email });
+      if (isExists) {
+        return res.status(400).json({
+          success: false,
+          message: "Email already taken!",
+        });
+      }
+    }
+
+    
+    // If the student has an existing profile picture in Cloudinary, delete it
+    if (student.profilePicture) {
+      const publicId = `orgconnect/${getCloudinaryPublicId(
+        student.profilePicture
+      )}`;
+
+      await cloudinary.uploader.destroy(publicId);
+      console.log("Old profile picture deleted from Cloudinary");
+    }
+
+
+    //student data
+    const studentData = {
+      firstname: firstname || student.firstname,
+      lastname: lastname || student.lastname,
+      middlename: middlename || student.middlename,
+      birthday: birthday || student.birthday,
+      username: username || student.username,
+      gender: gender || student.gender,
+      email: email || student.email,
+      contactNumber: contactNumber || student.contactNumber,
+      course: course || student.course,
+      year: year || student.year,
+      profilePicture,
+    };
+
+    const user = await Student.findByIdAndUpdate(userId, studentData);
+
+    //verify if user exists
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+    //send response message
+    res.status(200).json({
+      success: true,
+      message: "User updated successfully",
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
   }
 };

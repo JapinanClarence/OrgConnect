@@ -70,6 +70,8 @@ app.use("/api/user/", eventRoutes);
 app.use("/api/user/", announcementRoutes);
 app.use("/api/user/", paymentRoutes);
 app.use("/api/user/", officerRoutes);
+
+
 // Handle 404 errors for undefined routes
 app.use((req, res, next) => {
   res.status(404).json({

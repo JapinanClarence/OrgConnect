@@ -73,6 +73,7 @@ const ProfilePage = () => {
   const fullname = `${userData.firstname} ${
     userData.middlename ? userData.middlename[0] + ". " : ""
   }${userData.lastname}`;
+  
   return (
     <div className="p-5">
       <div className="shadow-sm rounded-lg border bg-white p-4 flex gap-2 text-white">
