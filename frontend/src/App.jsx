@@ -11,7 +11,7 @@ import MembersPage from "./pages/MembersPage";
 import PaymentPage from "./pages/PaymentPage";
 import SettingsPage from "./pages/SettingsPage";
 import OfficersPage from "./pages/OfficersPage";
-
+import EventPage from "./pages/EventPage";
 function App() {
 
   return (
@@ -26,7 +26,7 @@ function App() {
             <Route element={<DashboardLayout />}>
               <Route index element={<HomePage />} />
               <Route path="/settings" element={<SettingsPage/>}/>
-            {/* <Route path="/events" element={<Eventpage />} /> */}
+            <Route path="/events" element={<EventPage />} />
             <Route path="/announcements" element={<AnnouncementPage />} />
             <Route path="/payments" element={<PaymentPage />} />
             {/* <Route path="/events/attendance" element={<AttendancePage />} /> */}
