@@ -125,7 +125,8 @@ const LoginForm = () => {
         <div className="space-y-5 mt-12">
           <Button
             id="submit"
-            className="bg-gray-900 hover:bg-gray-800 text-md text-white rounded-md w-full"
+            size="default"
+            className="bg-gray-900 hover:bg-gray-800 text-white rounded-md w-full"
             disabled={isSubmitting}
           >
             {isSubmitting ? (
@@ -144,7 +145,8 @@ const LoginForm = () => {
           <Button
             id="button"
             variant="outline"
-            className="text-md rounded-md w-full "
+            size="default"
+            className=" rounded-md w-full "
             onClick={() => {
               navigate("/signup")
             }}
