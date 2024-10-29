@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import Mainlayout from "./layouts/Mainlayout";
+import MainLayout from "./layout/MainLayout";
 import LoginPage from "./pages/LoginPage";
 
 function App() {
@@ -10,7 +10,7 @@ function App() {
     <>
       <Routes>
         <Route path="/">
-          <Route path="/" element={<Mainlayout />}>
+          <Route path="/" element={<MainLayout />}>
             <Route path="/login" element={<LoginPage />} />
           </Route>
         </Route>
