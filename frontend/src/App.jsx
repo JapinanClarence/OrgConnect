@@ -7,6 +7,7 @@ import ProtectedRoutes from "./components/auth/ProtectedRoutes";
 import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
 import AnnouncementPage from "./pages/AnnouncementPage";
+import MembersPage from "./pages/MembersPage";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -28,7 +29,7 @@ function App() {
             {/* <Route path="/payments" element={<PaymentPage />} /> */}
             {/* <Route path="/events/attendance" element={<AttendancePage />} /> */}
             {/* <Route path="/officers" element={<OfficersPage />} /> */}
-            {/* <Route path="/members" element={<MembersPage />} /> */}
+            <Route path="/members" element={<MembersPage />} />
             </Route>
           </Route>
         </Route>
