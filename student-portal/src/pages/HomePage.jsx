@@ -65,13 +65,13 @@ const HomePage = () => {
   const handleClick = async (data) => {
     navigate(`/organization/${data}`);
   };
-
+  console.log(userData)
   return (
     <div className="pt-16">
       <Header />
       <div className="flex justify-start items-center gap-3 py-5 px-5">
         <Avatar className="size-14">
-          <AvatarImage src={userData.profilePicture} alt="user profile" />
+          <AvatarImage src={userData.profilePicture} alt="user profile" className="object-cover"/>
           <AvatarFallback className="text-gray-500 font-bold bg-gray-200">
             {userData.firstname.charAt(0) + userData.lastname.charAt(0)}
           </AvatarFallback>

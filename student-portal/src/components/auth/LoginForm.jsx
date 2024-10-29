@@ -105,14 +105,14 @@ const LoginForm = () => {
                       type="button"
                       size="icon"
                       variant="ghost"
-                      className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                      className="absolute right-0 top-0 h-full px-3 w-min hover:bg-transparent"
                       onClick={tooglePasswordVisibility}
                       aria-label={showPass ? "Hide Password" : "Show Password"}
                     >
                       {showPass ? (
-                        <Eye className="text-gray-500" />
+                        <Eye className="text-gray-500 size-4" />
                       ) : (
-                        <EyeOff className="text-gray-500" />
+                        <EyeOff className="text-gray-500 size-4" />
                       )}
                     </Button>
                   </div>
