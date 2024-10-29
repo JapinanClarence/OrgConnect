@@ -12,7 +12,7 @@ import Header from "@/components/nav/Header";
 import { Button } from "@/components/ui/button";
 
 const HomePage = () => {
-  const { token, userData } = useAuth();
+  const { token, userData, setUserData } = useAuth();
   const [orgData, setOrgData] = useState([]);
   const [eventData, setEventData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -53,10 +53,23 @@ const HomePage = () => {
       console.log(error);
     }
   };
-
+  const fetchUserData = async () => {
+    try {
+      const { data } = await apiClient.get("/user/", {
+        headers: {
+          Authorization: token,
+        },
+      });
+      if (data.success) {
+        setUserData(data.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
     const fetchData = async () => {
-      await Promise.all([fetchStudentOrgs(), fetchEvents()]);
+      await Promise.all([fetchStudentOrgs(), fetchEvents(), fetchUserData()]);
       setLoading(false);
     };
     fetchData();
@@ -65,13 +78,17 @@ const HomePage = () => {
   const handleClick = async (data) => {
     navigate(`/organization/${data}`);
   };
-  console.log(userData)
+  
   return (
     <div className="pt-16">
       <Header />
       <div className="flex justify-start items-center gap-3 py-5 px-5">
         <Avatar className="size-14">
-          <AvatarImage src={userData.profilePicture} alt="user profile" className="object-cover"/>
+          <AvatarImage
+            src={userData.profilePicture}
+            alt="user profile"
+            className="object-cover"
+          />
           <AvatarFallback className="text-gray-500 font-bold bg-gray-200">
             {userData.firstname.charAt(0) + userData.lastname.charAt(0)}
           </AvatarFallback>
