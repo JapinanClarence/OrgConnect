@@ -77,7 +77,7 @@ const LoginForm = () => {
     <div
       className="w-full"
     >
-      <Card className="mx-auto border-none shadow-none  md:rounded-xl md:bg-white w-full md:max-w-lg md:shadow-md md:border md:border-gray-300">
+      <Card className="mx-auto border-none shadow-none  md:rounded-xl md:bg-white w-full md:max-w-lg md:shadow-md md:border md:border-gray-300 ">
         <CardHeader>
           <img
             src="OrgConnect-transparent.svg"
