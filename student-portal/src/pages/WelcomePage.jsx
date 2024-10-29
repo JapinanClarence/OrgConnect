@@ -71,7 +71,7 @@ const WelcomePage = () => {
             size="sm"
             onClick={handleInstallClick}
           >
-            <Download /> Install App
+            <Download className="size-4 mr-1"/> Install App
           </Button>
         </div>
       </div>

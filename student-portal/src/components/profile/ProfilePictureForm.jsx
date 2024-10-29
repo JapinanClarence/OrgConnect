@@ -7,15 +7,8 @@ import { fileSchema } from "@/schema";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import apiClient from "@/api/axios";
 import { useAuth } from "@/context/AuthContext";
-import { useForm } from "react-hook-form";
 import { formatToDateInput, formatDate } from "@/util/helpers";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-} from "@/components/ui/dialog";
+
 import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription } from "@/components/ui/alert-dialog";
 import { useToast } from "@/hooks/use-toast";
 
@@ -28,7 +21,7 @@ const ProfilePictureForm = ({ imgSrc }) => {
   const { toast } = useToast();
   const onImageChange = async (event) => {
     const file = event.target.files[0];
-
+    
     if (!file) return;
 
     try {
