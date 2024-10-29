@@ -43,6 +43,7 @@ const EditProfilePage = () => {
         year: data.data.year,
         course: data.data.course,
         contactNumber: data.data.contactNumber,
+        profilePicture: data.data.profilePicture
       };
 
       setUserData(formData);
@@ -54,6 +55,7 @@ const EditProfilePage = () => {
   };
 
   const onSubmit = async (data) => {
+
     try {
       setIsSubmitting(true);
 
@@ -78,6 +80,7 @@ const EditProfilePage = () => {
     }
   };
 
+
   return (
     <div className="pt-[2.8rem] h-screen p-5">
       <PageHead />
@@ -93,6 +96,7 @@ const EditProfilePage = () => {
             onSubmit={onSubmit}
             errorMessage={errorMessage}
             isSubmitting={isSubmitting}
+
           />
           </div>
         )

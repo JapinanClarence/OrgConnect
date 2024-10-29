@@ -35,6 +35,15 @@ export const SignupSchema = z.object({
     .string()
     .min(8, { message: "Password should be at least 8 characters" }),
 });
+// Define the file schema
+export const fileSchema = z
+  .instanceof(File)
+  .refine((file) => file?.size <= 5000000, {
+    message: "File size must be less than 5MB",
+  })
+  .refine((file) => ["image/jpeg", "image/png"].includes(file.type), {
+    message: "Only .jpg and .png formats are allowed",
+  });
 
 export const UserSchema = z.object({
   firstname: z.string().min(1, {
@@ -60,5 +69,6 @@ export const UserSchema = z.object({
   birthday: z.string().optional(),
   username: z.string().min(1, {
     message: "Username is required",
-  }),
+  })
 });
+

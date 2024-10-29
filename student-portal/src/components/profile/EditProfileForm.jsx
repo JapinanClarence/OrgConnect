@@ -26,8 +26,9 @@ import { UserSchema } from "@/schema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import ProfilePictureForm from "./ProfilePictureForm";
 
-const EditProfileForm = ({ userData, onSubmit, errorMessage, isSubmitting }) => {
+const EditProfileForm = ({ userData, onSubmit, errorMessage, isSubmitting, onUploadSuccess }) => {
   const form = useForm({
     resolver: zodResolver(UserSchema),
     defaultValues: userData || {}, // Set default values at initialization
@@ -48,18 +49,7 @@ const EditProfileForm = ({ userData, onSubmit, errorMessage, isSubmitting }) => 
         <p className="text-muted-foreground text-sm">Click save to submit.</p>
       </div>
       <div className="mt-3">
-        <div className="flex gap-3 mb-2">
-          <Avatar className="size-16">
-            <AvatarImage src={""} alt="User Profile" />
-            <AvatarFallback className="bg-gray-200 text-gray-400 font-bold">
-              <Camera />
-            </AvatarFallback>
-          </Avatar>
-          <div className="flex flex-col  gap-2 justify-center">
-            <Label htmlFor="picture text-sm">Profile Picture</Label>
-            <Input id="picture" type="file" className="p-1 h-min" />
-          </div>
-        </div>
+        <ProfilePictureForm imgSrc={userData.profilePicture} />
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             {errorMessage && (
