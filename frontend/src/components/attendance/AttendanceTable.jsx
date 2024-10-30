@@ -33,14 +33,17 @@ import { Input } from "@/components/ui/input";
 import {
   ChevronLeft,
   ChevronRight,
+  DoorClosed,
+  DoorOpen,
   LoaderCircle,
   QrCodeIcon,
   Settings2,
+  SquareX,
 } from "lucide-react";
 import { columns } from "@/components/attendance/Columns";
 import TableSkeleton from "@/components/skeleton/TableSkeleton";
 
-const AttendeesTable = ({ data, loading }) => {
+const AttendeesTable = ({ data, loading, showScanner, isShowing }) => {
   const [sorting, setSorting] = React.useState([]);
   const [columnFilters, setColumnFilters] = React.useState([]);
   const [columnVisibility, setColumnVisibility] = React.useState({});
@@ -92,20 +95,26 @@ const AttendeesTable = ({ data, loading }) => {
   };
   return (
     <>
-      <div className="md:flex items-center justify-between py-4">
+      <div className="lg:flex items-center justify-between mb-4">
         <Input
           placeholder="Filter attendees..."
           value={globalFilter ?? ""}
           onChange={(event) => setGlobalFilter(event.target.value)}
-          className="md:max-w-sm"
+          className="lg:max-w-sm"
         />
-        <div className="flex-wrap-reverse mt-2 space-y-2 md:space-y-0 md:mt-0 md:space-x-2 md:flex md:items-center">
-          <Button className="w-full md:w-fit">
-            <QrCodeIcon className="mr-2 size-5" /> Mark Attendance
+        <div className="flex-wrap-reverse mt-2 space-y-2 lg:space-y-0 lg:mt-0  lg:flex lg:items-center">
+          {isShowing ? (
+            <Button  className="w-full lg:w-fit" onClick={() => showScanner(false)}>
+            <SquareX className="mr-2 size-5" /> Close Scanner
           </Button>
+          ) : (
+            <Button className="w-full lg:w-fit" onClick={() => showScanner(true)}>
+              <QrCodeIcon className="mr-2 size-5" /> Mark Attendance
+            </Button>
+          )}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="w-full md:w-fit">
+              <Button variant="outline" className="w-full lg:w-fit ml-2">
                 <Settings2 className="mr-2 h-4 w-4" /> View
               </Button>
             </DropdownMenuTrigger>
@@ -158,7 +167,7 @@ const AttendeesTable = ({ data, loading }) => {
               //     <LoaderCircle className="animate-spin inline-flex items-center" />
               //   </TableCell>
               // </TableRow>
-              <TableSkeleton rowCount={5} cellCount={8}/>
+              <TableSkeleton rowCount={5} cellCount={8} />
             ) : table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow

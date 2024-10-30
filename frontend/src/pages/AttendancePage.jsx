@@ -3,20 +3,10 @@ import { useLocation } from "react-router-dom";
 import AttendanceTable from "@/components/attendance/AttendanceTable";
 import apiClient from "@/api/axios";
 import { formatSimpleDateTime, formatDate } from "@/util/helpers";
-import { Badge } from "@/components/ui/badge";
-import { Skeleton } from "@/components/ui/skeleton";
 import { useAuth } from "@/context/AuthContext";
-
-const statusMap = {
-  true: {
-    name: "Open",
-    color: "bg-green-600",
-  },
-  false: {
-    name: "Close",
-    color: "bg-red-500",
-  },
-};
+import EventInfo from "@/components/attendance/EventInfo";
+import QrScanner from "@/components/attendance/QrScanner";
+import { useToast } from "@/hooks/use-toast";
 const yearMap = {
   1: "1st Year",
   2: "2nd Year",
@@ -31,19 +21,15 @@ const AttendancePage = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentEvent, setCurrentEvent] = useState("");
-  const [badgeStatus, setBadgeStatus] = useState(null);
   const { token } = useAuth();
+  const [showScanner, setShowScanner] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const date = formatDate(Date.now());
+  const { toast } = useToast();
   useEffect(() => {
     fetchAttendees();
     fetchCurrentEvent();
   }, []);
-
-  useEffect(() => {
-    // Once currentEvent is fetched, check and set the badge status
-    if (currentEvent && typeof currentEvent.status === "boolean") {
-      setBadgeStatus(statusMap[currentEvent.status]);
-    }
-  }, [currentEvent]);
 
   const fetchCurrentEvent = async () => {
     try {
@@ -104,38 +90,54 @@ const AttendancePage = () => {
       setLoading(false);
     }
   };
-  return (
-    <div className="md:bg-[#fefefe] md:shadow-lg md:rounded-lg md:border md:border-gray-200 text-gray-900 px-6 py-5 flex flex-col relative">
-      {loading ? (
-        <div className="space-y-2 mb-3">
-          <Skeleton className={"w-[300px] h-4"} />
-          <Skeleton className={"w-[200px] h-4"} />
-          <Skeleton className={"w-[500px] h-4"} />
-          <Skeleton className={"w-[600px] h-4"} />
-          <Skeleton className={"w-[400px] h-4"} />
-        </div>
-      ) : (
-        <div className="leading-none mb-3">
-          <h1 className="font-bold text-2xl inline-flex items-center gap-1">
-            {currentEvent.title}{" "}
-            {badgeStatus && (
-              <Badge
-                className={`${badgeStatus.color} hover:${badgeStatus.color} text-xs`}
-              >
-                {badgeStatus.name}
-              </Badge>
-            )}
-          </h1>
-          <span className="text-xs font-normal block">{`${formatSimpleDateTime(
-            currentEvent.startDate
-          )} - ${formatSimpleDateTime(currentEvent.endDate)}`}</span>
-          <p className="mt-3 text-sm text-muted-foreground text-pretty">
-            {currentEvent.description}
-          </p>
-        </div>
-      )}
 
-      <AttendanceTable data={data} loading={loading} />
+  const markAttendance = async (data) => {
+    const formData = {
+      studentId: data[0].rawValue,
+      eventId: currentEvent.id,
+    };
+
+    try {
+      const { data } = await apiClient.post(`/attendance`, formData, {
+        headers: {
+          Authorization: token,
+        },
+      });
+
+      if (data.success) {
+        fetchAttendees();
+      }
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: error.response.data.message,
+        description: `${date}`,
+      });
+    }
+  };
+
+  return (
+    <div className="  text-gray-900 gap-3 md:grid grid-flow-col grid-cols-10  ">
+      <div className="col-span-4 max-h-min md:bg-[#fefefe] md:shadow-lg md:rounded-lg md:border md:border-gray-200 p-5">
+        <EventInfo
+          currentEvent={currentEvent}
+          loading={loading}
+          hideEvent={showScanner}
+        />
+        <QrScanner
+          open={showScanner}
+          onScan={markAttendance}
+          onError={(data) => setErrorMessage(data)}
+        />
+      </div>
+      <div className="col-span-6 md:bg-[#fefefe] md:shadow-lg md:rounded-lg md:border md:border-gray-200 p-5">
+        <AttendanceTable
+          data={data}
+          loading={loading}
+          showScanner={(data) => setShowScanner(data)}
+          isShowing={showScanner}
+        />
+      </div>
     </div>
   );
 };
