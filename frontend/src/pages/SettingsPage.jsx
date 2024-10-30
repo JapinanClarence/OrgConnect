@@ -27,25 +27,41 @@ const SettingsPage = () => {
   };
 
   useEffect(() => {
-    getOrganizationData();
+    if (userData.role == "1") {
+      getOrganizationData();
+    }
   }, []);
 
   return (
-    <div className="p-5 md:p-0 flex justify-center items-center">
-      <Tabs defaultValue="account" className="w-full">
-        <TabsList className="bg-gray-200 grid w-full md:w-min grid-cols-[1fr,1fr]">
-          <TabsTrigger value="account">Account</TabsTrigger>
-          <TabsTrigger value="organization">Organization</TabsTrigger>
-        </TabsList>
+    <>
+      <div className={`${userData.role == "1" ? "hidden" : ""}`}>
+        <AccountForm/>
+      </div>
+      <div
+        className={`${
+          userData.role == "0" ? "hidden" : "flex"
+        } p-5 md:p-0 justify-center items-center`}
+      >
+        <Tabs defaultValue="account" className="w-full">
+          <TabsList className="bg-gray-200 grid w-full md:w-min grid-cols-[1fr,1fr]">
+            <TabsTrigger value="account">Account</TabsTrigger>
+            <TabsTrigger value="organization">Organization</TabsTrigger>
+          </TabsList>
 
-        <TabsContent value="account">
-          <AccountForm />
-        </TabsContent>
-        <TabsContent value="organization">
-          {orgData && <OrganizationForm orgData={orgData} updateData={() => getOrganizationData()}/>}
-        </TabsContent>
-      </Tabs>
-    </div>
+          <TabsContent value="account">
+            <AccountForm />
+          </TabsContent>
+          <TabsContent value="organization">
+            {orgData && (
+              <OrganizationForm
+                orgData={orgData}
+                updateData={() => getOrganizationData()}
+              />
+            )}
+          </TabsContent>
+        </Tabs>
+      </div>
+    </>
   );
 };
 

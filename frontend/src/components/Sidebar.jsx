@@ -90,7 +90,9 @@ const DesktopSidebar = () => {
             <TooltipTrigger asChild>
               <Link
                 to="/events"
-                className={`rounded-lg size-full flex items-center justify-start p-2 ${
+                className={`${
+                  userData.role == "0" ? "hidden" : "flex"
+                } rounded-lg size-full  items-center justify-start p-2 ${
                   isActive("/events")
                     ? "bg-white text-zinc-900"
                     : "hover:bg-gray-800"
@@ -117,7 +119,9 @@ const DesktopSidebar = () => {
             <TooltipTrigger asChild>
               <Link
                 to="/announcements"
-                className={`rounded-lg size-full flex items-center justify-start p-2 ${
+                className={`${
+                  userData.role == "0" ? "hidden" : "flex"
+                } rounded-lg size-full items-center justify-start p-2 ${
                   isActive("/announcements")
                     ? "bg-white text-zinc-900"
                     : "hover:bg-gray-800"
@@ -144,7 +148,9 @@ const DesktopSidebar = () => {
             <TooltipTrigger asChild>
               <Link
                 to="/payments"
-                className={`rounded-lg size-full flex items-center justify-start p-2 ${
+                className={` ${
+                  userData.role == "0" ? "hidden" : "flex"
+                } rounded-lg size-full items-center justify-start p-2 ${
                   isActive("/payments")
                     ? "bg-white text-zinc-900"
                     : "hover:bg-gray-800"
@@ -170,7 +176,7 @@ const DesktopSidebar = () => {
             <TooltipTrigger asChild>
               <Link
                 to="/members"
-                className={`rounded-lg size-full flex items-center justify-start p-2 ${
+                className={`${userData.role == "0" ? "hidden" : "flex"}  rounded-lg size-full items-center justify-start p-2 ${
                   isActive("/members")
                     ? "bg-white text-zinc-900"
                     : "hover:bg-gray-800"
@@ -196,7 +202,7 @@ const DesktopSidebar = () => {
             <TooltipTrigger asChild>
               <Link
                 to="/officers"
-                className={`rounded-lg size-full flex items-center justify-start p-2 ${
+                className={`${userData.role == "0" ? "hidden" : "flex"} rounded-lg size-full items-center justify-start p-2 ${
                   isActive("/officers")
                     ? "bg-white text-zinc-900"
                     : "hover:bg-gray-800"
@@ -217,8 +223,6 @@ const DesktopSidebar = () => {
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
-
-
       </nav>
 
       <nav className="mt-auto grid gap-1 p-3 border-t-[1px] border-gray-500">
@@ -239,9 +243,7 @@ const DesktopSidebar = () => {
                     <DropdownMenuContent align="start" className="bg-white">
                       <DropdownMenuLabel>My Account</DropdownMenuLabel>
                       <DropdownMenuSeparator />
-                      <DropdownMenuItem
-                        onSelect={() => navigate("/settings")}
-                      >
+                      <DropdownMenuItem onSelect={() => navigate("/settings")}>
                         Settings
                       </DropdownMenuItem>
                       <DropdownMenuItem onSelect={handleLogout}>
@@ -294,7 +296,6 @@ const DesktopSidebar = () => {
           </Tooltip>
         </TooltipProvider>
       </nav>
-    
     </aside>
   );
 };

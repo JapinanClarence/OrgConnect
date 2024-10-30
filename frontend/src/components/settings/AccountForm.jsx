@@ -38,10 +38,6 @@ const AccountForm = () => {
   const date = formatDate(Date.now());
   const { toast } = useToast();
 
-  //   useEffect(() => {
-  //     fetchProfile();
-  //   }, []);
-
   const form = useForm({
     resolver: zodResolver(AdminSchema),
     defaultValues: userData || {}, // Set default values at initialization
@@ -59,16 +55,25 @@ const AccountForm = () => {
   const onSubmit = async (data) => {
     try {
       setIsSubmitting(true);
+  
+      const formData = {
+        firstname: data.firstname,
+        lastname:data.lastname,
+        middlename: data.middlename,
+        email: data.email,
+        username: data.username,
+        role:userData.role
+      }
 
-      const res = await apiClient.patch(`/admin/profile/`, data, {
+      const res = await apiClient.patch(`/admin/profile/`, formData, {
         headers: {
           Authorization: token,
         },
       });
 
       if (res) {
-        localStorage.setItem("userData", JSON.stringify(data));
-        setUserData(data);
+        localStorage.setItem("userData", JSON.stringify(formData));
+        setUserData(formData);
         setIsSubmitting(false);
         form.reset();
         toast({
@@ -101,7 +106,7 @@ const AccountForm = () => {
             </Avatar>
             <div className="grid w-full max-w-sm items-center gap-1.5">
               <Label htmlFor="picture text-sm">Profile Picture</Label>
-              <Input id="picture" type="file" className="p-1" />
+              <Input id="picture" type="file" className="" />
             </div>
           </div>
           <Form {...form}>

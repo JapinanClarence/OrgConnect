@@ -58,12 +58,12 @@ const LoginForm = () => {
       const formData = LoginSchema.parse(data);
 
       const response = await apiClient.post("/login", formData);
-   
+
       if (response.data.data.role == "2") {
         setErrorMessage("Invalid Credentials");
         setIsSubmitting(false);
       } else {
-        login(response.data.token, response.data.data );
+        login(response.data.token, response.data.data);
         navigate("/");
       }
     } catch (error) {
@@ -74,9 +74,7 @@ const LoginForm = () => {
     }
   };
   return (
-    <div
-      className="w-full"
-    >
+    <div className="w-full">
       <Card className="mx-auto border-none shadow-none  md:rounded-xl md:bg-white w-full md:max-w-lg md:shadow-md md:border md:border-gray-300 ">
         <CardHeader>
           <img
@@ -110,7 +108,7 @@ const LoginForm = () => {
                         Username
                       </FormLabel>
                       <FormControl>
-                        <Input {...field} type="text" />
+                        <Input {...field} type="text" autoComplete="username"/>
                       </FormControl>
                       <FormMessage className="text-xs " />
                     </FormItem>
@@ -129,21 +127,22 @@ const LoginForm = () => {
                           <Input
                             {...field}
                             type={showPass ? "text" : "password"}
+                            autoComplete="current-password"
                           />
                           <Button
                             type="button"
                             size="icon"
                             variant="ghost"
-                            className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                            className="absolute right-0 top-0 h-full w-min px-3 py-2 hover:bg-transparent"
                             onClick={tooglePasswordVisibility}
                             aria-label={
                               showPass ? "Hide Password" : "Show Password"
                             }
                           >
                             {showPass ? (
-                              <Eye className="text-gray-500" />
+                              <Eye className="text-gray-500 size-4" />
                             ) : (
-                              <EyeOff className="text-gray-500" />
+                              <EyeOff className="text-gray-500 size-4" />
                             )}
                           </Button>
                         </div>
@@ -156,7 +155,8 @@ const LoginForm = () => {
               <div>
                 <Button
                   id="submit"
-                  className="bg-gray-900 hover:bg-gray-800 text-md text-white rounded-md w-full"
+                  size="default"
+                  className="bg-gray-900 text-sm hover:bg-gray-800  text-white rounded-md w-full"
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? (
