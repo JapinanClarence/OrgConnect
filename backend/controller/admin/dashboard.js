@@ -54,9 +54,9 @@ export const getDashboardData = async (req, res) => {
       .select("title description location"); // Limit the result to the last 20 events
 
     const totalMembersCount = await Membership.countDocuments({
-      organization: organization._id,
+      organization: organization._id, status:"1"
     });
-    const members = await Membership.find({ organization: organization._id })
+    const members = await Membership.find({ organization: organization._id, status:"1" })
       .sort({ createdAt: -1 })
       .limit(20)
       .populate("student");
