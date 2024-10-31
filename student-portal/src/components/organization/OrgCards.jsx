@@ -14,7 +14,7 @@ const OrgCards = ({ orgImage, title, about, variant, onClick, id }) => {
     <Card className={`overflow-hidden ${isHorizontal ? 'flex min-h-[150px]' : 'min-w-[250px] max-w-[250px] scroll-ml-5 snap-center' }`} onClick={() => onClick(id)}>
       <CardHeader className="p-0 ">
         {orgImage ? (
-          <img src={orgImage} className={`${isHorizontal ? 'h-full w-32' : 'h-32'} object-cover`}alt="" />
+          <img src={orgImage} className={`${isHorizontal ? 'h-full w-32' : 'h-32'} object-cover`} alt="Org Image" />
         ) : (
           <div className={`${isHorizontal ? 'h-full w-32' : 'h-32'} bg-slate-200`}></div>
         )}
