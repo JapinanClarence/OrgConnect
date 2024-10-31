@@ -43,7 +43,7 @@ export const getUser = async (req, res, next) => {
     const role = "1";
 
     const user = await Admin.find({ role }).select(
-      "firstname lastname middlename username email role active"
+      "firstname lastname middlename username email role active profilePicture"
     );
 
     if (user.length <= 0) {
@@ -69,7 +69,7 @@ export const findUser = async (req, res, next) => {
   const userId = req.params.id;
   try {
     const user = await Admin.findById(userId).select(
-      "firstname lastname middlename username email role active"
+      "firstname lastname middlename username email role active profilePicture"
     );
 
     if (!user) {

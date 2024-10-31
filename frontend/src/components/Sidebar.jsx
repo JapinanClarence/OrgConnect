@@ -14,8 +14,6 @@ import {
   SquareTerminal,
   MoreVertical,
   Wallet,
-  User2,
-  UserCog,
   UserPlus,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -63,18 +61,22 @@ const DesktopSidebar = () => {
       </div>
 
       <nav className="grid gap-1 pt-2 px-4">
-        <TooltipProvider>
+      <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
                 to="/"
-                className={`rounded-lg size-full flex items-center justify-start p-2 ${
-                  isActive("/") ? "bg-white text-zinc-900" : "hover:bg-gray-800"
+                className={`${
+                  userData.role == "1" ? "hidden" : "flex"
+                } rounded-lg size-full  items-center justify-start p-2 ${
+                  isActive("/")
+                    ? "bg-white text-zinc-900"
+                    : "hover:bg-gray-800"
                 }`}
               >
-                <SquareTerminal />
+                <Home />
                 <span className="hidden lg:block ml-2 font-bold text-sm">
-                  Dashboard
+                  Home
                 </span>
               </Link>
             </TooltipTrigger>
@@ -83,7 +85,7 @@ const DesktopSidebar = () => {
               side="right"
               sideOffset={5}
             >
-              Dashboard
+              Home
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
@@ -111,7 +113,35 @@ const DesktopSidebar = () => {
               side="right"
               sideOffset={5}
             >
-              Calendar
+              Register User
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Link
+                to="/"
+                className={`${
+                  userData.role == "0" ? "hidden" : "flex"
+                } rounded-lg size-full  items-center justify-start p-2 ${
+                  isActive("/events")
+                    ? "bg-white text-zinc-900"
+                    : "hover:bg-gray-800"
+                }`}
+              >
+                <SquareTerminal />
+                <span className="hidden lg:block ml-2 font-bold text-sm">
+                  Dashboard
+                </span>
+              </Link>
+            </TooltipTrigger>
+            <TooltipContent
+              className="lg:hidden bg-white text-gray-900"
+              side="right"
+              sideOffset={5}
+            >
+              Dashboard
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
