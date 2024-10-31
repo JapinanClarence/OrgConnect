@@ -5,7 +5,12 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 const MainLayout = () => {
   return (
-    <div className="h-screen bg-slate-50">
+    <div className="h-screen bg-slate-50 md:hidden">
+      <div className="hidden md:absolute h-screen bg-slate-50 left-0 right-0 z-50 md:flex justify-center items-center">
+        <h1 className="text-muted-foreground">
+          Application is only available on mobile.
+        </h1>
+      </div>
       {/* <PageHead/> */}
       <Outlet />
     </div>
