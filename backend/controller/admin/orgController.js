@@ -1,5 +1,7 @@
 import Organization from "../../model/organizationModel.js";
 import { OrgAdminModel as Admin } from "../../model/UserModel.js";
+import { getCloudinaryPublicId } from "../../util/helper.js";
+import { v2 as cloudinary } from "cloudinary";
 
 export const createOrg = async (req, res, next) => {
   const { name, about, contact, type } = req.body;
@@ -108,3 +110,43 @@ export const findOrg = async (req, res, next) => {
     });
   }
 };
+export const uploadBanner = async (req, res) =>{
+  const userId = req.user.userId;
+
+  const banner = req.file?.path;
+ 
+  try {
+    const org = await Organization.findOne({ user: userId }).select(
+      "name description about contact banner"
+    );
+
+    // If the org has an existing profile picture in Cloudinary, delete it
+    if (org.banner) {
+      const publicId = `orgconnect/${getCloudinaryPublicId(
+        org.banner
+      )}`;
+
+      await cloudinary.uploader.destroy(publicId);
+      console.log("Old profile picture deleted from Cloudinary");
+    }
+
+    const isExists = await Organization.findByIdAndUpdate(org._id, { banner });
+
+    //verify if isExists exists
+    if (!isExists) {
+      return res.status(404).json({
+        success: false,
+        message: "Org not found",
+      });
+    }
+    //send response message
+    res.status(200).json({
+      success: true,
+      message: "Organization updated successfully",
+      data: banner,
+    });
+
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+}

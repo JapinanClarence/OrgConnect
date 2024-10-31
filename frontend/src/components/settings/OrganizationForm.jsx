@@ -26,15 +26,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useToast } from "@/hooks/use-toast";
 import { formatDate } from "@/util/helpers";
-
-const OrganizationForm = ({orgData, updateData}) => {
+import BannerForm from "@/components/settings/BannerForm";
+const OrganizationForm = ({ orgData, updateData }) => {
   const { token, userData } = useAuth();
   const [loading, setLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const date = formatDate(Date.now());
   const { toast } = useToast();
-  
+
   const form = useForm({
     resolver: zodResolver(OrgSchema),
     defaultValues: orgData || {}, // Set default values at initialization
@@ -79,6 +79,7 @@ const OrganizationForm = ({orgData, updateData}) => {
       </CardHeader>
       <CardContent className="space-y-2">
         <div>
+          <BannerForm imgSrc={orgData.banner} />
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               {errorMessage && (

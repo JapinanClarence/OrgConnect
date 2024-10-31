@@ -10,6 +10,7 @@ const SettingsPage = () => {
   const [orgData, setOrgData] = useState({});
   const { token, setUserData, userData } = useAuth();
   const [loading, setLoading] = useState(true);
+
   const getOrganizationData = async () => {
     try {
       const { data } = await apiClient.get("/admin/organization/", {
@@ -17,7 +18,6 @@ const SettingsPage = () => {
           Authorization: token,
         },
       });
-
       if (data.success) {
         setOrgData(data.data);
       }
@@ -66,7 +66,7 @@ const SettingsPage = () => {
       getOrganizationData();
     }
   }, [userData.role]);
-  
+
   return (
     <>
       {userData.role === "0" && <AccountForm />}

@@ -7,7 +7,8 @@ import {
   validate,
   organizationValidationRules,
 } from "../../middleware/validator.js";
-import { createOrg, findOrg, updateOrg } from "../../controller/admin/orgController.js";
+import { createOrg, findOrg, updateOrg, uploadBanner } from "../../controller/admin/orgController.js";
+import upload from "../../middleware/multerConfig.js";
 
 const router = express.Router();
 
@@ -34,4 +35,12 @@ router.patch("/organization",
   updateOrg
 )
 
+
+router.patch(
+  "/organization/uploadBanner",
+  upload.single("banner"),
+  authenticate,
+  authorizeRole("admin"),
+  uploadBanner
+);
 export default router;
