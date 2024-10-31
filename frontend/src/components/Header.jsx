@@ -82,8 +82,9 @@ const Header = () => {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Avatar className="cursor-pointer size-10">
+                <AvatarImage src={userData.profilePicture} />
                 <AvatarFallback className="text-gray-500 bg-gray-200">
-                  AD
+                  {userData.firstname[0] + userData.lastname[0]}
                 </AvatarFallback>
               </Avatar>
             </DropdownMenuTrigger>
