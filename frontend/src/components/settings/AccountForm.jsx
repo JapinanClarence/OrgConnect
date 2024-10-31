@@ -28,7 +28,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useToast } from "@/hooks/use-toast";
 import { formatDate } from "@/util/helpers";
-
+import ProfilePictureForm from "./ProfilePictureForm";
 
 const AccountForm = () => {
   const { token, userData, setUserData } = useAuth();
@@ -52,18 +52,19 @@ const AccountForm = () => {
     }
   }, [userData, reset]);
 
+ 
   const onSubmit = async (data) => {
     try {
       setIsSubmitting(true);
-  
+
       const formData = {
         firstname: data.firstname,
-        lastname:data.lastname,
+        lastname: data.lastname,
         middlename: data.middlename,
         email: data.email,
         username: data.username,
-        role:userData.role
-      }
+        role: userData.role,
+      };
 
       const res = await apiClient.patch(`/admin/profile/`, formData, {
         headers: {
@@ -97,18 +98,7 @@ const AccountForm = () => {
       </CardHeader>
       <CardContent className="space-y-2">
         <div className="mt-3">
-          <div className="flex gap-5 mb-5">
-            <Avatar className="size-16">
-              <AvatarImage src={""} alt="User Profile" />
-              <AvatarFallback className="bg-gray-200 text-gray-400 font-bold">
-                <Camera />
-              </AvatarFallback>
-            </Avatar>
-            <div className="grid w-full max-w-sm items-center gap-1.5">
-              <Label htmlFor="picture text-sm">Profile Picture</Label>
-              <Input id="picture" type="file" className="" />
-            </div>
-          </div>
+          <ProfilePictureForm imgSrc={userData.profilePicture} />
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               {errorMessage && (

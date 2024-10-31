@@ -108,3 +108,13 @@ export const PaymentSchema = z.object({
     message: "Amount is required",
   })),
 });
+
+// Define the file schema
+export const fileSchema = z
+  .instanceof(File)
+  .refine((file) => file?.size <= 5000000, {
+    message: "File size must be less than 5MB",
+  })
+  .refine((file) => ["image/jpeg", "image/png"].includes(file.type), {
+    message: "Only .jpg and .png formats are allowed",
+  });

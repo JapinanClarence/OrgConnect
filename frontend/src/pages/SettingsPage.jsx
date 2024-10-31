@@ -8,8 +8,8 @@ import { useAuth } from "@/context/AuthContext";
 
 const SettingsPage = () => {
   const [orgData, setOrgData] = useState({});
-  const { token, userData } = useAuth();
-
+  const { token, setUserData, userData } = useAuth();
+  const [loading, setLoading] = useState(true);
   const getOrganizationData = async () => {
     try {
       const { data } = await apiClient.get("/admin/organization/", {
@@ -26,41 +26,73 @@ const SettingsPage = () => {
     }
   };
 
+  const fetchUserData = async () => {
+    try {
+      const { data } = await apiClient.get("/admin/profile", {
+        headers: {
+          Authorization: token,
+        },
+      });
+      if (!data) {
+        return console.log(data);
+      } else {
+        const formData = {
+          _id: data.data._id,
+          firstname: data.data.firstname,
+          lastname: data.data.lastname,
+          middlename: data.data.middlename,
+          username: data.data.username,
+          email: data.data.email,
+          profilePicture: data.data.profilePicture,
+          role: data.data.role
+        };
+
+        setUserData(formData);
+      }
+
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    if (userData.role == "1") {
+    fetchUserData();
+  }, [token]);
+
+  useEffect(() => {
+    if (userData.role === "1") {
       getOrganizationData();
     }
-  }, []);
-
+  }, [userData.role]);
+  
   return (
     <>
-      <div className={`${userData.role == "1" ? "hidden" : ""}`}>
-        <AccountForm/>
-      </div>
-      <div
-        className={`${
-          userData.role == "0" ? "hidden" : "flex"
-        } p-5 md:p-0 justify-center items-center`}
-      >
-        <Tabs defaultValue="account" className="w-full">
-          <TabsList className="bg-gray-200 grid w-full md:w-min grid-cols-[1fr,1fr]">
-            <TabsTrigger value="account">Account</TabsTrigger>
-            <TabsTrigger value="organization">Organization</TabsTrigger>
-          </TabsList>
+      {userData.role === "0" && <AccountForm />}
 
-          <TabsContent value="account">
-            <AccountForm />
-          </TabsContent>
-          <TabsContent value="organization">
-            {orgData && (
-              <OrganizationForm
-                orgData={orgData}
-                updateData={() => getOrganizationData()}
-              />
-            )}
-          </TabsContent>
-        </Tabs>
-      </div>
+      {userData.role === "1" && (
+        <div className={`flex p-5 md:p-0 justify-center items-center`}>
+          <Tabs defaultValue="account" className="w-full">
+            <TabsList className="bg-gray-200 grid w-full md:w-min grid-cols-[1fr,1fr]">
+              <TabsTrigger value="account">Account</TabsTrigger>
+              <TabsTrigger value="organization">Organization</TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="account">
+              <AccountForm />
+            </TabsContent>
+            <TabsContent value="organization">
+              {orgData && (
+                <OrganizationForm
+                  orgData={orgData}
+                  updateData={() => getOrganizationData()}
+                />
+              )}
+            </TabsContent>
+          </Tabs>
+        </div>
+      )}
     </>
   );
 };

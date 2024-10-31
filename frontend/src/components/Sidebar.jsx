@@ -15,7 +15,7 @@ import {
   MoreVertical,
   Wallet,
 } from "lucide-react";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -234,6 +234,7 @@ const DesktopSidebar = () => {
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Avatar className="cursor-pointer size-10">
+                        <AvatarImage src={userData.profilePicture}/>
                         <AvatarFallback className="text-gray-500">
                           AD
                         </AvatarFallback>
@@ -254,6 +255,7 @@ const DesktopSidebar = () => {
                 </div>
                 <div className="hidden lg:flex items-center">
                   <Avatar className="size-10">
+                  <AvatarImage src={userData.profilePicture}/>
                     <AvatarFallback className="text-gray-500">
                       AD
                     </AvatarFallback>

@@ -29,7 +29,7 @@ export const createAttendance = async (req, res, next) => {
     if (isMember.status == "0") {
       return res.status(403).json({
         success: false,
-        message: "Student unauthorized, must be a memberj.",
+        message: "Student unauthorized, must be a member.",
       });
     }
 
