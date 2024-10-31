@@ -38,7 +38,23 @@ export const SignupSchema = z.object({
     .string()
     .min(8, { message: "Password should be at least 8 characters" }),
 });
-
+export const RegistrationSchema = z.object({
+  firstname: z.string().min(1, {
+    message: "Firstname is required",
+  }),
+  lastname: z.string().min(1, {
+    message: "Lastname is required",
+  }),
+  middlename: z.string().optional(),
+  username: z.string().min(1, {
+    message: "Username is required",
+  }),
+  email: z.string().email({
+    message: "Invalid email",
+  }),
+  password: z.string()
+    .min(8, { message: "Password should be at least 8 characters" }),
+});
 export const AdminSchema = z.object({
   firstname: z.string().min(1, {
     message: "Firstname is required",
@@ -47,27 +63,30 @@ export const AdminSchema = z.object({
     message: "Lastname is required",
   }),
   middlename: z.string().optional(),
-  username: z.string().min(1,{
-    message: "Username is required"
+  username: z.string().min(1, {
+    message: "Username is required",
   }),
   email: z.string().email({
     message: "Invalid email",
   }),
-})
+});
 
 export const FileSchema = z
   .object({
     file: z
       .instanceof(File)
       .refine((file) => file.size <= 5000000, "File size should be 5MB or less") // max 5MB
-      .refine((file) => ["image/jpeg", "image/png"].includes(file.type), "File must be a JPG or PNG")
+      .refine(
+        (file) => ["image/jpeg", "image/png"].includes(file.type),
+        "File must be a JPG or PNG"
+      ),
   })
   .required();
 
 export const OfficerSchema = z.object({
-  officerId: z.string().min(1, {message: "Officer is required"}),
-  position: z.string().min(1, {message: "Position is required"})
-})
+  officerId: z.string().min(1, { message: "Officer is required" }),
+  position: z.string().min(1, { message: "Position is required" }),
+});
 
 export const OrgSchema = z.object({
   name: z.string().min(1, {
@@ -98,15 +117,17 @@ export const AnnouncementSchema = z.object({
   category: z.enum(["0", "1", "2", "3", "4"]),
 });
 
-
 export const PaymentSchema = z.object({
   purpose: z.string().min(1, {
     message: "Purpose is required",
   }),
-  details: z.string().min(1, {message: "Detail is required"}),
-  amount: z.preprocess((val) => Number(val), z.number().min(1, {
-    message: "Amount is required",
-  })),
+  details: z.string().min(1, { message: "Detail is required" }),
+  amount: z.preprocess(
+    (val) => Number(val),
+    z.number().min(1, {
+      message: "Amount is required",
+    })
+  ),
 });
 
 // Define the file schema

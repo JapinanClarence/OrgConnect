@@ -20,6 +20,7 @@ const EventPage = () => {
   const [endDate, setEndDate] = useState("");
   const [selectedEvent, setSelectedEvent] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
+  const [loading, setLoading] = useState(true);
   const { toast } = useToast();
   const date = formatDate(Date.now());
   const { token } = useAuth();
@@ -166,20 +167,26 @@ const EventPage = () => {
         },
       });
 
-      const events = data.data;
-      setCurrentEvents(
-        events.map((event) => ({
-          id: event._id,
-          title: event.title,
-          start: event.startDate,
-          end: event.endDate,
-          description: event.description,
-          active: event.active,
-          location: event.location,
-        }))
-      );
+      if (!data.success) {
+        setCurrentEvents([]);
+      } else {
+        const events = data.data;
+        setCurrentEvents(
+          events.map((event) => ({
+            id: event._id,
+            title: event.title,
+            start: event.startDate,
+            end: event.endDate,
+            description: event.description,
+            active: event.active,
+            location: event.location,
+          }))
+        );
+      }
+      setLoading(false)
     } catch (error) {
       console.error("Failed to fetch events:", error);
+      setLoading(false)
     }
   };
 

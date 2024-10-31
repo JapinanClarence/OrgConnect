@@ -13,6 +13,7 @@ import SettingsPage from "./pages/SettingsPage";
 import OfficersPage from "./pages/OfficersPage";
 import EventPage from "./pages/EventPage";
 import AttendancePage from "./pages/AttendancePage";
+import RegistrationPage from "./pages/RegistrationPage";
 function App() {
   return (
     <>
@@ -23,40 +24,41 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
           </Route>
 
-          <Route element={<DashboardLayout />}>
-            <Route
-              element={
-                <ProtectedRoutes allowedRoles={["superadmin", "admin"]} />
-              }
-            >
+          <Route
+            path="/"
+            element={<ProtectedRoutes allowedRoles={["superadmin", "admin"]} />}
+          >
+            <Route element={<DashboardLayout />}>
               <Route index element={<HomePage />} />
-            </Route>
-            <Route
-              element={
-                <ProtectedRoutes allowedRoles={["superadmin", "admin"]} />
-              }
-            >
               <Route path="/settings" element={<SettingsPage />} />
             </Route>
+          </Route>
+          {/* superadmin only routes */}
+          <Route
+            path="/"
+            element={<ProtectedRoutes allowedRoles={["superadmin"]} />}
+          >
+            <Route element={<DashboardLayout />}>
+              <Route path="/register-user" element={<RegistrationPage />} />
+            </Route>
+          </Route>
 
-            <Route element={<ProtectedRoutes allowedRoles={["admin"]} />}>
+          {/* admin only routes */}
+          <Route
+            path="/"
+            element={<ProtectedRoutes allowedRoles={["admin"]} />}
+          >
+            <Route element={<DashboardLayout />}>
               <Route path="/events" element={<EventPage />} />
-            </Route>
-            <Route element={<ProtectedRoutes allowedRoles={["admin"]} />}>
+
               <Route path="/announcements" element={<AnnouncementPage />} />
-            </Route>
-            <Route element={<ProtectedRoutes allowedRoles={["admin"]} />}>
+
               <Route path="/payments" element={<PaymentPage />} />
-            </Route>
-            <Route element={<ProtectedRoutes allowedRoles={["admin"]} />}>
+
               <Route path="/events/attendance" element={<AttendancePage />} />
-            </Route>
 
-            <Route element={<ProtectedRoutes allowedRoles={["admin"]} />}>
               <Route path="/officers" element={<OfficersPage />} />
-            </Route>
 
-            <Route element={<ProtectedRoutes allowedRoles={["admin"]} />}>
               <Route path="/members" element={<MembersPage />} />
             </Route>
           </Route>

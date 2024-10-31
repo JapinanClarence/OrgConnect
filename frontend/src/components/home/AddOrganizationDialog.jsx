@@ -10,13 +10,19 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+  AlertDialog,
+  AlertDialogContent, 
+  AlertDialogDescription,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog"
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { OrgSchema } from "@/schema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import {
   Form,
   FormControl,
@@ -38,7 +44,6 @@ const AddOrganizationDialog = ({ showDialog, onClose  }) => {
     resolver: zodResolver(OrgSchema),
     defaultValues: {
       name: "",
-      description: "",
       about: "",
       contact: "",
     },
@@ -75,14 +80,14 @@ const AddOrganizationDialog = ({ showDialog, onClose  }) => {
     //   animate={{ opacity: 1, y: 0 }}
     //   transition={{ duration: 0.5 }}
     // >
-    <Dialog open={showDialog}>
-      <DialogContent className="w-[400px] lg:w-[500px] bg-white">
-        <DialogHeader>
-          <DialogTitle>Let's get started 🔥</DialogTitle>
-          <DialogDescription>
+    <AlertDialog open={showDialog}>
+      <AlertDialogContent className="w-[400px] lg:w-[500px] bg-white">
+        <AlertDialogHeader>
+          <AlertDialogTitle>Let's get started 🔥</AlertDialogTitle>
+          <AlertDialogDescription>
             Set up your organization details to get started.
-          </DialogDescription>
-        </DialogHeader>
+          </AlertDialogDescription>
+        </AlertDialogHeader>
         <div>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -107,23 +112,6 @@ const AddOrganizationDialog = ({ showDialog, onClose  }) => {
                         <Input {...field} type="text" />
                       </FormControl>
                       <FormMessage className="text-xs " />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="description"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-gray-600 text-sm">
-                        Description
-                      </FormLabel>
-                      <FormControl>
-                        <div className="relative w-full ">
-                          <Textarea className="resize-none" {...field} />
-                        </div>
-                      </FormControl>
-                      <FormMessage className="text-xs" />
                     </FormItem>
                   )}
                 />
@@ -178,8 +166,8 @@ const AddOrganizationDialog = ({ showDialog, onClose  }) => {
             </form>
           </Form>
         </div>
-      </DialogContent>
-    </Dialog>
+      </AlertDialogContent>
+    </AlertDialog>
     // </motion.div>
   );
 };

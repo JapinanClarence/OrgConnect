@@ -33,6 +33,7 @@ const SettingsPage = () => {
           Authorization: token,
         },
       });
+
       if (!data) {
         return console.log(data);
       } else {

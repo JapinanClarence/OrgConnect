@@ -14,6 +14,9 @@ import {
   SquareTerminal,
   MoreVertical,
   Wallet,
+  User2,
+  UserCog,
+  UserPlus,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -84,7 +87,34 @@ const DesktopSidebar = () => {
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
-
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Link
+                to="/register-user"
+                className={`${
+                  userData.role == "1" ? "hidden" : "flex"
+                } rounded-lg size-full  items-center justify-start p-2 ${
+                  isActive("/register-user")
+                    ? "bg-white text-zinc-900"
+                    : "hover:bg-gray-800"
+                }`}
+              >
+                <UserPlus />
+                <span className="hidden lg:block ml-2 font-bold text-sm">
+                  Register User
+                </span>
+              </Link>
+            </TooltipTrigger>
+            <TooltipContent
+              className="lg:hidden bg-white text-gray-900"
+              side="right"
+              sideOffset={5}
+            >
+              Calendar
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
@@ -176,7 +206,9 @@ const DesktopSidebar = () => {
             <TooltipTrigger asChild>
               <Link
                 to="/members"
-                className={`${userData.role == "0" ? "hidden" : "flex"}  rounded-lg size-full items-center justify-start p-2 ${
+                className={`${
+                  userData.role == "0" ? "hidden" : "flex"
+                }  rounded-lg size-full items-center justify-start p-2 ${
                   isActive("/members")
                     ? "bg-white text-zinc-900"
                     : "hover:bg-gray-800"
@@ -202,7 +234,9 @@ const DesktopSidebar = () => {
             <TooltipTrigger asChild>
               <Link
                 to="/officers"
-                className={`${userData.role == "0" ? "hidden" : "flex"} rounded-lg size-full items-center justify-start p-2 ${
+                className={`${
+                  userData.role == "0" ? "hidden" : "flex"
+                } rounded-lg size-full items-center justify-start p-2 ${
                   isActive("/officers")
                     ? "bg-white text-zinc-900"
                     : "hover:bg-gray-800"
@@ -234,7 +268,7 @@ const DesktopSidebar = () => {
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Avatar className="cursor-pointer size-10">
-                        <AvatarImage src={userData.profilePicture}/>
+                        <AvatarImage src={userData.profilePicture} />
                         <AvatarFallback className="text-gray-500">
                           {userData.firstname[0] + userData.lastname[0]}
                         </AvatarFallback>
@@ -255,7 +289,7 @@ const DesktopSidebar = () => {
                 </div>
                 <div className="hidden lg:flex items-center">
                   <Avatar className="size-10">
-                  <AvatarImage src={userData.profilePicture}/>
+                    <AvatarImage src={userData.profilePicture} />
                     <AvatarFallback className="text-gray-500">
                       {userData.firstname[0] + userData.lastname[0]}
                     </AvatarFallback>
