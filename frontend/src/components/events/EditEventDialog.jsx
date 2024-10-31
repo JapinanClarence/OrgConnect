@@ -132,10 +132,10 @@ const EditEventDialog = ({
                               type="button"
                               size="icon"
                               variant="ghost"
-                              className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                              className="absolute right-0 top-0 h-full w-min px-3 py-2 hover:bg-transparent"
                               onClick={() => handleEditToggle("title")} // Toggle edit mode
                             >
-                              <Pen className="text-gray-500" />
+                              <Pen className="text-gray-500 size-4" />
                             </Button>
                           </div>
                         </FormControl>
@@ -159,15 +159,16 @@ const EditEventDialog = ({
                               {...field}
                               type="text"
                               disabled={!isEditable.description}
+                              className="pr-7"
                             />
                             <Button
                               type="button"
                               size="icon"
                               variant="ghost"
-                              className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                              className="absolute right-0 top-0 h-full w-min px-3 py-2 hover:bg-transparent"
                               onClick={() => handleEditToggle("description")} // Toggle edit mode
                             >
-                              <Pen className="text-gray-500" />
+                              <Pen className="text-gray-500 size-4" />
                             </Button>
                           </div>
                         </FormControl>
@@ -196,12 +197,12 @@ const EditEventDialog = ({
                               type="button"
                               size="icon"
                               variant="ghost"
-                              className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                              className="absolute right-0 top-0 h-full w-min px-3 py-2 hover:bg-transparent"
                               onClick={() => {
                                 handleEditToggle("location");
                               }} // Toggle edit mode
                             >
-                              <Pen className="text-gray-500" />
+                              <Pen className="text-gray-500 size-4" />
                             </Button>
                           </div>
                         </FormControl>
