@@ -125,7 +125,7 @@ const DesktopSidebar = () => {
                 className={`${
                   userData.role == "0" ? "hidden" : "flex"
                 } rounded-lg size-full  items-center justify-start p-2 ${
-                  isActive("/events")
+                  isActive("/")
                     ? "bg-white text-zinc-900"
                     : "hover:bg-gray-800"
                 }`}

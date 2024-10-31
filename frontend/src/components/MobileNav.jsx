@@ -8,10 +8,12 @@ import {
 } from "@/components/ui/sheet";
 import { MenuIcon } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "@/context/AuthContext";
 
 const MobileNav = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
+  const {userData} = useAuth();
 
   const handleNavigation = (path) => {
     setIsOpen(false); // Close the sheet
@@ -45,12 +47,12 @@ const MobileNav = () => {
           <span className="inline text-2xl font-semibold">OrgConnect</span>
         </div>
 
-        <div className="grid gap-1 mt-5 font-normal text-lg">
+        <div className={`${userData.role == "1" ? "grid" : "hidden"} gap-1 mt-5 font-normal text-lg`}>
           <button
             onClick={() => handleNavigation("/")}
             className="rounded-lg hover:bg-gray-800 p-2 w-full text-left"
           >
-            Home
+            Dashboard
           </button>
 
           <button
@@ -86,6 +88,22 @@ const MobileNav = () => {
           >
             Members
           </button>
+        </div>
+        <div className={`${userData.role == "0" ? "grid" : "hidden"} gap-1 mt-5 font-normal text-lg`}>
+          <button
+            onClick={() => handleNavigation("/")}
+            className="rounded-lg hover:bg-gray-800 p-2 w-full text-left"
+          >
+            Home
+          </button>
+
+          <button
+            onClick={() => handleNavigation("/register-user")}
+            className="rounded-lg hover:bg-gray-800 p-2 w-full text-left"
+          >
+            Register user
+          </button>
+
         </div>
       </SheetContent>
     </Sheet>
