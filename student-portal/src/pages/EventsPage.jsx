@@ -24,11 +24,12 @@ const EventsPage = () => {
         }
       );
 
-      if (data) {
+      if (!data.success) {
+        setEventData([]);
+      } else {
         const event = data.data;
-        
+
         setEventData(event);
-        setLoading(false);
       }
     } catch (error) {
       console.log(error);
