@@ -25,7 +25,7 @@ const OrgCards = ({ orgImage, title, about, variant, onClick, id }) => {
           >
             <img
               src={orgImage}
-              className={`h-full object-cover`}
+              className={`h-full w-full object-cover`}
               alt="Org Image"
             />
           </div>
