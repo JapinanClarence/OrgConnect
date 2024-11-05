@@ -23,7 +23,7 @@ export const officerValidationRules = () =>[
 export const organizationValidationRules = () => [
   body("name").notEmpty().withMessage("Organization name is required"),
 ]
-
+//testting
 export const eventValidationRules = () =>[
   body("title").notEmpty().withMessage("Event title is required"),
   body("startDate").notEmpty().withMessage("Start date is required"),
