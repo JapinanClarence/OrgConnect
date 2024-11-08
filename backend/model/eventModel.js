@@ -1,5 +1,10 @@
 import mongoose from "mongoose";
 
+/**
+ * 0 - Close
+ * 1 - Pending
+ * 2 - Active
+ */
 const eventSchema = new mongoose.Schema({
     title: {
         type: String,
@@ -16,9 +21,10 @@ const eventSchema = new mongoose.Schema({
         type: Date,
         required: [true, "End date is required"]
     },
-    active:{
-        type: Boolean,
-        default: false
+    status:{
+        type: String,
+        enum: ["0", "1", "2"],
+        default: "0"
     },
     location: {
         type: String,

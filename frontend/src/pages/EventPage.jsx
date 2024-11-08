@@ -52,7 +52,7 @@ const EventPage = () => {
       endDate: selected.event.endStr,
       description: selected.event.extendedProps.description,
       location: selected.event.extendedProps.location,
-      active: selected.event.extendedProps.active,
+      status: selected.event.extendedProps.status,
     };
     setSelectedEvent(eventData); // Store selected event data
     setShowEventInfo(true); // Show the dropdown
@@ -96,7 +96,7 @@ const EventPage = () => {
   const onEdit = async (data) => {
     try {
       setIsSubmitting(true);
-      const { id, title, description, location, startDate, endDate, active } =
+      const { id, title, description, location, startDate, endDate, status } =
         EventSchema.parse(data);
 
       const formData = {
@@ -105,7 +105,7 @@ const EventPage = () => {
         location,
         startDate,
         endDate,
-        active,
+        status,
       };
 
       const response = await apiClient.patch(
@@ -171,6 +171,7 @@ const EventPage = () => {
         setCurrentEvents([]);
       } else {
         const events = data.data;
+
         setCurrentEvents(
           events.map((event) => ({
             id: event._id,
@@ -178,7 +179,7 @@ const EventPage = () => {
             start: event.startDate,
             end: event.endDate,
             description: event.description,
-            active: event.active,
+            status: event.status,
             location: event.location,
           }))
         );

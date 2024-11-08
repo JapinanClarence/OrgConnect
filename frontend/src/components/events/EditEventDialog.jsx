@@ -28,6 +28,15 @@ import {
   FormMessage,
   FormDescription,
 } from "@/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { LoaderCircle, Pen, Trash2 } from "lucide-react";
@@ -213,33 +222,49 @@ const EditEventDialog = ({
                   {/* Status field */}
                   <FormField
                     control={form.control}
-                    name="active"
+                    name="status"
                     render={({ field }) => (
-                      <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
+                      <FormItem className="">
                         <FormLabel className="text-gray-600 text-sm">
-                          Accept student attendance.
+                          Event Status
                         </FormLabel>
 
-                        <FormControl>
-                          <Switch
-                            checked={field.value}
-                            onCheckedChange={field.onChange}
-                            className="h-5"
-                          />
-                        </FormControl>
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                        >
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Choose category" />
+                            </SelectTrigger>
+                          </FormControl>
+
+                          <SelectContent className="bg-white border-zinc-300">
+                            <SelectGroup>
+                              <SelectLabel>Status</SelectLabel>
+                              <SelectItem value="0">Close</SelectItem>
+                              <SelectItem value="1">Pending</SelectItem>
+                              <SelectItem value="2">Open</SelectItem>
+                            </SelectGroup>
+                          </SelectContent>
+                        </Select>
                         <FormMessage className="text-xs" />
                       </FormItem>
                     )}
                   />
                   <div className="m-0">
-                    <Link className="text-sm font-bold hover:underline" to={`/events/attendance/?eventId=${eventData.id}`}>Manage Attendees for This Event</Link>
+                    <Link
+                      className="text-sm font-bold hover:underline"
+                      to={`/events/attendance/?eventId=${eventData.id}`}
+                    >
+                      Manage Attendees for This Event
+                    </Link>
+                  </div>
                 </div>
-                </div>
-                
 
                 <div className="flex justify-between mt-4">
                   <div className="grid grid-flow-col gap-2">
-                  <Button
+                    <Button
                       type="submit"
                       className="w-[90px]"
                       disabled={isSubmitting}
