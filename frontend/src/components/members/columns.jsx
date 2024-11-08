@@ -127,6 +127,11 @@ export const columns = (onApprove, onKick, onManage) => [
     ),
   },
   {
+    accessorKey: "absenceCount",
+    header: "Total Absence",
+    cell: ({ row }) => <div className="text-xs">{row.getValue("absenceCount")}</div>,
+  },
+  {
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {

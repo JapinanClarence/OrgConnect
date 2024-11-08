@@ -24,7 +24,7 @@ const eventSchema = new mongoose.Schema({
     status:{
         type: String,
         enum: ["0", "1", "2"],
-        default: "0"
+        default: "1"
     },
     location: {
         type: String,

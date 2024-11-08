@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/dialog";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
+import { dateOnly, formatSimpleDate } from "@/util/helpers";
 const statusMap = {
   0: {
     name: "Pending",
@@ -51,10 +52,18 @@ const MemberDialog = ({ data, open, onOpenChange }) => {
           </div>
           <div className="my-auto grid grid-cols-[90px_1fr] text-sm">
             <div className="text-muted-foreground space-y-1">
-              <div>Age:</div>
+              <div>Birthday:</div>
             </div>
             <div className="font-semibold space-y-1">
-              <div>{data.age}</div>
+              <div>{data.birthday ? formatSimpleDate(data.birthday) : ""}</div>
+            </div>
+          </div>
+          <div className="my-auto grid grid-cols-[90px_1fr] text-sm">
+            <div className="text-muted-foreground space-y-1">
+              <div>Gender:</div>
+            </div>
+            <div className="font-semibold space-y-1">
+              <div>{data.gender}</div>
             </div>
           </div>
         </div>

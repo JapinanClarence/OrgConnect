@@ -1,7 +1,8 @@
 import Membership from "../../model/membershipModel.js";
 import Organization from "../../model/organizationModel.js";
 import { StudentModel as Student } from "../../model/UserModel.js";
-
+import Events from "../../model/eventModel.js";
+import Attendance from "../../model/attendanceModel.js";
 export const getMembers = async (req, res) => {
   const userId = req.user.userId;
   try {
@@ -23,25 +24,41 @@ export const getMembers = async (req, res) => {
       });
     }
 
+    // Fetch all events for the organization
+    const events = await Events.find({ organization: organization._id, status: "0" });
+    const eventIds = events.map(event => event._id);
+
     const memberData = await Promise.all(
-      members.map(async (members) => {
-        const data = await Student.findById(members.student);
+      members.map(async (member) => {
+        const data = await Student.findById(member.student);
         const fullname = `${data.firstname} ${
           data.middlename ? data.middlename[0] + ". " : ""
         }${data.lastname}`;
+
+        // Count absences by checking if the student has no attendance record for each event
+        const attendanceRecords = await Attendance.find({
+          student: data._id,
+          event: { $in: eventIds },
+        });
+
+        const attendedEventIds = attendanceRecords.map(record => record.event.toString());
+        const absentCount = eventIds.filter(id => !attendedEventIds.includes(id.toString())).length;
+
         return {
           _id: data._id,
           studentId: data.studentId,
           fullname,
           email: data.email,
-          age: data.age,
+          birthday: data.birthday,
+          gender: data.gender,
           contact: data.contactNumber,
           year: data.year,
           course: data.course,
           profilePicture: data.profilePicture,
-          status: members.status,
-          joinedDate: members.joinedDate,
-          position: members.position,
+          status: member.status,
+          joinedDate: member.joinedDate,
+          position: member.position,
+          absentCount,  // Adding absent count for the student
         };
       })
     );
@@ -57,6 +74,7 @@ export const getMembers = async (req, res) => {
     });
   }
 };
+
 
 export const updateMember = async (req, res) => {
   const userId = req.user.userId;

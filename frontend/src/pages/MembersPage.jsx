@@ -71,13 +71,16 @@ const MembersPage = () => {
           fullname: data.fullname,
           email: data.email,
           year: yearMap[data.year],
-          age: data.age,
+          birthday: data.birthday,
+          gender:data.gender,
           contact: data.contact,
           course: data.course,
           status: data.status,
+          absenceCount: data.absentCount,
           joinedDate: data.joinedDate ? dateOnly(data.joinedDate) : null,
           profilePicture: data.profilePicture,
-        }));
+        }));  
+        console.log(tableData)
         setData(tableData);
       }
 
