@@ -47,7 +47,7 @@ const AttendancePage = () => {
           location: data.data.location,
           startDate: data.data.startDate,
           endDate: data.data.endDate,
-          status: data.data.active,
+          status: data.data.status,
         };
         setCurrentEvent(eventData);
       }
