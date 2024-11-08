@@ -44,7 +44,7 @@ const AttendeesChart = ({ data, currentMonth, currentYear }) => {
       return acc;
     }, {});
   }, [data]);
-  
+
   // Map backend data to include 'fill' color dynamically
   const chartData = data.map((item, index) => ({
     ...item,
@@ -72,50 +72,54 @@ const AttendeesChart = ({ data, currentMonth, currentYear }) => {
           config={chartConfig}
           className="mx-auto my-auto aspect-square max-h-[300px] "
         >
-          <PieChart>
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent hideLabel />}
-            />
-            <Pie
-              data={chartData}
-              dataKey="attendees"
-              nameKey="event"
-              innerRadius={60}
-              outerRadius={90}
-              strokeWidth={10}
-            >
-              <Label
-                content={({ viewBox }) => {
-                  if (viewBox && "cx" in viewBox && "cy" in viewBox) {
-                    return (
-                      <text
-                        x={viewBox.cx}
-                        y={viewBox.cy}
-                        textAnchor="middle"
-                        dominantBaseline="middle"
-                      >
-                        <tspan
+          {totalAttendees <= 0 ? (
+            <div className="h-full flex justify-center items-center text-muted-foreground text-sm">No attendees found.</div>
+          ) : (
+            <PieChart>
+              <ChartTooltip
+                cursor={false}
+                content={<ChartTooltipContent hideLabel />}
+              />
+              <Pie
+                data={chartData}
+                dataKey="attendees"
+                nameKey="event"
+                innerRadius={60}
+                outerRadius={90}
+                strokeWidth={10}
+              >
+                <Label
+                  content={({ viewBox }) => {
+                    if (viewBox && "cx" in viewBox && "cy" in viewBox) {
+                      return (
+                        <text
                           x={viewBox.cx}
                           y={viewBox.cy}
-                          className="fill-foreground text-3xl font-bold"
+                          textAnchor="middle"
+                          dominantBaseline="middle"
                         >
-                          {totalAttendees.toLocaleString()}
-                        </tspan>
-                        <tspan
-                          x={viewBox.cx}
-                          y={(viewBox.cy || 0) + 24}
-                          className="fill-muted-foreground"
-                        >
-                          Attendees
-                        </tspan>
-                      </text>
-                    );
-                  }
-                }}
-              />
-            </Pie>
-          </PieChart>
+                          <tspan
+                            x={viewBox.cx}
+                            y={viewBox.cy}
+                            className="fill-foreground text-3xl font-bold"
+                          >
+                            {totalAttendees.toLocaleString()}
+                          </tspan>
+                          <tspan
+                            x={viewBox.cx}
+                            y={(viewBox.cy || 0) + 24}
+                            className="fill-muted-foreground"
+                          >
+                            Attendees
+                          </tspan>
+                        </text>
+                      );
+                    }
+                  }}
+                />
+              </Pie>
+            </PieChart>
+          )}
         </ChartContainer>
       </CardContent>
       <CardFooter className="text-sm">
