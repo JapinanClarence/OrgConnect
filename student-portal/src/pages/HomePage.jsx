@@ -11,7 +11,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Header from "@/components/nav/Header";
 import { Button } from "@/components/ui/button";
 import { ChevronDown } from "lucide-react";
-
+import StatusCardSkeleton from "@/components/skeleton/StatusCardSkeleton";
 const HomePage = () => {
   const { token, userData, setUserData } = useAuth();
   const [orgData, setOrgData] = useState([]);
@@ -62,14 +62,14 @@ const HomePage = () => {
         },
       });
       if (!data.success) {
-        setTotalAbsent(0);// if no close events found, set total absent to 0
+        setTotalAbsent(0); // if no close events found, set total absent to 0
       } else {
         setTotalAbsent(data.data);
       }
     } catch (error) {
       console.log(error);
     }
-  }
+  };
   const fetchUserData = async () => {
     try {
       const { data } = await apiClient.get("/user/", {
@@ -86,7 +86,12 @@ const HomePage = () => {
   };
   useEffect(() => {
     const fetchData = async () => {
-      await Promise.all([fetchStudentOrgs(), fetchEvents(), fetchUserData(), fetchAbsentCount()]);
+      await Promise.all([
+        fetchStudentOrgs(),
+        fetchEvents(),
+        fetchUserData(),
+        fetchAbsentCount(),
+      ]);
       setLoading(false);
     };
     fetchData();
@@ -118,22 +123,22 @@ const HomePage = () => {
           <p className="text-sm text-muted-foreground">{userData.email}</p>
         </div>
       </div>
-
-      <div className="mt-2 mb-4 mx-5 p-3 rounded-lg bg-white shadow-sm border flex justify-between">
-        {/* <Input
-          className="rounded-full border-none bg-slate-200 "
-          placeholder="Search organizations..."
-        /> */}
-        <div>
-          <h1 className="font-medium text-lg">Activity Status</h1>
-          <p className="text-muted-foreground text-sm">
-            You have {totalAbsent.totalAbsences} total absences.
-          </p>
+      {loading ? (
+        <StatusCardSkeleton />
+      ) : (
+        <div className="mt-2 mb-4 mx-5 p-3 rounded-lg bg-white shadow-sm border flex justify-between">
+          <div>
+            <h1 className="font-medium text-lg">Activity Status</h1>
+            <p className="text-muted-foreground text-sm">
+              You have {totalAbsent.totalAbsences} total absences.
+            </p>
+          </div>
+          <Link to={"/attendance"}>
+            <ChevronDown />
+          </Link>
         </div>
-        <Link to={"/attendance"}>
-          <ChevronDown />
-        </Link>
-      </div>
+      )}
+
       <div className="flex justify-between mx-5">
         <h1 className="font-semibold mb-2 "> Your Organizations</h1>
         <Link to="/organization" className="text-muted-foreground">
