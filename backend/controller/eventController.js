@@ -5,6 +5,7 @@ import Events from "../model/eventModel.js";
 
 export const getAllEvents = async (req, res) => {
   const student = req.user.userId;
+
   try {
     const membership = await Membership.find({ student, status: "1" });
 
@@ -15,20 +16,30 @@ export const getAllEvents = async (req, res) => {
       });
     }
 
-    // Find student organization events
+    // Find events from active organizations only
     const events = await Promise.all(
       membership.map(async (data) => {
-        const eventList = await Events.find({
-          organization: data.organization,
-        }).populate("organization", "name");
-        return eventList; // Return the list of events for each organization
+        const organization = await Organization.findOne({
+          _id: data.organization,
+          active: true,
+        });
+
+        if (organization) {
+          // Fetch events only if the organization is active
+          const eventList = await Events.find({
+            organization: data.organization,
+          }).populate("organization", "name");
+          return eventList; // Return the list of events for each active organization
+        }
+
+        return []; // Return an empty array if the organization is inactive
       })
     );
 
-    // `events` is now an array of arrays, so you might want to flatten it
-    const flattenedEvents = events.flat(); // Flatten the array if needed
+    // Flatten the array and filter out empty arrays (inactive organizations)
+    const flattenedEvents = events.flat();
 
-    if (events.length <= 0) {
+    if (flattenedEvents.length <= 0) {
       return res.status(200).json({
         success: false,
         message: "No events found",
@@ -47,7 +58,7 @@ export const getAllEvents = async (req, res) => {
   }
 };
 
-export const getEvents = async (req, res) =>{
+export const getEvents = async (req, res) => {
   const student = req.user.userId;
   const organization = req.params.id;
   try {
@@ -59,8 +70,11 @@ export const getEvents = async (req, res) =>{
         message: "Organization not found",
       });
     }
-   
-    const events = await Events.find({organization}).populate("organization", "name");
+
+    const events = await Events.find({ organization }).populate(
+      "organization",
+      "name"
+    );
 
     if (events.length <= 0) {
       return res.status(200).json({
@@ -79,4 +93,4 @@ export const getEvents = async (req, res) =>{
       message: err.message,
     });
   }
-}
+};

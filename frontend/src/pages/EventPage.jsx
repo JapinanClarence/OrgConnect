@@ -62,7 +62,7 @@ const EventPage = () => {
     try {
       setIsSubmitting(true);
       const { title, description, location } = EventSchema.parse(data);
-
+      
       const formData = {
         title,
         description,
