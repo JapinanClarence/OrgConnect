@@ -84,7 +84,7 @@ try {
         organization: data.organization,
       })
         .populate("organization", "name") // Get organization name
-        .select("title startDate endDate location organization");
+        .select("title startDate endDate location organization status");
 
       return eventList.map(event => ({
         id: event._id,
@@ -93,6 +93,7 @@ try {
         endDate: event.endDate,
         location: event.location,
         organizationName: event.organization.name,
+        status: event.status
       }));
     })
   );
@@ -118,7 +119,7 @@ try {
   // Map over events to include the attendance status and format final data
   const eventData = flattenedEvents.map(event => ({
     ...event,
-    status: attendedEventIds.has(event.id.toString()) ? "attended" : "absent",
+    attendanceStatus: attendedEventIds.has(event.id.toString()) ? "Present" : "Absent",
   }));
 
   res.status(200).json({

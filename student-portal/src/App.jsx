@@ -19,6 +19,7 @@ import PaymentPage from "./pages/PaymentPage";
 import OfficersPage from "./pages/OfficersPage";
 import EventsPage from "./pages/EventsPage";
 import OrgAnnouncementPage from "./pages/OrgAnnouncementPage";
+import AttendancePage from "./pages/AttendancePage";
 
 function App() {
   const [isInstalled, setIsInstalled] = useState(false);
@@ -52,6 +53,7 @@ function App() {
             <Route path="/" element={<SecondaryLayout />}>
               <Route path="/profile/edit" element={<EditProfilePage />} />
               <Route path="/organization" element={<OrganizationsPage />} />
+              <Route path="/attendance" element={<AttendancePage />} />
               <Route
                 path="/organization/:id"
                 element={<OrganizationDetailsPage />}
