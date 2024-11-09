@@ -226,7 +226,7 @@ const EditEventDialog = ({
                     render={({ field }) => (
                       <FormItem className="">
                         <FormLabel className="text-gray-600 text-sm">
-                          Event Status
+                          Event status
                         </FormLabel>
 
                         <Select
@@ -244,10 +244,14 @@ const EditEventDialog = ({
                               <SelectLabel>Status</SelectLabel>
                               <SelectItem value="0">Close</SelectItem>
                               <SelectItem value="1">Pending</SelectItem>
-                              <SelectItem value="2">Open</SelectItem>
+                              <SelectItem value="2">Ongoing</SelectItem>
+                              <SelectItem value="3">Open</SelectItem>
                             </SelectGroup>
                           </SelectContent>
                         </Select>
+                        <FormDescription>
+                          *Set status to open to accept student attendance.
+                        </FormDescription>
                         <FormMessage className="text-xs" />
                       </FormItem>
                     )}

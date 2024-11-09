@@ -3,7 +3,8 @@ import mongoose from "mongoose";
 /**
  * 0 - Close
  * 1 - Pending
- * 2 - Active
+ * 2 - Ongoing
+ * 3 - Open
  */
 const eventSchema = new mongoose.Schema({
     title: {
@@ -23,7 +24,7 @@ const eventSchema = new mongoose.Schema({
     },
     status:{
         type: String,
-        enum: ["0", "1", "2"],
+        enum: ["0", "1", "2", "3"],
         default: "1"
     },
     location: {

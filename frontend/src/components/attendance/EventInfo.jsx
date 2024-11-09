@@ -9,10 +9,14 @@ const statusMap = {
     color: "bg-red-500",
   },
   "1": {
-    name: "Pending",
+    name: "Upcoming",
     color: "bg-yellow-500",
   },
   "2": {
+    name: "Ongoing",
+    color: "bg-blue-600",
+  },
+  "3": {
     name: "Open",
     color: "bg-green-600",
   },

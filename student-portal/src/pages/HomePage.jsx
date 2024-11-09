@@ -10,6 +10,7 @@ import EventSkeleton from "@/components/skeleton/EventSkeleton";
 import { Link, useNavigate } from "react-router-dom";
 import Header from "@/components/nav/Header";
 import { Button } from "@/components/ui/button";
+import { ChevronDown } from "lucide-react";
 
 const HomePage = () => {
   const { token, userData, setUserData } = useAuth();
@@ -46,7 +47,6 @@ const HomePage = () => {
         setEventData([]);
       } else {
         const event = data.data;
-
         setEventData(event.slice(0, 10));
       }
     } catch (error) {
@@ -78,7 +78,7 @@ const HomePage = () => {
   const handleClick = async (data) => {
     navigate(`/organization/${data}`);
   };
-  
+
   return (
     <div className="pt-16">
       <Header />
@@ -102,11 +102,20 @@ const HomePage = () => {
         </div>
       </div>
 
-      <div className="py-2 mb-2 px-5">
-        <Input
+      <div className="mt-2 mb-4 mx-5 p-3 rounded-lg bg-white shadow-sm border flex justify-between">
+        {/* <Input
           className="rounded-full border-none bg-slate-200 "
           placeholder="Search organizations..."
-        />
+        /> */}
+        <div>
+          <h1 className="font-medium text-lg">Activity Status</h1>
+          <p className="text-muted-foreground text-sm">
+            You have 0 total absences.
+          </p>
+        </div>
+        <Link to={"/attendance"}>
+          <ChevronDown />
+        </Link>
       </div>
       <div className="flex justify-between mx-5">
         <h1 className="font-semibold mb-2 "> Your Organizations</h1>
@@ -164,6 +173,7 @@ const HomePage = () => {
                 startDate={data.startDate}
                 endDate={data.endDate}
                 location={data.location}
+                status={data.status}
                 postedBy={data.organization.name}
               />
             ))

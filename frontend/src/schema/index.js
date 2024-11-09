@@ -104,7 +104,7 @@ export const EventSchema = z.object({
   location: z.string().min(1, {
     message: "Location is required",
   }),
-  status: z.enum(["0","1","2"]),
+  status: z.enum(["0","1","2", "3"]),
   startDate: z.string().optional(),
   endDate: z.string().optional(),
 });

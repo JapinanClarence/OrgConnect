@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/dialog";
 import { Calendar, MapPin } from "lucide-react";
 import { Button } from "../ui/button";
+import { Badge } from "../ui/badge";
 
 const EventDialog = ({
   title,
@@ -16,6 +17,7 @@ const EventDialog = ({
   location,
   date,
   postedBy,
+  badgeStatus,
   open,
   onOpenChange,
 }) => {
@@ -31,15 +33,24 @@ const EventDialog = ({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="bg-white p-5 max-w-[340px] rounded-lg">
         <DialogHeader className="text-start">
-          <DialogTitle>{title}</DialogTitle>
+          <DialogTitle>
+            {title}
+            {badgeStatus && (
+              <Badge
+                className={`${badgeStatus.color} hover:${badgeStatus.color} text-xs w-min ml-2`}
+              >
+                {badgeStatus.name}
+              </Badge>
+            )}
+          </DialogTitle>
           <DialogDescription className="text-pretty inline-flex flex-col">
-            {description 
+            {description
               ? isLongDescription && !expanded
                 ? `${description.slice(0, previewLength)}...`
                 : description
               : "No Description"}
 
-            {description 
+            {description
               ? isLongDescription && (
                   <Button
                     onClick={handleToggleContent}

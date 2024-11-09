@@ -64,6 +64,7 @@ const EventsPage = () => {
               startDate={data.startDate}
               endDate={data.endDate}
               location={data.location}
+              status={data.status}
               postedBy={data.organization.name}
               />
             ))

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -9,6 +9,26 @@ import {
 import { Calendar, MapPin } from "lucide-react";
 import EventDialog from "./EventDialog";
 import { timeOnly, shortMonth } from "@/util/helpers";
+import { Badge } from "@/components/ui/badge";
+
+const statusMap = {
+  "0": {
+    name: "Close",
+    color: "bg-red-500",
+  },
+  "1": {
+    name: "Upcoming",
+    color: "bg-yellow-500",
+  },
+  "2": {
+    name: "Ongoing",
+    color: "bg-blue-600",
+  },
+  "3": {
+    name: "Open",
+    color: "bg-green-600",
+  },
+};
 
 const EventCards = ({
   title,
@@ -17,7 +37,9 @@ const EventCards = ({
   startDate,
   endDate,
   postedBy,
+  status
 }) => {
+  const [badgeStatus, setBadgeStatus] = useState(null);
   const [showDialog, setShowDialog] = useState(false);
 
   const handleClick = () => {
@@ -30,6 +52,12 @@ const EventCards = ({
 
   const date = preProcessDate(startDate, endDate);
   
+  useEffect(() => {
+    // set the badge status
+    if (status) {
+      setBadgeStatus(statusMap[status]);
+    }
+  }, [status]);
   function preProcessDate (startDate, endDate) {
     const sDate = new Date(startDate);
     const eDate = new Date(endDate);
@@ -53,7 +81,7 @@ const EventCards = ({
   return (
     <>
       <Card onClick={handleClick}>
-        <CardHeader className="p-4 pb-0">
+        <CardHeader className="p-4 pb-0 mb-2 ">
           <CardTitle className="text-lg">{title}</CardTitle>
         </CardHeader>
         <CardContent className="px-4 pb-4">
@@ -69,6 +97,13 @@ const EventCards = ({
             <MapPin size={13} strokeWidth={2} className=" inline mr-1" />{" "}
             {location}
           </p>
+          {badgeStatus && (
+              <Badge
+                className={`${badgeStatus.color} hover:${badgeStatus.color} text-xs w-min mt-2`}
+              >
+                {badgeStatus.name}
+              </Badge>
+            )}
         </CardContent>
       </Card>
       <EventDialog
@@ -78,6 +113,7 @@ const EventCards = ({
         description={description}
         location={location}
         date={date}
+        badgeStatus={badgeStatus}
         postedBy={postedBy}
       />
     </>

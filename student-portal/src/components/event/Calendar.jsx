@@ -7,7 +7,6 @@ import { useRef, useEffect } from "react";
 
 const Calendar = ({ currentEvents, onEventClick }) => {
   const calendarRef = useRef(null);
-    console.log(currentEvents)
   return (
     <FullCalendar
       ref={calendarRef} // Attach ref to FullCalendar component
