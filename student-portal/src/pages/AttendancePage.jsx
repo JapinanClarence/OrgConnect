@@ -26,8 +26,8 @@ const AttendancePage = () => {
         const tableData = data.data.map((data) => ({
           id: data.id,
           title: data.title,
-          startDate: formatSimpleDateTime(data.startDate),
-          endDate: formatSimpleDateTime(data.endDate),
+          checkIn: formatSimpleDateTime(data.checkIn),
+          checkOut: formatSimpleDateTime(data.checkOut),
           location: data.location,
           organizationName: data.organizationName,
           status: data.status,

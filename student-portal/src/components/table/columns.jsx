@@ -40,16 +40,7 @@ export const attendanceColumn = [
     },
     cell: ({ row }) => <div className="">{row.getValue("title")}</div>,
   },
-  {
-    accessorKey: "startDate",
-    header: "Start Date",
-    cell: ({ row }) => <div className="">{row.getValue("startDate")}</div>,
-  },
-  {
-    accessorKey: "endDate",
-    header: "End Date",
-    cell: ({ row }) => <div className="">{row.getValue("endDate")}</div>,
-  },
+ 
   {
     accessorKey: "location",
     header: "Location",
@@ -61,6 +52,16 @@ export const attendanceColumn = [
     cell: ({ row }) => (
       <div className="">{row.getValue("organizationName")}</div>
     ),
+  },
+  {
+    accessorKey: "checkIn",
+    header: "Check In",
+    cell: ({ row }) => <div className="">{row.getValue("checkIn")}</div>,
+  },
+  {
+    accessorKey: "checkOut",
+    header: "Check Out",
+    cell: ({ row }) => <div className="">{row.getValue("checkOut")}</div>,
   },
   {
     accessorKey: "status",
