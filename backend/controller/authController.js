@@ -126,6 +126,7 @@ export const login = async (req, res, next) => {
         username: user.username,
         profilePicture: user.profilePicture,
         role: user.role,
+        active: user.active
       }
     });
   } catch (err) {

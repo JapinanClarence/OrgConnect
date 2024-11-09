@@ -18,16 +18,20 @@ const organizationSchema = new mongoose.Schema(
       type: String,
     },
     banner: {
-        type:String,
-    },
-    type:{
       type: String,
-      enum:["0", "1"]
+    },
+    type: {
+      type: String,
+      enum: ["0", "1"],
     },
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: [true, "User is required"],
+    },
+    active: {
+      type: Boolean,
+      default: true,
     },
     officerPositions: {
       type: [{ position: String, rank: Number }],
@@ -39,7 +43,8 @@ const organizationSchema = new mongoose.Schema(
 
 // Pre-save hook to set officer positions based on type
 organizationSchema.pre("save", function (next) {
-  if (!this.officerPositions.length) { // Only set positions if they haven't been set yet
+  if (!this.officerPositions.length) {
+    // Only set positions if they haven't been set yet
     const primaryPositions = [
       { position: "governor", rank: 1 },
       { position: "vice-governor", rank: 2 },
@@ -49,7 +54,7 @@ organizationSchema.pre("save", function (next) {
       { position: "business manager", rank: 6 },
       { position: "pio", rank: 7 },
     ];
-  
+
     const perProgramPositions = [
       { position: "president", rank: 1 },
       { position: "vice-president", rank: 2 },
@@ -61,7 +66,8 @@ organizationSchema.pre("save", function (next) {
     ];
 
     // Set officerPositions based on the type of organization
-    this.officerPositions = this.type === "0" ? primaryPositions : perProgramPositions;
+    this.officerPositions =
+      this.type === "0" ? primaryPositions : perProgramPositions;
   }
   next();
 });

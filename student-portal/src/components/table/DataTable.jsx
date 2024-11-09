@@ -10,7 +10,9 @@ import {
 import {
   Table,
   TableBody,
+  TableCaption,
   TableCell,
+  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
@@ -180,7 +182,7 @@ const DataTable = ({ data, loading, columns, filterColumns}) => {
                 </TableCell>
               </TableRow>
             )}
-          </TableBody>
+          </TableBody>         
         </Table>
       </div>
       <div className="flex items-center justify-between py-4 gap-2">

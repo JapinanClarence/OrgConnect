@@ -9,7 +9,7 @@ export const absentCount = async (req, res) => {
 
   try {
     const membership = await Membership.find({ student, status: "1" });
-    console.log(membership)
+    console.log(membership);
     if (membership.length <= 0) {
       return res.status(200).json({
         success: false,
@@ -22,7 +22,7 @@ export const absentCount = async (req, res) => {
       membership.map(async (data) => {
         const eventList = await Events.find({
           organization: data.organization,
-          status: "0"
+          status: "0",
         }).select("_id");
         return eventList.map((event) => event._id);
       })
@@ -65,72 +65,80 @@ export const absentCount = async (req, res) => {
   }
 };
 export const getAttendance = async (req, res, next) => {
-    const student = req.user.userId;
+  const student = req.user.userId;
 
-try {
-  const membership = await Membership.find({ student, status: "1" });
+  try {
+    const membership = await Membership.find({ student, status: "1" });
 
-  if (membership.length <= 0) {
-    return res.status(200).json({
-      success: false,
-      message: "No joined organizations found",
-    });
-  }
+    if (membership.length <= 0) {
+      return res.status(200).json({
+        success: false,
+        message: "No joined organizations found",
+      });
+    }
 
-  // Get events for each organization, along with organization name
-  const events = await Promise.all(
-    membership.map(async (data) => {
-      const eventList = await Events.find({
-        organization: data.organization,
+    // Get events for each organization, along with organization name
+    const events = await Promise.all(
+      membership.map(async (data) => {
+        const eventList = await Events.find({
+          organization: data.organization,
+          status: { $in: ["0", "3"] },
+        })
+          .populate("organization", "name") // Get organization name
+          .select("title startDate endDate location organization status");
+
+        return eventList.map((event) => ({
+          id: event._id,
+          title: event.title,
+          location: event.location,
+          organizationName: event.organization.name,
+          status: event.status,
+        }));
       })
-        .populate("organization", "name") // Get organization name
-        .select("title startDate endDate location organization status");
+    );
 
-      return eventList.map(event => ({
-        id: event._id,
-        title: event.title,
-        startDate: event.startDate,
-        endDate: event.endDate,
-        location: event.location,
-        organizationName: event.organization.name,
-        status: event.status
-      }));
-    })
-  );
+    // Flatten the array of arrays to get a single array of event objects
+    const flattenedEvents = events.flat();
 
-  // Flatten the array of arrays to get a single array of event objects
-  const flattenedEvents = events.flat();
+    if (flattenedEvents.length <= 0) {
+      return res.status(200).json({
+        success: false,
+        message: "No events found",
+      });
+    }
 
-  if (flattenedEvents.length <= 0) {
-    return res.status(200).json({
+    // Fetch attendance records for each event
+    const attendanceRecords = await Attendance.find({
+      student,
+      event: { $in: flattenedEvents.map((event) => event.id) },
+    }).select("event checkIn checkOut");
+
+    const attendedEventIds = new Set(
+      attendanceRecords.map((record) => record.event.toString())
+    );
+
+    const attendedEvents = attendanceRecords.map((record) => ({
+      checkIn: record.checkIn,
+      checkOut: record.checkOut,
+    }));
+    
+    // Map over events to include the attendance status and format final data
+    const eventData = flattenedEvents.map((event) => ({
+      ...event,
+      attendedEvents,
+      attendanceStatus: attendedEventIds.has(event.id.toString())
+        ? "Present"
+        : "Absent",
+    }));
+
+    res.status(200).json({
+      success: true,
+      data: eventData,
+    });
+  } catch (err) {
+    return res.status(500).json({
       success: false,
-      message: "No events found",
+      message: err.message,
     });
   }
-
-  // Fetch attendance records for each event
-  const attendanceRecords = await Attendance.find({
-    student,
-    event: { $in: flattenedEvents.map(event => event.id) },
-  }).select("event");
-
-  const attendedEventIds = new Set(attendanceRecords.map(record => record.event.toString()));
-
-  // Map over events to include the attendance status and format final data
-  const eventData = flattenedEvents.map(event => ({
-    ...event,
-    attendanceStatus: attendedEventIds.has(event.id.toString()) ? "Present" : "Absent",
-  }));
-
-  res.status(200).json({
-    success: true,
-    data: eventData,
-  });
-} catch (err) {
-  return res.status(500).json({
-    success: false,
-    message: err.message,
-  });
-}
-
 };

@@ -71,9 +71,7 @@ export const studentOrgs = async (req, res, next) => {
   const student = req.user.userId;
 
   try {
-    const membership = await Membership.find({ student, status: "1" }).populate(
-      "organization"
-    );
+    const membership = await Membership.find({ student, status: "1" });
 
     if (membership.length <= 0) {
       return res.status(200).json({
@@ -82,19 +80,35 @@ export const studentOrgs = async (req, res, next) => {
       });
     }
 
-    const cleanData = membership.map((data) => {
-      return {
-        id: data.organization._id,
-        name: data.organization.name,
-        about: data.organization.about,
-        banner: data.organization.banner,
-        contact: data.organization.contact,
-      };
-    });
+    const data = await Promise.all(
+      membership.map(async (member) => {
+        const organization = await Organization.findOne({
+          _id: member.organization,
+          active: true,
+        });
+
+        return {
+          id: organization._id,
+          name: organization.name,
+          about: organization.about,
+          banner: organization.banner,
+          contact: organization.contact,
+        };
+      })
+    );
+  
+    // return {
+    //   id: data.organization._id,
+    //   name: data.organization.name,
+    //   about: data.organization.about,
+    //   banner: data.organization.banner,
+    //   contact: data.organization.contact,
+    //   active: data.organization.active,
+    // };
 
     res.status(200).json({
       success: true,
-      data: cleanData,
+      data: data,
     });
   } catch (err) {
     return res.status(500).json({

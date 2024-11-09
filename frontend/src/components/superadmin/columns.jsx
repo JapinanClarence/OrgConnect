@@ -13,7 +13,7 @@ import {
 import { CircleCheck, Timer } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 // Define the columns for the table
-export const columns = [
+export const columns = (onUpdateStatus) => [
   {
     id: "profilePicture",
     enableHiding: false,
@@ -113,27 +113,20 @@ export const columns = [
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
-      const member = row.original;
-
+      const admin = row.original;
+      const status = row.getValue("status");
       const handleCopy = (event) => {
         event.stopPropagation(); // Prevent the row click event
-        navigator.clipboard.writeText(member.id);
+        navigator.clipboard.writeText(admin.id);
       };
-
-      // const handleApprove = (event) => {
-      //   event.stopPropagation(); // Prevent the row click event
-      //   onApprove(member.id)
-      // };
-
-      // const handleDelete = (event) => {
-      //   event.stopPropagation(); // Prevent the row click event
-      //   onKick(member.id)
-      // };
-
-      // const handleManage = (event) =>{
-      //   event.stopPropagation();
-      //   onManage(member);
-      // }
+      
+      const handleApprove = (data) => (event) => {
+        event.stopPropagation(); // Prevents the row click event
+        onUpdateStatus({
+          id: admin.id,
+          active: data,
+        });
+      };
 
       return (
         <DropdownMenu>
@@ -148,9 +141,20 @@ export const columns = [
             <DropdownMenuItem onClick={handleCopy}>
               Copy Admin ID
             </DropdownMenuItem>
-            {/* <DropdownMenuSeparator />
-            <DropdownMenuItem className={member.status == 1 && `hidden`} onClick={handleApprove}>Approve</DropdownMenuItem>
-            <DropdownMenuItem onClick={handleManage}>Add Role</DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
+              className={status && `hidden`}
+              onClick={handleApprove(true)}
+            >
+              Activate
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              className={!status && `hidden`}
+              onClick={handleApprove(false)}
+            >
+              Deactivate
+            </DropdownMenuItem>
+            {/* <DropdownMenuItem onClick={handleManage}>Add Role</DropdownMenuItem>
             <DropdownMenuItem onClick={handleDelete}>Kick</DropdownMenuItem> */}
           </DropdownMenuContent>
         </DropdownMenu>

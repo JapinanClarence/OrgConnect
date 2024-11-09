@@ -43,7 +43,7 @@ import {
 import { columns } from "@/components/superadmin/columns";
 import TableSkeleton from "@/components/skeleton/TableSkeleton";
 
-const AdminTable = ({ data, loading, onClick }) => {
+const AdminTable = ({ data, loading, onClick, onUpdateStatus }) => {
   const [sorting, setSorting] = React.useState([]);
   const [columnFilters, setColumnFilters] = React.useState([]);
   const [columnVisibility, setColumnVisibility] = React.useState({});
@@ -57,7 +57,7 @@ const AdminTable = ({ data, loading, onClick }) => {
 
   const table = useReactTable({
     data,
-    columns: columns,
+    columns: columns(onUpdateStatus),
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     onPaginationChange: setPagination,
@@ -158,7 +158,7 @@ const AdminTable = ({ data, loading, onClick }) => {
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
-                  onClick={() => onClick(row.original)}
+                  // onClick={() => onClick(row.original)}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>

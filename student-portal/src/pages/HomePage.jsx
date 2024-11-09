@@ -30,6 +30,7 @@ const HomePage = () => {
       if (!data.success) {
         setOrgData([]);
       } else {
+        console.log(data.data)
         setOrgData(data.data.slice(0, 5));
       }
     } catch (error) {

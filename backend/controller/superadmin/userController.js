@@ -1,3 +1,4 @@
+import Organization from "../../model/organizationModel.js";
 import { OrgAdminModel as Admin } from "../../model/UserModel.js";
 
 export const createUser = async (req, res, next) => {
@@ -86,6 +87,45 @@ export const findUser = async (req, res, next) => {
     return res.status(500).json({
       success: false,
       message: error.message,
+    });
+  }
+};
+
+export const updateUser = async (req, res) => {
+
+  const userId = req.params.id;
+  try {
+    const user = await Admin.findByIdAndUpdate(userId, req.body);
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found!",
+      });
+    }
+ 
+    const organization = await Organization.findOneAndUpdate(
+      {
+        user: userId,
+      },
+      req.body
+    );
+
+    if (!organization) {
+      return res.status(404).json({
+        success: false,
+        message: "Organization not found!",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "User updated successfully!",
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      message: err.message,
     });
   }
 };

@@ -36,6 +36,7 @@ const SuperAdminHomeContent = () => {
             profilePicture: data.profilePicture,
           };
         });
+
         setData(tableData);
       }
 
@@ -45,9 +46,37 @@ const SuperAdminHomeContent = () => {
       setLoading(false);
     }
   };
+
+  const onUpdateStatus = async (reqData) => {
+    const userId = reqData.id;
+    
+    try {
+      const { data } = await apiClient.patch(
+        `/superadmin/accounts/${userId}`,
+        {
+          active: reqData.active,
+        },
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+
+      if (data.success) {
+        fetchAdminAccounts();
+      }
+
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="md:bg-[#fefefe] md:shadow-lg rounded-lg md:border md:border-gray-200 text-gray-900 px-6 py-5 flex flex-col relative">
-      <AdminTable data={data} />
+      <AdminTable data={data} onUpdateStatus={onUpdateStatus} />
     </div>
   );
 };

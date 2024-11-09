@@ -62,6 +62,14 @@ const LoginForm = () => {
       if (response.data.data.role == "2") {
         setErrorMessage("Invalid Credentials");
         setIsSubmitting(false);
+      } else if (response.data.data.role == "1") {
+        if (!response.data.data.active) {
+          setErrorMessage("Account is currently deactivated.");
+          setIsSubmitting(false);
+        } else {
+          login(response.data.token, response.data.data);
+          navigate("/");
+        }
       } else {
         login(response.data.token, response.data.data);
         navigate("/");
@@ -108,7 +116,7 @@ const LoginForm = () => {
                         Username
                       </FormLabel>
                       <FormControl>
-                        <Input {...field} type="text" autoComplete="username"/>
+                        <Input {...field} type="text" autoComplete="username" />
                       </FormControl>
                       <FormMessage className="text-xs " />
                     </FormItem>
