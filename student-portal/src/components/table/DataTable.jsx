@@ -148,7 +148,7 @@ const DataTable = ({ data, loading, columns, filterColumns}) => {
           </TableHeader>
           <TableBody className="">
             {loading ? (
-              <TableSkeleton rowCount={5} cellCount={3} />
+              <TableSkeleton rowCount={5} cellCount={7} />
             ) : table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow

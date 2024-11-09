@@ -326,7 +326,7 @@ const DesktopSidebar = () => {
                   </Avatar>
                   <div className="hidden lg:inline lg:ml-3 text-sm font-bold">
                     {fullname}{" "}
-                    <span className="font-normal">{userData.email}</span>
+                    <p className="font-normal">{userData.username}</p>
                   </div>
 
                   <DropdownMenu>
