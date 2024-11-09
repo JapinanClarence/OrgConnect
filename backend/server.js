@@ -18,7 +18,7 @@ import eventRoutes from "./routes/events.js";
 import announcementRoutes from "./routes/announcements.js";
 import paymentRoutes from "./routes/payment.js";
 import officerRoutes from "./routes/officers.js";
-
+import userAttendanceRoutes from "./routes/attendance.js";
 const DB = process.env.DATABASE.replace("<PASSWORD>", process.env.DB_PASSWORD);
 const app = express();
 
@@ -70,7 +70,7 @@ app.use("/api/user/", eventRoutes);
 app.use("/api/user/", announcementRoutes);
 app.use("/api/user/", paymentRoutes);
 app.use("/api/user/", officerRoutes);
-
+app.use("/api/user/", userAttendanceRoutes);
 
 // Handle 404 errors for undefined routes
 app.use((req, res, next) => {

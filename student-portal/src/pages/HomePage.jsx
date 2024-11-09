@@ -16,6 +16,7 @@ const HomePage = () => {
   const { token, userData, setUserData } = useAuth();
   const [orgData, setOrgData] = useState([]);
   const [eventData, setEventData] = useState([]);
+  const [totalAbsent, setTotalAbsent] = useState("");
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   // const loading = true;
@@ -53,6 +54,22 @@ const HomePage = () => {
       console.log(error);
     }
   };
+  const fetchAbsentCount = async () => {
+    try {
+      const { data } = await apiClient.get("/user/totalAbsent/", {
+        headers: {
+          Authorization: token,
+        },
+      });
+      if (!data.success) {
+        setTotalAbsent(0);// if no close events found, set total absent to 0
+      } else {
+        setTotalAbsent(data.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
   const fetchUserData = async () => {
     try {
       const { data } = await apiClient.get("/user/", {
@@ -69,7 +86,7 @@ const HomePage = () => {
   };
   useEffect(() => {
     const fetchData = async () => {
-      await Promise.all([fetchStudentOrgs(), fetchEvents(), fetchUserData()]);
+      await Promise.all([fetchStudentOrgs(), fetchEvents(), fetchUserData(), fetchAbsentCount()]);
       setLoading(false);
     };
     fetchData();
@@ -110,7 +127,7 @@ const HomePage = () => {
         <div>
           <h1 className="font-medium text-lg">Activity Status</h1>
           <p className="text-muted-foreground text-sm">
-            You have 0 total absences.
+            You have {totalAbsent.totalAbsences} total absences.
           </p>
         </div>
         <Link to={"/attendance"}>
