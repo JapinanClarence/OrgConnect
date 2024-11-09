@@ -87,28 +87,26 @@ export const studentOrgs = async (req, res, next) => {
           active: true,
         });
 
-        return {
-          id: organization._id,
-          name: organization.name,
-          about: organization.about,
-          banner: organization.banner,
-          contact: organization.contact,
-        };
+        // Only return organization data if it is active
+        if (organization) {
+          return {
+            id: organization._id,
+            name: organization.name,
+            about: organization.about,
+            banner: organization.banner,
+            contact: organization.contact,
+          };
+        }
+        return null; // Return null if organization is inactive
       })
     );
-  
-    // return {
-    //   id: data.organization._id,
-    //   name: data.organization.name,
-    //   about: data.organization.about,
-    //   banner: data.organization.banner,
-    //   contact: data.organization.contact,
-    //   active: data.organization.active,
-    // };
+
+    // Filter out null values (inactive organizations) from the result
+    const activeOrganizations = data.filter((org) => org !== null);
 
     res.status(200).json({
       success: true,
-      data: data,
+      data: activeOrganizations,
     });
   } catch (err) {
     return res.status(500).json({
