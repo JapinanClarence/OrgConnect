@@ -80,8 +80,13 @@ const MembersPage = () => {
           joinedDate: data.joinedDate ? dateOnly(data.joinedDate) : null,
           profilePicture: data.profilePicture,
         }));  
-        console.log(tableData)
-        setData(tableData);
+// Sort by last name
+const sortedTableData = tableData.sort((a, b) => {
+  const lastNameA = a.fullname.split(' ').slice(-1)[0].toLowerCase();
+  const lastNameB = b.fullname.split(' ').slice(-1)[0].toLowerCase();
+  return lastNameA.localeCompare(lastNameB);
+});
+        setData(sortedTableData);
       }
 
       setLoading(false);
