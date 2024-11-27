@@ -173,11 +173,35 @@ const SignupForm = () => {
                         <SelectItem value="BITM">
                           Bachelor of Science in Industrial Mathematics
                         </SelectItem>
+                        <SelectItem value="BSN">
+                          Bachelor of Science in Nursing
+                        </SelectItem>
+                        <SelectItem value="BTLED">
+                          Bachelor of Science in Technical and Livelihood Education
+                        </SelectItem>
                         <SelectItem value="BPED">
                           Bachelor of Science in Physical Education
                         </SelectItem>
-                        <SelectItem value="BSN">
-                          Bachelor of Science in Nursing
+                        <SelectItem value="BSCRIM">
+                          Bachelor of Science in Criminology
+                        </SelectItem>
+                        <SelectItem value="BSBA">
+                          Bachelor of Science in Business Administration
+                        </SelectItem>
+                        <SelectItem value="BSHM">
+                          Bachelor of Science in Hospitality Management
+                        </SelectItem>
+                        <SelectItem value="BSBIO">
+                          Bachelor of Science in Biology
+                        </SelectItem>
+                        <SelectItem value="BSAM">
+                          Bachelor of Science in Agribusiness Management
+                        </SelectItem>
+                        <SelectItem value="BSES">
+                          Bachelor of Science in Environmental Science
+                        </SelectItem>
+                        <SelectItem value="BSDEVCOM">
+                          Bachelor of Science in Development Communication
                         </SelectItem>
                       </SelectGroup>
                     </SelectContent>
