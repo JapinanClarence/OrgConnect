@@ -28,7 +28,7 @@ export const getAllEvents = async (req, res) => {
           // Fetch events only if the organization is active
           const eventList = await Events.find({
             organization: data.organization,
-          }).populate("organization", "name");
+          }).populate("organization", "name").sort({createdAt: -1});
           return eventList; // Return the list of events for each active organization
         }
 
@@ -74,7 +74,7 @@ export const getEvents = async (req, res) => {
     const events = await Events.find({ organization }).populate(
       "organization",
       "name"
-    );
+    ).sort({createdAt: -1});
 
     if (events.length <= 0) {
       return res.status(200).json({
