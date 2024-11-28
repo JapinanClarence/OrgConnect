@@ -1,14 +1,15 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
+import apiClient from "@/api/axios";
 
 const ProtectedRoutes = ({ allowedRoles }) => {
   const roleMapping = {
     admin: "1",
     superadmin: "0",
   };
-
-  const { isAuthenticated, isLoading, userData } = useAuth();
+  const [data, setData] = useState();
+  const { isAuthenticated, isLoading, userData, token } = useAuth();
   const location = useLocation();
   const userRole = userData?.role;
 
