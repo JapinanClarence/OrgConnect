@@ -72,20 +72,20 @@ const MembersPage = () => {
           email: data.email,
           year: yearMap[data.year],
           birthday: data.birthday,
-          gender:data.gender,
+          gender: data.gender,
           contact: data.contact,
           course: data.course,
           status: data.status,
           absenceCount: data.absentCount,
           joinedDate: data.joinedDate ? dateOnly(data.joinedDate) : null,
           profilePicture: data.profilePicture,
-        }));  
-// Sort by last name
-const sortedTableData = tableData.sort((a, b) => {
-  const lastNameA = a.fullname.split(' ').slice(-1)[0].toLowerCase();
-  const lastNameB = b.fullname.split(' ').slice(-1)[0].toLowerCase();
-  return lastNameA.localeCompare(lastNameB);
-});
+        }));
+        // Sort by last name
+        const sortedTableData = tableData.sort((a, b) => {
+          const lastNameA = a.fullname.split(" ").slice(-1)[0].toLowerCase();
+          const lastNameB = b.fullname.split(" ").slice(-1)[0].toLowerCase();
+          return lastNameA.localeCompare(lastNameB);
+        });
         setData(sortedTableData);
       }
 
@@ -167,18 +167,21 @@ const sortedTableData = tableData.sort((a, b) => {
 
   const onAdd = async (data) => {
     // console.log(data)
-    const {officerId, position, rank} = data;
+    const { officerId, position, rank } = data;
     try {
-      
       setIsSubmitting(true);
-      const res = await apiClient.patch(`/admin/officer/${officerId}`, {
-        position: position.toLowerCase(),
-        rank
-      }, {
-        headers: {
-          Authorization: token,
+      const res = await apiClient.patch(
+        `/admin/officer/${officerId}`,
+        {
+          position: position.toLowerCase(),
+          rank,
         },
-      });
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
 
       if (res) {
         await fetchMembers();
