@@ -55,9 +55,10 @@ const AdminHomeContent = () => {
         }
         setLoading(false);
       } catch (error) {
-        if (error.response && error.response.status === 404) {
-          setShowDialog(true);
-        }
+        // if (error.response && error.response.status === 404) {
+        //   setShowDialog(true);
+        // }
+        console.log(error)
         setLoading(false);
       }
     };

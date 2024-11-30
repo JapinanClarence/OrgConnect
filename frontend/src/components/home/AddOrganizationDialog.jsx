@@ -83,7 +83,7 @@ const AddOrganizationDialog = ({ showDialog, onClose  }) => {
     <AlertDialog open={showDialog}>
       <AlertDialogContent className="w-[400px] lg:w-[500px] bg-white">
         <AlertDialogHeader>
-          <AlertDialogTitle>Let's get started 🔥</AlertDialogTitle>
+          <AlertDialogTitle> Account is not currently assigned to organization 🔥</AlertDialogTitle>
           <AlertDialogDescription>
             Set up your organization details to get started.
           </AlertDialogDescription>
