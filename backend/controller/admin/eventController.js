@@ -9,16 +9,16 @@ export const createEvent = async (req, res, next) => {
 
   try {
     //verify if user exist
-    const user = await Admin.findById(userId);
-
-    if (!user) {
+    const admin = await Admin.findById(userId);
+    
+    if (!admin) {
       return res.status(404).json({
         success: false,
         message: "User not found",
       });
     }
-
-    const organization = await Organization.findOne({ user });
+    
+    const organization = await Organization.findOne({ admin });
 
     if (!organization) {
       return res.status(404).json({
@@ -51,7 +51,7 @@ export const createEvent = async (req, res, next) => {
 export const getEvent = async (req, res, next) => {
   const userId = req.user.userId;
   try {
-    const organization = await Organization.findOne({ user: userId });
+    const organization = await Organization.findOne({ admin: userId });
     if (!organization) {
       return res.status(404).json({
         success: false,
