@@ -6,7 +6,7 @@ import Attendance from "../../model/attendanceModel.js";
 export const getMembers = async (req, res) => {
   const userId = req.user.userId;
   try {
-    const organization = await Organization.findOne({ user: userId });
+    const organization = await Organization.findOne({ admin: userId });
 
     if (!organization) {
       return res.status(404).json({
@@ -79,7 +79,7 @@ export const getMembers = async (req, res) => {
 export const updateMember = async (req, res) => {
   const userId = req.user.userId;
   try {
-    const organization = await Organization.findOne({ user: userId });
+    const organization = await Organization.findOne({ admin: userId });
 
     if (!organization) {
       return res.status(404).json({
@@ -119,7 +119,7 @@ export const updateMember = async (req, res) => {
 export const deleteMember = async (req, res) => {
   const userId = req.user.userId;
   try {
-    const organization = await Organization.findOne({ user: userId });
+    const organization = await Organization.findOne({ admin: userId });
 
     if (!organization) {
       return res.status(404).json({

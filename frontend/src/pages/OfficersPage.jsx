@@ -126,6 +126,7 @@ const OfficersPage = () => {
           title: "Officer has been removed",
           description: `${date}`,
         });
+        setIsSubmitting(false);
       }
     } catch (error) {
       console.log(error);

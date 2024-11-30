@@ -13,8 +13,8 @@ export const createOfficer = async (req, res) => {
     const { position } = req.body;
 
     // Fetch organization
-    const organization = await Organization.findOne({ user: userId }).populate(
-      "user"
+    const organization = await Organization.findOne({ admin: userId }).populate(
+      "admin"
     );
 
     if (!organization) {
@@ -90,8 +90,8 @@ export const updateOfficer = async (req, res) => {
  
 
     // Fetch organization
-    const organization = await Organization.findOne({ user: userId }).populate(
-      "user"
+    const organization = await Organization.findOne({ admin: userId }).populate(
+      "admin"
     );
 
     if (!organization) {
@@ -149,8 +149,8 @@ export const revokeRole = async (req, res) => {
 
   try {
     // Fetch organization
-    const organization = await Organization.findOne({ user: userId }).populate(
-      "user"
+    const organization = await Organization.findOne({ admin: userId }).populate(
+      "admin"
     );
 
     if (!organization) {
@@ -166,7 +166,7 @@ export const revokeRole = async (req, res) => {
         position: "member",
       }
     );
-    console.log(memberId);
+
     if (!officer) {
       return res.status(404).json({
         success: false,
@@ -188,7 +188,7 @@ export const revokeRole = async (req, res) => {
 export const getOfficer = async (req, res) => {
   const userId = req.user.userId;
   try {
-    const organization = await Organization.findOne({ user: userId });
+    const organization = await Organization.findOne({ admin: userId });
 
     if (!organization) {
       return res.status(404).json({
@@ -255,7 +255,7 @@ export const getOfficer = async (req, res) => {
 export const getPositions = async (req, res) => {
   const userId = req.user.userId;
   try {
-    const organization = await Organization.findOne({ user: userId });
+    const organization = await Organization.findOne({ admin: userId });
 
     if (!organization) {
       return res.status(404).json({

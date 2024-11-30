@@ -8,16 +8,16 @@ export const createAnnouncement = async (req, res, next) => {
   const userId = req.user.userId;
   try {
     //verify if user exist
-    const user = await Admin.findById(userId);
+    const admin = await Admin.findById(userId);
 
-    if (!user) {
+    if (!admin) {
       return res.status(404).json({
         success: false,
         message: "User not found",
       });
     }
 
-    const organization = await Organization.findOne({ user });
+    const organization = await Organization.findOne({ admin });
 
     if (!organization) {
       return res.status(404).json({
@@ -49,16 +49,16 @@ export const getAnnouncement = async (req, res, next) => {
   const userId = req.user.userId;
   try {
     //verify if user exist
-    const user = await Admin.findById(userId);
+    const admin = await Admin.findById(userId);
 
-    if (!user) {
+    if (!admin) {
       return res.status(404).json({
         success: false,
         message: "User not found",
       });
     }
 
-    const organization = await Organization.findOne({ user });
+    const organization = await Organization.findOne({ admin });
 
     if (!organization) {
       return res.status(404).json({
