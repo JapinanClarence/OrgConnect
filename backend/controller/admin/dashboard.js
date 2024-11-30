@@ -29,8 +29,8 @@ export const getDashboardData = async (req, res) => {
   });
  
   try {
-    const organization = await Organization.findOne({ user: userId });
-
+    const organization = await Organization.findOne({ admin: userId });
+ 
     if (!organization) {
       return res.status(404).json({
         success: false,

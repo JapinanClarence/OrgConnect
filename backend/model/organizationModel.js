@@ -24,7 +24,7 @@ const organizationSchema = new mongoose.Schema(
       type: String,
       enum: ["0", "1"],
     },
-    user: {
+    admin: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: [true, "User is required"],
