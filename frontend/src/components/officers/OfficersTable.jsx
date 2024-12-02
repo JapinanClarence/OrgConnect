@@ -41,7 +41,14 @@ import {
 } from "lucide-react";
 import { columns } from "@/components/officers/Columns";
 import TableSkeleton from "@/components/skeleton/TableSkeleton";
-const OfficersTable = ({ data, loading, onAdd, onClick, handleDelete, handleEdit }) => {
+const OfficersTable = ({
+  data,
+  loading,
+  onAdd,
+  onClick,
+  handleDelete,
+  handleEdit,
+}) => {
   const [sorting, setSorting] = React.useState([]);
   const [columnFilters, setColumnFilters] = React.useState([]);
   const [columnVisibility, setColumnVisibility] = React.useState({});
@@ -103,7 +110,7 @@ const OfficersTable = ({ data, loading, onAdd, onClick, handleDelete, handleEdit
         />
 
         <div className="flex-wrap-reverse mt-2 space-y-2 md:space-y-0 md:mt-0 md:space-x-2 md:flex md:items-center">
-        <Button className="w-full md:w-fit" onClick={onAdd}>
+          <Button className="w-full md:w-fit" onClick={onAdd}>
             Add Officer
           </Button>
           <DropdownMenu>
@@ -153,7 +160,7 @@ const OfficersTable = ({ data, loading, onAdd, onClick, handleDelete, handleEdit
           </TableHeader>
           <TableBody className="">
             {loading ? (
-              <TableSkeleton rowCount={6} cellCount={6}/>
+              <TableSkeleton rowCount={6} cellCount={6} />
             ) : table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow

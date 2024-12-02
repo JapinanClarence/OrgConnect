@@ -5,12 +5,12 @@ import {
   getUser,
   updateUser,
 } from "../../controller/superadmin/userController.js";
-import { userValidationRules, validate } from "../../middleware/validator.js";
+import { userValidationRules, organizationValidationRules, validate } from "../../middleware/validator.js";
 import {
   authenticate,
   authorizeRole,
 } from "../../middleware/authMiddleware.js";
-
+import { createOrg, findOrg, updateOrg, uploadBanner } from "../../controller/admin/orgController.js";
 const router = express.Router();
 
 router.post(

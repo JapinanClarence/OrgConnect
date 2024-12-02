@@ -10,10 +10,11 @@ const SettingsPage = () => {
   const [orgData, setOrgData] = useState({});
   const { token, setUserData, userData } = useAuth();
   const [loading, setLoading] = useState(true);
-
+ 
   const getOrganizationData = async () => {
+ 
     try {
-      const { data } = await apiClient.get("/admin/organization/", {
+      const { data } = await apiClient.get(`/admin/organization/${userData.email}`, {
         headers: {
           Authorization: token,
         },

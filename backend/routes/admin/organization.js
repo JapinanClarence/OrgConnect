@@ -16,14 +16,14 @@ const router = express.Router();
 router.post(
   "/organization",
   authenticate,
-  authorizeRole("admin"),
+  authorizeRole("superadmin"),
   express.json(),
   organizationValidationRules(),
   validate,
   createOrg
 );
 
-router.get("/organization",
+router.get("/organization/:user",
   authenticate,
   authorizeRole("admin"),
   findOrg

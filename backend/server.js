@@ -19,6 +19,8 @@ import announcementRoutes from "./routes/announcements.js";
 import paymentRoutes from "./routes/payment.js";
 import officerRoutes from "./routes/officers.js";
 import userAttendanceRoutes from "./routes/attendance.js";
+import superadminOrgs from "./routes/superadmin/organization.js";
+
 const DB = process.env.DATABASE.replace("<PASSWORD>", process.env.DB_PASSWORD);
 const app = express();
 
@@ -54,6 +56,7 @@ app.use("/api/admin/", adminRoutes);
 
 //admin routes
 app.use("/api/superadmin/", superAdminRoutes);
+app.use("/api/superadmin/", superadminOrgs);
 app.use("/api/admin/", adminOrganizationRoutes);
 app.use("/api/admin/", adminEventRoutes);
 app.use("/api/admin/", adminAnnouncementRoutes);

@@ -106,7 +106,7 @@ export const updateUser = async (req, res) => {
  
     const organization = await Organization.findOneAndUpdate(
       {
-        user: userId,
+        admin: userId,
       },
       req.body
     );

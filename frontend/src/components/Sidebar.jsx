@@ -15,6 +15,9 @@ import {
   MoreVertical,
   Wallet,
   UserPlus,
+  Building2,
+  User2,
+  
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -61,7 +64,7 @@ const DesktopSidebar = () => {
       </div>
 
       <nav className="grid gap-1 pt-2 px-4">
-      <TooltipProvider>
+        <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
@@ -69,9 +72,7 @@ const DesktopSidebar = () => {
                 className={`${
                   userData.role == "1" ? "hidden" : "flex"
                 } rounded-lg size-full  items-center justify-start p-2 ${
-                  isActive("/")
-                    ? "bg-white text-zinc-900"
-                    : "hover:bg-gray-800"
+                  isActive("/") ? "bg-white text-zinc-900" : "hover:bg-gray-800"
                 }`}
               >
                 <Home />
@@ -86,6 +87,62 @@ const DesktopSidebar = () => {
               sideOffset={5}
             >
               Home
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Link
+                to="/organizations"
+                className={`${
+                  userData.role == "1" ? "hidden" : "flex"
+                } rounded-lg size-full  items-center justify-start p-2 ${
+                  isActive("/register-user")
+                    ? "bg-white text-zinc-900"
+                    : "hover:bg-gray-800"
+                }`}
+              >
+                <Building2 />
+                <span className="hidden lg:block ml-2 font-bold text-sm">
+                  Organizations
+                </span>
+              </Link>
+            </TooltipTrigger>
+            <TooltipContent
+              className="lg:hidden bg-white text-gray-900"
+              side="right"
+              sideOffset={5}
+            >
+              Organizations
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Link
+                to="/accounts"
+                className={`${
+                  userData.role == "1" ? "hidden" : "flex"
+                } rounded-lg size-full  items-center justify-start p-2 ${
+                  isActive("/register-user")
+                    ? "bg-white text-zinc-900"
+                    : "hover:bg-gray-800"
+                }`}
+              >
+                <Users />
+                <span className="hidden lg:block ml-2 font-bold text-sm">
+                  Users
+                </span>
+              </Link>
+            </TooltipTrigger>
+            <TooltipContent
+              className="lg:hidden bg-white text-gray-900"
+              side="right"
+              sideOffset={5}
+            >
+              Users
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
@@ -125,9 +182,7 @@ const DesktopSidebar = () => {
                 className={`${
                   userData.role == "0" ? "hidden" : "flex"
                 } rounded-lg size-full  items-center justify-start p-2 ${
-                  isActive("/")
-                    ? "bg-white text-zinc-900"
-                    : "hover:bg-gray-800"
+                  isActive("/") ? "bg-white text-zinc-900" : "hover:bg-gray-800"
                 }`}
               >
                 <SquareTerminal />

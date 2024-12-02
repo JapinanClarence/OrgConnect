@@ -1,4 +1,3 @@
-
 import React from "react";
 import {
   getCoreRowModel,
@@ -40,11 +39,10 @@ import {
   LoaderCircle,
   Settings2,
 } from "lucide-react";
-import { userColumns } from "@/components/superadmin/columns";
+import { orgColumns } from "@/components/superadmin/columns";
 import TableSkeleton from "@/components/skeleton/TableSkeleton";
-import { Label } from "../ui/label";
 
-const AdminTable = ({ data, loading, onClick, onAdd, onUpdateStatus }) => {
+const OrgTable = ({ data, loading, onClick, onAdd, onUpdateStatus }) => {
   const [sorting, setSorting] = React.useState([]);
   const [columnFilters, setColumnFilters] = React.useState([]);
   const [columnVisibility, setColumnVisibility] = React.useState({});
@@ -58,7 +56,7 @@ const AdminTable = ({ data, loading, onClick, onAdd, onUpdateStatus }) => {
 
   const table = useReactTable({
     data,
-    columns: userColumns(onUpdateStatus),
+    columns: orgColumns(onUpdateStatus),
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     onPaginationChange: setPagination,
@@ -106,8 +104,8 @@ const AdminTable = ({ data, loading, onClick, onAdd, onUpdateStatus }) => {
         />
 
         <div className="flex-wrap-reverse mt-2 space-y-2 md:space-y-0 md:mt-0 md:space-x-2 md:flex md:items-center">
-        <Button className="w-full md:w-fit" onClick={onAdd}>
-            Create Account
+          <Button className="w-full md:w-fit" onClick={onAdd}>
+            Create Org
           </Button>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -245,4 +243,4 @@ const AdminTable = ({ data, loading, onClick, onAdd, onUpdateStatus }) => {
   );
 };
 
-export default AdminTable;
+export default OrgTable;

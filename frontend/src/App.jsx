@@ -14,6 +14,8 @@ import OfficersPage from "./pages/OfficersPage";
 import EventPage from "./pages/EventPage";
 import AttendancePage from "./pages/AttendancePage";
 import RegistrationPage from "./pages/RegistrationPage";
+import OrganizationPage from "./pages/OrganizationPage";
+import AdminAccPage from "./pages/AdminAccPage";
 function App() {
   return (
     <>
@@ -38,6 +40,12 @@ function App() {
             path="/"
             element={<ProtectedRoutes allowedRoles={["superadmin"]} />}
           >
+            <Route element={<DashboardLayout />}>
+              <Route path="/organizations" element={<OrganizationPage />} />
+            </Route>
+            <Route element={<DashboardLayout />}>
+              <Route path="/accounts" element={<AdminAccPage />} />
+            </Route>
             <Route element={<DashboardLayout />}>
               <Route path="/register-user" element={<RegistrationPage />} />
             </Route>

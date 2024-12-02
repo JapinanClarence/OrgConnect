@@ -84,14 +84,11 @@ export const updateOrg = async (req, res, next) => {
     });
   }
 };
-export const findOrg = async (req, res, next) => {
+export const getOrg = async (req, res, next) => {
   const email = req.params.user;
 
   try {
-    const admin = await Admin.findOne({email});
-    const org = await Organization.findOne({ admin: admin._id }).select(
-      "name description about contact banner"
-    );
+    const org = await Organization.find();
 
     if (!org) {
       return res.status(404).json({
@@ -111,43 +108,3 @@ export const findOrg = async (req, res, next) => {
     });
   }
 };
-export const uploadBanner = async (req, res) =>{
-  const userId = req.user.userId;
-
-  const banner = req.file?.path;
- 
-  try {
-    const org = await Organization.findOne({ user: userId }).select(
-      "name description about contact banner"
-    );
-
-    // If the org has an existing profile picture in Cloudinary, delete it
-    if (org.banner) {
-      const publicId = `orgconnect/${getCloudinaryPublicId(
-        org.banner
-      )}`;
-
-      await cloudinary.uploader.destroy(publicId);
-      console.log("Old profile picture deleted from Cloudinary");
-    }
-
-    const isExists = await Organization.findByIdAndUpdate(org._id, { banner });
-
-    //verify if isExists exists
-    if (!isExists) {
-      return res.status(404).json({
-        success: false,
-        message: "Org not found",
-      });
-    }
-    //send response message
-    res.status(200).json({
-      success: true,
-      message: "Organization updated successfully",
-      data: banner,
-    });
-
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
-  }
-}
