@@ -45,7 +45,12 @@ export const attendanceValidationRules = () =>[
   body("studentId").notEmpty().withMessage("Student Id is required")
 ]
 
-
+export const academicYearValidationRules = () =>[
+  body("academicYear").notEmpty().withMessage("Academic year is required"),
+  body("semester").notEmpty().withMessage("Semester is required"),
+  body("startDate").notEmpty().withMessage("Start date is required"),
+  body("endDate").notEmpty().withMessage("End date is required"),
+]
 export const joinOrganizationValidationRules = () => [
   body("organization").notEmpty().withMessage("Organization is required"),
 ]

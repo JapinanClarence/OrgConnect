@@ -37,6 +37,7 @@ const organizationSchema = new mongoose.Schema(
       type: [{ position: String, rank: Number }],
       default: [], // Set default to empty array initially
     },
+    academicYear: {type: mongoose.Schema.Types.ObjectId, ref: "AcademicYear", required: true}
   },
   { timestamps: true }
 );

@@ -1,7 +1,5 @@
 import Organization from "../../model/organizationModel.js";
 import { OrgAdminModel as Admin } from "../../model/UserModel.js";
-import { getCloudinaryPublicId } from "../../util/helper.js";
-import { v2 as cloudinary } from "cloudinary";
 
 export const createOrg = async (req, res, next) => {
   const { name, type } = req.body;
@@ -15,13 +13,6 @@ export const createOrg = async (req, res, next) => {
       return res.status(404).json({
         success: false,
         message: "User not found",
-      });
-    }
-
-    if (user.active) {
-      return res.status(400).json({
-        success: false,
-        message: "Account already created an organization",
       });
     }
 
@@ -39,12 +30,7 @@ export const createOrg = async (req, res, next) => {
       about,
       contact,
       type,
-      user: userId,
-    });
-
-    //activate account after creating an org
-    await Admin.findByIdAndUpdate(userId, {
-      active: true,
+      admin: userId,
     });
 
     res.status(201).json({
