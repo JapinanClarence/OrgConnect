@@ -1,13 +1,13 @@
+import AcademicYear from "../../model/academicYearModel.js";
 import Organization from "../../model/organizationModel.js";
 import { OrgAdminModel as Admin } from "../../model/UserModel.js";
 
 export const createOrg = async (req, res, next) => {
-  const { name, type } = req.body;
-
-  const userId = req.user.userId;
+  const { name, type, admin } = req.body;
+  console.log(admin)
   try {
     //verify if user exist
-    const user = await Admin.findById(userId);
+    const user = await Admin.findById(admin);
 
     if (!user) {
       return res.status(404).json({
@@ -25,12 +25,12 @@ export const createOrg = async (req, res, next) => {
       });
     }
 
+    const currentAY = await AcademicYear.findOne({isCurrent: true});
     await Organization.create({
       name,
-      about,
-      contact,
       type,
-      admin: userId,
+      admin: admin,
+      academicYear: currentAY
     });
 
     res.status(201).json({
