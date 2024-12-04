@@ -121,16 +121,16 @@ const SuperAdminHomeContent = () => {
           </CardContent>
         </Card>
       </div>
-      <div className="flex gap-2">
-        <div className="md:bg-[#fefefe] md:shadow-lg rounded-lg md:border md:border-gray-200 text-gray-900 px-6 py-5 w-full flex flex-col relative">
+      {/* <div className="flex gap-2"> */}
+        {/* <div className="md:bg-[#fefefe] md:shadow-lg rounded-lg md:border md:border-gray-200 text-gray-900 px-6 py-5 w-full flex flex-col relative">
           <Label className="font-semibold">Users</Label>
           <AdminTable data={userData} onUpdateStatus={updateUser} />
-        </div>
+        </div> */}
         <div className="md:bg-[#fefefe] md:shadow-lg rounded-lg md:border md:border-gray-200 text-gray-900 px-6 py-5 w-full flex flex-col relative">
           <Label className="font-semibold">Organizations</Label>
           <OrgTable data={orgData} onUpdateStatus={updateOrg} />
         </div>
-      </div>
+      {/* </div> */}
     </>
   );
 };

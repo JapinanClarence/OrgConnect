@@ -17,6 +17,7 @@ import {
   UserPlus,
   Building2,
   User2,
+  BookA,
   
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -94,7 +95,7 @@ const DesktopSidebar = () => {
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
-                to="/organizations"
+                to="/academicYear"
                 className={`${
                   userData.role == "1" ? "hidden" : "flex"
                 } rounded-lg size-full  items-center justify-start p-2 ${
@@ -103,9 +104,9 @@ const DesktopSidebar = () => {
                     : "hover:bg-gray-800"
                 }`}
               >
-                <Building2 />
+                <BookA />
                 <span className="hidden lg:block ml-2 font-bold text-sm">
-                  Organizations
+                  Academic Years
                 </span>
               </Link>
             </TooltipTrigger>
@@ -114,7 +115,7 @@ const DesktopSidebar = () => {
               side="right"
               sideOffset={5}
             >
-              Organizations
+              Academic Years
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
