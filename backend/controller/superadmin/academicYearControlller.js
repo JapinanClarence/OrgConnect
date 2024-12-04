@@ -38,10 +38,10 @@ export const createAcadYear = async (req, res, next) => {
 
 export const updateAcadyear = async (req, res, next) => {
   const id = req.params.id;
-
+  
   try {
     const academicYear = await AcademicYear.findByIdAndUpdate(id, req.body);
-
+   
     if (!academicYear) {
       return res.status(404).json({
         success: false,

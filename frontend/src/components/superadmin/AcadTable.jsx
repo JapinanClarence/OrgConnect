@@ -42,7 +42,7 @@ import {
 import { acadColumns } from "@/components/superadmin/columns";
 import TableSkeleton from "@/components/skeleton/TableSkeleton";
 
-const AcadTable = ({ data, loading, onClick, onAdd, onUpdate }) => {
+const AcadTable = ({ data, loading, onClick, onAdd, onEdit }) => {
   const [sorting, setSorting] = React.useState([]);
   const [columnFilters, setColumnFilters] = React.useState([]);
   const [columnVisibility, setColumnVisibility] = React.useState({});
@@ -56,7 +56,7 @@ const AcadTable = ({ data, loading, onClick, onAdd, onUpdate }) => {
 
   const table = useReactTable({
     data,
-    columns: acadColumns(onUpdate),
+    columns: acadColumns(onEdit),
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     onPaginationChange: setPagination,

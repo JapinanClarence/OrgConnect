@@ -307,7 +307,7 @@ export const orgColumns = (onUpdateStatus) => [
   },
 ];
 
-export const acadColumns = (onUpdate) =>[
+export const acadColumns = (onEdit) =>[
 
   {
     accessorKey: "academicYear",
@@ -431,19 +431,15 @@ export const acadColumns = (onUpdate) =>[
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
-      const admin = row.original;
-      const active = row.getValue("active");
+      const acadYear = row.original;
       const handleCopy = (event) => {
         event.stopPropagation(); // Prevent the row click event
-        navigator.clipboard.writeText(admin.id);
+        navigator.clipboard.writeText(acadYear.id);
       };
       
-      const handleApprove = (data) => (event) => {
+      const handleEdit = (event) => {
         event.stopPropagation(); // Prevents the row click event
-        onUpdate({
-          id: admin.id,
-          active: data,
-        });
+        onEdit(acadYear);
       };
 
       return (
@@ -461,16 +457,10 @@ export const acadColumns = (onUpdate) =>[
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem
-              className={active && `hidden`}
-              onClick={handleApprove(true)}
+              // className={active && `hidden`}
+              onClick={handleEdit}
             >
-              Activate
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              className={!active && `hidden`}
-              onClick={handleApprove(false)}
-            >
-              Deactivate
+              Edit
             </DropdownMenuItem>
             {/* <DropdownMenuItem onClick={handleManage}>Add Role</DropdownMenuItem>
             <DropdownMenuItem onClick={handleDelete}>Kick</DropdownMenuItem> */}

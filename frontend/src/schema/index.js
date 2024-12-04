@@ -151,4 +151,5 @@ export const AcadYearSchema = z.object({
   endDate: z.string().min(1, {
     message: "End date is required",
   }),
+  active: z.boolean().optional()
 })

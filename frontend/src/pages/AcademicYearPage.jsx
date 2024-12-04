@@ -12,12 +12,15 @@ import { useToast } from "@/hooks/use-toast";
 import { useForm } from "react-hook-form";
 import AddAcadsDialog from "@/components/superadmin/AddAcadsDialog";
 import { AcadYearSchema } from "@/schema";
+import EditAcadsDialog from "@/components/superadmin/EditAcadsDialog";
 
 const AcademicYearPage = () => {
   const [loading, setLoading] = useState(true);
   const { token } = useAuth();
   const [acadData, setAcadData] = useState([]);
   const [showAddDialog, setShowAddDialog] = useState(false);
+  const [showEditDialog, setShowEditDialog] = useState(false);
+  const [currentAcadData, setCurrentAcadData] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState(false);
   const date = formatDate(Date.now());
@@ -70,7 +73,6 @@ const AcademicYearPage = () => {
   };
 
   const onAdd = async (data) => {
-    console.log(data)
     try {
       setIsSubmitting(true);
       const res = await apiClient.post("/superadmin/academicYear", data, {
@@ -97,7 +99,64 @@ const AcademicYearPage = () => {
     }
   };
 
-  const updateAcad = async (reqData) => {};
+  const handleEditDialog = (data) => {
+    setShowEditDialog(true);
+
+    const startDateParts = data.startDate.split('/');
+    const startDate = `${startDateParts[2]}-${startDateParts[0].padStart(2, '0')}-${startDateParts[1].padStart(2, '0')}`;;
+    
+    const endDateParts = data.endDate.split('/');
+    const endDate = `${endDateParts[2]}-${endDateParts[0].padStart(2, '0')}-${endDateParts[1].padStart(2, '0')}`;;
+
+    setCurrentAcadData({
+      id: data.id,
+      academicYear: data.academicYear,
+      semester: data.semester,
+      startDate,
+      endDate,
+      active:data.active
+    });
+  };
+
+  const onEdit = async (data) => {
+    try {
+      const formData = {
+        academicYear: data.academicYear,
+        semester: data.semester,
+        startDate: data.startDate,
+        endDate: data.endDate,
+        isCurrent: data.active
+      }
+      setIsSubmitting(true);
+      const res = await apiClient.patch(
+        `/superadmin/academicYear/${currentAcadData.id}`,
+        formData,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+
+      if (res) {
+        await fetchAcademicYears();
+        setIsSubmitting(false);
+        setShowEditDialog(false);
+        form.reset();
+
+        toast({
+          title: `Academic year has been updated`,
+          description: `${date}`,
+        });
+      }
+    } catch (error) {
+      const message = error.response.data.message;
+      setErrorMessage(message);
+      setIsSubmitting(false);
+    }
+  };
+
+
   return (
     <div className="md:bg-[#fefefe] md:shadow-lg rounded-lg md:border md:border-gray-200 text-gray-900 px-6 py-5 w-full flex flex-col relative">
       <h1 className="font-bold">Academic year</h1>
@@ -106,7 +165,7 @@ const AcademicYearPage = () => {
       </p>
       <AcadTable
         data={acadData}
-        onUpdateStatus={updateAcad}
+        onEdit={handleEditDialog}
         onAdd={setShowAddDialog}
       />
 
@@ -115,6 +174,14 @@ const AcademicYearPage = () => {
         onOpenChange={setShowAddDialog}
         form={form}
         onSubmit={onAdd}
+        isSubmitting={isSubmitting}
+        errorMessage={errorMessage}
+      />
+      <EditAcadsDialog
+        open={showEditDialog}
+        onOpenChange={setShowEditDialog}
+        acadsData={currentAcadData}
+        onSubmit={onEdit}
         isSubmitting={isSubmitting}
         errorMessage={errorMessage}
       />
