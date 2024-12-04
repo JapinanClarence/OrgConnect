@@ -5,6 +5,7 @@ import { StudentModel as Student } from "../../model/UserModel.js";
 
 export const createAttendance = async (req, res, next) => {
   const { eventId, studentId } = req.body;
+  
   try {
     const event = await Events.findById(eventId).select(["status"]);
 

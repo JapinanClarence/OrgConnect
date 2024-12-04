@@ -23,6 +23,16 @@ export const createOfficer = async (req, res) => {
         message: "User or organization not found",
       });
     }
+
+    if (!organization.active) {
+      return res.status(403).json({
+        success: false,
+        message:
+          "Organization is currently not active, limited actions granted.",
+      });
+    }
+    
+
     const validPositions = organization.officerPositions;
 
     // Validate position
@@ -100,6 +110,15 @@ export const updateOfficer = async (req, res) => {
         message: "User or organization not found",
       });
     }
+
+    if (!organization.active) {
+      return res.status(403).json({
+        success: false,
+        message:
+          "Organization is currently not active, limited actions granted.",
+      });
+    }
+    
     const validPositions = organization.officerPositions;
 
     // Validate position
@@ -159,7 +178,14 @@ export const revokeRole = async (req, res) => {
         message: "User or organization not found",
       });
     }
-
+    if (!organization.active) {
+      return res.status(403).json({
+        success: false,
+        message:
+          "Organization is currently not active, limited actions granted.",
+      });
+    }
+    
     const officer = await Membership.findOneAndUpdate(
       { student: memberId },
       {

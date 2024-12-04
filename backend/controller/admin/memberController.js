@@ -87,6 +87,15 @@ export const updateMember = async (req, res) => {
         message: "Organization not found",
       });
     }
+    if (!organization.active) {
+      return res.status(403).json({
+        success: false,
+        message:
+          "Organization is currently not active, limited actions granted.",
+      });
+    }
+    
+    
     const studentId = req.params.id;
 
     const member = await Membership.findOneAndUpdate(
@@ -127,6 +136,14 @@ export const deleteMember = async (req, res) => {
         message: "Organization not found",
       });
     }
+    if (!organization.active) {
+      return res.status(403).json({
+        success: false,
+        message:
+          "Organization is currently not active, limited actions granted.",
+      });
+    }
+    
     const memberId = req.params.id;
 
     const member = await Membership.findOneAndDelete({

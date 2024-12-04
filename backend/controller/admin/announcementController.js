@@ -26,11 +26,18 @@ export const createAnnouncement = async (req, res, next) => {
       });
     }
 
+    if (!organization.active) {
+      return res.status(403).json({
+        success: false,
+        message:
+          "Organization is currently not active, limited actions granted.",
+      });
+    }
     await Announcements.create({
       title,
       description,
       organization: organization._id,
-      category
+      category,
     });
 
     res.status(201).json({
@@ -115,7 +122,35 @@ export const findAnnouncement = async (req, res, next) => {
 };
 
 export const updateAnnouncement = async (req, res, next) => {
+  const userId = req.user.userId;
   try {
+    //verify if user exist
+    const admin = await Admin.findById(userId);
+
+    if (!admin) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    const organization = await Organization.findOne({ admin });
+
+    if (!organization) {
+      return res.status(404).json({
+        success: false,
+        message: "Organization not found",
+      });
+    }
+
+    if (!organization.active) {
+      return res.status(403).json({
+        success: false,
+        message:
+          "Organization is currently not active, limited actions granted.",
+      });
+    }
+    
     const announcementId = req.params.id;
 
     const announcement = await Announcements.findByIdAndUpdate(

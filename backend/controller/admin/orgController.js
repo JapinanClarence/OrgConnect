@@ -72,7 +72,14 @@ export const updateOrg = async (req, res, next) => {
         message: "Organization not found",
       });
     }
-
+    if (!org.active) {
+      return res.status(403).json({
+        success: false,
+        message:
+          "Organization is currently not active, limited actions granted.",
+      });
+    }
+    
     res.status(200).json({
       success: true,
       data: org,

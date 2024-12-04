@@ -27,6 +27,13 @@ export const createEvent = async (req, res, next) => {
       });
     }
 
+    if (!organization.active) {
+      return res.status(403).json({
+        success: false,
+        message:
+          "Organization is currently not active, limited actions granted.",
+      });
+    }
     await Events.create({
       title,
       description,
@@ -108,7 +115,35 @@ export const findEvent = async (req, res, next) => {
 };
 
 export const updateEvent = async (req, res, next) => {
+  const userId = req.user.userId;
   try {
+    //verify if user exist
+    const admin = await Admin.findById(userId);
+
+    if (!admin) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    const organization = await Organization.findOne({ admin });
+
+    if (!organization) {
+      return res.status(404).json({
+        success: false,
+        message: "Organization not found",
+      });
+    }
+
+    if (!organization.active) {
+      return res.status(403).json({
+        success: false,
+        message:
+          "Organization is currently not active, limited actions granted.",
+      });
+    }
+    
     const eventId = req.params.id;
 
     const event = await Events.findByIdAndUpdate(eventId, req.body);
@@ -133,7 +168,35 @@ export const updateEvent = async (req, res, next) => {
 };
 
 export const deleteEvent = async (req, res, next) => {
+  const userId = req.user.userId;
   try {
+    //verify if user exist
+    const admin = await Admin.findById(userId);
+
+    if (!admin) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    const organization = await Organization.findOne({ admin });
+
+    if (!organization) {
+      return res.status(404).json({
+        success: false,
+        message: "Organization not found",
+      });
+    }
+
+    if (!organization.active) {
+      return res.status(403).json({
+        success: false,
+        message:
+          "Organization is currently not active, limited actions granted.",
+      });
+    }
+    
     const eventId = req.params.id;
 
     const event = await Events.findByIdAndDelete(eventId, req.body);
