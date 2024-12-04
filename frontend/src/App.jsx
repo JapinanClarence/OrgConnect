@@ -46,9 +46,9 @@ function App() {
             <Route element={<DashboardLayout />}>
               <Route path="/accounts" element={<AdminAccPage />} />
             </Route>
-            <Route element={<DashboardLayout />}>
+            {/* <Route element={<DashboardLayout />}>
               <Route path="/register-user" element={<RegistrationPage />} />
-            </Route>
+            </Route> */}
           </Route>
 
           {/* admin only routes */}

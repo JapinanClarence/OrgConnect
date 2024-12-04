@@ -147,34 +147,7 @@ const DesktopSidebar = () => {
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Link
-                to="/register-user"
-                className={`${
-                  userData.role == "1" ? "hidden" : "flex"
-                } rounded-lg size-full  items-center justify-start p-2 ${
-                  isActive("/register-user")
-                    ? "bg-white text-zinc-900"
-                    : "hover:bg-gray-800"
-                }`}
-              >
-                <UserPlus />
-                <span className="hidden lg:block ml-2 font-bold text-sm">
-                  Register User
-                </span>
-              </Link>
-            </TooltipTrigger>
-            <TooltipContent
-              className="lg:hidden bg-white text-gray-900"
-              side="right"
-              sideOffset={5}
-            >
-              Register User
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
+       
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
