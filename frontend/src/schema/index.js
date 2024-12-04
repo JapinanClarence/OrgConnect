@@ -139,3 +139,16 @@ export const fileSchema = z
   .refine((file) => ["image/jpeg", "image/png"].includes(file.type), {
     message: "Only .jpg and .png formats are allowed",
   });
+
+export const AcadYearSchema = z.object({
+  academicYear: z.string().min(1, {
+    message: "Academic year is required",
+  }),
+  semester: z.enum(["0", "1"]),
+  startDate: z.string().min(1, {
+    message: "Start date is required",
+  }),
+  endDate: z.string().min(1, {
+    message: "End date is required",
+  }),
+})

@@ -99,7 +99,7 @@ const DesktopSidebar = () => {
                 className={`${
                   userData.role == "1" ? "hidden" : "flex"
                 } rounded-lg size-full  items-center justify-start p-2 ${
-                  isActive("/register-user")
+                  isActive("/academicYear")
                     ? "bg-white text-zinc-900"
                     : "hover:bg-gray-800"
                 }`}
@@ -127,7 +127,7 @@ const DesktopSidebar = () => {
                 className={`${
                   userData.role == "1" ? "hidden" : "flex"
                 } rounded-lg size-full  items-center justify-start p-2 ${
-                  isActive("/register-user")
+                  isActive("/accounts")
                     ? "bg-white text-zinc-900"
                     : "hover:bg-gray-800"
                 }`}

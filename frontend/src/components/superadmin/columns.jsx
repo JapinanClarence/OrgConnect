@@ -432,7 +432,7 @@ export const acadColumns = (onUpdate) =>[
     enableHiding: false,
     cell: ({ row }) => {
       const admin = row.original;
-      const status = row.getValue("status");
+      const active = row.getValue("active");
       const handleCopy = (event) => {
         event.stopPropagation(); // Prevent the row click event
         navigator.clipboard.writeText(admin.id);
@@ -461,13 +461,13 @@ export const acadColumns = (onUpdate) =>[
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem
-              className={status && `hidden`}
+              className={active && `hidden`}
               onClick={handleApprove(true)}
             >
               Activate
             </DropdownMenuItem>
             <DropdownMenuItem
-              className={!status && `hidden`}
+              className={!active && `hidden`}
               onClick={handleApprove(false)}
             >
               Deactivate
