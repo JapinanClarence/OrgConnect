@@ -4,7 +4,7 @@ import { OrgAdminModel as Admin } from "../../model/UserModel.js";
 
 export const createOrg = async (req, res, next) => {
   const { name, type, admin } = req.body;
-  console.log(admin)
+  
   try {
     //verify if user exist
     const user = await Admin.findById(admin);
@@ -23,6 +23,13 @@ export const createOrg = async (req, res, next) => {
         success: false,
         message: "Organization name already exists",
       });
+    }
+
+    if(admin === organization.admin){
+      return  res.status(400).json({
+        success:false,
+        message: "Admin is already assigned to an organization."
+      })
     }
 
     const currentAY = await AcademicYear.findOne({isCurrent: true});

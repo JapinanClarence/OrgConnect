@@ -128,7 +128,7 @@ const AddOrgDialog = ({
                   name="admin"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Admin</FormLabel>
+                      <FormLabel>Assign Admin</FormLabel>
                       <Popover disableFocusTrap>
                         <PopoverTrigger asChild>
                           <FormControl>
