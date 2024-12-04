@@ -36,32 +36,30 @@ export const createAcadYear = async (req, res, next) => {
 };
 
 
-// export const updateOrg = async (req, res, next) => {
-//   const userId = req.user.userId;
+export const updateAcadyear = async (req, res, next) => {
+  const id = req.params.id;
 
-//   try {
-//     const org = await Organization.findOneAndUpdate({ user: userId }, req.body).select(
-//       "name description about contact banner"
-//     );
+  try {
+    const academicYear = await AcademicYear.findByIdAndUpdate(id, req.body);
 
-//     if (!org) {
-//       return res.status(404).json({
-//         success: false,
-//         message: "Organization not found",
-//       });
-//     }
+    if (!academicYear) {
+      return res.status(404).json({
+        success: false,
+        message: "Academic year not found",
+      });
+    }
 
-//     res.status(200).json({
-//       success: true,
-//       data: org,
-//     });
-//   } catch (err) {
-//     return res.status(500).json({
-//       success: false,
-//       message: err.message,
-//     });
-//   }
-// };
+    res.status(200).json({
+      success: true,
+      message: "Academic year updated",
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
+};
 export const getAcademicYears = async (req, res, next) => {
  
 

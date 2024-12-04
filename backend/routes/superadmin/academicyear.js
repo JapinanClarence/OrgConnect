@@ -8,7 +8,7 @@ import {
   authorizeRole,
 } from "../../middleware/authMiddleware.js";
 
-import { createAcadYear } from "../../controller/superadmin/academicYearControlller.js";
+import { createAcadYear, getAcademicYears, updateAcadyear } from "../../controller/superadmin/academicYearControlller.js";
 const router = express.Router();
 
 //create organization routes
@@ -22,5 +22,18 @@ router.post(
   createAcadYear
 );
 
+router.patch("/academicYear/:id",
+  authenticate,
+  authorizeRole("superadmin"),
+  express.json(),
+  updateAcadyear
+)
+
+
+router.get("/academicYear",
+  authenticate,
+  authorizeRole("superadmin"),
+  getAcademicYears
+)
 
 export default router;
