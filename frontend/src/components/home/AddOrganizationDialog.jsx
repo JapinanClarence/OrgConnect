@@ -20,7 +20,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { OrgSchema } from "@/schema";
+import { CreateOrgSchema } from "@/schema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -41,7 +41,7 @@ const AddOrganizationDialog = ({ showDialog, onClose  }) => {
   const navigate = useNavigate();
   const {token} = useAuth();
   const form = useForm({
-    resolver: zodResolver(OrgSchema),
+    resolver: zodResolver(CreateOrgSchema),
     defaultValues: {
       name: "",
       about: "",

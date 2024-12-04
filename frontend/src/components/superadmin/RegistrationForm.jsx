@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/card";
 import React, { useEffect, useState } from "react";
 import apiClient from "@/api/axios";
-import { RegistrationSchema, OrgSchema } from "@/schema";
+import { RegistrationSchema } from "@/schema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";

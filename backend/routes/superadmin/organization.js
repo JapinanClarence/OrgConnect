@@ -21,7 +21,7 @@ router.post(
   validate,
   createOrg
 );
-
+router.patch("/organization/:id", authenticate, authorizeRole("superadmin"), express.json(), updateOrg);
 router.get("/organization/", authenticate, authorizeRole("superadmin"), getOrg);
 
 export default router;

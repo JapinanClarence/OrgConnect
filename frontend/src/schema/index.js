@@ -88,12 +88,25 @@ export const OfficerSchema = z.object({
   position: z.string().min(1, { message: "Position is required" }),
 });
 
-export const OrgSchema = z.object({
+export const CreateOrgSchema = z.object({
   name: z.string().min(1, {
     message: "Organization name is required",
   }),
-  about: z.string(),
-  contact: z.string(),
+  admin: z.string().min(1, {
+    message: "Admin is required"
+  })
+})
+
+export const EditOrgSchema = z.object({
+  name: z.string().min(1, {
+    message: "Organization name is required",
+  }),
+  about: z.string().optional(),
+  contact: z.string().optional(),
+  createdAt: z.string().optional(),
+  admin: z.string().optional(),
+  status: z.boolean().optional(),
+  remarks: z.string().optional(),
 });
 
 export const EventSchema = z.object({

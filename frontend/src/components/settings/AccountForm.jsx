@@ -22,7 +22,7 @@ import React, { useEffect, useState } from "react";
 import apiClient from "@/api/axios";
 import { useAuth } from "@/context/AuthContext";
 import { Camera, LoaderCircle } from "lucide-react";
-import { AdminSchema, OrgSchema } from "@/schema";
+import { AdminSchema } from "@/schema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Alert, AlertDescription } from "@/components/ui/alert";

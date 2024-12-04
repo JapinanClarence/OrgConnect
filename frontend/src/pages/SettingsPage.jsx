@@ -2,7 +2,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import React, { useEffect, useState } from "react";
 import AccountForm from "@/components/settings/AccountForm";
 import OrganizationForm from "@/components/settings/OrganizationForm";
-import { AdminSchema, OrgSchema } from "@/schema";
 import apiClient from "@/api/axios";
 import { useAuth } from "@/context/AuthContext";
 

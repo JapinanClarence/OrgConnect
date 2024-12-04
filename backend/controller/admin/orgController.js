@@ -62,7 +62,7 @@ export const updateOrg = async (req, res, next) => {
   const userId = req.user.userId;
 
   try {
-    const org = await Organization.findOneAndUpdate({ user: userId }, req.body).select(
+    const org = await Organization.findOneAndUpdate({ admin: userId }, req.body).select(
       "name description about contact banner"
     );
 

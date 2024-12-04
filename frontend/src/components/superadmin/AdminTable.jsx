@@ -44,7 +44,7 @@ import { userColumns } from "@/components/superadmin/columns";
 import TableSkeleton from "@/components/skeleton/TableSkeleton";
 import { Label } from "../ui/label";
 
-const AdminTable = ({ data, loading, onClick, onAdd, onUpdateStatus }) => {
+const AdminTable = ({ data, loading, onClick, onAdd, onEdit }) => {
   const [sorting, setSorting] = React.useState([]);
   const [columnFilters, setColumnFilters] = React.useState([]);
   const [columnVisibility, setColumnVisibility] = React.useState({});
@@ -58,7 +58,7 @@ const AdminTable = ({ data, loading, onClick, onAdd, onUpdateStatus }) => {
 
   const table = useReactTable({
     data,
-    columns: userColumns(onUpdateStatus),
+    columns: userColumns(onEdit),
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     onPaginationChange: setPagination,

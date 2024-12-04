@@ -42,7 +42,7 @@ import {
 import { orgColumns } from "@/components/superadmin/columns";
 import TableSkeleton from "@/components/skeleton/TableSkeleton";
 
-const OrgTable = ({ data, loading, onClick, onAdd, onUpdateStatus }) => {
+const OrgTable = ({ data, loading, onClick, onAdd, onEdit }) => {
   const [sorting, setSorting] = React.useState([]);
   const [columnFilters, setColumnFilters] = React.useState([]);
   const [columnVisibility, setColumnVisibility] = React.useState({});
@@ -52,11 +52,11 @@ const OrgTable = ({ data, loading, onClick, onAdd, onUpdateStatus }) => {
   });
   const [globalFilter, setGlobalFilter] = React.useState("");
   // Define the columns where you want to apply the global filter
-  const filterColumns = ["username", "fullname", "email"];
+  const filterColumns = ["name", "admin", "status"];
 
   const table = useReactTable({
     data,
-    columns: orgColumns(onUpdateStatus),
+    columns: orgColumns(onEdit),
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     onPaginationChange: setPagination,

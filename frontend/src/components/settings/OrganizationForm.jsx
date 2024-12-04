@@ -20,13 +20,14 @@ import { Textarea } from "@/components/ui/textarea";
 import React, { useEffect, useState } from "react";
 import apiClient from "@/api/axios";
 import { useAuth } from "@/context/AuthContext";
-import { AdminSchema, OrgSchema } from "@/schema";
+import { AdminSchema, EditOrgSchema } from "@/schema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useToast } from "@/hooks/use-toast";
 import { formatDate } from "@/util/helpers";
 import BannerForm from "@/components/settings/BannerForm";
+
 const OrganizationForm = ({ orgData, updateData }) => {
   const { token, userData } = useAuth();
   const [loading, setLoading] = useState(true);
@@ -36,7 +37,7 @@ const OrganizationForm = ({ orgData, updateData }) => {
   const { toast } = useToast();
 
   const form = useForm({
-    resolver: zodResolver(OrgSchema),
+    resolver: zodResolver(EditOrgSchema),
     defaultValues: orgData || {}, // Set default values at initialization
   });
 
@@ -50,6 +51,7 @@ const OrganizationForm = ({ orgData, updateData }) => {
   }, [orgData, reset]);
 
   const onSubmit = async (data) => {
+
     setIsSubmitting(true);
     try {
       const res = await apiClient.patch("/admin/organization", data, {

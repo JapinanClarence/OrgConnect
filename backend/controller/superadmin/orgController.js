@@ -45,12 +45,11 @@ export const createOrg = async (req, res, next) => {
   }
 };
 export const updateOrg = async (req, res, next) => {
-  const userId = req.user.userId;
+  const id = req.params.id;
 
   try {
-    const org = await Organization.findOneAndUpdate({ user: userId }, req.body).select(
-      "name description about contact banner"
-    );
+    console.log(req.body);
+    const org = await Organization.findByIdAndUpdate(id, req.body);
 
     if (!org) {
       return res.status(404).json({
@@ -61,7 +60,7 @@ export const updateOrg = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      data: org,
+      message: "Organization updated successfully",
     });
   } catch (err) {
     return res.status(500).json({
@@ -74,7 +73,7 @@ export const getOrg = async (req, res, next) => {
   const email = req.params.user;
 
   try {
-    const org = await Organization.find();
+    const org = await Organization.find().populate("admin");
 
     if (!org) {
       return res.status(404).json({
@@ -83,9 +82,20 @@ export const getOrg = async (req, res, next) => {
       });
     }
 
+    const filteredOrgs = org.map((data) =>{
+      return {
+        _id: data.id,
+        name: data.name,
+        createdAt: data.createdAt,
+        admin: data.admin.username,
+        active:data.active,
+        remarks:data.remarks
+      }
+    })
+
     res.status(200).json({
       success: true,
-      data: org,
+      data: filteredOrgs,
     });
   } catch (err) {
     return res.status(500).json({
