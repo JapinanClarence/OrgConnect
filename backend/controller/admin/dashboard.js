@@ -41,9 +41,18 @@ export const getDashboardData = async (req, res) => {
     const totalAnnouncementCount = await Announcement.countDocuments({
       organization: organization._id,
     });
-    const totalPaymentCount = await Payments.countDocuments({
-      organization: organization._id,
+
+    const announcements = await Announcement.find({
+      organization: organization._id
     });
+
+    const totalPaymentAmount = await Payments.aggregate([
+      { $match: { organization: organization._id } }, // Filter documents for the specific organization
+      { $group: { _id: null, totalAmount: { $sum: "$amount" } } }, // Group and sum the `amount` field
+    ]);
+    
+    const totalAmount = totalPaymentAmount.length > 0 ? totalPaymentAmount[0].totalAmount : 0;
+    
 
     const totalEventsCount = await Events.countDocuments({
       organization: organization._id,
@@ -58,7 +67,6 @@ export const getDashboardData = async (req, res) => {
     });
     const members = await Membership.find({ organization: organization._id, status:"1" })
       .sort({ createdAt: -1 })
-      .limit(20)
       .populate("student");
 
     const cleanMemberData = members.map((data) => {
@@ -73,6 +81,7 @@ export const getDashboardData = async (req, res) => {
         course: data.student.course,
         profilePicture: data.student.profilePicture,
         joinedDate: dateOnly(data.joinedDate),
+        gender: data.student.gender,
       };
     });
 
@@ -125,13 +134,14 @@ export const getDashboardData = async (req, res) => {
       success: true,
       eventCount: totalEventsCount,
       announcementCount: totalAnnouncementCount,
-      paymentCount: totalPaymentCount,
+      paymentCount: `₱ ${new Intl.NumberFormat('en-US').format(totalAmount)}`,
       memberCount: totalMembersCount,
       events: trimmedEvents,
       members: cleanMemberData,
       eventAttendees: eventsAttendees,
       currentMonth: monthString,
       currentYear,
+      announcements
     });
   } catch (err) {
     return res.status(500).json({

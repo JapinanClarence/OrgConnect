@@ -18,6 +18,8 @@ import {
   dashboardMemberColumns,
 } from "@/components/home/Columns";
 import { useAuth } from "@/context/AuthContext";
+import MembersChart from "./MembersChart";
+import AnnouncementsChart from "./AnnouncementsChart";
 
 const AdminHomeContent = () => {
   const [showDialog, setShowDialog] = useState(false);
@@ -26,11 +28,12 @@ const AdminHomeContent = () => {
   const [membersCount, setMembersCount] = useState(0);
   const [paymentCount, setPaymentcount] = useState(0);
   const [chartData, setChartData] = useState([]);
-  const [eventData, setEventData] = useState("");
-  const [memberData, setMemberData] = useState("");
+  const [eventData, setEventData] = useState([]);
+  const [memberData, setMemberData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentMonth, setCurrentMonth] = useState("");
   const [currentYear, setCurrentYear] = useState("");
+  const [announcementData, setAnnouncementData] = useState([]);
   const { userData } = useAuth();
 
   useEffect(() => {
@@ -52,13 +55,14 @@ const AdminHomeContent = () => {
           setChartData(data.eventAttendees);
           setCurrentYear(data.currentYear);
           setCurrentMonth(data.currentMonth);
+          setAnnouncementData(data.announcements);
         }
         setLoading(false);
       } catch (error) {
         // if (error.response && error.response.status === 404) {
         //   setShowDialog(true);
         // }
-        console.log(error)
+        console.log(error);
         setLoading(false);
       }
     };
@@ -108,6 +112,14 @@ const AdminHomeContent = () => {
               color="#10B981"
               loading={loading}
             />
+          </div>
+        </div>
+        <div className=" flex gap-3 flex-col-reverse md:flex-row">
+          <div className="flex-1   text-gray-900  md:flex flex-col">
+            <MembersChart data={memberData} />
+          </div>
+          <div className="flex-1   text-gray-900  md:flex flex-col">
+            <AnnouncementsChart data={announcementData} />
           </div>
         </div>
         <div className="flex gap-3 flex-col-reverse md:flex-row ">
