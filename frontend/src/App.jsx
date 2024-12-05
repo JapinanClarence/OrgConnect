@@ -16,6 +16,7 @@ import AttendancePage from "./pages/AttendancePage";
 import RegistrationPage from "./pages/RegistrationPage";
 import AdminAccPage from "./pages/AdminAccPage";
 import AcademicYearPage from "./pages/AcademicYearPage";
+import MembersPaidPage from "./pages/MembersPaidPage";
 function App() {
   return (
     <>
@@ -62,6 +63,8 @@ function App() {
               <Route path="/announcements" element={<AnnouncementPage />} />
 
               <Route path="/payments" element={<PaymentPage />} />
+
+              <Route path="/payments/memberspaid" element={<MembersPaidPage />} />
 
               <Route path="/events/attendance" element={<AttendancePage />} />
 

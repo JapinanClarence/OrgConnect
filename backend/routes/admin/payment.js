@@ -11,6 +11,7 @@ import {
 import {
   createPayment,
   deletePayment,
+  findPayment,
   getPayment,
   updatePayment,
   //   getAttendance,
@@ -39,19 +40,14 @@ router.patch(
 );
 
 router.delete(
-    "/payment/:id",
-    authenticate,
-    authorizeRole("admin"),
-    deletePayment
-  );
+  "/payment/:id",
+  authenticate,
+  authorizeRole("admin"),
+  deletePayment
+);
 
 router.get("/payment", authenticate, authorizeRole("admin"), getPayment);
 
-// router.get(
-//     "/announcement/:id",
-//     authenticate,
-//     authorizeRole("admin"),
-//     findAnnouncement
-//   );
+router.get("/payment/:id", authenticate, authorizeRole("admin"), findPayment);
 
 export default router;

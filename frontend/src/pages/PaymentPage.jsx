@@ -20,6 +20,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { useAuth } from "@/context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const PaymentPage = () => {
   const [data, setData] = useState([]);
@@ -41,6 +42,7 @@ const PaymentPage = () => {
       amount: "",
     },
   });
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchPayments();
@@ -174,6 +176,11 @@ const PaymentPage = () => {
       setIsSubmitting(false);
     }
   };
+
+  const handleRowClick = (data) => {
+    navigate(`/payments/memberspaid/?paymentId=${data.id}`)
+  }
+
   return (
     <div className="md:bg-[#fefefe] md:shadow-lg rounded-lg md:border md:border-gray-200 text-gray-900 px-6 py-5 flex flex-col relative">
       <h1 className="font-bold">Financial Records</h1>
@@ -181,11 +188,12 @@ const PaymentPage = () => {
         Here are the recent financial records of your organization
       </p>
       <PaymentTable
-        data={data}
-        loading={loading}
-        onAdd={setShowAddDialog}
-        onEdit={handleEditDialog}
-        onDelete={handleDeleteDialog}
+          data={data}
+          loading={loading}
+          onAdd={setShowAddDialog}
+          onEdit={handleEditDialog}
+          onDelete={handleDeleteDialog}
+          onClick={handleRowClick}
       />
 
       <AddPaymentDialog

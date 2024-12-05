@@ -1,6 +1,7 @@
 import Organization from "../../model/organizationModel.js";
 import { OrgAdminModel as Admin } from "../../model/UserModel.js";
 import Payments from "../../model/paymentModel.js";
+import { StudentModel as Student } from "../../model/UserModel.js";
 
 export const createPayment = async (req, res, next) => {
   const { purpose, amount, details } = req.body;
@@ -117,9 +118,27 @@ export const findPayment = async (req, res, next) => {
       });
     }
 
+    const membersPaid = await Promise.all(
+      payment.membersPaid.map(async (member) => {
+        const memberInfo = await Student.findOne(member.member);
+        const fullname = `${memberInfo.firstname} ${
+          memberInfo.middlename ? memberInfo.middlename[0] + ". " : ""
+        }${memberInfo.lastname}`;
+        return {
+          fullname,
+          profilePicture: memberInfo.profilePicture,
+          studentId: memberInfo.studentId,
+          year: memberInfo.year,
+          course: memberInfo.course,
+          amount: member.amount,
+          status: member.status,
+        };
+      })
+    );
+
     res.status(200).json({
       success: true,
-      data: payment,
+      data: membersPaid,
     });
   } catch (err) {
     return res.status(500).json({
