@@ -36,6 +36,11 @@ export const columns = (onEdit, onDelete) => [
     cell: ({ row }) => <div className="">{row.getValue("details")}</div>,
   },
   {
+    accessorKey: "category",
+    header: "Category",
+    cell: ({ row }) => <div className="">{row.getValue("category")}</div>,
+  },
+  {
     accessorKey: "amount",
     header: ({ column }) => {
       return (

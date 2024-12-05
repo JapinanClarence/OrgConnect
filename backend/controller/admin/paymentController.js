@@ -4,7 +4,7 @@ import Payments from "../../model/paymentModel.js";
 import { StudentModel as Student } from "../../model/UserModel.js";
 
 export const createPayment = async (req, res, next) => {
-  const { purpose, amount, details } = req.body;
+  const { purpose, amount, details, category } = req.body;
   const userId = req.user.userId;
 
   try {
@@ -38,6 +38,7 @@ export const createPayment = async (req, res, next) => {
       purpose,
       amount,
       details,
+      category,
       organization: organization._id,
     });
 

@@ -22,6 +22,12 @@ import {
 import { useAuth } from "@/context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
+const categoryMap = {
+  0: "Fees",
+  1: "Expendeture",
+  2: "Payment Logs",
+};
+
 const PaymentPage = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -64,6 +70,7 @@ const PaymentPage = () => {
           purpose: data.purpose,
           details: data.details,
           amount: data.amount,
+          category: categoryMap[data.category]
         }));
         setData(tableData);
       }

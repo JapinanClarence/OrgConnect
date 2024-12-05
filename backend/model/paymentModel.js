@@ -1,5 +1,9 @@
 import mongoose, { Mongoose } from "mongoose";
-
+/**
+ * 0 - Fees
+ * 1 - Expendeture
+ * 2 -  payment logs
+ */
 const paymentSchema = new mongoose.Schema(
   {
     purpose: {
@@ -18,6 +22,10 @@ const paymentSchema = new mongoose.Schema(
       type: mongoose.Schema.ObjectId,
       required: true,
     },
+    category: {
+      type: String,
+      enum: ["0", "1", "2"],
+    },
     membersPaid: [
       {
         member: {
@@ -25,18 +33,18 @@ const paymentSchema = new mongoose.Schema(
           ref: "User",
         },
         amount: {
-            type: Number,
-            required:  [true, "Amount is required"],
+          type: Number,
+          required: [true, "Amount is required"],
         },
         /**
          * 0 - not fully paid
          * 1 - full paid
          */
-        status:{
-            type: String,
-            enum: ["0", "1"],
-            default: "1"
-        }
+        status: {
+          type: String,
+          enum: ["0", "1"],
+          default: "1",
+        },
       },
     ],
   },
