@@ -33,7 +33,7 @@ const QrCard = () => {
   }, []);
 
   return (
-    <div className="bg-slate-100 w-full border border-zinc-300 shadow-md  rounded-lg p-5 text-gray-900 bg-grid-small-white/[0.2]">
+    <div className="bg-slate-100 w-full md:w-1/4 border border-zinc-300 shadow-md  rounded-lg p-5 text-gray-900 bg-grid-small-white/[0.2]">
       {loading ? (
         <div className="flex justify-center ">
           <div className=" space-y-5">
