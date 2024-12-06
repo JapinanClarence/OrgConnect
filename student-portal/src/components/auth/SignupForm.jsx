@@ -202,6 +202,9 @@ const SignupForm = () => {
                         <SelectItem value="BPED">
                           Bachelor of Science in Physical Education
                         </SelectItem>
+                        <SelectItem value="BECED">
+                        Bachelor of Early Childhood Education
+                        </SelectItem>
                         {/* fcje */}
                         <SelectItem value="BSCRIM">
                           Bachelor of Science in Criminology
