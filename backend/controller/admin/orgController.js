@@ -122,9 +122,8 @@ export const uploadBanner = async (req, res) =>{
   const userId = req.user.userId;
 
   const banner = req.file?.path;
- 
   try {
-    const org = await Organization.findOne({ user: userId }).select(
+    const org = await Organization.findOne({ admin: userId }).select(
       "name description about contact banner"
     );
 
