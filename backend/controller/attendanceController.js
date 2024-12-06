@@ -21,8 +21,7 @@ export const absentCount = async (req, res) => {
     const events = await Promise.all(
       membership.map(async (data) => {
         const organization = await Organization.findOne({
-          _id: data.organization,
-          active: true,
+          _id: data.organization
         });
 
         if (organization) {

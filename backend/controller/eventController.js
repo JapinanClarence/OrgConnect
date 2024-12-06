@@ -21,7 +21,6 @@ export const getAllEvents = async (req, res) => {
       membership.map(async (data) => {
         const organization = await Organization.findOne({
           _id: data.organization,
-          active: true,
         });
 
         if (organization) {

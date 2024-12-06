@@ -84,7 +84,6 @@ export const studentOrgs = async (req, res, next) => {
       membership.map(async (member) => {
         const organization = await Organization.findOne({
           _id: member.organization,
-          active: true,
         });
 
         // Only return organization data if it is active
