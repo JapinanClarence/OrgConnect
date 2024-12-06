@@ -16,16 +16,15 @@ export const createOrg = async (req, res, next) => {
         message: "User not found",
       });
     }
-    
-     // Verify if the admin is already assigned to an organization
-     const existingOrg = await Organization.findOne({ admin });
-     if (existingOrg) {
-       return res.status(400).json({
-         success: false,
-         message: "Admin is already assigned to an organization",
-       });
-     }
- 
+
+    // Verify if the admin is already assigned to an organization
+    const existingOrg = await Organization.findOne({ admin });
+    if (existingOrg) {
+      return res.status(400).json({
+        success: false,
+        message: "Admin is already assigned to an organization",
+      });
+    }
 
     const organization = await Organization.findOne({ name });
     //verify if organization name already exists
@@ -35,13 +34,13 @@ export const createOrg = async (req, res, next) => {
         message: "Organization name already exists",
       });
     }
-  
-    const currentAY = await AcademicYear.findOne({isCurrent: true});
+
+    const currentAY = await AcademicYear.findOne({ isCurrent: true });
     await Organization.create({
       name,
       type,
       admin,
-      academicYear: currentAY
+      academicYear: currentAY,
     });
 
     res.status(201).json({
@@ -93,16 +92,16 @@ export const getOrg = async (req, res, next) => {
       });
     }
 
-    const filteredOrgs = org.map((data) =>{
+    const filteredOrgs = org.map((data) => {
       return {
         _id: data.id,
         name: data.name,
         createdAt: data.createdAt,
         admin: data.admin.username,
-        active:data.active,
-        remarks:data.remarks
-      }
-    })
+        active: data.active,
+        remarks: data.remarks,
+      };
+    });
 
     res.status(200).json({
       success: true,
