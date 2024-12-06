@@ -161,6 +161,7 @@ const SignupForm = () => {
                     <SelectContent>
                       <SelectGroup>
                         <SelectLabel>Courses</SelectLabel>
+                        {/* facet */}
                         <SelectItem value="BSIT">
                           Bachelor of Science in Information Technology
                         </SelectItem>
@@ -176,21 +177,43 @@ const SignupForm = () => {
                         <SelectItem value="BSN">
                           Bachelor of Science in Nursing
                         </SelectItem>
+                        {/*  fted */}
+                        <SelectItem value="BEED">
+                          Bachelor of Elementary Education
+                        </SelectItem>
+                        <SelectItem value="BSED-Math">
+                          Bachelor of Secondary Education major in Mathematics
+                        </SelectItem>
+                        <SelectItem value="BSED-English">
+                          Bachelor of Secondary Education major in English
+                        </SelectItem>
+                        <SelectItem value="BSED-Science">
+                          Bachelor of Secondary Education major in Science
+                        </SelectItem>
+                        <SelectItem value="BSED-Filipino">
+                          Bachelor of Secondary Education major in Filipino
+                        </SelectItem>
+                        <SelectItem value="BSNED">
+                          Bachelor of Special Needs Education
+                        </SelectItem>
                         <SelectItem value="BTLED">
                           Bachelor of Science in Technical and Livelihood Education
                         </SelectItem>
                         <SelectItem value="BPED">
                           Bachelor of Science in Physical Education
                         </SelectItem>
+                        {/* fcje */}
                         <SelectItem value="BSCRIM">
                           Bachelor of Science in Criminology
                         </SelectItem>
+                        {/* fbm */}
                         <SelectItem value="BSBA">
                           Bachelor of Science in Business Administration
                         </SelectItem>
                         <SelectItem value="BSHM">
                           Bachelor of Science in Hospitality Management
                         </SelectItem>
+                        {/* fals */}
                         <SelectItem value="BSBIO">
                           Bachelor of Science in Biology
                         </SelectItem>
@@ -199,6 +222,16 @@ const SignupForm = () => {
                         </SelectItem>
                         <SelectItem value="BSES">
                           Bachelor of Science in Environmental Science
+                        </SelectItem>
+                        <SelectItem value="BSA">
+                          Bachelor of Science in Agcriculture
+                        </SelectItem>
+                        {/* fhssc */}
+                        <SelectItem value="BSPolSci">
+                          Bachelor of Science in Political Science
+                        </SelectItem>
+                        <SelectItem value="BSPsych">
+                          Bachelor of Science in Psychology
                         </SelectItem>
                         <SelectItem value="BSDEVCOM">
                           Bachelor of Science in Development Communication
