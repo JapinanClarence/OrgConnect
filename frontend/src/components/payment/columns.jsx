@@ -38,7 +38,17 @@ export const columns = (onEdit, onDelete) => [
   {
     accessorKey: "category",
     header: "Category",
-    cell: ({ row }) => <div className="">{row.getValue("category")}</div>,
+    cell: ({ row }) => {
+      const categoryMap = {
+        0: "Fees",
+        1: "Expendeture",
+        2: "Payment Logs",
+      };
+
+      const category = categoryMap[row.getValue("category")];
+
+      return <span className={`text-xs flex items-center`}>{category}</span>;
+    },
   },
   {
     accessorKey: "amount",
@@ -225,7 +235,7 @@ export const membersColumns = (onEdit, onDelete) => [
     enableHiding: false,
     cell: ({ row }) => {
       const payment = row.original;
-      
+
       const handleEdit = (event) => {
         event.stopPropagation();
         onEdit(payment);

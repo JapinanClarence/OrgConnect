@@ -22,11 +22,27 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PaymentSchema } from "@/schema";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectLabel,
+  SelectValue,
+  SelectGroup,
+} from "@/components/ui/select";
 
-const EditPaymentDialog = ({ paymentData, open, onOpenChange, onSubmit, isSubmitting, errorMessage }) => {
+const EditPaymentDialog = ({
+  paymentData,
+  open,
+  onOpenChange,
+  onSubmit,
+  isSubmitting,
+  errorMessage,
+}) => {
   const form = useForm({
     resolver: zodResolver(PaymentSchema),
-    defaultValues: paymentData,
+    defaultValues: paymentData || {},
   });
 
   const { reset } = form;
@@ -49,7 +65,7 @@ const EditPaymentDialog = ({ paymentData, open, onOpenChange, onSubmit, isSubmit
         </DialogHeader>
         <div>
           <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               {errorMessage && (
                 <Alert
                   variant="destructive"
@@ -109,10 +125,48 @@ const EditPaymentDialog = ({ paymentData, open, onOpenChange, onSubmit, isSubmit
                           <div className="absolute left-0 top-0 p-[10px]  ">
                             <PhilippinePeso className="h-4 w-4 text-muted-foreground" />
                           </div>
-                          <Input {...field} type="number" min="0.00" placeholder="0.00" className="pl-8"/>
+                          <Input
+                            {...field}
+                            type="number"
+                            min="0.00"
+                            placeholder="0.00"
+                            className="pl-8"
+                          />
                         </div>
                       </FormControl>
                       <FormMessage className="text-xs" />
+                    </FormItem>
+                  )}
+                />
+
+                {/* Category Field */}
+                <FormField
+                  control={form.control}
+                  name="category"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-gray-600 text-sm">
+                        Payment Category
+                      </FormLabel>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Choose payment category" />
+                          </SelectTrigger>
+                        </FormControl>
+
+                        <SelectContent className="bg-white border-zinc-300">
+                          <SelectGroup>
+                            <SelectLabel>Categories</SelectLabel>
+                            <SelectItem value="0">Fees</SelectItem>
+                            <SelectItem value="1">Expendeture</SelectItem>
+                            <SelectItem value="2">Payment Logs</SelectItem>
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
                     </FormItem>
                   )}
                 />

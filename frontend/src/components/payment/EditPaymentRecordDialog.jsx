@@ -55,6 +55,7 @@ const EditPaymentRecordDialog = ({
       reset(data); // This will reset the form with new event data
     }
   }, [data, reset]);
+  
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
