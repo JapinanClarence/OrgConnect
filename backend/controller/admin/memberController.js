@@ -75,6 +75,77 @@ export const getMembers = async (req, res) => {
   }
 };
 
+export const getApproveMembers = async (req, res) => {
+  const userId = req.user.userId;
+  try {
+    const organization = await Organization.findOne({ admin: userId });
+
+    if (!organization) {
+      return res.status(404).json({
+        success: false,
+        message: "Organization not found",
+      });
+    }
+
+    const members = await Membership.find({ organization: organization._id, status:"1"  });
+
+    if (members.length <= 0) {
+      return res.status(200).json({
+        success: false,
+        message: "No members found",
+      });
+    }
+
+    // Fetch all events for the organization
+    const events = await Events.find({ organization: organization._id, status: "0" });
+    const eventIds = events.map(event => event._id);
+
+    const memberData = await Promise.all(
+      members.map(async (member) => {
+        const data = await Student.findById(member.student);
+        const fullname = `${data.firstname} ${
+          data.middlename ? data.middlename[0] + ". " : ""
+        }${data.lastname}`;
+
+        // Count absences by checking if the student has no attendance record for each event
+        const attendanceRecords = await Attendance.find({
+          student: data._id,
+          event: { $in: eventIds },
+        });
+
+        const attendedEventIds = attendanceRecords.map(record => record.event.toString());
+        const absentCount = eventIds.filter(id => !attendedEventIds.includes(id.toString())).length;
+
+        return {
+          _id: data._id,
+          studentId: data.studentId,
+          fullname,
+          email: data.email,
+          birthday: data.birthday,
+          gender: data.gender,
+          contact: data.contactNumber,
+          year: data.year,
+          course: data.course,
+          profilePicture: data.profilePicture,
+          status: member.status,
+          joinedDate: member.joinedDate,
+          position: member.position,
+          absentCount,  // Adding absent count for the student
+        };
+      })
+    );
+
+    res.status(200).json({
+      success: true,
+      data: memberData,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
+};
 
 export const updateMember = async (req, res) => {
   const userId = req.user.userId;

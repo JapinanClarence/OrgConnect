@@ -6,6 +6,7 @@ import {
 
 import {
     deleteMember,
+  getApproveMembers,
   getMembers,
   updateMember,
 
@@ -17,6 +18,11 @@ router.get("/members",
     authenticate,
     authorizeRole("admin"),
     getMembers
+)
+router.get("/members/approved", 
+  authenticate,
+  authorizeRole("admin"),
+  getApproveMembers
 )
 router.patch("/members/:id", 
     authenticate,

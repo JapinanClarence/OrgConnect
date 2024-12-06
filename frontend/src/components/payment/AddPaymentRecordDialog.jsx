@@ -65,7 +65,7 @@ const AddPaymentRecordDialog = ({
 
   const fetchMembers = async () => {
     try {
-      const response = await apiClient.get("/admin/members", {
+      const response = await apiClient.get("/admin/members/approved", {
         headers: {
           Authorization: token,
         },
