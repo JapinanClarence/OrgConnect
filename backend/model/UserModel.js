@@ -84,7 +84,7 @@ const StudentSchema = new mongoose.Schema({
 const OrgAdminSchema = new mongoose.Schema({
   active: {
     type: Boolean,
-    default: false,
+    default: true,
   },
 })
 
