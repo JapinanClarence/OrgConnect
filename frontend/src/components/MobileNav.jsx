@@ -98,10 +98,16 @@ const MobileNav = () => {
           </button>
 
           <button
-            onClick={() => handleNavigation("/register-user")}
+            onClick={() => handleNavigation("/academicYear")}
             className="rounded-lg hover:bg-gray-800 p-2 w-full text-left"
           >
-            Register user
+            Academic Years
+          </button>
+          <button
+            onClick={() => handleNavigation("/accounts")}
+            className="rounded-lg hover:bg-gray-800 p-2 w-full text-left"
+          >
+            Users
           </button>
 
         </div>

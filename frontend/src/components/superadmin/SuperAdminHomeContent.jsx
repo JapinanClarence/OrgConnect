@@ -142,14 +142,14 @@ const SuperAdminHomeContent = () => {
   };
   return (
     <>
-      <div className="mb-2">
+      {/* <div className="mb-2">
         <Label>Current Semister: 1st A.Y. 2024-2025</Label>
         <Card>
           <CardContent>
             <CardHeader>Hello</CardHeader>
           </CardContent>
         </Card>
-      </div>
+      </div> */}
       {/* <div className="flex gap-2"> */}
       {/* <div className="md:bg-[#fefefe] md:shadow-lg rounded-lg md:border md:border-gray-200 text-gray-900 px-6 py-5 w-full flex flex-col relative">
           <Label className="font-semibold">Users</Label>
