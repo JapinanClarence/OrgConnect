@@ -126,6 +126,7 @@ export const findPayment = async (req, res, next) => {
           memberInfo.middlename ? memberInfo.middlename[0] + ". " : ""
         }${memberInfo.lastname}`;
         return {
+          _id: memberInfo.id,
           fullname,
           profilePicture: memberInfo.profilePicture,
           studentId: memberInfo.studentId,
@@ -136,10 +137,145 @@ export const findPayment = async (req, res, next) => {
         };
       })
     );
-
     res.status(200).json({
       success: true,
-      data: membersPaid,
+      data: {
+        id: payment.id,
+        purpose: payment.purpose,
+        details: payment.details,
+        amount: payment.amount,
+        category: payment.category,
+        membersPaid,
+      },
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
+};
+
+export const recordPayment = async (req, res, next) => {
+  const { member, amount, status } = req.body;
+  try {
+    const paymentId = req.params.id;
+
+    const payment = await Payments.findById(paymentId);
+
+    if (!payment) {
+      return res.status(404).json({
+        success: false,
+        message: "Payment not found!",
+      });
+    }
+
+    // Add the new member payment record
+    payment.membersPaid.push({
+      member,
+      amount,
+      status: status || "1", // Default to fully paid if not provided
+    });
+
+    // Save the updated payment document
+    await payment.save();
+
+    return res.status(200).json({
+      success: true,
+      message: "Payment recorded successfully!",
+      data: payment,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
+};
+
+export const editPaymentRecord = async (req, res, next) => {
+  try {
+    const paymentId = req.params.paymentId; // Payment record ID
+    const memberId = req.params.memberId; // User's member ID to remove payment
+    const { amount, status } = req.body; // Fields to update
+
+    // Find the payment record
+    const payment = await Payments.findById(paymentId);
+
+    if (!payment) {
+      return res.status(404).json({
+        success: false,
+        message: "Payment record not found!",
+      });
+    }
+
+    // Check if the member exists in the membersPaid array
+    const memberIndex = payment.membersPaid.findIndex(
+      (paidMember) => paidMember.member.toString() === memberId
+    );
+
+    if (memberIndex === -1) {
+      return res.status(404).json({
+        success: false,
+        message: "Member's payment record not found!",
+      });
+    }
+
+    // Update the payment details
+    if (amount !== undefined) payment.membersPaid[memberIndex].amount = amount;
+    if (status !== undefined) payment.membersPaid[memberIndex].status = status;
+
+    // Save the updated payment record
+    await payment.save();
+
+    return res.status(200).json({
+      success: true,
+      message: "Member's payment record updated successfully!",
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
+};
+
+export const deleteUserPayment = async (req, res, next) => {
+  try {
+    const paymentId = req.params.paymentId; // Payment record ID
+    const memberId = req.params.memberId; // User's member ID to remove payment
+
+    // Find the payment record
+    const payment = await Payments.findById(paymentId);
+
+    if (!payment) {
+      return res.status(404).json({
+        success: false,
+        message: "Payment record not found!",
+      });
+    }
+
+    // Check if the member exists in the membersPaid array
+    const memberIndex = payment.membersPaid.findIndex(
+      (paidMember) => paidMember.member.toString() === memberId
+    );
+    console.log(memberId);
+    if (memberIndex === -1) {
+      return res.status(404).json({
+        success: false,
+        message: "Member's payment record not found!",
+      });
+    }
+
+    // Remove the member's payment record
+    payment.membersPaid.splice(memberIndex, 1);
+
+    // Save the updated payment record
+    await payment.save();
+
+    return res.status(200).json({
+      success: true,
+      message: "Member's payment record deleted successfully!",
     });
   } catch (err) {
     return res.status(500).json({

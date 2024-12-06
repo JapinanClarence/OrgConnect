@@ -4,6 +4,7 @@ import mongoose, { Mongoose } from "mongoose";
  * 1 - Expendeture
  * 2 -  payment logs
  */
+
 const paymentSchema = new mongoose.Schema(
   {
     purpose: {

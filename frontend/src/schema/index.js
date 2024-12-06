@@ -142,7 +142,19 @@ export const PaymentSchema = z.object({
       message: "Amount is required",
     })
   ),
+  category: z.enum(["0", "1", "2"])
 });
+
+export const PaymentRecordSchema = z.object({
+  member: z.string().min(1, { message: "Member is required" }),
+  amount: z.preprocess(
+    (val) => Number(val),
+    z.number().min(1, {
+      message: "Amount is required",
+    })
+  ),
+  status: z.enum(["0", "1"])
+})
 
 // Define the file schema
 export const fileSchema = z

@@ -225,7 +225,7 @@ export const membersColumns = (onEdit, onDelete) => [
     enableHiding: false,
     cell: ({ row }) => {
       const payment = row.original;
-
+      
       const handleEdit = (event) => {
         event.stopPropagation();
         onEdit(payment);

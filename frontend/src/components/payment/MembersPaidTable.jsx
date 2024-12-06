@@ -54,7 +54,7 @@ const MembersPaidTable = ({ data, loading, onAdd, onEdit, onDelete }) => {
   });
   const [globalFilter, setGlobalFilter] = React.useState("");
   // Define the columns where you want to apply the global filter
-  const filterColumns = ["purpose", "details", "amount"];
+  const filterColumns = ["fullname", "course", "year","amount", "studentId"];
 
   const table = useReactTable({
     data,

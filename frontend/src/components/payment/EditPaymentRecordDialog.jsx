@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { cn } from "@/lib/utils";
 import {
   Dialog,
   DialogContent,
@@ -13,6 +14,7 @@ import {
   FormLabel,
   FormControl,
   FormMessage,
+  FormDescription,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -28,22 +30,38 @@ import {
   SelectValue,
   SelectGroup,
 } from "@/components/ui/select";
+import { PaymentRecordSchema } from "@/schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 
-const AddPaymentDialog = ({
+const EditPaymentRecordDialog = ({
   open,
   onOpenChange,
   onSubmit,
-  form,
+  data,
   isSubmitting,
   errorMessage,
 }) => {
+  const form = useForm({
+    resolver: zodResolver(PaymentRecordSchema),
+    defaultValues: data || {}, // Set default values at initialization
+  });
+
+  const { reset } = form;
+
+  // Use effect to reset form when acads datas changes
+  useEffect(() => {
+    if (data) {
+      reset(data); // This will reset the form with new event data
+    }
+  }, [data, reset]);
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Add Financial Record</DialogTitle>
+          <DialogTitle>Add Payment Record</DialogTitle>
           <DialogDescription>
-            Please fill in all required fields to add financial records.
+            Please fill in all required fields to add payment records.
           </DialogDescription>
         </DialogHeader>
         <div className="">
@@ -58,42 +76,6 @@ const AddPaymentDialog = ({
                 </Alert>
               )}
               <div className="space-y-2">
-                {/* Purpose Field */}
-                <FormField
-                  control={form.control}
-                  name="purpose"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-gray-600 text-sm">
-                        Purpose
-                      </FormLabel>
-                      <FormControl>
-                        <Input {...field} type="text" />
-                      </FormControl>
-                      <FormMessage className="text-xs" />
-                    </FormItem>
-                  )}
-                />
-
-                {/* Details Field */}
-                <FormField
-                  control={form.control}
-                  name="details"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-gray-600 text-sm">
-                        Details{" "}
-                      </FormLabel>
-                      <FormControl>
-                        <div className="relative w-full ">
-                          <Textarea className="resize-y" {...field} />
-                        </div>
-                      </FormControl>
-                      <FormMessage className="text-xs" />
-                    </FormItem>
-                  )}
-                />
-
                 {/* amount Field */}
                 <FormField
                   control={form.control}
@@ -108,7 +90,13 @@ const AddPaymentDialog = ({
                           <div className="absolute left-0 top-0 p-[10px]  ">
                             <PhilippinePeso className="h-4 w-4 text-muted-foreground" />
                           </div>
-                          <Input {...field} type="number" min="0.00" placeholder="0.00" className="pl-8"/>
+                          <Input
+                            {...field}
+                            type="number"
+                            min="0.00"
+                            placeholder="0.00"
+                            className="pl-8"
+                          />
                         </div>
                       </FormControl>
                       <FormMessage className="text-xs" />
@@ -116,14 +104,14 @@ const AddPaymentDialog = ({
                   )}
                 />
 
-                 {/* Category Field */}
-                 <FormField
+                {/* Status Field */}
+                <FormField
                   control={form.control}
-                  name="category"
+                  name="status"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="text-gray-600 text-sm">
-                        Payment Category
+                        Payment Status
                       </FormLabel>
                       <Select
                         onValueChange={field.onChange}
@@ -131,16 +119,15 @@ const AddPaymentDialog = ({
                       >
                         <FormControl>
                           <SelectTrigger>
-                            <SelectValue placeholder="Choose payment category" />
+                            <SelectValue placeholder="Choose payment status" />
                           </SelectTrigger>
                         </FormControl>
 
                         <SelectContent className="bg-white border-zinc-300">
                           <SelectGroup>
-                            <SelectLabel>Categories</SelectLabel>
-                            <SelectItem value="0">Fees</SelectItem>
-                            <SelectItem value="1">Expendeture</SelectItem>
-                            <SelectItem value="2">Payment Logs</SelectItem>
+                            <SelectLabel>Status</SelectLabel>
+                            <SelectItem value="0">Not Fully Paid</SelectItem>
+                            <SelectItem value="1">Fully Paid</SelectItem>
                           </SelectGroup>
                         </SelectContent>
                       </Select>
@@ -158,7 +145,7 @@ const AddPaymentDialog = ({
                   {isSubmitting ? (
                     <LoaderCircle className="animate-spin" />
                   ) : (
-                    "Add Record"
+                    "Submit"
                   )}
                 </Button>
                 <Button
@@ -178,4 +165,4 @@ const AddPaymentDialog = ({
   );
 };
 
-export default AddPaymentDialog;
+export default EditPaymentRecordDialog;

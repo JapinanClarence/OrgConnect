@@ -41,6 +41,12 @@ export const paymentValidationRules = () =>[
   body("amount").notEmpty().withMessage("Payment amount is required"),
   body("category").notEmpty().withMessage("Category is required")
 ]
+export const recordPaymentValidationRules = () => [
+  body("member").notEmpty().withMessage("Payment purpose is required"),
+  body("status").notEmpty().withMessage("Payment status is required"),
+  body("amount").notEmpty().withMessage("Payment amount is required"),
+]
+
 export const attendanceValidationRules = () =>[
   body("eventId").notEmpty().withMessage("Event Id is required"),
   body("studentId").notEmpty().withMessage("Student Id is required")
