@@ -36,9 +36,16 @@ const OrgCards = ({ orgImage, title, about, variant, onClick, id }) => {
         )}
       </CardHeader>
       <CardContent className="p-4">
-        <CardTitle className="text-lg"> {title.length > 15 ? `${title.slice(0, 15)}...` : title} </CardTitle>
+        <CardTitle className="text-lg">
+          {" "}
+          {title.length > 15 ? `${title.slice(0, 15)}...` : title}{" "}
+        </CardTitle>
         <CardDescription className="text-pretty">
-          {about.length > 100 ? `${about.slice(0, 100)}...` : about}
+          {about
+            ? about.length > 100
+              ? `${about.slice(0, 100)}...`
+              : about
+            : ""}
         </CardDescription>
       </CardContent>
     </Card>

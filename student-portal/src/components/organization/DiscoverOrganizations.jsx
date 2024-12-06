@@ -43,7 +43,6 @@ const DiscoverOrganizations = () => {
       });
 
       if (data.success) {
-        console.log(data.data)
         setOrgData(data.data);
       } else {
         setOrgData([]);
