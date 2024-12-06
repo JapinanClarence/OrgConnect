@@ -3,9 +3,10 @@ import Organization from "../../model/organizationModel.js";
 import { OrgAdminModel as Admin } from "../../model/UserModel.js";
 
 export const createOrg = async (req, res, next) => {
-  const { name, type, admin } = req.body;
-  
+  const { name, admin, type } = req.body;
+
   try {
+    // console.log(req.body)
     //verify if user exist
     const user = await Admin.findById(admin);
 
@@ -15,6 +16,16 @@ export const createOrg = async (req, res, next) => {
         message: "User not found",
       });
     }
+    
+     // Verify if the admin is already assigned to an organization
+     const existingOrg = await Organization.findOne({ admin });
+     if (existingOrg) {
+       return res.status(400).json({
+         success: false,
+         message: "Admin is already assigned to an organization",
+       });
+     }
+ 
 
     const organization = await Organization.findOne({ name });
     //verify if organization name already exists
@@ -24,19 +35,12 @@ export const createOrg = async (req, res, next) => {
         message: "Organization name already exists",
       });
     }
-
-    if(admin === organization.admin){
-      return  res.status(400).json({
-        success:false,
-        message: "Admin is already assigned to an organization."
-      })
-    }
-
+  
     const currentAY = await AcademicYear.findOne({isCurrent: true});
     await Organization.create({
       name,
       type,
-      admin: admin,
+      admin,
       academicYear: currentAY
     });
 

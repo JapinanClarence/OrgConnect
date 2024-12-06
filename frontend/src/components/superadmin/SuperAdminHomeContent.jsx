@@ -79,6 +79,7 @@ const SuperAdminHomeContent = () => {
     setCurrentOrgData(data);
   };
   const onAdd = async (data) =>{
+   
     try {
       setIsSubmitting(true);
       const res = await apiClient.post("/superadmin/organization", data, {
