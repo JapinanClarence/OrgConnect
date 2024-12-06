@@ -29,6 +29,10 @@ const DiscoverOrganizations = () => {
   const { toast } = useToast();
   const date = formatDate(Date.now());
   const navigate = useNavigate();
+  
+  useEffect(() => {
+    fetchAllOrgs();
+  }, []);
 
   const fetchAllOrgs = async () => {
     try {
@@ -50,9 +54,7 @@ const DiscoverOrganizations = () => {
     }
   };
 
-  useEffect(() => {
-    fetchAllOrgs();
-  }, []);
+  
 
   const handleClick = (data) => {
     setCurrentOrg(data);
