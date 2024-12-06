@@ -100,7 +100,7 @@ const HomePage = () => {
   const handleClick = async (data) => {
     navigate(`/organization/${data}`);
   };
-
+console.log(totalAbsent)
   return (
     <div className="pt-16">
       <Header />
