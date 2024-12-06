@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/card";
 
 const OrgCards = ({ orgImage, title, about, variant, onClick, id }) => {
+  console.log(about)
   const isHorizontal = variant === "horizontal";
   return (
     <Card
