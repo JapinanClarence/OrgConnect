@@ -100,7 +100,7 @@ const HomePage = () => {
   const handleClick = async (data) => {
     navigate(`/organization/${data}`);
   };
-console.log(totalAbsent)
+
   return (
     <div className="pt-16">
       <Header />
@@ -130,7 +130,11 @@ console.log(totalAbsent)
           <div>
             <h1 className="font-medium text-lg">Activity Status</h1>
             <p className="text-muted-foreground text-sm">
-              You have {totalAbsent.totalAbsences == null ? 0 : totalAbsent.totalAbsences} total absences.
+              You have{" "}
+              {totalAbsent.totalAbsences == null
+                ? 0
+                : totalAbsent.totalAbsences}{" "}
+              total absences.
             </p>
           </div>
           <Link to={"/attendance"}>

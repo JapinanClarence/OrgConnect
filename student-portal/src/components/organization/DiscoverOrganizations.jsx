@@ -29,7 +29,7 @@ const DiscoverOrganizations = () => {
   const { toast } = useToast();
   const date = formatDate(Date.now());
   const navigate = useNavigate();
-  
+
   useEffect(() => {
     fetchAllOrgs();
   }, []);
@@ -43,6 +43,7 @@ const DiscoverOrganizations = () => {
       });
 
       if (data.success) {
+        console.log(data.data)
         setOrgData(data.data);
       } else {
         setOrgData([]);
@@ -53,6 +54,7 @@ const DiscoverOrganizations = () => {
       setLoading(false);
     }
   };
+
 
   
 
