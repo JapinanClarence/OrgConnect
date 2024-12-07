@@ -40,7 +40,7 @@ const PaymentPage = () => {
           amountPaid: data.studentStatus?.amountPaid || null,
           status: data.studentStatus?.status || null,
         }));
-        console.log(tableData)
+      
         setPaymentData(tableData);
       }
       setLoading(false);
