@@ -187,7 +187,7 @@ export const revokeRole = async (req, res) => {
     }
     
     const officer = await Membership.findOneAndUpdate(
-      { student: memberId },
+      { student: memberId, organization: organization._id },
       {
         position: "member",
       }
