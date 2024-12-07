@@ -27,7 +27,7 @@ try {
         // Fetch announcements only if the organization is active
         const announcementList = await Announcements.find({
           organization: data.organization,
-        }).populate("organization", "name");
+        }).populate("organization", "name").sort({createdAt: -1});
         return announcementList; // Return the list of announcements for each active organization
       }
 

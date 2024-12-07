@@ -75,7 +75,7 @@ export const getAnnouncement = async (req, res, next) => {
     }
     const announcement = await Announcements.find({
       organization: organization._id,
-    });
+    }).sort({createdAt: -1});
 
     if (announcement.length <= 0) {
       return res.status(200).json({
