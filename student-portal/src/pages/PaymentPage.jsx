@@ -6,7 +6,7 @@ import PageHead from "@/components/nav/PageHead";
 import DataTable from "@/components/payments/DataTable";
 const categoryMap = {
   0: "Fees",
-  1: "Expendeture",
+  1: "Expenditure",
   2: "Payment Logs",
 };
 
