@@ -38,17 +38,7 @@ export const columns = (onEdit, onDelete) => [
   {
     accessorKey: "category",
     header: "Category",
-    cell: ({ row }) => {
-      const categoryMap = {
-        0: "Fees",
-        1: "Expendeture",
-        2: "Payment Logs",
-      };
-
-      const category = categoryMap[row.getValue("category")];
-
-      return <span className={`text-xs flex items-center`}>{category}</span>;
-    },
+    cell: ({ row }) => <div className="">{row.getValue("category")}</div>,
   },
   {
     accessorKey: "amount",

@@ -54,7 +54,7 @@ const PaymentTable = ({ data, loading, onAdd, onEdit, onDelete, onClick }) => {
   });
   const [globalFilter, setGlobalFilter] = React.useState("");
   // Define the columns where you want to apply the global filter
-  const filterColumns = ["purpose", "details", "amount"];
+  const filterColumns = ["purpose", "details", "amount", "category"];
 
   const table = useReactTable({
     data,
