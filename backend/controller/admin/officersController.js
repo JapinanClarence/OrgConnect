@@ -48,8 +48,8 @@ export const createOfficer = async (req, res) => {
       });
     }
 
-    const positionAvailability = await Membership.find();
-
+    const positionAvailability = await Membership.find({organization: organization._id});
+   
     // Check if the position is taken
     const takenPosition = positionAvailability.find(
       (takenPosition) => takenPosition?.position === position
@@ -77,7 +77,7 @@ export const createOfficer = async (req, res) => {
       });
     }
 
-    await Membership.findOneAndUpdate({ student: memberId }, { position });
+    await Membership.findOneAndUpdate({ student: memberId, organization: organization._id }, { position });
     res.status(200).json({
       success: true,
       message: "Role added successfully!",
@@ -215,27 +215,30 @@ export const getOfficer = async (req, res) => {
   const userId = req.user.userId;
   try {
     const organization = await Organization.findOne({ admin: userId });
-
+   
     if (!organization) {
       return res.status(404).json({
         success: false,
         message: "Organization not found",
       });
     }
+
     const officers = await Membership.find({
       organization: organization._id,
       position: { $ne: "member" }, // Exclude members with position "Member"
     }).populate("student");
-
+    console.log(officers)
     if (officers.length <= 0) {
       return res.status(200).json({
         success: false,
         message: "No members found",
       });
     }
+   
 
     // Validate position
     const validPositions = organization.officerPositions;
+    // console.log(validPositions)
     //create a map of positions to their rank
     const positionRankMap = validPositions.reduce((acc, pos) => {
       acc[pos.position.toLowerCase()] = pos.rank; // Convert to lower case for consistency
