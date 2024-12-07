@@ -72,7 +72,7 @@ export const getAnnouncement = async (req, res) => {
 
     const announcements = await Announcements.find({ organization }).populate(
       "organization", "name"
-    );
+    ).sort({createdAt: -1});
 
     if (announcements.length <= 0) {
       return res.status(200).json({
