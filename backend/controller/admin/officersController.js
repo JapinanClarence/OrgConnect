@@ -61,7 +61,7 @@ export const createOfficer = async (req, res) => {
         message: `Position ${position} is already taken.`,
       });
     }
-    const member = await Membership.findOne({ student: memberId });
+    const member = await Membership.findOne({ student: memberId, organization: organization._id });
 
     if (member.status === "0") {
       return res.status(400).json({
@@ -134,7 +134,7 @@ export const updateOfficer = async (req, res) => {
       });
     }
 
-    const positionAvailability = await Membership.find();
+    const positionAvailability = await Membership.find({organization: organization._id});
 
     // Check if the position is taken
     const takenPosition = positionAvailability.find(
@@ -148,7 +148,7 @@ export const updateOfficer = async (req, res) => {
       });
     }
   
-    await Membership.findOneAndUpdate({ student: memberId }, { position });
+    await Membership.findOneAndUpdate({ student: memberId, organization: organization._id }, { position });
     res.status(200).json({
       success: true,
       message: "Role added successfully!",
