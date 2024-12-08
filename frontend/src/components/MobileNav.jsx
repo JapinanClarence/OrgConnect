@@ -59,7 +59,7 @@ const MobileNav = () => {
             onClick={() => handleNavigation("/events")}
             className="rounded-lg hover:bg-gray-800 p-2 w-full text-left"
           >
-            Calendar
+            Event
           </button>
 
           <button

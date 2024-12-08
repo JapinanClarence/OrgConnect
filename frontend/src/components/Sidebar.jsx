@@ -189,7 +189,7 @@ const DesktopSidebar = () => {
               >
                 <Calendar />
                 <span className="hidden lg:block ml-2 font-bold text-sm">
-                  Calendar
+                  Event
                 </span>
               </Link>
             </TooltipTrigger>
@@ -198,7 +198,7 @@ const DesktopSidebar = () => {
               side="right"
               sideOffset={5}
             >
-              Calendar
+              Event
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
