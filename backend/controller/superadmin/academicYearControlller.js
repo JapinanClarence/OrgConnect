@@ -40,14 +40,32 @@ export const updateAcadyear = async (req, res, next) => {
   const id = req.params.id;
   
   try {
-    const academicYear = await AcademicYear.findByIdAndUpdate(id, req.body);
-   
+    const academicYear = await AcademicYear.findById(id);
+    
+
     if (!academicYear) {
       return res.status(404).json({
         success: false,
         message: "Academic year not found",
       });
     }
+ 
+    // Check if the user is trying to set this academic year to active
+    if (req.body.isCurrent) {
+      // Find if another active academic year already exists
+      const findActiveAY = await AcademicYear.findOne({
+        isCurrent: true,
+        _id: { $ne: id }, // Exclude the current academic year
+      });
+
+      if (findActiveAY) {
+        return res.status(400).json({
+          success: false,
+          message: "An active academic year already exists.",
+        });
+      }
+    }
+    await AcademicYear.findByIdAndUpdate(id, req.body)
 
     res.status(200).json({
       success: true,

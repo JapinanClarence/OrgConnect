@@ -127,6 +127,7 @@ const AcademicYearPage = () => {
         endDate: data.endDate,
         isCurrent: data.active
       }
+      console.log(formData)
       setIsSubmitting(true);
       const res = await apiClient.patch(
         `/superadmin/academicYear/${currentAcadData.id}`,
