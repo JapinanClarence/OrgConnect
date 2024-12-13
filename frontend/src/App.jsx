@@ -17,6 +17,8 @@ import RegistrationPage from "./pages/RegistrationPage";
 import AdminAccPage from "./pages/AdminAccPage";
 import AcademicYearPage from "./pages/AcademicYearPage";
 import MembersPaidPage from "./pages/MembersPaidPage";
+import OrganizationPage from "./pages/OrganizationPage";
+
 function App() {
   return (
     <>
@@ -47,9 +49,9 @@ function App() {
             <Route element={<DashboardLayout />}>
               <Route path="/accounts" element={<AdminAccPage />} />
             </Route>
-            {/* <Route element={<DashboardLayout />}>
-              <Route path="/register-user" element={<RegistrationPage />} />
-            </Route> */}
+            <Route element={<DashboardLayout />}>
+              <Route path="/organizations" element={<OrganizationPage />} />
+            </Route>
           </Route>
 
           {/* admin only routes */}
