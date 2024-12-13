@@ -35,6 +35,9 @@ export const SignupSchema = z.object({
     .string()
     .min(8, { message: "Password should be at least 8 characters" }),
   confirmPassword: z.string(),
+  termsAccepted: z.boolean().refine(val => val === true, {
+    message: "You must accept the terms and conditions",
+  }),
 }).refine((data) => data.password === data.confirmPassword, {
   message: "Passwords must match",
   path: ["confirmPassword"],

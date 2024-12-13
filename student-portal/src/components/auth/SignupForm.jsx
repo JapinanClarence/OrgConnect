@@ -4,6 +4,7 @@ import { SignupSchema } from "@/schema";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Form,
   FormControl,
@@ -25,13 +26,23 @@ import { Input } from "@/components/ui/input";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { LoaderCircle, Eye, EyeOff } from "lucide-react";
 import apiClient from "@/api/axios";
-
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  // DialogCancel
+} from "@/components/ui/dialog";
 const SignupForm = () => {
   const navigate = useNavigate();
   const [showPass, setShowPass] = useState(false);
   const [showConfirmPass, setShowConfirmPass] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showTermsAndConditions, setShowTermsAndConditions] = useState(false);
   const form = useForm({
     resolver: zodResolver(SignupSchema),
     defaultValues: {
@@ -44,7 +55,8 @@ const SignupForm = () => {
       email: "",
       username: "",
       password: "",
-      confirmPassword: ""
+      confirmPassword: "",
+      termsAccepted: "",
     },
   });
   const tooglePasswordVisibility = () => {
@@ -56,14 +68,14 @@ const SignupForm = () => {
   };
   const onSubmit = async (data) => {
     try {
-      setIsSubmitting(true);
+      // setIsSubmitting(true);
       const formData = SignupSchema.parse(data);
-      
-      const response = await apiClient.post("/register", formData);
-      if (response) {
-        setIsSubmitting(false);
-        navigate("/login");
-      }
+      console.log(formData);
+      // const response = await apiClient.post("/register", formData);
+      // if (response) {
+      //   setIsSubmitting(false);
+      //   navigate("/login");
+      // }
     } catch (error) {
       console.log(error);
       const message = error.response.data.message;
@@ -178,7 +190,7 @@ const SignupForm = () => {
                           Bachelor of Science in Mathematics
                         </SelectItem>
                         <SelectItem value="BITM">
-                          Bachelor of Science in Industrial Mathematics
+                          Bachelor of Science in Industrial Management
                         </SelectItem>
                         <SelectItem value="BSN">
                           Bachelor of Science in Nursing
@@ -203,13 +215,14 @@ const SignupForm = () => {
                           Bachelor of Special Needs Education
                         </SelectItem>
                         <SelectItem value="BTLED">
-                          Bachelor of Science in Technical and Livelihood Education
+                          Bachelor of Science in Technical and Livelihood
+                          Education
                         </SelectItem>
                         <SelectItem value="BPED">
                           Bachelor of Science in Physical Education
                         </SelectItem>
                         <SelectItem value="BECED">
-                        Bachelor of Early Childhood Education
+                          Bachelor of Early Childhood Education
                         </SelectItem>
                         {/* fcje */}
                         <SelectItem value="BSCRIM">
@@ -270,18 +283,10 @@ const SignupForm = () => {
                     <SelectContent>
                       <SelectGroup>
                         <SelectLabel>Year</SelectLabel>
-                        <SelectItem value="1">
-                          1st Year
-                        </SelectItem>
-                        <SelectItem value="2">
-                          2nd Year
-                        </SelectItem>
-                        <SelectItem value="3">
-                          3rd Year
-                        </SelectItem>
-                        <SelectItem value="4">
-                          4th Year
-                        </SelectItem>
+                        <SelectItem value="1">1st Year</SelectItem>
+                        <SelectItem value="2">2nd Year</SelectItem>
+                        <SelectItem value="3">3rd Year</SelectItem>
+                        <SelectItem value="4">4th Year</SelectItem>
                       </SelectGroup>
                     </SelectContent>
                   </Select>
@@ -297,7 +302,7 @@ const SignupForm = () => {
               <FormItem>
                 <FormLabel className="text-gray-600 text-sm">Email</FormLabel>
                 <FormControl>
-                  <Input {...field} type="text" autoComplete="email"/>
+                  <Input {...field} type="text" autoComplete="email" />
                 </FormControl>
                 <FormMessage className="text-xs " />
               </FormItem>
@@ -313,7 +318,11 @@ const SignupForm = () => {
                 </FormLabel>
                 <FormControl>
                   <div className="relative w-full ">
-                    <Input {...field} type={showPass ? "text" : "password"} autoComplete="current-password"/>
+                    <Input
+                      {...field}
+                      type={showPass ? "text" : "password"}
+                      autoComplete="current-password"
+                    />
                     <Button
                       type="button"
                       size="icon"
@@ -344,14 +353,20 @@ const SignupForm = () => {
                 </FormLabel>
                 <FormControl>
                   <div className="relative w-full ">
-                    <Input {...field} type={showConfirmPass ? "text" : "password"} autoComplete="current-password"/>
+                    <Input
+                      {...field}
+                      type={showConfirmPass ? "text" : "password"}
+                      autoComplete="current-password"
+                    />
                     <Button
                       type="button"
                       size="icon"
                       variant="ghost"
                       className="absolute right-0 top-0 h-full w-min px-3 py-2 hover:bg-transparent"
                       onClick={toogleConfirmPasswordVisibility}
-                      aria-label={showConfirmPass ? "Hide Password" : "Show Password"}
+                      aria-label={
+                        showConfirmPass ? "Hide Password" : "Show Password"
+                      }
                     >
                       {showConfirmPass ? (
                         <Eye className="text-gray-500 size-4" />
@@ -361,6 +376,33 @@ const SignupForm = () => {
                     </Button>
                   </div>
                 </FormControl>
+                <FormMessage className="text-xs" />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="termsAccepted"
+            render={({ field }) => (
+              <FormItem>
+                <div className="flex flex-row items-center space-x-3 space-y-0 py-4">
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
+
+                  <FormLabel className="text-gray-600 text-sm">
+                    I accept the{" "}
+                    <span
+                      className="underline"
+                      onClick={() => setShowTermsAndConditions(true)}
+                    >
+                      Terms and Conditions
+                    </span>
+                  </FormLabel>
+                </div>
                 <FormMessage className="text-xs" />
               </FormItem>
             )}
@@ -381,9 +423,7 @@ const SignupForm = () => {
           </Button>
           <div className="relative flex items-center">
             <div className="flex-grow border-b"></div>
-            <span className="text-center px-4 text-muted-foreground">
-              or
-            </span>
+            <span className="text-center px-4 text-muted-foreground">or</span>
             <div className="flex-grow border-b"></div>
           </div>
           <Button
@@ -399,6 +439,38 @@ const SignupForm = () => {
           </Button>
         </div>
       </form>
+      <Dialog
+        open={showTermsAndConditions}
+        onOpenChange={setShowTermsAndConditions}
+      >
+        <DialogContent className="max-w-[320px] rounded-lg">
+          <DialogHeader>
+            <DialogTitle className="text-start">
+              Terms and Conditions
+            </DialogTitle>
+            <DialogDescription className="text-pretty text-start">
+              Data Privacy Act of 2012 SEC.3 (b) Consent of the data subject
+              refers to any freely given, specific, informed indication of will,
+              whereby the data subject agrees to the collection and processing
+              of personal information about and/or relating to him or her.
+              Consent shall be evidenced by written, electronic or recorded
+              means. It may also be given on behalf of the data subject by an
+              agent specifically authorized by the data subject to do so.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className={"flex-col gap-2"}>
+            <Button type="button">Accept</Button>
+            <Button
+              type="button"
+              variant="outline"
+              className="border border-gray-500 hover:bg-gray-100"
+              onClick={() => setShowTermsAndConditions(false)}
+            >
+              Cancel
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </Form>
   );
 };
