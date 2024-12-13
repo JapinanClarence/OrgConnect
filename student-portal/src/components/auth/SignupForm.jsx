@@ -8,6 +8,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -43,6 +44,8 @@ const SignupForm = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showTermsAndConditions, setShowTermsAndConditions] = useState(false);
+  const [termsAccepted, setTermsAccepted] = useState(false);
+
   const form = useForm({
     resolver: zodResolver(SignupSchema),
     defaultValues: {
@@ -56,7 +59,7 @@ const SignupForm = () => {
       username: "",
       password: "",
       confirmPassword: "",
-      termsAccepted: "",
+      termsAccepted: false,
     },
   });
   const tooglePasswordVisibility = () => {
@@ -83,6 +86,13 @@ const SignupForm = () => {
       setIsSubmitting(false);
     }
   };
+
+  // Handle accepting terms
+  const handleAcceptTerms = () => {
+    setTermsAccepted(true); // Set termsAccepted to true
+    setShowTermsAndConditions(false); // Close the dialog
+  };
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="">
@@ -385,24 +395,27 @@ const SignupForm = () => {
             name="termsAccepted"
             render={({ field }) => (
               <FormItem>
-                <div className="flex flex-row items-center space-x-3 space-y-0 py-4">
-                  <FormControl>
-                    <Checkbox
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                    />
-                  </FormControl>
-
-                  <FormLabel className="text-gray-600 text-sm">
-                    I accept the{" "}
-                    <span
-                      className="underline"
-                      onClick={() => setShowTermsAndConditions(true)}
-                    >
-                      Terms and Conditions
-                    </span>
-                  </FormLabel>
+                <div className="flex items-center gap-2 mt-5">
+                   <FormControl>
+                  <Checkbox
+                    checked={termsAccepted || field.value}
+                    onCheckedChange={() => {
+                      setTermsAccepted(!termsAccepted);
+                      field.onChange(!termsAccepted);
+                    }}
+                  />
+                </FormControl>
+                <FormDescription className="text-sm">
+                  I agree to the{" "}
+                  <span
+                    className="underline cursor-pointer"
+                    onClick={() => setShowTermsAndConditions(true)}
+                  >
+                    Terms and Conditions
+                  </span>
+                </FormDescription>
                 </div>
+               
                 <FormMessage className="text-xs" />
               </FormItem>
             )}
@@ -443,7 +456,7 @@ const SignupForm = () => {
         open={showTermsAndConditions}
         onOpenChange={setShowTermsAndConditions}
       >
-        <DialogContent className="max-w-[320px] rounded-lg">
+        <DialogContent className="max-w-[320px] md:max-w-fit rounded-lg">
           <DialogHeader>
             <DialogTitle className="text-start">
               Terms and Conditions
@@ -459,15 +472,15 @@ const SignupForm = () => {
             </DialogDescription>
           </DialogHeader>
           <DialogFooter className={"flex-col gap-2"}>
-            <Button type="button">Accept</Button>
-            <Button
+            
+            {/* <Button
               type="button"
               variant="outline"
               className="border border-gray-500 hover:bg-gray-100"
               onClick={() => setShowTermsAndConditions(false)}
             >
               Cancel
-            </Button>
+            </Button> */}
           </DialogFooter>
         </DialogContent>
       </Dialog>
