@@ -209,8 +209,10 @@ const AddOrgDialog = ({
                         <SelectContent className="bg-white border-zinc-300">
                           <SelectGroup>
                             <SelectLabel>Types</SelectLabel>
-                            <SelectItem value="0">Primary</SelectItem>
-                            <SelectItem value="1">Per-program</SelectItem>
+                            <SelectItem value="0">Institute Based Organization </SelectItem>
+                            <SelectItem value="1">Non-institute Based Organization</SelectItem>
+                            <SelectItem value="2">Religious Based Organization</SelectItem>
+                            <SelectItem value="3">Fraternities</SelectItem>
                           </SelectGroup>
                         </SelectContent>
                       </Select>

@@ -2,8 +2,10 @@ import mongoose, { Mongoose } from "mongoose";
 
 /**
  * org type
- * 0 - Primary
- * 1  - Per-Program
+ * 0 - Institute Based Organization 
+ * 1  - Non-institute Based Organization
+ * 2 - Religious Based Organization
+ * 3- Fraternities
  */
 const organizationSchema = new mongoose.Schema(
   {
@@ -22,7 +24,7 @@ const organizationSchema = new mongoose.Schema(
     },
     type: {
       type: String,
-      enum: ["0", "1"],
+      enum: ["0", "1", "2", "3"],
     },
     admin: {
       type: mongoose.Schema.Types.ObjectId,
@@ -49,7 +51,7 @@ const organizationSchema = new mongoose.Schema(
 organizationSchema.pre("save", function (next) {
   if (!this.officerPositions.length) {
     // Only set positions if they haven't been set yet
-    const primaryPositions = [
+    const instituteBased = [
       { position: "governor", rank: 1 },
       { position: "vice-governor", rank: 2 },
       { position: "secretary", rank: 3 },
@@ -59,7 +61,7 @@ organizationSchema.pre("save", function (next) {
       { position: "pio", rank: 7 },
     ];
 
-    const perProgramPositions = [
+    const others = [
       { position: "president", rank: 1 },
       { position: "vice-president", rank: 2 },
       { position: "secretary", rank: 3 },
@@ -71,7 +73,7 @@ organizationSchema.pre("save", function (next) {
 
     // Set officerPositions based on the type of organization
     this.officerPositions =
-      this.type === "0" ? primaryPositions : perProgramPositions;
+      this.type === "0" ? instituteBased : others;
   }
   next();
 });

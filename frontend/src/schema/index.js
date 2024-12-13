@@ -95,7 +95,7 @@ export const CreateOrgSchema = z.object({
   admin: z.string().min(1, {
     message: "Admin is required"
   }),
-  type: z.enum(["0", "1"]),
+  type: z.enum(["0", "1", "2", "3"]),
 })
 
 export const EditOrgSchema = z.object({
