@@ -29,6 +29,7 @@ import apiClient from "@/api/axios";
 const SignupForm = () => {
   const navigate = useNavigate();
   const [showPass, setShowPass] = useState(false);
+  const [showConfirmPass, setShowConfirmPass] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const form = useForm({
@@ -43,10 +44,15 @@ const SignupForm = () => {
       email: "",
       username: "",
       password: "",
+      confirmPassword: ""
     },
   });
   const tooglePasswordVisibility = () => {
     setShowPass(!showPass);
+  };
+
+  const toogleConfirmPasswordVisibility = () => {
+    setShowConfirmPass(!showConfirmPass);
   };
   const onSubmit = async (data) => {
     try {
@@ -77,7 +83,7 @@ const SignupForm = () => {
           </Alert>
         )}
         <div>
-          <div className="grid grid-flow-col grid-cols-2 sm:grid-cols-1 gap-2">
+          <div className="grid grid-flow-col grid-cols-2 gap-2">
             <FormField
               control={form.control}
               name="firstname"
@@ -140,7 +146,7 @@ const SignupForm = () => {
               </FormItem>
             )}
           />
-          <div className="grid grid-flow-col grid-cols-2 sm:grid-cols-1 gap-2">
+          <div className="grid grid-flow-col grid-cols-2  gap-2">
             <FormField
               control={form.control}
               name="course"
@@ -317,6 +323,37 @@ const SignupForm = () => {
                       aria-label={showPass ? "Hide Password" : "Show Password"}
                     >
                       {showPass ? (
+                        <Eye className="text-gray-500 size-4" />
+                      ) : (
+                        <EyeOff className="text-gray-500 size-4" />
+                      )}
+                    </Button>
+                  </div>
+                </FormControl>
+                <FormMessage className="text-xs" />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="confirmPassword"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-gray-600 text-sm">
+                  Confirm Password
+                </FormLabel>
+                <FormControl>
+                  <div className="relative w-full ">
+                    <Input {...field} type={showConfirmPass ? "text" : "password"} autoComplete="current-password"/>
+                    <Button
+                      type="button"
+                      size="icon"
+                      variant="ghost"
+                      className="absolute right-0 top-0 h-full w-min px-3 py-2 hover:bg-transparent"
+                      onClick={toogleConfirmPasswordVisibility}
+                      aria-label={showConfirmPass ? "Hide Password" : "Show Password"}
+                    >
+                      {showConfirmPass ? (
                         <Eye className="text-gray-500 size-4" />
                       ) : (
                         <EyeOff className="text-gray-500 size-4" />

@@ -34,7 +34,12 @@ export const SignupSchema = z.object({
   password: z
     .string()
     .min(8, { message: "Password should be at least 8 characters" }),
+  confirmPassword: z.string(),
+}).refine((data) => data.password === data.confirmPassword, {
+  message: "Passwords must match",
+  path: ["confirmPassword"],
 });
+
 // Define the file schema
 export const fileSchema = z
   .instanceof(File)
@@ -69,6 +74,5 @@ export const UserSchema = z.object({
   birthday: z.string().optional(),
   username: z.string().min(1, {
     message: "Username is required",
-  })
+  }),
 });
-
