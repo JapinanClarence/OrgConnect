@@ -58,7 +58,7 @@ export const updateOrg = async (req, res, next) => {
   const id = req.params.id;
 
   try {
-    console.log(req.body);
+   
     const org = await Organization.findByIdAndUpdate(id, req.body);
 
     if (!org) {
@@ -91,18 +91,21 @@ export const getOrg = async (req, res, next) => {
         message: "Organization not found",
       });
     }
-
+    
     const filteredOrgs = org.map((data) => {
+      const fullname = `${data.admin.firstname} ${
+        data.admin.middlename ? data.admin.middlename[0] + ". " : ""
+      }${data.admin.lastname}`;
       return {
         _id: data.id,
         name: data.name,
         createdAt: data.createdAt,
-        admin: data.admin.username,
+        admin: fullname,
         active: data.active,
         remarks: data.remarks,
       };
     });
-
+    console.log(filteredOrgs)
     res.status(200).json({
       success: true,
       data: filteredOrgs,
