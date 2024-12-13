@@ -173,7 +173,7 @@ export const columns = (onApprove, onKick, onManage) => [
             <DropdownMenuSeparator />
             <DropdownMenuItem className={member.status == 1 && `hidden`} onClick={handleApprove}>Approve</DropdownMenuItem>
             <DropdownMenuItem className={member.status == 0 && `hidden`}  onClick={handleManage}>Add Role</DropdownMenuItem>
-            <DropdownMenuItem onClick={handleDelete}>Kick</DropdownMenuItem>
+            <DropdownMenuItem className={member.status == 0 && `hidden`}  onClick={handleDelete}>Kick</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );
