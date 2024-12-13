@@ -73,12 +73,12 @@ const SignupForm = () => {
     try {
       // setIsSubmitting(true);
       const formData = SignupSchema.parse(data);
-      console.log(formData);
-      // const response = await apiClient.post("/register", formData);
-      // if (response) {
-      //   setIsSubmitting(false);
-      //   navigate("/login");
-      // }
+    
+      const response = await apiClient.post("/register", formData);
+      if (response) {
+        setIsSubmitting(false);
+        navigate("/login");
+      }
     } catch (error) {
       console.log(error);
       const message = error.response.data.message;
