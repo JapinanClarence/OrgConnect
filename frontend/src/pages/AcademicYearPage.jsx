@@ -127,7 +127,6 @@ const AcademicYearPage = () => {
         endDate: data.endDate,
         isCurrent: data.active
       }
-      console.log(formData)
       setIsSubmitting(true);
       const res = await apiClient.patch(
         `/superadmin/academicYear/${currentAcadData.id}`,
@@ -141,9 +140,11 @@ const AcademicYearPage = () => {
 
       if (res) {
         await fetchAcademicYears();
+        setErrorMessage("")
         setIsSubmitting(false);
         setShowEditDialog(false);
         form.reset();
+     
 
         toast({
           title: `Academic year has been updated`,
@@ -153,6 +154,7 @@ const AcademicYearPage = () => {
     } catch (error) {
       const message = error.response.data.message;
       setErrorMessage(message);
+      form.reset();
       setIsSubmitting(false);
     }
   };
@@ -185,6 +187,7 @@ const AcademicYearPage = () => {
         onSubmit={onEdit}
         isSubmitting={isSubmitting}
         errorMessage={errorMessage}
+        setErrorMessage= {setErrorMessage}
       />
     </div>
   );

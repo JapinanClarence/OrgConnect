@@ -40,6 +40,7 @@ const EditAcadsDialog = ({
   acadsData,
   isSubmitting,
   errorMessage,
+  setErrorMessage
 }) => {
   const form = useForm({
     resolver: zodResolver(AcadYearSchema),
@@ -55,6 +56,11 @@ const EditAcadsDialog = ({
     }
   }, [acadsData, reset]);
 
+  const handleClose = () => {
+    form.reset(); // Reset form data
+    if (setErrorMessage) setErrorMessage(""); // Reset error message if provided
+    onOpenChange(false); // Close the dialog
+  };
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="bg-white">
@@ -190,7 +196,7 @@ const EditAcadsDialog = ({
                   type="button"
                   variant="outline"
                   className="border border-gray-500 hover:bg-gray-100"
-                  onClick={() => onOpenChange(false)}
+                  onClick={handleClose}
                 >
                   Cancel
                 </Button>
