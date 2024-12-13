@@ -21,6 +21,7 @@ import officerRoutes from "./routes/officers.js";
 import userAttendanceRoutes from "./routes/attendance.js";
 import superadminOrgs from "./routes/superadmin/organization.js";
 import acadYear from "./routes/superadmin/academicyear.js";
+import superAdminDashboard from "./routes/superadmin/dashboard.js";
 
 const DB = process.env.DATABASE.replace("<PASSWORD>", process.env.DB_PASSWORD);
 const app = express();
@@ -59,6 +60,7 @@ app.use("/api/admin/", adminRoutes);
 app.use("/api/superadmin/", superAdminRoutes);
 app.use("/api/superadmin/", superadminOrgs);
 app.use("/api/superadmin/", acadYear);
+app.use("/api/superadmin/", superAdminDashboard);
 
 app.use("/api/admin/", adminOrganizationRoutes);
 app.use("/api/admin/", adminEventRoutes);

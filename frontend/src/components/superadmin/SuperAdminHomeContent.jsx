@@ -3,7 +3,7 @@ import AdminTable from "@/components/superadmin/AdminTable";
 import { useAuth } from "@/context/AuthContext";
 import apiClient from "@/api/axios";
 import { dateOnly } from "@/util/helpers";
-import OrgTable from "./OrgTable";
+import DashboardTable from "./DashboardTable";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader } from "../ui/card";
 import { formatDate } from "@/util/helpers";
@@ -14,20 +14,28 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { CreateOrgSchema, EditOrgSchema } from "@/schema";
 import EditOrgDialog from "@/components/superadmin/EditOrgDialog";
 import AddOrgDialog from "./AddOrgDialog";
+import StatCard from "./StatCard";
+import { Skeleton } from "@/components/ui/skeleton";
+import OrgChart from "./OrgChart";
+import { Calendar } from "@/components/ui/calendar";
+import { User2 } from "lucide-react";
+
+const semesterMap = {
+  0: "1st Semester",
+  1: "2nd Semester",
+  3: "Summer",
+};
 
 const SuperAdminHomeContent = () => {
   const [userData, setUserData] = useState([]);
   const [loading, setLoading] = useState(true);
   const { token } = useAuth();
   const [orgData, setOrgData] = useState([]);
-  const [showAddDialog, setShowAddDialog] = useState(false);
-  const [showEditDialog, setShowEditDialog] = useState(false);
-  const [currentOrgData, setCurrentOrgData] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(false);
+  const [currentSemester, setCurrentSemester] = useState("");
   const date = formatDate(Date.now());
   const { toast } = useToast();
-
+  const [currentDate, setDate] = useState(new Date());
+  const [adminData, setAdminData ] = useState("");
   const form = useForm({
     resolver: zodResolver(CreateOrgSchema),
     defaultValues: {
@@ -37,21 +45,24 @@ const SuperAdminHomeContent = () => {
   });
 
   useEffect(() => {
-    fetchOrganizations();
+    fetchDashboardData();
   }, []);
 
-  const fetchOrganizations = async () => {
+  const fetchDashboardData = async () => {
     try {
-      const { data } = await apiClient.get("/superadmin/organization", {
+      const { data } = await apiClient.get("/superadmin/dashboard", {
         headers: {
           Authorization: token,
         },
       });
 
       if (!data.success) {
-        setData([]);
+        setCurrentSemester("");
+        setAdminData("");
+        setOrgData([]);
       } else {
-        const tableData = data.data.map((data) => {
+        setCurrentSemester(data.currentSemester);
+        const tableData = data.orgData.map((data) => {
           return {
             id: data._id,
             name: data.name,
@@ -60,9 +71,10 @@ const SuperAdminHomeContent = () => {
             banner: data.banner,
             remarks: data.remarks,
             admin: data.admin,
+            type: data.type,
           };
         });
-
+        setAdminData(data.adminCount);
         setOrgData(tableData);
       }
 
@@ -73,89 +85,54 @@ const SuperAdminHomeContent = () => {
     }
   };
 
-  const handleEditDialog = (data) => {
-    setShowEditDialog(true);
-
-    setCurrentOrgData(data);
-  };
-  const onAdd = async (data) =>{
-   
-    try {
-      setIsSubmitting(true);
-      const res = await apiClient.post("/superadmin/organization", data, {
-        headers: {
-          Authorization: token,
-        },
-      });
-
-      if (res) {
-        await fetchOrganizations();
-        setIsSubmitting(false);
-        setShowAddDialog(false);
-        form.reset();
-
-        toast({
-          title: "Organization has been added",
-          description: `${date}`,
-        });
-      }
-    } catch (error) {
-      const message = error.response.data.message;
-      setErrorMessage(message);
-      setIsSubmitting(false);
-    }
-  }
-  const onEdit = async (data) => {
-    try {
-      const formData = {
-        active: data.status,
-        remarks: data.remarks || null,
-      };
-      setIsSubmitting(true);
-      const res = await apiClient.patch(
-        `/superadmin/organization/${currentOrgData.id}`,
-        formData,
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
-      );
-
-      if (res) {
-        await fetchOrganizations();
-        setIsSubmitting(false);
-        setShowEditDialog(false);
-        form.reset();
-
-        toast({
-          title: `Organization has been updated`,
-          description: `${date}`,
-        });
-      }
-    } catch (error) {
-      console.log(error);
-      const message = error.response.data.message;
-      setErrorMessage(message);
-      setIsSubmitting(false);
-    }
-  };
   return (
     <>
-      <div className="mb-2">
-        <Label>Current Semister: 1st A.Y. 2024-2025</Label>
-        
+      <div className="flex flex-col gap-3 p-2">
+        <div className=" bg-white shadow-sm md:shadow-lg rounded-lg  border border-gray-200 text-gray-900 p-5">
+          {loading ? (
+            <Skeleton className={"h-10"} />
+          ) : (
+            <>
+              <h1 className="text-2xl font-semibold border-b pb-1 mb-2">
+                Dashboard
+              </h1>
+              <p className="font-medium text-sm">
+                Current Academic Year:{" "}
+                {currentSemester && currentSemester.academicYear} -{" "}
+                {semesterMap[currentSemester.semester]}
+              </p>
+            </>
+          )}
+        </div>
+        <div className="flex gap-3 flex-col-reverse lg:flex-row ">
+          <div className="md:bg-[#fefefe] md:shadow-lg rounded-lg md:border md:border-gray-200 text-gray-900 px-6 py-5 flex flex-col relative">
+            <Label className="font-semibold text-xl">Organizations</Label>
+            <DashboardTable data={orgData} />
+          </div>
+          <div className="flex-1 flex gap-2 flex-col">
+            <div className=" text-gray-900 flex-1 max-h-min ">
+              <StatCard
+                name={"Total Admin Accounts"}
+                icon={User2}
+                value={adminData}
+                color={"#8B5CF6"}
+                loading={loading}
+              />
+            </div>
+            <div className=" text-gray-900 flex-1 h-full">
+              <OrgChart data={orgData} />
+            </div>
+            <div className="bg-[#fefefe] md:shadow-lg rounded-lg md:border md:border-gray-200">
+              <Calendar
+                mode="single"
+                // selected={date}
+                // onSelect={setDate}
+                className=""
+              />
+            </div>
+          </div>
+        </div>
       </div>
-  
-      <div className="md:bg-[#fefefe] md:shadow-lg rounded-lg md:border md:border-gray-200 text-gray-900 px-6 py-5 w-full flex flex-col relative">
-        <Label className="font-semibold">Organizations</Label>
-        <OrgTable
-          data={orgData}
-          onEdit={handleEditDialog}
-          onAdd={setShowAddDialog}
-        />
-      </div>
-     
     </>
   );
 };

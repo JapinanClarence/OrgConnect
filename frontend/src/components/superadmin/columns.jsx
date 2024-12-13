@@ -119,7 +119,7 @@ export const userColumns = (onUpdateStatus) => [
   //       event.stopPropagation(); // Prevent the row click event
   //       navigator.clipboard.writeText(admin.id);
   //     };
-      
+
   //     const handleApprove = (data) => (event) => {
   //       event.stopPropagation(); // Prevents the row click event
   //       onUpdateStatus({
@@ -162,6 +162,132 @@ export const userColumns = (onUpdateStatus) => [
   //   },
   // },
 ];
+export const dashboardColumns = [
+  {
+    id: "banner",
+    enableHiding: false,
+    cell: ({ row }) => {
+      const organization = row.original;
+      const { banner, name } = organization;
+
+      return (
+        <div className="flex justify-center">
+          <Avatar className="size-9">
+            <AvatarImage src={banner} alt="User Profile" />
+            <AvatarFallback className="bg-gray-200 text-gray-400 font-bold">
+              {name?.[0].toUpperCase()}
+            </AvatarFallback>
+          </Avatar>
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "name",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="px-0"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Name
+          <CaretSortIcon className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => <div className="text-xs">{row.getValue("name")}</div>,
+  },
+  {
+    accessorKey: "createdAt",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="px-0"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Date Created
+          <CaretSortIcon className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => (
+      <div className="text-xs">{row.getValue("createdAt")}</div>
+    ),
+  },
+  {
+    accessorKey: "admin",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="px-0"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Admin
+          <CaretSortIcon className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => <div className="text-xs">{row.getValue("admin")}</div>,
+  },
+  {
+    accessorKey: "status",
+    header: "Status",
+    cell: ({ row }) => {
+      const statusMap = {
+        false: {
+          name: "Inactive",
+          color: "bg-red-500",
+          icon: (
+            <Timer size={18} strokeWidth={1.7} className="inline-block mr-1" />
+          ),
+        },
+        true: {
+          name: "Active",
+          color: "bg-green-600",
+          icon: (
+            <CircleCheck
+              strokeWidth={2}
+              size={15}
+              className="inline-block mr-1"
+            />
+          ),
+        },
+      };
+
+      const status = statusMap[row.getValue("status")];
+
+      return (
+        <span className={`text-xs flex items-center`}>
+          {status?.icon}
+          {status?.name}
+        </span>
+      );
+    },
+  },
+  {
+    accessorKey: "type",
+    header: "Status",
+    cell: ({ row }) => {
+      const statusMap = {
+        0: "Institute Based",
+        1: "Non-Institute Based",
+        2: "Religious Based",
+        3: "Fraternities",
+      };
+
+      const status = statusMap[row.getValue("type")];
+
+      return (
+        <span className={`text-xs flex items-center`}>
+          {status}
+        </span>
+      );
+    },
+  },
+];
 export const orgColumns = (onEdit) => [
   {
     id: "banner",
@@ -196,9 +322,7 @@ export const orgColumns = (onEdit) => [
         </Button>
       );
     },
-    cell: ({ row }) => (
-      <div className="text-xs">{row.getValue("name")}</div>
-    ),
+    cell: ({ row }) => <div className="text-xs">{row.getValue("name")}</div>,
   },
   {
     accessorKey: "createdAt",
@@ -232,9 +356,7 @@ export const orgColumns = (onEdit) => [
         </Button>
       );
     },
-    cell: ({ row }) => (
-      <div className="text-xs">{row.getValue("admin")}</div>
-    ),
+    cell: ({ row }) => <div className="text-xs">{row.getValue("admin")}</div>,
   },
   {
     accessorKey: "status",
@@ -285,9 +407,7 @@ export const orgColumns = (onEdit) => [
         </Button>
       );
     },
-    cell: ({ row }) => (
-      <div className="text-xs">{row.getValue("remarks")}</div>
-    ),
+    cell: ({ row }) => <div className="text-xs">{row.getValue("remarks")}</div>,
   },
   {
     id: "actions",
@@ -298,7 +418,7 @@ export const orgColumns = (onEdit) => [
         event.stopPropagation(); // Prevent the row click event
         navigator.clipboard.writeText(acadYear.id);
       };
-      
+
       const handleEdit = (event) => {
         event.stopPropagation(); // Prevents the row click event
         onEdit(acadYear);
@@ -333,8 +453,7 @@ export const orgColumns = (onEdit) => [
   },
 ];
 
-export const acadColumns = (onEdit) =>[
-
+export const acadColumns = (onEdit) => [
   {
     accessorKey: "academicYear",
     header: ({ column }) => {
@@ -375,11 +494,7 @@ export const acadColumns = (onEdit) =>[
 
       const semester = semesterMap[row.getValue("semester")];
 
-      return (
-        <span className={`text-xs flex items-center`}>
-          {semester}
-        </span>
-      );
+      return <span className={`text-xs flex items-center`}>{semester}</span>;
     },
   },
   {
@@ -414,9 +529,7 @@ export const acadColumns = (onEdit) =>[
         </Button>
       );
     },
-    cell: ({ row }) => (
-      <div className="text-xs">{row.getValue("endDate")}</div>
-    ),
+    cell: ({ row }) => <div className="text-xs">{row.getValue("endDate")}</div>,
   },
   {
     accessorKey: "active",
@@ -462,7 +575,7 @@ export const acadColumns = (onEdit) =>[
         event.stopPropagation(); // Prevent the row click event
         navigator.clipboard.writeText(acadYear.id);
       };
-      
+
       const handleEdit = (event) => {
         event.stopPropagation(); // Prevents the row click event
         onEdit(acadYear);

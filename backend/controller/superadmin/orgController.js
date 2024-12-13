@@ -83,7 +83,7 @@ export const getOrg = async (req, res, next) => {
   const email = req.params.user;
 
   try {
-    const org = await Organization.find().populate("admin");
+    const org = await Organization.find().populate("admin").sort({createdAt: -1});
 
     if (!org) {
       return res.status(404).json({
