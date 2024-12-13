@@ -170,7 +170,7 @@ export const AcadYearSchema = z.object({
   academicYear: z.string().min(1, {
     message: "Academic year is required",
   }),
-  semester: z.enum(["0", "1"]),
+  semester: z.enum(["0", "1", "2"]),
   startDate: z.string().min(1, {
     message: "Start date is required",
   }),

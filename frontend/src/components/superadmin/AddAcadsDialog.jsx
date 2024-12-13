@@ -99,6 +99,7 @@ const AddAcadsDialog = ({
                             <SelectLabel>Semesters</SelectLabel>
                             <SelectItem value="0">1st Semester</SelectItem>
                             <SelectItem value="1">2nd Semester</SelectItem>
+                            <SelectItem value="2">Summer</SelectItem>
                           </SelectGroup>
                         </SelectContent>
                       </Select>

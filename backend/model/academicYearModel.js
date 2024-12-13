@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 /**
  * 0 - 1st sem
  * 1 - 2nd sem
+ * 2 - summer
  */
 const academicYearSchema = new mongoose.Schema({
     academicYear:{
@@ -11,7 +12,7 @@ const academicYearSchema = new mongoose.Schema({
     },
     semester :{
         type: String,
-        enum:['0','1'],
+        enum:['0','1', '2'],
         required: true,
     },
     startDate: { type: Date, required: true },
