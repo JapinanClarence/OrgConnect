@@ -162,7 +162,7 @@ const AcademicYearPage = () => {
 
   return (
     <div className="md:bg-[#fefefe] md:shadow-lg rounded-lg md:border md:border-gray-200 text-gray-900 px-6 py-5 w-full flex flex-col relative">
-      <h1 className="font-bold">Academic year</h1>
+      <h1 className="font-bold">Academic Year</h1>
       <p className="text-sm text-muted-foreground">
         View and manage academic year and semester here.
       </p>
