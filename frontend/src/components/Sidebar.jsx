@@ -55,8 +55,8 @@ const DesktopSidebar = () => {
       <div className="border-b border-zinc-500 flex justify-start items-center py-2 px-4">
         <Link to={"/"} aria-label="Home">
           <img
-            src="OrgConnect-transparent.svg"
-            className="size-9 fill-foreground"
+            src="OrgConnect-Default.jpeg"
+            className="size-9 fill-foreground rounded-lg"
           />
         </Link>
         <span className="ml-2 hidden text-xl font-semibold lg:block">

@@ -37,11 +37,11 @@ const MobileNav = () => {
         aria-describedby={undefined}
       >
         <SheetTitle></SheetTitle>
-        <div className="flex items-center pb-2 border-b-[1px] border-zinc-300">
+        <div className="flex items-center gap-2 pb-2 border-b-[1px] border-zinc-300">
           <Link to={"/"} aria-label="Home">
             <img
-              src="OrgConnect-transparent.svg"
-              className="size-12 fill-foreground"
+              src="OrgConnect-Default.jpeg"
+              className="size-10 fill-foreground rounded-lg"
             />
           </Link>
           <span className="inline text-2xl font-semibold">OrgConnect</span>

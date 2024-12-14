@@ -86,9 +86,9 @@ const LoginForm = () => {
       <Card className="mx-auto border-none shadow-none  md:rounded-xl md:bg-white w-full md:max-w-lg md:shadow-md md:border md:border-gray-300 ">
         <CardHeader>
           <img
-            src="OrgConnect-transparent.svg"
+            src="OrgConnect.svg"
             alt="OrgConnect logo"
-            className="w-16 h-16 mx-auto"
+            className="w-24 h-24 mx-auto"
           />
           <h1 className="font-bold text-2xl text-gray-900">Login</h1>
           <p className="text-sm text-gray-600">
