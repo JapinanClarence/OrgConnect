@@ -8,7 +8,7 @@ const Header = () => {
         <img
           src="OrgConnect.svg"
           alt="OrgConnect logo"
-          className="w-40 ml-0 mr-auto"
+          className="w-12 ml-0 mr-auto"
         />
       </div>
     </header>
