@@ -132,6 +132,7 @@ export const getDashboardData = async (req, res) => {
 
     res.status(200).json({
       success: true,
+      organization: organization.name,
       eventCount: totalEventsCount,
       announcementCount: totalAnnouncementCount,
       paymentCount: `₱ ${new Intl.NumberFormat('en-US').format(totalAmount)}`,

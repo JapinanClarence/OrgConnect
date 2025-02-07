@@ -34,6 +34,8 @@ const AdminHomeContent = () => {
   const [currentMonth, setCurrentMonth] = useState("");
   const [currentYear, setCurrentYear] = useState("");
   const [announcementData, setAnnouncementData] = useState([]);
+  const [organizationName, setOrganizationName] = useState("");
+
   const { userData } = useAuth();
 
   useEffect(() => {
@@ -46,6 +48,7 @@ const AdminHomeContent = () => {
           },
         });
         if (data.success) {
+          setOrganizationName(data.organization);
           setEventCount(data.eventCount);
           setAnnouncmentCount(data.announcementCount);
           setPaymentcount(data.paymentCount);
@@ -80,7 +83,7 @@ const AdminHomeContent = () => {
           {loading ? (
             <Skeleton className={"h-10"} />
           ) : (
-            <h1 className="text-2xl font-semibold border-b pb-1 ">Dashboard</h1>
+            <h1 className="text-2xl font-semibold border-b pb-1 ">{organizationName}</h1>
           )}
 
           <div className="max-h-full w-full grid grid-flow-row lg:grid-flow-col grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mt-5">
