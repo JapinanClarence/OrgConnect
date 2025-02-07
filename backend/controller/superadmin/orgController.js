@@ -105,7 +105,7 @@ export const getOrg = async (req, res, next) => {
         remarks: data.remarks,
       };
     });
-    console.log(filteredOrgs)
+
     res.status(200).json({
       success: true,
       data: filteredOrgs,

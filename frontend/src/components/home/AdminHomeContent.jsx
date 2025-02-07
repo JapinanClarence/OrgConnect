@@ -127,6 +127,7 @@ const AdminHomeContent = () => {
             {/* <OrgDetailsCard name={orgData.name} about={orgData.about} contact={orgData.contact}/> */}
             <TableComponent
               title={"Recent Events"}
+              searchContent={"Search Events"}
               columns={dashboardEventColumns}
               data={eventData}
               loading={loading}
@@ -145,6 +146,7 @@ const AdminHomeContent = () => {
         <div className=" bg-white md:shadow-lg rounded-lg border border-gray-200 text-gray-900 p-5 md:flex flex-col">
           <TableComponent
             title={"New Members"}
+            searchContent={"Search Members"}
             columns={dashboardMemberColumns}
             data={memberData}
             loading={loading}

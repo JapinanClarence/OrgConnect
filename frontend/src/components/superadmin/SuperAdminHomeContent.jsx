@@ -107,7 +107,7 @@ const SuperAdminHomeContent = () => {
         <div className="flex gap-3 flex-col-reverse lg:flex-row ">
           <div className="md:bg-[#fefefe] md:shadow-lg rounded-lg md:border md:border-gray-200 text-gray-900 px-6 py-5 flex flex-col relative">
             <Label className="font-semibold text-xl">Organizations</Label>
-            <DashboardTable data={orgData} />
+            <DashboardTable data={orgData}  />
           </div>
           <div className="flex-1 flex gap-2 flex-col">
             <div className=" text-gray-900 flex-1 max-h-min ">

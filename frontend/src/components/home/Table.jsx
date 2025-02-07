@@ -43,6 +43,7 @@ import TableSkeleton from "@/components/skeleton/TableSkeleton";
 import { Label } from "@/components/ui/label";
 
 const TableComponent = ({
+  searchContent,
   title,
   description,
   height,
@@ -106,7 +107,7 @@ const TableComponent = ({
       <Label className="font-semibold">{title}</Label>
       <div className="md:flex items-center justify-between py-4">
         <Input
-          placeholder="Filter table..."
+          placeholder={searchContent}
           value={globalFilter ?? ""}
           onChange={(event) => setGlobalFilter(event.target.value)}
           className="md:max-w-sm"

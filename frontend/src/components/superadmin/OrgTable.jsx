@@ -97,7 +97,7 @@ const OrgTable = ({ data, loading, onClick, onAdd, onEdit }) => {
     <>
       <div className="md:flex items-center justify-between py-4">
         <Input
-          placeholder="Filter admin accounts..."
+          placeholder="Search organizations..."
           value={globalFilter ?? ""}
           onChange={(event) => setGlobalFilter(event.target.value)}
           className="md:max-w-sm"

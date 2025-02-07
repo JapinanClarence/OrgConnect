@@ -97,7 +97,7 @@ const AcadTable = ({ data, loading, onClick, onAdd, onEdit }) => {
     <>
       <div className="md:flex items-center justify-between py-4">
         <Input
-          placeholder="Filter academic years..."
+          placeholder="Search academic years..."
           value={globalFilter ?? ""}
           onChange={(event) => setGlobalFilter(event.target.value)}
           className="md:max-w-sm"
