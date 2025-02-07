@@ -1,82 +1,82 @@
-import FullCalendar from "@fullcalendar/react";
-import dayGridPlugin from "@fullcalendar/daygrid";
-import timeGridPlugin from "@fullcalendar/timegrid";
-import listPlugin from "@fullcalendar/list";
-import interactionPlugin from "@fullcalendar/interaction";
-import { useRef, useEffect } from "react";
+import { useEffect, useState } from "react";
+import "@schedule-x/theme-shadcn/dist/index.css";
+import { useCalendarApp, ScheduleXCalendar } from "@schedule-x/react";
+import {
+  createCalendar,
+  viewDay,
+  viewMonthAgenda,
+  viewMonthGrid,
+  viewWeek,
+} from "@schedule-x/calendar";
+import { createEventModalPlugin } from "@schedule-x/event-modal";
 
-const EventCalendar = ({ onDateClick, currentEvents }) => {
-  const calendarRef = useRef(null);
-  useEffect(() => {
-    const handleResize = () => {
-      const calendarApi = calendarRef.current.getApi(); // Get the FullCalendar API
-      const width = window.innerWidth;
-      let calendarHeight = "auto";
+const EventCalendar = ({ currentEvents }) => {
+  const calendar = useCalendarApp({
+    defaultView: viewMonthAgenda.name,
+    // theme: "shadcn",
+    views: [viewMonthGrid, viewMonthAgenda, viewWeek, viewDay],
+    events: currentEvents,
+    calendars: {
+      0: {
+        colorName: "red",
+        lightColors: {
+          main: "#f44336", // Red
+          container: "#f8d7da", // Light red
+          onContainer: "#d32f2f", // Dark red
+        },
+        darkColors: {
+          main: "#e57373", // Light red for dark theme
+          container: "#b71c1c", // Dark red container
+          onContainer: "#f44336", // Red for dark theme
+        },
+      },
+      1: {
+        colorName: "yellow",
+        lightColors: {
+          main: "#ffeb3b", // Yellow
+          container: "#fff9c4", // Light yellow
+          onContainer: "#fbc02d", // Dark yellow
+        },
+        darkColors: {
+          main: "#fff59d", // Light yellow for dark theme
+          container: "#f57f17", // Dark yellow container
+          onContainer: "#ffeb3b", // Yellow for dark theme
+        },
+      },
+      2: {
+        colorName: "blue",
+        lightColors: {
+          main: "#2196f3", // Blue
+          container: "#bbdefb", // Light blue
+          onContainer: "#1976d2", // Dark blue
+        },
+        darkColors: {
+          main: "#64b5f6", // Light blue for dark theme
+          container: "#0d47a1", // Dark blue container
+          onContainer: "#2196f3", // Blue for dark theme
+        },
+      },
+      3: {
+        colorName: "green",
+        lightColors: {
+          main: "#4caf50", // Green
+          container: "#c8e6c9", // Light green
+          onContainer: "#388e3c", // Dark green
+        },
+        darkColors: {
+          main: "#81c784", // Light green for dark theme
+          container: "#1b5e20", // Dark green container
+          onContainer: "#4caf50", // Green for dark theme
+        },
+      },
+    },
+    plugins: [createEventModalPlugin()],
+  });
 
-      // Adjust header toolbar based on screen size
-      if (width < 768) {
-        calendarApi.setOption("headerToolbar", {
-          start: "prev,next",
-          center: "title",
-          end: "dayGridMonth,listMonth",
-        });
-        calendarHeight = "88vh";
-        // calendarApi.setOption("initialView",
-        //   "dayGridMonth"
-        // )
-      } else if (width < 1024) {
-        calendarApi.setOption("headerToolbar", {
-          start: "prev,next",
-          center: "title",
-          end: "dayGridMonth,timeGridWeek,timeGridDay",
-        });
-        calendarHeight = "80vh";
-      } else {
-        calendarApi.setOption("headerToolbar", {
-          start: "prev,next today",
-          center: "title",
-          end: "dayGridMonth,timeGridWeek,timeGridDay,listMonth",
-        });
-        calendarHeight = "80vh";
-      }
-      calendarApi.setOption("height", calendarHeight);
-    };
-
-    // Add event listener for window resizing
-    window.addEventListener("resize", handleResize);
-
-    // Initial call to handle screen size on load
-    handleResize();
-
-    // Cleanup the event listener when the component unmounts
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
   return (
-    <FullCalendar
-      ref={calendarRef} // Attach ref to FullCalendar component
-      height="100%"
-      plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin]}
-      headerToolbar={{
-        // Full header for larger screens
-        start: "prev,next today",
-        center: "title",
-        end: "dayGridMonth,timeGridWeek,timeGridDay,listMonth",
-      }}
-      initialView="dayGridMonth"
-      events={currentEvents}
-      eventBackgroundColor="#2c5039"
-      eventBorderColor="transparent"
-      editable={false}
-      selectable={true}
-      selectMirror={true}
-      dayMaxEvents={true}
-      select={onDateClick}
-      // eventClick={onEventClick}
-      unselectAuto={true}
-      nowIndicator={true}
-    />
+    <div>
+      <ScheduleXCalendar calendarApp={calendar} />
+    </div>
   );
 };
 

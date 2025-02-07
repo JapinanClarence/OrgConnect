@@ -7,7 +7,12 @@ import apiClient from "@/api/axios";
 import EditEventDialog from "@/components/events/EditEventDialog";
 import AddEventDialog from "@/components/events/AddEventDialog";
 import { useToast } from "@/hooks/use-toast";
-import { dateOnly, formatDate, formatSimpleDate, formatSimpleDateTime } from "@/util/helpers";
+import {
+  dateOnly,
+  formatDate,
+  formatSimpleDate,
+  formatSimpleDateTime,
+} from "@/util/helpers";
 import { useAuth } from "@/context/AuthContext";
 import EventsTable from "@/components/events/EventsTable";
 import {
@@ -39,6 +44,7 @@ const EventPage = () => {
   const date = formatDate(Date.now());
   const { token } = useAuth();
   const [showAlert, setShowAlert] = useState(false);
+
   const form = useForm({
     resolver: zodResolver(EventSchema),
     defaultValues: {
@@ -58,7 +64,7 @@ const EventPage = () => {
   const onAdd = async (data) => {
     try {
       setIsSubmitting(true);
-      const { title, description, location } = EventSchema.parse(data);
+      const { title, description, location, startDate, endDate } = EventSchema.parse(data);
 
       const formData = {
         title,
@@ -67,7 +73,7 @@ const EventPage = () => {
         startDate,
         endDate,
       };
-
+   
       const response = await apiClient.post("/admin/event", formData, {
         headers: {
           Authorization: token,
@@ -160,15 +166,9 @@ const EventPage = () => {
     }
   };
 
-  const handleManageAttendance = async (data) =>{
-    navigate(`/events/attendance/?eventId=${data}`)
-    // <Link
-    //                   className="text-sm font-bold hover:underline"
-    //                   to={`/events/attendance/?eventId=${eventData.id}`}
-    //                 >
-    //                   Manage Attendees for This Event
-    //                 </Link>
-  }
+  const handleManageAttendance = async (data) => {
+    navigate(`/events/attendance/?eventId=${data}`);
+  };
   const fetchEvents = async () => {
     try {
       const { data } = await apiClient.get("/admin/event/", {
