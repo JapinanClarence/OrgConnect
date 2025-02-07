@@ -228,7 +228,34 @@ const DesktopSidebar = () => {
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
-
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Link
+                to="/calendar"
+                className={`${
+                  userData.role == "0" ? "hidden" : "flex"
+                } rounded-lg size-full  items-center justify-start p-2 ${
+                  isActive("/calendar")
+                    ? "bg-white text-zinc-900"
+                    : "hover:bg-gray-800"
+                }`}
+              >
+                <Calendar />
+                <span className="hidden lg:block ml-2 font-bold text-sm">
+                  Calendar
+                </span>
+              </Link>
+            </TooltipTrigger>
+            <TooltipContent
+              className="lg:hidden bg-white text-gray-900"
+              side="right"
+              sideOffset={5}
+            >
+              Calendar
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>

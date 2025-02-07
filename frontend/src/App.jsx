@@ -18,6 +18,7 @@ import AdminAccPage from "./pages/AdminAccPage";
 import AcademicYearPage from "./pages/AcademicYearPage";
 import MembersPaidPage from "./pages/MembersPaidPage";
 import OrganizationPage from "./pages/OrganizationPage";
+import CalendarPage from "./pages/CalendarPage";
 
 function App() {
   return (
@@ -61,7 +62,7 @@ function App() {
           >
             <Route element={<DashboardLayout />}>
               <Route path="/events" element={<EventPage />} />
-
+              <Route path="/calendar" element={<CalendarPage />} />
               <Route path="/announcements" element={<AnnouncementPage />} />
 
               <Route path="/payments" element={<PaymentPage />} />
