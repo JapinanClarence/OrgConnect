@@ -94,7 +94,7 @@ const SuperAdminHomeContent = () => {
           ) : (
             <>
               <h1 className="text-2xl font-semibold border-b pb-1 mb-2">
-                Dashboard
+                OSA Admin
               </h1>
               <p className="font-medium text-sm">
                 Current Academic Year:{" "}
