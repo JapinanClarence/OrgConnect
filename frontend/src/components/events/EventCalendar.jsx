@@ -5,7 +5,7 @@ import listPlugin from "@fullcalendar/list";
 import interactionPlugin from "@fullcalendar/interaction";
 import { useRef, useEffect } from "react";
 
-const EventCalendar = ({ onDateClick, currentEvents, onEventClick }) => {
+const EventCalendar = ({ onDateClick, currentEvents }) => {
   const calendarRef = useRef(null);
   useEffect(() => {
     const handleResize = () => {
@@ -64,7 +64,7 @@ const EventCalendar = ({ onDateClick, currentEvents, onEventClick }) => {
         center: "title",
         end: "dayGridMonth,timeGridWeek,timeGridDay,listMonth",
       }}
-      initialView="timeGridWeek"
+      initialView="dayGridMonth"
       events={currentEvents}
       eventBackgroundColor="#2c5039"
       eventBorderColor="transparent"
@@ -73,7 +73,7 @@ const EventCalendar = ({ onDateClick, currentEvents, onEventClick }) => {
       selectMirror={true}
       dayMaxEvents={true}
       select={onDateClick}
-      eventClick={onEventClick}
+      // eventClick={onEventClick}
       unselectAuto={true}
       nowIndicator={true}
     />

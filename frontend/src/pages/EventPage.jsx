@@ -7,12 +7,25 @@ import apiClient from "@/api/axios";
 import EditEventDialog from "@/components/events/EditEventDialog";
 import AddEventDialog from "@/components/events/AddEventDialog";
 import { useToast } from "@/hooks/use-toast";
-import { formatDate } from "@/util/helpers";
+import { dateOnly, formatDate, formatSimpleDate, formatSimpleDateTime } from "@/util/helpers";
 import { useAuth } from "@/context/AuthContext";
+import EventsTable from "@/components/events/EventsTable";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { useNavigate } from "react-router-dom";
 
 const EventPage = () => {
   const [showAddEvent, setShowAddEventDialog] = useState(false);
-  const [showEventInfo, setShowEventInfo] = useState(false);
+  const [showEditDialog, setShowEditDialog] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [currentEvents, setCurrentEvents] = useState([]);
@@ -20,11 +33,12 @@ const EventPage = () => {
   const [endDate, setEndDate] = useState("");
   const [selectedEvent, setSelectedEvent] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
   const date = formatDate(Date.now());
   const { token } = useAuth();
-
+  const [showAlert, setShowAlert] = useState(false);
   const form = useForm({
     resolver: zodResolver(EventSchema),
     defaultValues: {
@@ -36,33 +50,16 @@ const EventPage = () => {
     },
   });
 
-  const handleDateClick = (selected) => {
-    setShowAddEventDialog(true);
-
-    // Set the start and end dates
-    setStartDate(selected.startStr);
-    setEndDate(selected.endStr);
+  const handleEditDialog = (data) => {
+    setShowEditDialog(true);
+    setSelectedEvent(data);
   };
 
-  const handleEventClick = (selected) => {
-    const eventData = {
-      id: selected.event.id,
-      title: selected.event.title,
-      startDate: selected.event.startStr,
-      endDate: selected.event.endStr,
-      description: selected.event.extendedProps.description,
-      location: selected.event.extendedProps.location,
-      status: selected.event.extendedProps.status,
-    };
-    setSelectedEvent(eventData); // Store selected event data
-    setShowEventInfo(true); // Show the dropdown
-  };
-
-  const onSubmit = async (data) => {
+  const onAdd = async (data) => {
     try {
       setIsSubmitting(true);
       const { title, description, location } = EventSchema.parse(data);
-      
+
       const formData = {
         title,
         description,
@@ -93,48 +90,21 @@ const EventPage = () => {
     }
   };
 
-  const onEdit = async (data) => {
-    try {
-      setIsSubmitting(true);
-      const { id, title, description, location, startDate, endDate, status } =
-        EventSchema.parse(data);
-
-      const formData = {
-        title,
-        description,
-        location,
-        startDate,
-        endDate,
-        status,
-      };
-
-      const response = await apiClient.patch(
-        `/admin/event/${selectedEvent.id}`,
-        formData,
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
-      );
-
-      if (response) {
-        await fetchEvents();
-        setIsSubmitting(false);
-        setShowEventInfo(false);
-        form.reset();
-        toast({
-          title: "Event updated",
-          description: `${date}`,
-        });
-      }
-    } catch (error) {
-      const message = error.response.data.message;
-      setErrorMessage(message);
-      setIsSubmitting(false);
-    }
+  const handleDeleteDialog = (data) => {
+    setShowAlert(true);
+    setSelectedEvent(data);
   };
-  const handleDelete = async (eventId) => {
+
+  const confirmDelete = () => {
+    onDelete(selectedEvent); // Call the delete function
+    setShowAlert(false); // Close the alert dialog after deleting
+  };
+
+  const cancelDelete = () => {
+    setShowAlert(false); // Close the alert dialog without deleting
+  };
+
+  const onDelete = async (eventId) => {
     try {
       const response = await apiClient.delete(`/admin/event/${eventId}`, {
         headers: {
@@ -145,7 +115,6 @@ const EventPage = () => {
       if (response) {
         await fetchEvents();
         setIsDeleting(false);
-        setShowEventInfo(false);
         form.reset();
         toast({
           title: "Event deleted",
@@ -159,6 +128,47 @@ const EventPage = () => {
     }
   };
 
+  const onEdit = async (data) => {
+    try {
+      setIsSubmitting(true);
+      const res = await apiClient.patch(
+        `/admin/event/${selectedEvent.id}`,
+        data,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+
+      if (res) {
+        await fetchEvents();
+        setIsSubmitting(false);
+        setShowEditDialog(false);
+        form.reset();
+
+        toast({
+          title: `Event has been updated`,
+          description: `${date}`,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      const message = error.response.data.message;
+      setErrorMessage(message);
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleManageAttendance = async (data) =>{
+    navigate(`/events/attendance/?eventId=${data}`)
+    // <Link
+    //                   className="text-sm font-bold hover:underline"
+    //                   to={`/events/attendance/?eventId=${eventData.id}`}
+    //                 >
+    //                   Manage Attendees for This Event
+    //                 </Link>
+  }
   const fetchEvents = async () => {
     try {
       const { data } = await apiClient.get("/admin/event/", {
@@ -173,21 +183,23 @@ const EventPage = () => {
         const events = data.data;
 
         setCurrentEvents(
-          events.map((event) => ({
-            id: event._id,
-            title: event.title,
-            start: event.startDate,
-            end: event.endDate,
-            description: event.description,
-            status: event.status,
-            location: event.location,
-          }))
+          events.map((event) => {
+            return {
+              id: event._id,
+              title: event.title,
+              startDate: formatSimpleDateTime(event.startDate),
+              endDate: formatSimpleDateTime(event.endDate),
+              description: event.description,
+              status: event.status,
+              location: event.location,
+            };
+          })
         );
       }
-      setLoading(false)
+      setLoading(false);
     } catch (error) {
       console.error("Failed to fetch events:", error);
-      setLoading(false)
+      setLoading(false);
     }
   };
 
@@ -197,34 +209,53 @@ const EventPage = () => {
 
   return (
     <>
-      <div className="bg-white md:shadow-lg md:rounded-lg border border-gray-200 text-gray-900 p-5 md:flex gap-2">
-        <div className="rounded bg-gray-900 bg-opacity-10 md:w-[100px]"></div>
-        <div className="md:w-full">
-          <EventCalendar
-            onDateClick={handleDateClick}
-            currentEvents={currentEvents}
-            onEventClick={handleEventClick}
-            onDelete={handleDelete}
-          />
-        </div>
+      <div className="md:bg-[#fefefe] md:shadow-lg rounded-lg md:border md:border-gray-200 text-gray-900 px-6 py-5 flex flex-col relative">
+        <h1 className="font-bold">Events</h1>
+        <p className="text-sm text-muted-foreground">
+          View and manage events here.
+        </p>
+        <EventsTable
+          onAdd={setShowAddEventDialog}
+          data={currentEvents}
+          onEdit={handleEditDialog}
+          onDelete={handleDeleteDialog}
+          onManageAttendance={handleManageAttendance}
+        />
       </div>
 
       <EditEventDialog
-        open={showEventInfo}
-        onOpenChange={setShowEventInfo}
+        open={showEditDialog}
+        onOpenChange={setShowEditDialog}
         onSubmit={onEdit}
         eventData={selectedEvent}
-        onDelete={handleDelete}
         isDeleting={isDeleting}
       />
       <AddEventDialog
         form={form}
         open={showAddEvent}
         onOpenChange={setShowAddEventDialog}
-        onSubmit={onSubmit}
+        onSubmit={onAdd}
         isSubmitting={isSubmitting}
         errorMessage={errorMessage}
       />
+
+      <AlertDialog open={showAlert} onOpenChange={setShowAlert}>
+        <AlertDialogContent className="bg-white">
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This action cannot be undone. This will permanently delete the
+              event.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={cancelDelete}>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={confirmDelete}>
+              Continue
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
   );
 };

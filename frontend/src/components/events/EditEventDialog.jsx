@@ -53,15 +53,8 @@ const EditEventDialog = ({
   onSubmit,
   errorMessage,
   isSubmitting,
-  isDeleting,
-  onDelete,
 }) => {
   const [showAlert, setShowAlert] = useState(false);
-  const [isEditable, setIsEditable] = useState({
-    title: false,
-    description: false,
-    location: false,
-  });
   const form = useForm({
     resolver: zodResolver(EventSchema),
     defaultValues: eventData || {}, // Set default values at initialization
@@ -132,20 +125,7 @@ const EditEventDialog = ({
                         </FormLabel>
                         <FormControl>
                           <div className="relative w-full">
-                            <Input
-                              {...field}
-                              type="text"
-                              disabled={!isEditable.title}
-                            />
-                            <Button
-                              type="button"
-                              size="icon"
-                              variant="ghost"
-                              className="absolute right-0 top-0 h-full w-min px-3 py-2 hover:bg-transparent"
-                              onClick={() => handleEditToggle("title")} // Toggle edit mode
-                            >
-                              <Pen className="text-gray-500 size-4" />
-                            </Button>
+                            <Input {...field} type="text" />
                           </div>
                         </FormControl>
                         <FormMessage className="text-xs" />
@@ -164,21 +144,7 @@ const EditEventDialog = ({
                         </FormLabel>
                         <FormControl>
                           <div className="relative w-full">
-                            <Textarea
-                              {...field}
-                              type="text"
-                              disabled={!isEditable.description}
-                              className="pr-7"
-                            />
-                            <Button
-                              type="button"
-                              size="icon"
-                              variant="ghost"
-                              className="absolute right-0 top-0 h-full w-min px-3 py-2 hover:bg-transparent"
-                              onClick={() => handleEditToggle("description")} // Toggle edit mode
-                            >
-                              <Pen className="text-gray-500 size-4" />
-                            </Button>
+                            <Textarea {...field} type="text" className="pr-7" />
                           </div>
                         </FormControl>
                         <FormMessage className="text-xs" />
@@ -197,22 +163,7 @@ const EditEventDialog = ({
                         </FormLabel>
                         <FormControl>
                           <div className="relative w-full">
-                            <Input
-                              {...field}
-                              type="text"
-                              disabled={!isEditable.location}
-                            />
-                            <Button
-                              type="button"
-                              size="icon"
-                              variant="ghost"
-                              className="absolute right-0 top-0 h-full w-min px-3 py-2 hover:bg-transparent"
-                              onClick={() => {
-                                handleEditToggle("location");
-                              }} // Toggle edit mode
-                            >
-                              <Pen className="text-gray-500 size-4" />
-                            </Button>
+                            <Input {...field} type="text" />
                           </div>
                         </FormControl>
                         <FormMessage className="text-xs" />
@@ -228,7 +179,9 @@ const EditEventDialog = ({
                         <FormLabel className="text-gray-600 text-sm">
                           Event status
                         </FormLabel>
-
+                        <FormDescription>
+                          *Set status to open to accept student attendance.
+                        </FormDescription>
                         <Select
                           onValueChange={field.onChange}
                           defaultValue={field.value}
@@ -249,21 +202,19 @@ const EditEventDialog = ({
                             </SelectGroup>
                           </SelectContent>
                         </Select>
-                        <FormDescription>
-                          *Set status to open to accept student attendance.
-                        </FormDescription>
+
                         <FormMessage className="text-xs" />
                       </FormItem>
                     )}
                   />
-                  <div className="m-0">
+                  {/* <div className="m-0">
                     <Link
                       className="text-sm font-bold hover:underline"
                       to={`/events/attendance/?eventId=${eventData.id}`}
                     >
                       Manage Attendees for This Event
                     </Link>
-                  </div>
+                  </div> */}
                 </div>
 
                 <div className="flex justify-between mt-4">
@@ -277,18 +228,6 @@ const EditEventDialog = ({
                         <LoaderCircle className="animate-spin" />
                       ) : (
                         "Apply"
-                      )}
-                    </Button>
-                    <Button
-                      type="button"
-                      onClick={handleDelete}
-                      variant="destructive"
-                      disabled={isDeleting}
-                    >
-                      {isDeleting ? (
-                        <LoaderCircle className="animate-spin" />
-                      ) : (
-                        <Trash2 className="h-4" />
                       )}
                     </Button>
                   </div>
@@ -307,24 +246,6 @@ const EditEventDialog = ({
           </div>
         </DialogContent>
       </Dialog>
-
-      <AlertDialog open={showAlert} onOpenChange={setShowAlert}>
-        <AlertDialogContent className="bg-white">
-          <AlertDialogHeader>
-            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-            <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete the
-              event.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel onClick={cancelDelete}>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={confirmDelete}>
-              Continue
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
     </>
   );
 };

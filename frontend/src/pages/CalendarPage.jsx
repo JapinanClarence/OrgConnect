@@ -14,19 +14,19 @@ const CalendarPage = () => {
   const date = formatDate(Date.now());
   const { token } = useAuth();
 
-  const handleEventClick = (selected) => {
-    const eventData = {
-      id: selected.event.id,
-      title: selected.event.title,
-      startDate: selected.event.startStr,
-      endDate: selected.event.endStr,
-      description: selected.event.extendedProps.description,
-      location: selected.event.extendedProps.location,
-      status: selected.event.extendedProps.status,
-    };
-    setSelectedEvent(eventData); // Store selected event data
-    setShowEventInfo(true); // Show the dropdown
-  };
+  // const handleEventClick = (selected) => {
+  //   const eventData = {
+  //     id: selected.event.id,
+  //     title: selected.event.title,
+  //     startDate: selected.event.startStr,
+  //     endDate: selected.event.endStr,
+  //     description: selected.event.extendedProps.description,
+  //     location: selected.event.extendedProps.location,
+  //     status: selected.event.extendedProps.status,
+  //   };
+  //   setSelectedEvent(eventData); // Store selected event data
+  //   setShowEventInfo(true); // Show the dropdown
+  // };
 
   const fetchEvents = async () => {
     try {
@@ -40,7 +40,7 @@ const CalendarPage = () => {
         setCurrentEvents([]);
       } else {
         const events = data.data;
-
+       
         setCurrentEvents(
           events.map((event) => ({
             id: event._id,
@@ -75,7 +75,7 @@ const CalendarPage = () => {
         </div>
       </div>
 
-      <EventDialog open={showEventInfo} onOpenChange={setShowEventInfo} eventData={selectedEvent}/>
+      {/* <EventDialog open={showEventInfo} onOpenChange={setShowEventInfo} eventData={selectedEvent}/> */}
 
     </>
   );
