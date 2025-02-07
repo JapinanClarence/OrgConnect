@@ -109,7 +109,7 @@ const AdminHomeContent = () => {
               loading={loading}
             />
             <Statcard
-              name="Total Payments"
+              name="Total Collection"
               icon={ChartNoAxesColumn}
               value={paymentCount}
               color="#10B981"
