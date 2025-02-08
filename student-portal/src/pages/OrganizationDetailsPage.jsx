@@ -14,6 +14,7 @@ import OrgHeader from "@/components/organization/OrgHeader";
 import { useToast } from "@/hooks/use-toast";
 import { formatDate } from "@/util/helpers";
 import LeaveDialog from "@/components/organization/LeaveDialog";
+import SecondaryFooter from "@/components/nav/SecondaryFooter";
 
 const OrganizationDetailsPage = () => {
   const navigate = useNavigate();
@@ -92,13 +93,13 @@ const OrganizationDetailsPage = () => {
             <ChevronLeft />
           </Button>
 
-          <Button
+          {/* <Button
             variant="ghost"
             size="icon"
             onClick={() => setOpenDrawer(true)}
           >
             <Ellipsis />
-          </Button>
+          </Button> */}
         </div>
       </header>
       <div
@@ -116,6 +117,8 @@ const OrganizationDetailsPage = () => {
         {loading ? <AboutSkeleton /> : <AboutCard orgData={orgData} />}
       </div>
 
+      
+      <SecondaryFooter onLeave={handleLeave} id={orgData._id}/>
       <OrganizationDrawer
         open={openDrawer}
         onOpenChange={setOpenDrawer}
