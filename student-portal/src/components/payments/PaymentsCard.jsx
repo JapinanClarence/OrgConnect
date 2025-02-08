@@ -8,6 +8,7 @@ import {
   CardHeader,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { PhilippinePeso } from "lucide-react";
 
 
 const PaymentsCard = ({
@@ -62,6 +63,10 @@ const PaymentsCard = ({
                 : details
               : "No description."}
           </CardDescription>
+          <div className="text-sm text-muted-foreground">
+            <h2 className="font-bold">Amount Paid:</h2>
+            <span className="inline-flex items-center"><PhilippinePeso size={12}/> {amountPaid || 0}</span>
+          </div>
           <CardFooter className="inline md:hidden p-0">
             {badgeCategory && (
               <Badge className={`${badgeCategory.color} text-white`}>
