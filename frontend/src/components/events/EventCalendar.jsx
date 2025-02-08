@@ -13,7 +13,7 @@ import { createEventModalPlugin } from "@schedule-x/event-modal";
 const EventCalendar = ({ currentEvents }) => {
   const calendar = useCalendarApp({
     defaultView: viewMonthAgenda.name,
-    // theme: "shadcn",
+    theme: "shadcn",
     views: [viewMonthGrid, viewMonthAgenda, viewWeek, viewDay],
     events: currentEvents,
     calendars: {

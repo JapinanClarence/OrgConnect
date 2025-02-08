@@ -85,6 +85,29 @@ export const columns = (onEdit, onDelete, onAttendance) => [
     cell: ({ row }) => <div className="">{row.getValue("endDate")}</div>,
   },
   {
+    accessorKey: "status",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Status
+          <CaretSortIcon className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const statusMap = {
+        0: "Close",
+        1: "Pending",
+        2: "Ongoing",
+        3: "Open",
+      };
+      return <div className="">{statusMap[row.getValue("status")]}</div>;
+    },
+  },
+  {
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
@@ -102,8 +125,8 @@ export const columns = (onEdit, onDelete, onAttendance) => [
 
       const handleAttendance = (event) => {
         event.stopPropagation();
-        onAttendance(currentEvent.id)
-      }
+        onAttendance(currentEvent.id);
+      };
 
       return (
         <DropdownMenu>
@@ -125,7 +148,9 @@ export const columns = (onEdit, onDelete, onAttendance) => [
             <DropdownMenuItem onClick={handleDelete}>
               Delete Event
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={handleAttendance}>Manage Attendance</DropdownMenuItem>
+            <DropdownMenuItem onClick={handleAttendance}>
+              Manage Attendance
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );

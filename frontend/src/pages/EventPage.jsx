@@ -28,6 +28,8 @@ import {
 } from "@/components/ui/alert-dialog";
 import { useNavigate } from "react-router-dom";
 
+
+
 const EventPage = () => {
   const [showAddEvent, setShowAddEventDialog] = useState(false);
   const [showEditDialog, setShowEditDialog] = useState(false);

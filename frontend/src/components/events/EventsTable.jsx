@@ -42,7 +42,14 @@ import {
 import { columns } from "@/components/events/columns";
 import TableSkeleton from "@/components/skeleton/TableSkeleton";
 
-const EventsTable = ({ data, loading, onAdd,  onEdit, onDelete, onManageAttendance }) => {
+const EventsTable = ({
+  data,
+  loading,
+  onAdd,
+  onEdit,
+  onDelete,
+  onManageAttendance,
+}) => {
   const [sorting, setSorting] = React.useState([]);
   const [columnFilters, setColumnFilters] = React.useState([]);
   const [columnVisibility, setColumnVisibility] = React.useState({});
@@ -52,7 +59,7 @@ const EventsTable = ({ data, loading, onAdd,  onEdit, onDelete, onManageAttendan
   });
   const [globalFilter, setGlobalFilter] = React.useState("");
   // Define the columns where you want to apply the global filter
-  const filterColumns = ["studentId", "fullname", "email", "year", "course"];
+  const filterColumns = ["title", "location"];
 
   const table = useReactTable({
     data,
@@ -160,7 +167,7 @@ const EventsTable = ({ data, loading, onAdd,  onEdit, onDelete, onManageAttendan
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
-                //   onClick={() => onClick(row.original)}
+                  //   onClick={() => onClick(row.original)}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
