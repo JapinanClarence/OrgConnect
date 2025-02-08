@@ -63,3 +63,10 @@ export const timeOnly = (dateString) =>{
     hour12: true   
   });
 }
+export const dateOnlyISO = (dateString) => {
+  const date = new Date(dateString); // Parse the date string into a Date object
+  const year = date.getFullYear(); // Get the full year
+  const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Get the month and pad with leading zero
+  const day = date.getDate().toString().padStart(2, '0'); // Get the day and pad with leading zero
+  return `${year}-${month}-${day}`;
+};

@@ -35,7 +35,7 @@ const EventCalendar = ({ currentEvents }) => {
         lightColors: {
           main: "#ffeb3b", // Yellow
           container: "#fff9c4", // Light yellow
-          onContainer: "#fbc02d", // Dark yellow
+          onContainer: "#8B8000", // Dark yellow
         },
         darkColors: {
           main: "#fff59d", // Light yellow for dark theme

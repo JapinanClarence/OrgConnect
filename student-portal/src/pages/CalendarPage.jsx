@@ -3,6 +3,7 @@ import { useAuth } from "@/context/AuthContext";
 import apiClient from "@/api/axios";
 import Header from "@/components/nav/Header";
 import Calendar from "@/components/event/Calendar";
+import { dateOnlyISO } from "@/util/helpers";
 
 const CalendarPage = () => {
   const { token, userData } = useAuth();
@@ -24,10 +25,11 @@ const CalendarPage = () => {
           events.map((event) => ({
             id: event._id,
             title: event.title,
-            start: event.startDate,
-            end: event.endDate,
+            start: dateOnlyISO(event.startDate),
+            end: dateOnlyISO(event.endDate),
             description: event.description,
             active: event.active,
+            calendarId: event.status,
             location: event.location,
           }))
         );
@@ -47,7 +49,11 @@ const CalendarPage = () => {
       <Header />
 
       <div className="py-5 h-full">
-        <Calendar currentEvents={eventData} />
+        {loading ? (
+          <div>Loading events...</div> // Display a loading message while fetching events
+        ) : (
+          <Calendar currentEvents={eventData} />
+        )}
       </div>
     </div>
   );
