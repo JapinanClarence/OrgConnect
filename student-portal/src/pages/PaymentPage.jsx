@@ -66,7 +66,7 @@ const PaymentPage = () => {
       <PageHead title={"Payments"} />
 
       <Tabs defaultValue="orgs" className="px-5">
-        <TabsList className="grid grid-cols-2  bg-zinc-200 mb-3">
+        <TabsList className="grid grid-cols-2  bg-zinc-200 w-full mb-3">
           <TabsTrigger value="orgs">My payments</TabsTrigger>
           <TabsTrigger value="discover">Transactions</TabsTrigger>
         </TabsList>
