@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/card";
 import { Calendar, MapPin } from "lucide-react";
 import EventDialog from "./EventDialog";
-import { timeOnly, shortMonth } from "@/util/helpers";
+import { timeOnly, shortMonth, formatSimpleDate } from "@/util/helpers";
 import { Badge } from "@/components/ui/badge";
 
 const statusMap = {
@@ -51,13 +51,15 @@ const EventCards = ({
 
 
   const date = preProcessDate(startDate, endDate);
-  
+
   useEffect(() => {
     // set the badge status
     if (status) {
       setBadgeStatus(statusMap[status]);
     }
   }, [status]);
+
+  
   function preProcessDate (startDate, endDate) {
     const sDate = new Date(startDate);
     const eDate = new Date(endDate);
@@ -73,7 +75,7 @@ const EventCards = ({
     });
 
     if (s !== e) {
-      return `${sDate} - ${eDate}`;
+      return `${shortMonth(startDate)} - ${shortMonth(endDate)}`;
     } else {
       return `${shortMonth(startDate)} - ${timeOnly(endDate)}`;
     }

@@ -19,7 +19,7 @@ const AttendancePage = () => {
           Authorization: token,
         },
       });
-      console.log(data);
+
       if (!data.success) {
         setAttendanceData([]);
       } else {

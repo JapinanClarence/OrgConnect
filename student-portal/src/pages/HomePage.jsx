@@ -47,8 +47,11 @@ const HomePage = () => {
       if (!data.success) {
         setEventData([]);
       } else {
-        const event = data.data;
-        setEventData(event.slice(0, 10));
+        const events = data.data;
+       
+        const upcomingEvents = events.filter((event)=> event.status ==="1")
+
+        setEventData(upcomingEvents.slice(0, 10));
       }
     } catch (error) {
       console.log(error);
@@ -180,14 +183,14 @@ const HomePage = () => {
       <div className="border-b my-6 mx-5"></div>
       <div className="mx-5 pb-20">
         <div className="sticky top-[3.6rem] bg-slate-50 pb-2 flex justify-start z-10">
-          <h1 className="font-semibold ">Recent Events</h1>
+          <h1 className="font-semibold ">Upcoming Events</h1>
         </div>
         <div className="flex flex-col gap-2">
           {loading ? (
             <EventSkeleton items={5} />
           ) : eventData <= 0 ? (
             <div className="w-full py-10 flex justify-center content-center text-muted-foreground">
-              No recent events
+              No upcoming events
             </div>
           ) : (
             eventData.map((data) => (
