@@ -4,6 +4,9 @@ import { useAuth } from "@/context/AuthContext";
 import { useParams, useNavigate } from "react-router-dom";
 import PageHead from "@/components/nav/PageHead";
 import DataTable from "@/components/payments/DataTable";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import PaymentsTab from "@/components/payments/PaymentsTab";
+import TransactionsTab from "@/components/payments/TransactionsTab";
 const categoryMap = {
   0: "Fees",
   1: "Expenditure",
@@ -13,6 +16,7 @@ const categoryMap = {
 const PaymentPage = () => {
   const { token } = useAuth();
   const [paymentData, setPaymentData] = useState([]);
+  const [transactionData, setTransactionData] = useState([]);
   const params = useParams();
   const [loading, setLoading] = useState(true);
 
@@ -30,18 +34,22 @@ const PaymentPage = () => {
       if (!data.success) {
         setPaymentData([]);
       } else {
-      
-        const tableData = data.data.map((data) => ({
+        const paymentData = data.data.map((data) => ({
           id: data._id,
           purpose: data.purpose,
           details: data.details,
           amount: data.amount,
-          category: categoryMap[data.category],
+          category: data.category,
           amountPaid: data.studentStatus?.amountPaid || null,
           status: data.studentStatus?.status || null,
         }));
-      
-        setPaymentData(tableData);
+         console.log(paymentData)
+        const payments = paymentData.filter((data) => data.category === "0");
+        const transactions = paymentData.filter(
+          (data) => data.category !== "0"
+        );
+        setPaymentData(payments);
+        setTransactionData(transactions);
       }
       setLoading(false);
     } catch (error) {
@@ -56,9 +64,19 @@ const PaymentPage = () => {
   return (
     <div className="pt-16">
       <PageHead title={"Payments"} />
-      <div className="px-5">
-        <DataTable data={paymentData} loading={loading} />
-      </div>
+
+      <Tabs defaultValue="orgs" className="px-5">
+        <TabsList className="grid grid-cols-2  bg-zinc-200 mb-3">
+          <TabsTrigger value="orgs">My payments</TabsTrigger>
+          <TabsTrigger value="discover">Transactions</TabsTrigger>
+        </TabsList>
+        <TabsContent value="orgs">
+          <PaymentsTab payments={paymentData} />
+        </TabsContent>
+        <TabsContent value="discover">
+          <TransactionsTab transactions={transactionData} />
+        </TabsContent>
+      </Tabs>
     </div>
   );
 };
