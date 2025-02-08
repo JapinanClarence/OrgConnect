@@ -4,6 +4,7 @@ import {
   Bell,
   Calendar,
   CalendarRange,
+  DoorOpen,
   Home,
   Newspaper,
   QrCode,
@@ -56,7 +57,7 @@ const SecondaryFooter = ({id, onLeave}) => {
           className={`mx-auto text-muted-foreground`}
           onClick={() => onLeave(id)}
         >
-          <Newspaper className="mx-auto" />
+          <DoorOpen className="mx-auto" />
           <span className="text-center block text-xs">Leave</span>
         </div>
       </div>
