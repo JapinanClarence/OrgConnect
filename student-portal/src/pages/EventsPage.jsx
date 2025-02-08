@@ -6,9 +6,17 @@ import { useAuth } from "@/context/AuthContext";
 import EventCards from "@/components/event/EventCards";
 import { shortMonth, timeOnly } from "@/util/helpers";
 import EventSkeleton from "@/components/skeleton/EventSkeleton";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import PendingTab from "@/components/event/PendingTab";
+import OngoingTab from "@/components/event/OngoingTab";
+import OpenTab from "@/components/event/OpenTab";
+import CloseTab from "@/components/event/CloseTab";
 
 const EventsPage = () => {
-  const [eventData, setEventData] = useState([]);
+  const [pendingEventData, setPendingEventData] = useState([]);
+  const [closeEventData, setCloseEventData] = useState([]);
+  const [ongoingEventData, setOngoingEventData] = useState([]);
+  const [openEventData, setOpenEventData] = useState([]);
   const params = useParams();
   const [loading, setLoading] = useState(true);
   const { token } = useAuth();
@@ -25,14 +33,21 @@ const EventsPage = () => {
       );
 
       if (!data.success) {
-        setEventData([]);
+        setPendingEventData([]);
       } else {
         const event = data.data;
 
-        setEventData(event);
+        const pendingEvent = event.filter((data) => data.status ==="1");
+        const ongoingEvent = event.filter((data) => data.status ==="2");
+        const openEvent = event.filter((data) => data.status === "3");
+        const closeEvent = event.filter((data) => data.status === "0"); 
+
+        setCloseEventData(closeEvent);
+        setOngoingEventData(ongoingEvent);
+        setOpenEventData(openEvent);
+        setPendingEventData(pendingEvent);
       }
       setLoading(false);
-
     } catch (error) {
       console.log(error);
       setLoading(false);
@@ -46,31 +61,26 @@ const EventsPage = () => {
   return (
     <div className="pt-16">
       <PageHead title={"Events"} />
-      <div className="px-5">
-        <div className="space-y-2">
-          {loading ? (
-            <EventSkeleton items={5} />
-          ) : eventData <= 0 ? (
-            <div className="w-full py-10 flex justify-center content-center text-muted-foreground">
-              No recent events
-            </div>
-          ) : (
-            eventData.map((data) => (
-              <EventCards
-              key={data._id}
-              title={data.title}
-              description={data.description}
-              date={data.date}
-              startDate={data.startDate}
-              endDate={data.endDate}
-              location={data.location}
-              status={data.status}
-              postedBy={data.organization.name}
-              />
-            ))
-          )}
-        </div>
-      </div>
+      <Tabs defaultValue="upcoming" className="px-5">
+        <TabsList className="grid grid-cols-4  bg-zinc-200 mb-3">
+          <TabsTrigger value="upcoming">Upcoming</TabsTrigger>
+          <TabsTrigger value="ongoing">Ongoing</TabsTrigger>
+          <TabsTrigger value="open">Open</TabsTrigger>
+          <TabsTrigger value="close">Close</TabsTrigger>
+        </TabsList>
+        <TabsContent value="upcoming">
+          <PendingTab loading={loading} eventData={pendingEventData}/>
+        </TabsContent>
+        <TabsContent value="ongoing">
+          <OngoingTab loading={loading} eventData={ongoingEventData} />
+        </TabsContent>
+        <TabsContent value="open">
+          <OpenTab loading={loading} eventData={openEventData} />
+        </TabsContent>
+        <TabsContent value="close">
+          <CloseTab loading={loading} eventData={closeEventData} />
+        </TabsContent>
+      </Tabs>
     </div>
   );
 };

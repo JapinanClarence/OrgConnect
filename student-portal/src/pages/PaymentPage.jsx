@@ -65,15 +65,15 @@ const PaymentPage = () => {
     <div className="pt-16">
       <PageHead title={"Payments"} />
 
-      <Tabs defaultValue="orgs" className="px-5">
+      <Tabs defaultValue="my-payments" className="px-5">
         <TabsList className="grid grid-cols-2  bg-zinc-200 w-full mb-3">
-          <TabsTrigger value="orgs">My payments</TabsTrigger>
-          <TabsTrigger value="discover">Transactions</TabsTrigger>
+          <TabsTrigger value="my-payments">My payments</TabsTrigger>
+          <TabsTrigger value="transactions">Transactions</TabsTrigger>
         </TabsList>
-        <TabsContent value="orgs">
+        <TabsContent value="my-payments">
           <PaymentsTab payments={paymentData} />
         </TabsContent>
-        <TabsContent value="discover">
+        <TabsContent value="transactions">
           <TransactionsTab transactions={transactionData} />
         </TabsContent>
       </Tabs>
