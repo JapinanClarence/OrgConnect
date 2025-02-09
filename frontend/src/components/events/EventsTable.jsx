@@ -39,7 +39,7 @@ import {
   LoaderCircle,
   Settings2,
 } from "lucide-react";
-import { columns } from "@/components/events/columns";
+import { Columns } from "@/components/events/Columns";
 import TableSkeleton from "@/components/skeleton/TableSkeleton";
 
 const EventsTable = ({
@@ -63,7 +63,7 @@ const EventsTable = ({
 
   const table = useReactTable({
     data,
-    columns: columns(onEdit, onDelete, onManageAttendance),
+    columns: Columns(onEdit, onDelete, onManageAttendance),
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     onPaginationChange: setPagination,
