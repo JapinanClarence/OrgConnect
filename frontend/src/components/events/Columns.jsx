@@ -14,7 +14,7 @@ import { CircleCheck, Timer } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 // Define the columns for the table
-export const columns = (onEdit, onDelete, onAttendance) => [
+export const Columns = (onEdit, onDelete, onAttendance) => [
   {
     accessorKey: "title",
     header: ({ column }) => {
