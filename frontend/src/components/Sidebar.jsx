@@ -18,6 +18,7 @@ import {
   Building2,
   User2,
   BookA,
+  CalendarDays,
   
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -241,7 +242,7 @@ const DesktopSidebar = () => {
                     : "hover:bg-gray-800"
                 }`}
               >
-                <Calendar />
+                <CalendarDays />
                 <span className="hidden lg:block ml-2 font-bold text-sm">
                   Calendar
                 </span>
