@@ -3,7 +3,7 @@ import Organization from "../../model/organizationModel.js";
 import { OrgAdminModel as Admin } from "../../model/UserModel.js";
 
 export const createEvent = async (req, res, next) => {
-  const { title, description, startDate, endDate, location } = req.body;
+  const { title, description, startDate, endDate, location, fee } = req.body;
 
   const userId = req.user.userId;
 
@@ -34,6 +34,14 @@ export const createEvent = async (req, res, next) => {
           "Organization is currently not active, limited actions granted.",
       });
     }
+
+    if(await Events.findOne({title})){
+      return res.status(400).json({
+        success: false,
+        message: "Event already exists"
+      })
+    }
+
     await Events.create({
       title,
       description,
@@ -41,6 +49,7 @@ export const createEvent = async (req, res, next) => {
       endDate,
       location,
       organization: organization._id,
+      fee
     });
 
     res.status(201).json({
@@ -67,7 +76,7 @@ export const getEvent = async (req, res, next) => {
     }
 
     const event = await Events.find({ organization: organization._id }).select(
-      "title startDate endDate status location description"
+      "title startDate endDate status location description fee"
     );
 
     if (event.length <= 0) {

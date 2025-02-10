@@ -55,6 +55,7 @@ const EventPage = () => {
       startDate: "",
       endDate: "",
       location: "",
+      isFree: "",
     },
   });
 
@@ -66,14 +67,15 @@ const EventPage = () => {
   const onAdd = async (data) => {
     try {
       setIsSubmitting(true);
-      const { title, description, location, startDate, endDate } = EventSchema.parse(data);
-
+      const { title, description, location, startDate, endDate, fee } = EventSchema.parse(data);
+     
       const formData = {
         title,
         description,
         location,
         startDate,
         endDate,
+        fee
       };
    
       const response = await apiClient.post("/admin/event", formData, {
@@ -194,6 +196,7 @@ const EventPage = () => {
               description: event.description,
               status: event.status,
               location: event.location,
+              fee: event.fee || 0,
             };
           })
         );

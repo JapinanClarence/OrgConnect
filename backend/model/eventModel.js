@@ -35,6 +35,9 @@ const eventSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Organization",
         required: [true, "Organization is required"]
+    },
+    fee: {
+        type: Number,
     }
 }, { timestamps: true });
 

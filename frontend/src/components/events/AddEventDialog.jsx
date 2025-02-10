@@ -18,7 +18,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { LoaderCircle } from "lucide-react";
+import { LoaderCircle, PhilippinePeso } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -148,6 +148,30 @@ const AddEventDialog = ({
                     )}
                   />
                 </div>
+                {/* Payment information Field */}
+                <FormField
+                  control={form.control}
+                  name="fee"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-gray-600 text-sm">
+                        Event Fee{" "}
+                        <span className="ml-1 text-[10px] text-slate-500">
+                          (optional)
+                        </span>
+                      </FormLabel>
+                      <FormControl>
+                        <div className="relative w-full ">
+                          <div className="absolute pl-2 flex items-center h-full left-0 top-0 w-min">
+                            <PhilippinePeso size={15} className="text-muted-foreground"/>
+                          </div>
+                          <Input {...field} type="number" className="pl-6" placeholder="0.00"/>
+                        </div>
+                      </FormControl>
+                      <FormMessage className="text-xs" />
+                    </FormItem>
+                  )}
+                />
               </div>
 
               <div className="flex justify-between mt-4">

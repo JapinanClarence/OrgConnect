@@ -9,6 +9,8 @@ import {
   viewWeek,
 } from "@schedule-x/calendar";
 import { createEventModalPlugin } from "@schedule-x/event-modal";
+import { createCurrentTimePlugin } from "@schedule-x/current-time";
+import { createCalendarControlsPlugin } from "@schedule-x/calendar-controls";
 
 const EventCalendar = ({ currentEvents }) => {
   const calendar = useCalendarApp({
@@ -16,6 +18,7 @@ const EventCalendar = ({ currentEvents }) => {
     theme: "shadcn",
     views: [viewMonthGrid, viewMonthAgenda, viewWeek, viewDay],
     events: currentEvents,
+    setFirstDayOfWeek: 0,
     calendars: {
       0: {
         colorName: "red",
@@ -70,7 +73,11 @@ const EventCalendar = ({ currentEvents }) => {
         },
       },
     },
-    plugins: [createEventModalPlugin()],
+    plugins: [
+      createEventModalPlugin(),
+      createCurrentTimePlugin(),
+      createCalendarControlsPlugin({ setFirstDayOfWeek: 6 }),
+    ],
   });
 
   return (
