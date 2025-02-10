@@ -7,7 +7,7 @@ import {
   DialogTitle,
   DialogFooter,
 } from "@/components/ui/dialog";
-import { Calendar, MapPin } from "lucide-react";
+import { Calendar, MapPin, PhilippinePeso } from "lucide-react";
 import { Button } from "../ui/button";
 import { Badge } from "../ui/badge";
 
@@ -18,6 +18,7 @@ const EventDialog = ({
   date,
   postedBy,
   badgeStatus,
+  eventFee,
   open,
   onOpenChange,
 }) => {
@@ -73,6 +74,18 @@ const EventDialog = ({
             <MapPin size={13} strokeWidth={2} className="inline mr-1" />
             {location}
           </p>
+        </div>
+        <div>
+          <h1 className="text-muted-foreground text-xs">Event Fee:</h1>
+          <div className="text-gray-900 font-semibold text-sm inline-flex items-center">
+            {eventFee ? (
+              <>
+                <PhilippinePeso className="" size={14} /> {eventFee}
+              </>
+            ) : (
+              "Free"
+            )}
+          </div>
         </div>
 
         <DialogFooter>

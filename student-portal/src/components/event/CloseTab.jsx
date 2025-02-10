@@ -23,6 +23,7 @@ const CloseTab = ({ loading, eventData }) => {
             location={data.location}
             status={data.status}
             postedBy={data.organization.name}
+            eventFee={data.fee}
           />
         ))
       )}

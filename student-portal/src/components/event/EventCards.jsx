@@ -37,7 +37,8 @@ const EventCards = ({
   startDate,
   endDate,
   postedBy,
-  status
+  status,
+  eventFee
 }) => {
   const [badgeStatus, setBadgeStatus] = useState(null);
   const [showDialog, setShowDialog] = useState(false);
@@ -117,6 +118,7 @@ const EventCards = ({
         date={date}
         badgeStatus={badgeStatus}
         postedBy={postedBy}
+        eventFee={eventFee}
       />
     </>
   );
