@@ -19,6 +19,7 @@ const EventDialog = ({
   postedBy,
   badgeStatus,
   eventFee,
+  organizer,
   open,
   onOpenChange,
 }) => {
@@ -87,7 +88,12 @@ const EventDialog = ({
             )}
           </div>
         </div>
-
+        <div>
+          <h1 className="text-muted-foreground text-xs">Organizer:</h1>
+          <div className="text-gray-900 font-semibold text-sm r">
+            {organizer}
+          </div>
+        </div>
         <DialogFooter>
           <div>
             <h1 className="text-muted-foreground text-xs">Event by:</h1>

@@ -205,6 +205,7 @@ const HomePage = () => {
                 status={data.status}
                 postedBy={data.organization.name}
                 eventFee={data.fee}
+                organizer={data.organizer}
               />
             ))
           )}

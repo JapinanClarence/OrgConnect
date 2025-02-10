@@ -163,10 +163,34 @@ const AddEventDialog = ({
                       <FormControl>
                         <div className="relative w-full ">
                           <div className="absolute pl-2 flex items-center h-full left-0 top-0 w-min">
-                            <PhilippinePeso size={15} className="text-muted-foreground"/>
+                            <PhilippinePeso
+                              size={15}
+                              className="text-muted-foreground"
+                            />
                           </div>
-                          <Input {...field} type="number" className="pl-6" placeholder="0.00"/>
+                          <Input
+                            {...field}
+                            type="number"
+                            className="pl-6"
+                            placeholder="0.00"
+                          />
                         </div>
+                      </FormControl>
+                      <FormMessage className="text-xs" />
+                    </FormItem>
+                  )}
+                />
+                {/* organizer Field */}
+                <FormField
+                  control={form.control}
+                  name="organizer"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-gray-600 text-sm">
+                        Organizer
+                      </FormLabel>
+                      <FormControl>
+                        <Input {...field} type="text" />
                       </FormControl>
                       <FormMessage className="text-xs" />
                     </FormItem>

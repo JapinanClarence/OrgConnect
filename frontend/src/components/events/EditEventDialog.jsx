@@ -170,6 +170,55 @@ const EditEventDialog = ({
                       </FormItem>
                     )}
                   />
+
+                  {/* Payment information Field */}
+                  <FormField
+                    control={form.control}
+                    name="fee"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-gray-600 text-sm">
+                          Event Fee{" "}
+                          <span className="ml-1 text-[10px] text-slate-500">
+                            (optional)
+                          </span>
+                        </FormLabel>
+                        <FormControl>
+                          <div className="relative w-full ">
+                            <div className="absolute pl-2 flex items-center h-full left-0 top-0 w-min">
+                              <PhilippinePeso
+                                size={15}
+                                className="text-muted-foreground"
+                              />
+                            </div>
+                            <Input
+                              {...field}
+                              type="number"
+                              className="pl-6"
+                              placeholder="0.00"
+                            />
+                          </div>
+                        </FormControl>
+                        <FormMessage className="text-xs" />
+                      </FormItem>
+                    )}
+                  />
+                  {/* organizer Field */}
+                  <FormField
+                    control={form.control}
+                    name="organizer"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-gray-600 text-sm">
+                          Organizer
+                        </FormLabel>
+                        <FormControl>
+                          <Input {...field} type="text" />
+                        </FormControl>
+                        <FormMessage className="text-xs" />
+                      </FormItem>
+                    )}
+                  />
                   {/* Status field */}
                   <FormField
                     control={form.control}
@@ -207,38 +256,7 @@ const EditEventDialog = ({
                       </FormItem>
                     )}
                   />
-                  {/* Payment information Field */}
-                  <FormField
-                    control={form.control}
-                    name="fee"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-gray-600 text-sm">
-                          Event Fee{" "}
-                          <span className="ml-1 text-[10px] text-slate-500">
-                            (optional)
-                          </span>
-                        </FormLabel>
-                        <FormControl>
-                          <div className="relative w-full ">
-                            <div className="absolute pl-2 flex items-center h-full left-0 top-0 w-min">
-                              <PhilippinePeso
-                                size={15}
-                                className="text-muted-foreground"
-                              />
-                            </div>
-                            <Input
-                              {...field}
-                              type="number"
-                              className="pl-6"
-                              placeholder="0.00"
-                            />
-                          </div>
-                        </FormControl>
-                        <FormMessage className="text-xs" />
-                      </FormItem>
-                    )}
-                  />
+
                   {/* <div className="m-0">
                     <Link
                       className="text-sm font-bold hover:underline"

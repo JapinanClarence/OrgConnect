@@ -28,8 +28,6 @@ import {
 } from "@/components/ui/alert-dialog";
 import { useNavigate } from "react-router-dom";
 
-
-
 const EventPage = () => {
   const [showAddEvent, setShowAddEventDialog] = useState(false);
   const [showEditDialog, setShowEditDialog] = useState(false);
@@ -55,7 +53,8 @@ const EventPage = () => {
       startDate: "",
       endDate: "",
       location: "",
-      isFree: "",
+      fee: "",
+      organizer: "",
     },
   });
 
@@ -67,17 +66,26 @@ const EventPage = () => {
   const onAdd = async (data) => {
     try {
       setIsSubmitting(true);
-      const { title, description, location, startDate, endDate, fee } = EventSchema.parse(data);
-     
+      const {
+        title,
+        description,
+        location,
+        startDate,
+        endDate,
+        fee,
+        organizer,
+      } = EventSchema.parse(data);
+
       const formData = {
         title,
         description,
         location,
         startDate,
         endDate,
-        fee
+        fee,
+        organizer,
       };
-   
+
       const response = await apiClient.post("/admin/event", formData, {
         headers: {
           Authorization: token,
@@ -196,7 +204,8 @@ const EventPage = () => {
               description: event.description,
               status: event.status,
               location: event.location,
-              fee: event.fee || 0,
+              fee: event.fee ? event.fee.toString() : "0",
+              organizer: event.organizer,
             };
           })
         );

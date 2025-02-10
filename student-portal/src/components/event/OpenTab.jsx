@@ -24,6 +24,7 @@ const OpenTab = ({ loading, eventData }) => {
             status={data.status}
             postedBy={data.organization.name}
             eventFee={data.fee}
+            organizer={data.organizer}
           />
         ))
       )}

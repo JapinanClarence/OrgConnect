@@ -84,6 +84,56 @@ export const Columns = (onEdit, onDelete, onAttendance) => [
     },
     cell: ({ row }) => <div className="">{row.getValue("endDate")}</div>,
   },
+
+  {
+    accessorKey: "fee",
+    header: ({ column }) => {
+      return (
+        <div className="flex justify-end">
+          <Button
+            variant="ghost"
+            className="p-0"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Event Fee
+            <CaretSortIcon className="ml-2 h-4 w-4" />
+          </Button>
+        </div>
+      );
+    },
+    cell: ({ row }) => {
+      return (
+        <div className="inline-flex items-center">
+          <PhilippinePeso className="mr-1" size={13} />
+          {row.getValue("fee")}
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "organizer",
+    header: ({ column }) => {
+      return (
+        <div className="flex justify-end">
+          <Button
+            variant="ghost"
+            className="p-0"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Organizer
+            <CaretSortIcon className="ml-2 h-4 w-4" />
+          </Button>
+        </div>
+      );
+    },
+    cell: ({ row }) => {
+      return (
+        <div className="inline-flex items-center">
+          {row.getValue("organizer")}
+        </div>
+      );
+    },
+  },
   {
     accessorKey: "status",
     header: ({ column }) => {
@@ -105,26 +155,6 @@ export const Columns = (onEdit, onDelete, onAttendance) => [
         3: "Open",
       };
       return <div className="">{statusMap[row.getValue("status")]}</div>;
-    },
-  },
-  {
-    accessorKey: "fee",
-    header: ({ column }) => {
-      return (
-        <div className="flex justify-end">
-          <Button
-            variant="ghost"
-            className="p-0"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            Event Fee
-            <CaretSortIcon className="ml-2 h-4 w-4" />
-          </Button>
-        </div>
-      );
-    },
-    cell: ({ row }) => {
-      return <div className="inline-flex items-center"><PhilippinePeso className="mr-1" size={13}/>{row.getValue("fee")}</div>
     },
   },
   {

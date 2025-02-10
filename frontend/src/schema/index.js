@@ -121,7 +121,8 @@ export const EventSchema = z.object({
   status: z.enum(["0","1","2", "3"]).optional(),
   startDate: z.string().optional(),
   endDate: z.string().optional(),
-  fee: z.string().optional()
+  fee: z.string().optional(),
+  organizer: z.string().optional()
 });
 
 export const AnnouncementSchema = z.object({
