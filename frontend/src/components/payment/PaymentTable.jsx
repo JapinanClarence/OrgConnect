@@ -162,7 +162,7 @@ const PaymentTable = ({ data, loading, onAdd, onEdit, onDelete, onClick }) => {
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
-                  onClick={() => onClick(row.original)}
+                  // onClick={() => onClick(row.original)}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>

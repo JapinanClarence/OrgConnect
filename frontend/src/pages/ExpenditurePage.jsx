@@ -28,7 +28,7 @@ const categoryMap = {
   2: "Payment Logs",
 };
 
-const PaymentPage = () => {
+const ExpenditurePage = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showAddDialog, setShowAddDialog] = useState(false);
@@ -72,8 +72,10 @@ const PaymentPage = () => {
           amount: data.amount,
           category: categoryMap[data.category]
         }));
+
+        const expenditureData = tableData.filter((data) => data.category === "Expenditure")
         // console.log(tableData)
-        setData(tableData);
+        setData(expenditureData);
       }
 
       setLoading(false);
@@ -193,9 +195,9 @@ const PaymentPage = () => {
 
   return (
     <div className="md:bg-[#fefefe] md:shadow-lg rounded-lg md:border md:border-gray-200 text-gray-900 px-6 py-5 flex flex-col relative">
-      <h1 className="font-bold">Financial Records</h1>
+      <h1 className="font-bold">Expenditure Records</h1>
       <p className="text-sm text-muted-foreground">
-        Here are the recent financial records of your organization
+        Here are the recent expenditure records of your organization
       </p>
       <PaymentTable
           data={data}
@@ -244,4 +246,4 @@ const PaymentPage = () => {
   );
 };
 
-export default PaymentPage;
+export default ExpenditurePage;

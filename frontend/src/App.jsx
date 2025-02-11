@@ -8,7 +8,6 @@ import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
 import AnnouncementPage from "./pages/AnnouncementPage";
 import MembersPage from "./pages/MembersPage";
-import PaymentPage from "./pages/PaymentPage";
 import SettingsPage from "./pages/SettingsPage";
 import OfficersPage from "./pages/OfficersPage";
 import EventPage from "./pages/EventPage";
@@ -19,6 +18,9 @@ import AcademicYearPage from "./pages/AcademicYearPage";
 import MembersPaidPage from "./pages/MembersPaidPage";
 import OrganizationPage from "./pages/OrganizationPage";
 import CalendarPage from "./pages/CalendarPage";
+import ExpenditurePage from "./pages/ExpenditurePage";
+import FeesPage from "./pages/FeesPage";
+import PaymentLogsPage from "./pages/PaymentLogsPage";
 
 function App() {
   return (
@@ -65,8 +67,9 @@ function App() {
               <Route path="/calendar" element={<CalendarPage />} />
               <Route path="/announcements" element={<AnnouncementPage />} />
 
-              <Route path="/expenditure" element={<PaymentPage />} />
-
+              <Route path="/expenditure" element={<ExpenditurePage />} />
+              <Route path="/fees" element={<FeesPage />} />
+              <Route path="/payment-logs" element={<PaymentLogsPage />} />
               <Route path="/payments/memberspaid" element={<MembersPaidPage />} />
 
               <Route path="/events/attendance" element={<AttendancePage />} />
