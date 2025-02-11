@@ -19,7 +19,7 @@ import {
   User2,
   BookA,
   CalendarDays,
-  
+  ChevronDown,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -33,6 +33,11 @@ import {
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/AuthContext";
 import { useState } from "react";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 
 const DesktopSidebar = () => {
   const [showUserDialog, setShowUserDialog] = useState(false);
@@ -100,7 +105,9 @@ const DesktopSidebar = () => {
                 className={`${
                   userData.role == "1" ? "hidden" : "flex"
                 } rounded-lg size-full  items-center justify-start p-2 ${
-                  isActive("/organizations") ? "bg-white text-zinc-900" : "hover:bg-gray-800"
+                  isActive("/organizations")
+                    ? "bg-white text-zinc-900"
+                    : "hover:bg-gray-800"
                 }`}
               >
                 <Building2 />
@@ -174,7 +181,7 @@ const DesktopSidebar = () => {
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
-       
+
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
@@ -289,7 +296,7 @@ const DesktopSidebar = () => {
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Link
+              {/* <Link
                 to="/payments"
                 className={` ${
                   userData.role == "0" ? "hidden" : "flex"
@@ -299,11 +306,55 @@ const DesktopSidebar = () => {
                     : "hover:bg-gray-800"
                 }`}
               >
-                <Wallet />
+                <Wallet/>
                 <span className="hidden lg:block ml-2 font-bold text-sm">
                   Financial Records
                 </span>
-              </Link>
+              </Link> */}
+              <Collapsible className={``}>
+                <CollapsibleTrigger asChild>
+                  <div className="inline-flex items-center justify-start p-2 w-full rounded-lg hover:bg-gray-800">
+                    <Wallet />
+                    <span className="hidden lg:block ml-2 font-bold text-sm">
+                      Financial Records
+                    </span>
+                    <ChevronDown className="ml-2" size={20} />
+                  </div>
+                </CollapsibleTrigger>
+                <CollapsibleContent className="space-y-2 border-l ml-4 pl-2 mb-2 flex flex-col">
+                  <Link
+                    to={"/expenditure"}
+                    className={`rounded-md p-2 text-sm ${
+                      isActive("/expenditure")
+                        ? "bg-gray-600 text-white"
+                        : "hover:bg-gray-800"
+                    }`}
+                  >
+                    Expenditure
+                  </Link>
+
+                  <Link
+                    to={"/fees"}
+                    className={`rounded-md p-2 text-sm ${
+                      isActive("/fees")
+                        ? "bg-gray-600 text-white"
+                        : "hover:bg-gray-800"
+                    }`}
+                  >
+                    Fees
+                  </Link>
+                  <Link
+                    to={"/payment-logs"}
+                    className={`rounded-md p-2 text-sm ${
+                      isActive("/payment-logs")
+                        ? "bg-gray-600 text-white"
+                        : "hover:bg-gray-800"
+                    }`}
+                  >
+                    Payment Logs
+                  </Link>
+                </CollapsibleContent>
+              </Collapsible>
             </TooltipTrigger>
             <TooltipContent
               className="lg:hidden bg-white text-gray-900"

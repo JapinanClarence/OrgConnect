@@ -65,7 +65,7 @@ function App() {
               <Route path="/calendar" element={<CalendarPage />} />
               <Route path="/announcements" element={<AnnouncementPage />} />
 
-              <Route path="/payments" element={<PaymentPage />} />
+              <Route path="/expenditure" element={<PaymentPage />} />
 
               <Route path="/payments/memberspaid" element={<MembersPaidPage />} />
 
