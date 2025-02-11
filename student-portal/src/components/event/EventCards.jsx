@@ -13,20 +13,16 @@ import { Badge } from "@/components/ui/badge";
 
 const statusMap = {
   "0": {
-    name: "Close",
+    name: "Absent",
     color: "bg-red-500",
   },
   "1": {
-    name: "Upcoming",
-    color: "bg-yellow-500",
+    name: "Present",
+    color: "bg-green-600",
   },
   "2": {
-    name: "Ongoing",
-    color: "bg-blue-600",
-  },
-  "3": {
-    name: "Open",
-    color: "bg-green-600",
+    name: "Pending",
+    color: "bg-zinc-400",
   },
 };
 
@@ -39,7 +35,8 @@ const EventCards = ({
   postedBy,
   status,
   eventFee,
-  organizer
+  organizer,
+  attendance
 }) => {
   const [badgeStatus, setBadgeStatus] = useState(null);
   const [showDialog, setShowDialog] = useState(false);
@@ -57,7 +54,7 @@ const EventCards = ({
   useEffect(() => {
     // set the badge status
     if (status) {
-      setBadgeStatus(statusMap[status]);
+      setBadgeStatus(statusMap[attendance]);
     }
   }, [status]);
 

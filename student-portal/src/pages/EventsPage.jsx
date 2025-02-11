@@ -36,7 +36,7 @@ const EventsPage = () => {
         setPendingEventData([]);
       } else {
         const event = data.data;
-
+        console.log(event)
         const pendingEvent = event.filter((data) => data.status ==="1");
         const ongoingEvent = event.filter((data) => data.status ==="2");
         const openEvent = event.filter((data) => data.status === "3");

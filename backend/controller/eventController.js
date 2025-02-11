@@ -2,6 +2,7 @@ import Membership from "../model/membershipModel.js";
 import Organization from "../model/organizationModel.js";
 import { StudentModel as Student } from "../model/UserModel.js";
 import Events from "../model/eventModel.js";
+import Attendance from "../model/attendanceModel.js";
 
 export const getAllEvents = async (req, res) => {
   const student = req.user.userId;
@@ -27,7 +28,10 @@ export const getAllEvents = async (req, res) => {
           // Fetch events only if the organization is active
           const eventList = await Events.find({
             organization: data.organization,
-          }).populate("organization", "name").sort({createdAt: -1});
+          })
+            .populate("organization", "name")
+            .sort({ createdAt: -1 });
+
           return eventList; // Return the list of events for each active organization
         }
 
@@ -70,10 +74,9 @@ export const getEvents = async (req, res) => {
       });
     }
 
-    const events = await Events.find({ organization }).populate(
-      "organization",
-      "name"
-    ).sort({createdAt: -1});
+    const events = await Events.find({ organization })
+      .populate("organization", "name")
+      .sort({ createdAt: -1 });
 
     if (events.length <= 0) {
       return res.status(200).json({
@@ -82,9 +85,54 @@ export const getEvents = async (req, res) => {
       });
     }
 
+    const attendanceStatus = await Promise.all(
+      events.map(async (event) => {
+
+        const isAttendanace = ["0"];
+        const attendance = await Attendance.findOne({ event: event._id });
+
+        if (isAttendanace.includes(event.status)) {
+          return {
+            _id: event._id,
+            title: event.title,
+            description: event.description,
+            startDate: event.startDate,
+            endDate: event.endDate,
+            location: event.location,
+            organization: event.organization,
+            createdAt: event.createdAt,
+            updatedAt: event.updatedAt,
+            status: event.status,
+            attendance:
+              attendance && student.toString() === attendance.student.toString()
+                ? "1"
+                : "0",
+          };
+        } else {
+          return {
+            _id: event._id,
+            title: event.title,
+            description: event.description,
+            startDate: event.startDate,
+            endDate: event.endDate,
+            location: event.location,
+            organization: event.organization,
+            createdAt: event.createdAt,
+            updatedAt: event.updatedAt,
+            status: event.status,
+            attendance: attendance && student.toString() === attendance.student.toString()
+                ? "1"
+                : "2",
+          };
+        }
+      })
+    );
+
+    // console.log(attendanceStatus)
+
     res.status(200).json({
       success: true,
-      data: events,
+      data: attendanceStatus,
     });
   } catch (err) {
     return res.status(500).json({
