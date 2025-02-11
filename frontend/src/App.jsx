@@ -70,7 +70,7 @@ function App() {
               <Route path="/expenditure" element={<ExpenditurePage />} />
               <Route path="/fees" element={<FeesPage />} />
               <Route path="/payment-logs" element={<PaymentLogsPage />} />
-              <Route path="/payments/memberspaid" element={<MembersPaidPage />} />
+              <Route path="/fees/memberspaid" element={<MembersPaidPage />} />
 
               <Route path="/events/attendance" element={<AttendancePage />} />
 

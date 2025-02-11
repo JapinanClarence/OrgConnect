@@ -44,7 +44,7 @@ import { columns } from "@/components/payment/columns";
 
 import TableSkeleton from "@/components/skeleton/TableSkeleton";
 
-const PaymentTable = ({ data, loading, onAdd, onEdit, onDelete, onClick }) => {
+const PaymentTable = ({ data, loading, onAdd, onEdit, onDelete, onManage }) => {
   const [sorting, setSorting] = React.useState([]);
   const [columnFilters, setColumnFilters] = React.useState([]);
   const [columnVisibility, setColumnVisibility] = React.useState({});
@@ -58,7 +58,7 @@ const PaymentTable = ({ data, loading, onAdd, onEdit, onDelete, onClick }) => {
 
   const table = useReactTable({
     data,
-    columns: columns(onEdit, onDelete),
+    columns: columns(onEdit, onDelete, onManage),
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     onPaginationChange: setPagination,

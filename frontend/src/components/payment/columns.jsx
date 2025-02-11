@@ -14,7 +14,7 @@ import { CircleCheck, Timer } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 // Define the columns for the table
-export const columns = (onEdit, onDelete) => [
+export const columns = (onEdit, onDelete, onManage) => [
   {
     accessorKey: "purpose",
     header: ({ column }) => {
@@ -84,6 +84,10 @@ export const columns = (onEdit, onDelete) => [
         onDelete(payment.id);
       };
 
+      const handleManagePayment = (event) => {
+        event.stopPropagation();
+        onManage(payment.id);
+      };
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -105,6 +109,10 @@ export const columns = (onEdit, onDelete) => [
             </DropdownMenuItem>
             <DropdownMenuItem onClick={handleDelete}>
               Delete Payment
+            </DropdownMenuItem>
+
+            <DropdownMenuItem className={["Expenditure", "Payment Logs"].includes(payment.category) ? "hidden" : "flex"} onClick={handleManagePayment}>
+              Manage Payment
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

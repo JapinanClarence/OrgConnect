@@ -203,9 +203,9 @@ const ExpenditurePage = () => {
     }
   };
 
-  const handleRowClick = (data) => {
-    navigate(`/payments/memberspaid/?paymentId=${data.id}`);
-  };
+  // const handleRowClick = (data) => {
+  //   navigate(`/fees/memberspaid/?paymentId=${data.id}`);
+  // };
 
   return (
     <div className="md:bg-[#fefefe] md:shadow-lg rounded-lg md:border md:border-gray-200 text-gray-900 px-6 py-5 flex flex-col relative">
@@ -219,7 +219,7 @@ const ExpenditurePage = () => {
         onAdd={setShowAddDialog}
         onEdit={handleEditDialog}
         onDelete={handleDeleteDialog}
-        onClick={handleRowClick}
+        // onClick={handleRowClick}
       />
 
       <AddPaymentDialog

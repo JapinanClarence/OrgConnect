@@ -201,8 +201,8 @@ const FeesPage = () => {
     }
   };
 
-  const handleRowClick = (data) => {
-    navigate(`/payments/memberspaid/?paymentId=${data.id}`);
+  const handleNavigate = (paymentId) => {
+    navigate(`/fees/memberspaid/?paymentId=${paymentId}`);
   };
 
   return (
@@ -217,7 +217,7 @@ const FeesPage = () => {
         onAdd={setShowAddDialog}
         onEdit={handleEditDialog}
         onDelete={handleDeleteDialog}
-        onClick={handleRowClick}
+        onManage={handleNavigate}
       />
 
       <AddPaymentDialog
