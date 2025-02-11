@@ -122,6 +122,7 @@ const ExpenditurePage = () => {
   };
 
   const handleEditDialog = (data) => {
+    
     setShowEditDialog(true);
     setCurrentPayment(data);
   };
@@ -167,10 +168,16 @@ const ExpenditurePage = () => {
 
   const onEdit = async (data) => {
     try {
+      console.log(data)
+      const expenditureData = {
+        purpose: data.purpose,
+        details: data.details,
+        amount: data.amount,
+      };
       setIsSubmitting(true);
       const res = await apiClient.patch(
         `/admin/payment/${currenPayment.id}`,
-        data,
+        expenditureData,
         {
           headers: {
             Authorization: token,
@@ -226,6 +233,7 @@ const ExpenditurePage = () => {
       />
 
       <EditPaymentDialog
+        title={"Edit Expenditure"}
         paymentData={currenPayment}
         open={showEditDialog}
         onOpenChange={setShowEditDialog}

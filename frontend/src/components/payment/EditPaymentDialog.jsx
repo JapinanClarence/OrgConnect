@@ -33,6 +33,7 @@ import {
 } from "@/components/ui/select";
 
 const EditPaymentDialog = ({
+  title,
   paymentData,
   open,
   onOpenChange,
@@ -58,7 +59,7 @@ const EditPaymentDialog = ({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Update Financial Record</DialogTitle>
+          <DialogTitle>{title}</DialogTitle>
           <DialogDescription>
             Please fill in all required fields to modify financial records.
           </DialogDescription>
@@ -139,37 +140,6 @@ const EditPaymentDialog = ({
                   )}
                 />
 
-                {/* Category Field */}
-                <FormField
-                  control={form.control}
-                  name="category"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-gray-600 text-sm">
-                        Payment Category
-                      </FormLabel>
-                      <Select
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
-                      >
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Choose payment category" />
-                          </SelectTrigger>
-                        </FormControl>
-
-                        <SelectContent className="bg-white border-zinc-300">
-                          <SelectGroup>
-                            <SelectLabel>Categories</SelectLabel>
-                            <SelectItem value="0">Fees</SelectItem>
-                            <SelectItem value="1">Expendeture</SelectItem>
-                            <SelectItem value="2">Payment Logs</SelectItem>
-                          </SelectGroup>
-                        </SelectContent>
-                      </Select>
-                    </FormItem>
-                  )}
-                />
               </div>
 
               <div className="flex justify-between mt-4">

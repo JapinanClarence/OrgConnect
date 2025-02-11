@@ -143,8 +143,7 @@ export const PaymentSchema = z.object({
     z.number().min(1, {
       message: "Amount is required",
     })
-  ),
-  category: z.enum(["0", "1", "2"]).optional()
+  )
 });
 
 export const PaymentRecordSchema = z.object({

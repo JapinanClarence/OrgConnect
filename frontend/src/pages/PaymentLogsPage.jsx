@@ -70,17 +70,18 @@ const PaymentLogsPage = () => {
           purpose: data.purpose,
           details: data.details,
           amount: data.amount,
-          category: categoryMap[data.category]
+          category: categoryMap[data.category],
         }));
 
-        const expenditureData = tableData.filter((data) => data.category === "Payment Logs")
+        const expenditureData = tableData.filter(
+          (data) => data.category === "Payment Logs"
+        );
         // console.log(tableData)
         setData(expenditureData);
       }
 
       setLoading(false);
     } catch (error) {
-
       console.log(error.response.message);
       setLoading(false);
     }
@@ -88,19 +89,19 @@ const PaymentLogsPage = () => {
 
   const onAdd = async (data) => {
     try {
-        const expenditureData = {
-            purpose: data.purpose,
-            details: data.details,
-            amount: data.amount,
-            category: "2",
-          };
-    
-          setIsSubmitting(true);
-          const res = await apiClient.post("/admin/payment", expenditureData, {
-            headers: {
-              Authorization: token,
-            },
-          });
+      const expenditureData = {
+        purpose: data.purpose,
+        details: data.details,
+        amount: data.amount,
+        category: "2",
+      };
+
+      setIsSubmitting(true);
+      const res = await apiClient.post("/admin/payment", expenditureData, {
+        headers: {
+          Authorization: token,
+        },
+      });
 
       if (res) {
         await fetchPayments();
@@ -165,12 +166,16 @@ const PaymentLogsPage = () => {
   };
 
   const onEdit = async (data) => {
-   
     try {
+      const paymentLogsData = {
+        purpose: data.purpose,
+        details: data.details,
+        amount: data.amount,
+      };
       setIsSubmitting(true);
       const res = await apiClient.patch(
         `/admin/payment/${currenPayment.id}`,
-        data,
+        paymentLogsData,
         {
           headers: {
             Authorization: token,
@@ -197,8 +202,8 @@ const PaymentLogsPage = () => {
   };
 
   const handleRowClick = (data) => {
-    navigate(`/payments/memberspaid/?paymentId=${data.id}`)
-  }
+    navigate(`/payments/memberspaid/?paymentId=${data.id}`);
+  };
 
   return (
     <div className="md:bg-[#fefefe] md:shadow-lg rounded-lg md:border md:border-gray-200 text-gray-900 px-6 py-5 flex flex-col relative">
@@ -207,16 +212,16 @@ const PaymentLogsPage = () => {
         Here are the recent payment logs of your organization
       </p>
       <PaymentTable
-          data={data}
-          loading={loading}
-          onAdd={setShowAddDialog}
-          onEdit={handleEditDialog}
-          onDelete={handleDeleteDialog}
-          onClick={handleRowClick}
+        data={data}
+        loading={loading}
+        onAdd={setShowAddDialog}
+        onEdit={handleEditDialog}
+        onDelete={handleDeleteDialog}
+        onClick={handleRowClick}
       />
 
       <AddPaymentDialog
-      title={"Add Payment Logs"}
+        title={"Add Payment Log"}
         open={showAddDialog}
         onOpenChange={setShowAddDialog}
         form={form}
@@ -226,6 +231,7 @@ const PaymentLogsPage = () => {
       />
 
       <EditPaymentDialog
+        title={"Edit Payment Log"}
         paymentData={currenPayment}
         open={showEditDialog}
         onOpenChange={setShowEditDialog}

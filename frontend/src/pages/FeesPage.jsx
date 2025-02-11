@@ -167,10 +167,15 @@ const FeesPage = () => {
 
   const onEdit = async (data) => {
     try {
+      const feeData = {
+        purpose: data.purpose,
+        details: data.details,
+        amount: data.amount,
+      };
       setIsSubmitting(true);
       const res = await apiClient.patch(
         `/admin/payment/${currenPayment.id}`,
-        data,
+        feeData,
         {
           headers: {
             Authorization: token,
@@ -216,7 +221,7 @@ const FeesPage = () => {
       />
 
       <AddPaymentDialog
-        title={"Add Payment Logs"}
+        title={"Add Payment Log"}
         open={showAddDialog}
         onOpenChange={setShowAddDialog}
         form={form}
@@ -226,6 +231,7 @@ const FeesPage = () => {
       />
 
       <EditPaymentDialog
+        title={"Edit Fee"}
         paymentData={currenPayment}
         open={showEditDialog}
         onOpenChange={setShowEditDialog}
