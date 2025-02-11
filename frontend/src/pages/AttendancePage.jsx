@@ -7,6 +7,7 @@ import { useAuth } from "@/context/AuthContext";
 import EventInfo from "@/components/attendance/EventInfo";
 import QrScanner from "@/components/attendance/QrScanner";
 import { useToast } from "@/hooks/use-toast";
+
 const yearMap = {
   1: "1st Year",
   2: "2nd Year",
@@ -105,6 +106,10 @@ const AttendancePage = () => {
       });
 
       if (data.success) {
+        toast({
+          title: "Attendance Recorded",
+          description: `${date}`,
+        });
         fetchAttendees();
       }
     } catch (error) {
