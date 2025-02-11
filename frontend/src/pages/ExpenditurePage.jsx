@@ -70,17 +70,18 @@ const ExpenditurePage = () => {
           purpose: data.purpose,
           details: data.details,
           amount: data.amount,
-          category: categoryMap[data.category]
+          category: categoryMap[data.category],
         }));
 
-        const expenditureData = tableData.filter((data) => data.category === "Expenditure")
+        const expenditureData = tableData.filter(
+          (data) => data.category === "Expenditure"
+        );
         // console.log(tableData)
         setData(expenditureData);
       }
 
       setLoading(false);
     } catch (error) {
-
       console.log(error.response.message);
       setLoading(false);
     }
@@ -88,8 +89,15 @@ const ExpenditurePage = () => {
 
   const onAdd = async (data) => {
     try {
+      const expenditureData = {
+        purpose: data.purpose,
+        details: data.details,
+        amount: data.amount,
+        category: "1",
+      };
+
       setIsSubmitting(true);
-      const res = await apiClient.post("/admin/payment", data, {
+      const res = await apiClient.post("/admin/payment", expenditureData, {
         headers: {
           Authorization: token,
         },
@@ -158,7 +166,6 @@ const ExpenditurePage = () => {
   };
 
   const onEdit = async (data) => {
-   
     try {
       setIsSubmitting(true);
       const res = await apiClient.patch(
@@ -190,8 +197,8 @@ const ExpenditurePage = () => {
   };
 
   const handleRowClick = (data) => {
-    navigate(`/payments/memberspaid/?paymentId=${data.id}`)
-  }
+    navigate(`/payments/memberspaid/?paymentId=${data.id}`);
+  };
 
   return (
     <div className="md:bg-[#fefefe] md:shadow-lg rounded-lg md:border md:border-gray-200 text-gray-900 px-6 py-5 flex flex-col relative">
@@ -200,15 +207,16 @@ const ExpenditurePage = () => {
         Here are the recent expenditure records of your organization
       </p>
       <PaymentTable
-          data={data}
-          loading={loading}
-          onAdd={setShowAddDialog}
-          onEdit={handleEditDialog}
-          onDelete={handleDeleteDialog}
-          onClick={handleRowClick}
+        data={data}
+        loading={loading}
+        onAdd={setShowAddDialog}
+        onEdit={handleEditDialog}
+        onDelete={handleDeleteDialog}
+        onClick={handleRowClick}
       />
 
       <AddPaymentDialog
+        title={"Add Expenditure"}
         open={showAddDialog}
         onOpenChange={setShowAddDialog}
         form={form}

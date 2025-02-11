@@ -88,12 +88,19 @@ const PaymentLogsPage = () => {
 
   const onAdd = async (data) => {
     try {
-      setIsSubmitting(true);
-      const res = await apiClient.post("/admin/payment", data, {
-        headers: {
-          Authorization: token,
-        },
-      });
+        const expenditureData = {
+            purpose: data.purpose,
+            details: data.details,
+            amount: data.amount,
+            category: "2",
+          };
+    
+          setIsSubmitting(true);
+          const res = await apiClient.post("/admin/payment", expenditureData, {
+            headers: {
+              Authorization: token,
+            },
+          });
 
       if (res) {
         await fetchPayments();
@@ -209,6 +216,7 @@ const PaymentLogsPage = () => {
       />
 
       <AddPaymentDialog
+      title={"Add Payment Logs"}
         open={showAddDialog}
         onOpenChange={setShowAddDialog}
         form={form}
