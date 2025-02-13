@@ -68,7 +68,7 @@ export const memberFeesReportColumns = [
   },
   {
     accessorKey: "totalCollectedPayments",
-    header: "Collected Payments",
+    header: "Total Collected Payments",
     cell: ({ row }) => (
       <div className="">{row.getValue("totalCollectedPayments")}</div>
     ),

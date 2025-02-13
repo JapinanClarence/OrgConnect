@@ -118,7 +118,10 @@ const TableComponent = ({
                 <Settings className="mr-2 h-4 w-4" />{" "}
                 {selectedCategory == "0"
                   ? "Attendance Reports"
-                  : "Collected Fees Reports"}
+                  : selectedCategory == "1"
+                  ? "Collected Fees Reports"
+                  : "Transaction Reports"
+                  }
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">

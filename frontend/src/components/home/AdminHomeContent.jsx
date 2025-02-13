@@ -12,7 +12,7 @@ const AdminHomeContent = () => {
       <Tabs defaultValue="overview" className="">
         <TabsList className="grid w-fit grid-cols-2 border">
           <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="reports">Transactions</TabsTrigger>
+          <TabsTrigger value="reports">Reports</TabsTrigger>
         </TabsList>
         <TabsContent value="overview">
           <OverviewTab/>
