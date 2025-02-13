@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import { toast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import {
+  CommandDialog,
   Command,
   CommandEmpty,
   CommandGroup,
@@ -39,6 +40,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { useState } from "react";
 
 const languages = [
   { label: "English", value: "en" },
@@ -59,6 +61,7 @@ const FormSchema = z.object({
 });
 
 const TestPage = () => {
+  const [openCommand, setOpenCommand] = useState(false);
   const form = useForm({
     resolver: zodResolver(FormSchema),
   });
@@ -73,96 +76,99 @@ const TestPage = () => {
       ),
     });
   }
-
+  const handleShowCommand = () => {
+    setOpenCommand(true);
+  };
   return (
     <Dialog>
-  <DialogTrigger asChild>
-    <Button variant="outline">Edit Profile</Button>
-  </DialogTrigger>
-  <DialogContent className="sm:max-w-[425px]">
-    <DialogHeader>
-      <DialogTitle>Edit profile</DialogTitle>
-      <DialogDescription>
-        Make changes to your profile here. Click save when you're done.
-      </DialogDescription>
-    </DialogHeader>
-    <div className="grid gap-4 py-4">
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          <FormField
-            control={form.control}
-            name="language"
-            render={({ field }) => (
-              <FormItem className="flex flex-col">
-                <FormLabel>Language</FormLabel>
-                <Popover>
-                  <PopoverTrigger asChild>
+      <DialogTrigger asChild>
+        <Button variant="outline">Edit Profile</Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Edit profile</DialogTitle>
+          <DialogDescription>
+            Make changes to your profile here. Click save when you're done.
+          </DialogDescription>
+        </DialogHeader>
+        <div className="grid gap-4 py-4">
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              <FormField
+                control={form.control}
+                name="language"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col">
+                    <FormLabel>Language</FormLabel>
                     <FormControl>
                       <Button
+                        type="button"
                         variant="outline"
                         role="combobox"
                         className={cn(
                           "w-[200px] justify-between",
                           !field.value && "text-muted-foreground"
                         )}
+                        onClick={handleShowCommand}
                       >
                         {field.value
                           ? languages.find(
                               (language) => language.value === field.value
                             )?.label
                           : "Select language"}
-                        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        <ChevronsUpDown className="opacity-50" />
                       </Button>
                     </FormControl>
-                  </PopoverTrigger>
-                  {/* Add `forceMount` to ensure proper rendering inside the Dialog */}
-                  <PopoverContent className="w-[200px] p-0 z-50" forceMount>
-                    <Command>
-                      <CommandInput placeholder="Search language..." />
-                      <CommandList>
-                        <CommandEmpty>No language found.</CommandEmpty>
-                        <CommandGroup>
-                          {languages.map((language) => (
-                            <CommandItem
-                              value={language.label}
-                              key={language.value}
-                              onSelect={() => {
-                                form.setValue("language", language.value);
-                              }}
-                            >
-                              {language.label}
-                              <Check
-                                className={cn(
-                                  "ml-auto",
-                                  language.value === field.value
-                                    ? "opacity-100"
-                                    : "opacity-0"
-                                )}
-                              />
-                            </CommandItem>
-                          ))}
-                        </CommandGroup>
-                      </CommandList>
-                    </Command>
-                  </PopoverContent>
-                </Popover>
-                <FormDescription>
-                  This is the language that will be used in the dashboard.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <Button type="submit">Submit</Button>
-        </form>
-      </Form>
-    </div>
-    <DialogFooter>
-      <Button type="submit">Save changes</Button>
-    </DialogFooter>
-  </DialogContent>
-</Dialog>
+                    <CommandDialog
+                      open={openCommand}
+                      onOpenChange={setOpenCommand}
+                      className="h-1/2 "
+                    >
+                      <Command className="">
+                        <CommandInput placeholder="Search language..." />
+                        <CommandList>
+                          <CommandEmpty>No language found.</CommandEmpty>
+                          <CommandGroup>
+                            {languages.map((language) => (
+                              <CommandItem
+                                value={language.label}
+                                key={language.value}
+                                onSelect={() => {
+                                  form.setValue("language", language.value);
+                                }}
+                              >
+                                {language.label}
+                                <Check
+                                  className={cn(
+                                    "ml-auto",
+                                    language.value === field.value
+                                      ? "opacity-100"
+                                      : "opacity-0"
+                                  )}
+                                />
+                              </CommandItem>
+                            ))}
+                          </CommandGroup>
+                        </CommandList>
+                      </Command>
+                    </CommandDialog>
 
+                    <FormDescription>
+                      This is the language that will be used in the dashboard.
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button type="submit">Submit</Button>
+            </form>
+          </Form>
+        </div>
+        <DialogFooter>
+          <Button type="submit">Save changes</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 };
 export default TestPage;

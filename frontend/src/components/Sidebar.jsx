@@ -311,7 +311,9 @@ const DesktopSidebar = () => {
                   Financial Records
                 </span>
               </Link> */}
-              <Collapsible className={``}>
+              <Collapsible className={`${
+                  userData.role == "0" ? "hidden" : ""
+                }`}>
                 <CollapsibleTrigger asChild>
                   <div className="inline-flex items-center justify-start p-2 w-full rounded-lg hover:bg-gray-800">
                     <Wallet />

@@ -204,7 +204,7 @@ export const getReportsData = async (req, res) => {
     const membersFees = await Promise.all(
       feesData.map((fees) =>{
         const totalCollectedPayments = fees.membersPaid.reduce((sum, member) => sum + (member.amount || 0), 0);
-   
+        
           return {
             _id: fees._id,
             purpose: fees.purpose,
@@ -240,7 +240,8 @@ export const getReportsData = async (req, res) => {
       data: {
         attendeesCount,
         membersFees,
-        transactions
+        transactions,
+        organizationStartYear: organization.createdAt
       },
     });
   } catch (err) {

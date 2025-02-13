@@ -41,8 +41,14 @@ import autoTable from "jspdf-autotable";
 
 // Function to get the current month name
 const getCurrentMonth = () => format(new Date(), "MMMM"); // "October", "February", etc.
+const getCurrentYear = () => format(new Date(), "yyyy");
+
+// const currentYear = new Date().getFullYear();
+// const years = Array.from({ length: 11 }, (_, i) => currentYear - (10 - i));
+// console.log(years)
 
 const TableComponent = ({
+  yearStarted,
   title,
   data,
   loading,
@@ -58,6 +64,15 @@ const TableComponent = ({
   const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 5 });
   const [globalFilter, setGlobalFilter] = useState("");
   const [selectedMonth, setSelectedMonth] = useState(getCurrentMonth());
+  const [selectedYear, setSelectedYear] = useState(getCurrentYear());
+
+  const formatYearStarted = yearStarted ? parseInt(format(new Date(yearStarted), "yyyy"), 10) : 2020;
+  const currentYear = new Date().getFullYear();
+
+  const years = Array.from(
+    { length: currentYear - formatYearStarted + 1 },
+    (_, i) => formatYearStarted + i
+  );
 
   const handleSelectCategory = (category) => {
     setSelectedCategory(category);
@@ -68,21 +83,19 @@ const TableComponent = ({
     setSelectedMonth(month);
   };
 
-  // Filter data based on selected month and endDate
-  const filteredData = useMemo(() => {
-    if (selectedCategory === "0") {
-      return data.filter((rowDate) => {
-        const eventEndMonth = format(new Date(rowDate.endDate), "MMMM"); // Extracts the month name
-        return eventEndMonth === selectedMonth;
-      });
-    } else {
-      return data.filter((rowDate) => {
-        const date = format(new Date(rowDate.date), "MMMM"); // Extracts the month name
-        return date === selectedMonth;
-      });
-    }
-  }, [data, selectedMonth]);
+  const handleYearChange = (year) => setSelectedYear(year);
 
+  // Filter data based on selected month and year
+  const filteredData = useMemo(() => {
+    return data.filter((rowDate) => {
+      const date = new Date(rowDate.endDate || rowDate.date);
+      const month = format(date, "MMMM");
+      const year = format(date, "yyyy");
+
+      return month === selectedMonth && year === String(selectedYear);
+    });
+  }, [data, selectedMonth, selectedYear]);
+  
   const table = useReactTable({
     data: filteredData,
     columns: columns,
@@ -137,11 +150,17 @@ const TableComponent = ({
             <Printer />
             Print
           </Button> */}
-          <Button onClick={exportToPDF} className="rounded-none rounded-l-md">
+          <Button
+            onClick={exportToPDF}
+            className="rounded-none rounded-l-md border-r-0"
+          >
             <FileText />
             PDF
           </Button>
-          <Button onClick={exportToExcel} className="rounded-none rounded-r-md">
+          <Button
+            onClick={exportToExcel}
+            className="rounded-none rounded-r-md border-l-0"
+          >
             <Sheet />
             Excel
           </Button>
@@ -182,37 +201,64 @@ const TableComponent = ({
               </DropdownMenuCheckboxItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="w-full md:w-fit">
-                <CalendarCog className="mr-2 h-4 w-4" /> {selectedMonth}
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              {[
-                "January",
-                "February",
-                "March",
-                "April",
-                "May",
-                "June",
-                "July",
-                "August",
-                "September",
-                "October",
-                "November",
-                "December",
-              ].map((month) => (
-                <DropdownMenuCheckboxItem
-                  key={month}
-                  checked={selectedMonth === month}
-                  onCheckedChange={() => handleMonthChange(month)}
+          <div className="h-full flex items-center">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="outline"
+                  className="rounded-none rounded-l-md w-full md:w-fit"
                 >
-                  {month}
-                </DropdownMenuCheckboxItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
+                  <CalendarCog className="mr-2 h-4 w-4" /> {selectedMonth}
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                {[
+                  "January",
+                  "February",
+                  "March",
+                  "April",
+                  "May",
+                  "June",
+                  "July",
+                  "August",
+                  "September",
+                  "October",
+                  "November",
+                  "December",
+                ].map((month) => (
+                  <DropdownMenuCheckboxItem
+                    key={month}
+                    checked={selectedMonth === month}
+                    onCheckedChange={() => handleMonthChange(month)}
+                  >
+                    {month}
+                  </DropdownMenuCheckboxItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+            {/* Year Selector */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="outline"
+                  className="rounded-none rounded-r-md w-full md:w-fit"
+                >
+                  {selectedYear}
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                {years.map((year) => (
+                  <DropdownMenuCheckboxItem
+                    key={year}
+                    checked={selectedYear === year}
+                    onCheckedChange={() => handleYearChange(year)}
+                  >
+                    {year}
+                  </DropdownMenuCheckboxItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" className="w-full md:w-fit">

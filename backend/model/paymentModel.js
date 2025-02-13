@@ -46,6 +46,9 @@ const paymentSchema = new mongoose.Schema(
           enum: ["0", "1"],
           default: "1",
         },
+        datePaid: {
+          type: Date,
+        }
       },
     ],
   },

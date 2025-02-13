@@ -44,6 +44,7 @@ const ReportTab = () => {
   const [collectedPayments, setCollectedPayments] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("0");
   const [transactionData, setTransactionData] = useState([]);
+  const [yearStarted, setYearStarted] = useState("");
 
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -89,7 +90,7 @@ const ReportTab = () => {
               date: dateOnly(data.date),
             };
           });
-
+          setYearStarted(data.data?.organizationStartYear);
           setEventAttendees(eventReport);
           setCollectedPayments(collectedFees);
           setTransactionData(transactions);
@@ -115,6 +116,7 @@ const ReportTab = () => {
         </h1>
         <div className="">
           <TableComponent
+            yearStarted={yearStarted}
             data={
               selectedCategory === "0"
                 ? eventAttendees

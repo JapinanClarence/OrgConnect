@@ -174,7 +174,8 @@ export const recordPayment = async (req, res, next) => {
     payment.membersPaid.push({
       member,
       amount,
-      status: status || "1", // Default to fully paid if not provided
+      status: status || "1",// Default to fully paid if not provided
+      datePaid: Date.now() 
     });
 
     // Save the updated payment document
@@ -221,9 +222,12 @@ export const editPaymentRecord = async (req, res, next) => {
       });
     }
 
+    const datePaid = Date.now();
+
     // Update the payment details
     if (amount !== undefined) payment.membersPaid[memberIndex].amount = amount;
     if (status !== undefined) payment.membersPaid[memberIndex].status = status;
+    if (datePaid !== undefined) payment.membersPaid[memberIndex].datePaid = datePaid;
 
     // Save the updated payment record
     await payment.save();
