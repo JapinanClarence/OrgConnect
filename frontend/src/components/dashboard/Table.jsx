@@ -26,13 +26,18 @@ import {
   CalendarCog,
   ChevronLeft,
   ChevronRight,
+  FileText,
   Printer,
   Settings,
   Settings2,
+  Sheet,
 } from "lucide-react";
 import TableSkeleton from "@/components/skeleton/TableSkeleton";
 import { Label } from "@/components/ui/label";
 import { format } from "date-fns";
+import * as XLSX from "xlsx";
+import { jsPDF } from "jspdf";
+import autoTable from "jspdf-autotable";
 
 // Function to get the current month name
 const getCurrentMonth = () => format(new Date(), "MMMM"); // "October", "February", etc.
@@ -99,17 +104,47 @@ const TableComponent = ({
     },
   });
 
+  // Function to export table data to Excel
+  const exportToExcel = () => {
+    const worksheet = XLSX.utils.json_to_sheet(filteredData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Report");
+    XLSX.writeFile(workbook, `${title || "report"}.xlsx`);
+  };
+
+  // Function to export table data to PDF
+  const exportToPDF = () => {
+    const doc = new jsPDF();
+    doc.text(title || "OrgConnect Reports", 10, 10);
+
+    const tableData = filteredData.map((row) =>
+      table.getAllColumns().map((col) => row[col.id])
+    );
+
+    doc.autoTable({
+      head: [table.getAllColumns().map((col) => col.id)],
+      body: tableData,
+    });
+
+    doc.save(`${title || "report"}.pdf`);
+  };
   return (
     <>
       <Label className="font-semibold">{title}</Label>
       <div className="md:flex items-center justify-between py-4">
         <div className="flex items-center">
-          <Button className="rounded-none rounded-l-md">
+          {/* <Button className="rounded-none rounded-l-md">
             <Printer />
             Print
+          </Button> */}
+          <Button onClick={exportToPDF} className="rounded-none rounded-l-md">
+            <FileText />
+            PDF
           </Button>
-          <Button className="rounded-none">PDF</Button>
-          <Button className="rounded-none rounded-r-md">Excel</Button>
+          <Button onClick={exportToExcel} className="rounded-none rounded-r-md">
+            <Sheet />
+            Excel
+          </Button>
         </div>
         <div className="flex-wrap-reverse mt-2 space-y-2 md:space-y-0 md:mt-0 md:space-x-2 md:flex md:items-center">
           <DropdownMenu>
@@ -120,8 +155,7 @@ const TableComponent = ({
                   ? "Attendance Reports"
                   : selectedCategory == "1"
                   ? "Collected Fees Reports"
-                  : "Transaction Reports"
-                  }
+                  : "Transaction Reports"}
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
