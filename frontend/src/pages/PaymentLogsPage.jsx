@@ -6,7 +6,7 @@ import apiClient from "@/api/axios";
 import PaymentTable from "@/components/payment/PaymentTable";
 import AddPaymentDialog from "@/components/payment/AddPaymentDialog";
 import { useToast } from "@/hooks/use-toast";
-import { formatDate } from "@/util/helpers";
+import { dateOnly, formatDate } from "@/util/helpers";
 import EditPaymentDialog from "@/components/payment/EditPaymentDialog";
 import {
   AlertDialog,
@@ -71,6 +71,7 @@ const PaymentLogsPage = () => {
           details: data.details,
           amount: data.amount,
           category: categoryMap[data.category],
+          date: dateOnly(data.createdAt),
         }));
 
         const expenditureData = tableData.filter(

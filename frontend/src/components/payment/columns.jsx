@@ -69,6 +69,11 @@ export const columns = (onEdit, onDelete, onManage) => [
     },
   },
   {
+    accessorKey: "date",
+    header: "Date",
+    cell: ({ row }) => <div className="">{row.getValue("date")}</div>,
+  },
+  {
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {

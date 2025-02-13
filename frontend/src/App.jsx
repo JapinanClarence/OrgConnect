@@ -21,6 +21,7 @@ import CalendarPage from "./pages/CalendarPage";
 import ExpenditurePage from "./pages/ExpenditurePage";
 import FeesPage from "./pages/FeesPage";
 import PaymentLogsPage from "./pages/PaymentLogsPage";
+import TestPage from "./pages/TestPage";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
         <Route path="/">
           <Route path="/" element={<MainLayout />}>
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/test" element={<TestPage />} />
           </Route>
 
           <Route

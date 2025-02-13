@@ -147,7 +147,9 @@ export const PaymentSchema = z.object({
 });
 
 export const PaymentRecordSchema = z.object({
-  member: z.string().min(1, { message: "Member is required" }),
+  member:  z.string({
+      required_error: "Please select a member.",
+    }),
   amount: z.preprocess(
     (val) => Number(val),
     z.number().min(1, {

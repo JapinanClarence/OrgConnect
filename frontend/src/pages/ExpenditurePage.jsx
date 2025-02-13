@@ -6,7 +6,7 @@ import apiClient from "@/api/axios";
 import PaymentTable from "@/components/payment/PaymentTable";
 import AddPaymentDialog from "@/components/payment/AddPaymentDialog";
 import { useToast } from "@/hooks/use-toast";
-import { formatDate } from "@/util/helpers";
+import { dateOnly, formatDate } from "@/util/helpers";
 import EditPaymentDialog from "@/components/payment/EditPaymentDialog";
 import {
   AlertDialog,
@@ -71,6 +71,7 @@ const ExpenditurePage = () => {
           details: data.details,
           amount: data.amount,
           category: categoryMap[data.category],
+          date: dateOnly(data.createdAt),
         }));
 
         const expenditureData = tableData.filter(
@@ -122,7 +123,6 @@ const ExpenditurePage = () => {
   };
 
   const handleEditDialog = (data) => {
-    
     setShowEditDialog(true);
     setCurrentPayment(data);
   };
@@ -168,7 +168,7 @@ const ExpenditurePage = () => {
 
   const onEdit = async (data) => {
     try {
-      console.log(data)
+      console.log(data);
       const expenditureData = {
         purpose: data.purpose,
         details: data.details,
