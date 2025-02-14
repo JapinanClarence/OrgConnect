@@ -23,6 +23,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
 import {
+  CommandDialog,
   Command,
   CommandEmpty,
   CommandGroup,
@@ -55,6 +56,10 @@ const AddOrgDialog = ({
 }) => {
   const [members, setMembers] = useState([]);
   const { token } = useAuth();
+  const [openCommand, setOpenCommand] = useState(false);
+  const handleShowCommand = () => {
+    setOpenCommand(true);
+  };
 
   useEffect(() => {
     fetchAdmins();
@@ -69,7 +74,6 @@ const AddOrgDialog = ({
       });
 
       if (response.data.success) {
-        
         const popoverData = response.data.data.map((data) => {
           const fullname = `${data.firstname} ${
             data.middlename ? data.middlename[0] + ". " : ""
@@ -79,7 +83,7 @@ const AddOrgDialog = ({
             value: data._id,
           };
         });
-       
+
         setMembers(popoverData);
       } else {
         console.log(response.data.message);
@@ -120,7 +124,7 @@ const AddOrgDialog = ({
                         Name
                       </FormLabel>
                       <FormControl>
-                        <Input {...field} type="text"/>
+                        <Input {...field} type="text" />
                       </FormControl>
                       <FormMessage className="text-xs" />
                     </FormItem>
@@ -134,59 +138,62 @@ const AddOrgDialog = ({
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Assign Admin</FormLabel>
-                      <Popover disableFocusTrap>
-                        <PopoverTrigger asChild>
-                          <FormControl>
-                            <Button
-                              variant="outline"
-                              role="combobox"
-                              className={cn(
-                                "w-full justify-between",
-                                !field.value && "text-muted-foreground"
-                              )}
-                            >
-                              {field.value
-                                ? members.find(
-                                    (member) => member.value === field.value
-                                  )?.label
-                                : "Select admin username"}
-                              <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                            </Button>
-                          </FormControl>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-full p-0 z-50">
-                          <Command>
-                            <CommandInput
-                              placeholder="Search admin..."
-                              className="h-9"
-                            />
-                            <CommandList>
-                              <CommandEmpty>No admin found.</CommandEmpty>
-                              <CommandGroup>
-                                {members.map((member) => (
-                                  <CommandItem
-                                    key={member.value}
-                                    value={member.label}
-                                    onSelect={() => {
-                                      form.setValue("admin", member.value);
-                                    }}
-                                  >
-                                    {member.label}
-                                    <CheckIcon
-                                      className={cn(
-                                        "ml-auto h-4 w-4",
-                                        member.value === field.value
-                                          ? "opacity-100"
-                                          : "opacity-0"
-                                      )}
-                                    />
-                                  </CommandItem>
-                                ))}
-                              </CommandGroup>
-                            </CommandList>
-                          </Command>
-                        </PopoverContent>
-                      </Popover>
+
+                      <FormControl>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          role="combobox"
+                          className={cn(
+                            "w-full justify-between",
+                            !field.value && "text-muted-foreground"
+                          )}
+                          onClick={handleShowCommand}
+                        >
+                          {field.value
+                            ? members.find(
+                                (member) => member.value === field.value
+                              )?.label
+                            : "Select admin username"}
+                          <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        </Button>
+                      </FormControl>
+                      <CommandDialog
+                        open={openCommand}
+                        onOpenChange={setOpenCommand}
+                      >
+                        <Command>
+                          <CommandInput
+                            placeholder="Search admin..."
+                            className="h-9"
+                          />
+                          <CommandList>
+                            <CommandEmpty>No admin found.</CommandEmpty>
+                            <CommandGroup>
+                              {members.map((member) => (
+                                <CommandItem
+                                  key={member.value}
+                                  value={member.label}
+                                  onSelect={() => {
+                                    form.setValue("admin", member.value);
+                                    setOpenCommand(false);
+                                  }}
+                                >
+                                  {member.label}
+                                  <CheckIcon
+                                    className={cn(
+                                      "ml-auto h-4 w-4",
+                                      member.value === field.value
+                                        ? "opacity-100"
+                                        : "opacity-0"
+                                    )}
+                                  />
+                                </CommandItem>
+                              ))}
+                            </CommandGroup>
+                          </CommandList>
+                        </Command>
+                      </CommandDialog>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -214,9 +221,15 @@ const AddOrgDialog = ({
                         <SelectContent className="bg-white border-zinc-300">
                           <SelectGroup>
                             <SelectLabel>Types</SelectLabel>
-                            <SelectItem value="0">Institute Based Organization </SelectItem>
-                            <SelectItem value="1">Non-institute Based Organization</SelectItem>
-                            <SelectItem value="2">Religious Based Organization</SelectItem>
+                            <SelectItem value="0">
+                              Institute Based Organization{" "}
+                            </SelectItem>
+                            <SelectItem value="1">
+                              Non-institute Based Organization
+                            </SelectItem>
+                            <SelectItem value="2">
+                              Religious Based Organization
+                            </SelectItem>
                             <SelectItem value="3">Fraternities</SelectItem>
                           </SelectGroup>
                         </SelectContent>
