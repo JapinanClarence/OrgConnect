@@ -19,14 +19,14 @@ export const userColumns = (onUpdateStatus) => [
     enableHiding: false,
     cell: ({ row }) => {
       const student = row.original;
-      const { profilePicture, fullname } = student;
+      const { profilePicture, username } = student;
 
       return (
         <div className="flex justify-center">
           <Avatar className="size-9">
             <AvatarImage src={profilePicture} alt="User Profile" />
             <AvatarFallback className="bg-gray-200 text-gray-400 font-bold">
-              {fullname?.[0].toUpperCase()}
+              {username?.[0].toUpperCase()}
             </AvatarFallback>
           </Avatar>
         </div>

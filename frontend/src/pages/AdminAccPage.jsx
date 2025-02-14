@@ -25,9 +25,6 @@ const AdminAccPage = () => {
   const form = useForm({
     resolver: zodResolver(RegistrationSchema),
     defaultValues: {
-      firstname: "",
-      lastname: "",
-      middlename: "",
       email: "",
       username: "",
       password: "",
@@ -50,13 +47,10 @@ const AdminAccPage = () => {
         setUserData([]);
       } else {
         const tableData = data.data.map((data) => {
-          const fullname = `${data.firstname} ${
-            data.middlename ? data.middlename[0] + ". " : ""
-          }${data.lastname}`;
+
           return {
             id: data._id,
             username: data.username,
-            fullname: fullname,
             email: data.email,
             status: data.active,
             profilePicture: data.profilePicture,
@@ -105,9 +99,6 @@ const AdminAccPage = () => {
       setIsSubmitting(true);
 
       const formData = {
-        firstname: data.firstname,
-        lastname: data.lastname,
-        middlename: data.middlename,
         email: data.email,
         username: data.username,
         password: data.password,
@@ -121,7 +112,8 @@ const AdminAccPage = () => {
 
       if (res) {
         setIsSubmitting(false);
-
+        setShowAddDialog(false);
+        form.reset();
         toast({
           title: "User registered.",
           description: `${date}`,

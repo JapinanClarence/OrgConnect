@@ -10,11 +10,11 @@ const userSchema = new mongoose.Schema(
   {
     firstname: {
       type: String,
-      required: [true, "Firstname is required"],
+      // required: [true, "Firstname is required"],
     },
     lastname: {
       type: String,
-      required: [true, "Lastname is required"],
+      // required: [true, "Lastname is required"],
     },
     middlename: { type: String },
     username: {
