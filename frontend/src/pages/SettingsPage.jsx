@@ -39,9 +39,6 @@ const SettingsPage = () => {
       } else {
         const formData = {
           _id: data.data._id,
-          firstname: data.data.firstname,
-          lastname: data.data.lastname,
-          middlename: data.data.middlename,
           username: data.data.username,
           email: data.data.email,
           profilePicture: data.data.profilePicture,

@@ -56,13 +56,6 @@ export const RegistrationSchema = z.object({
     .min(8, { message: "Password should be at least 8 characters" }),
 });
 export const AdminSchema = z.object({
-  firstname: z.string().min(1, {
-    message: "Firstname is required",
-  }),
-  lastname: z.string().min(1, {
-    message: "Lastname is required",
-  }),
-  middlename: z.string().optional(),
   username: z.string().min(1, {
     message: "Username is required",
   }),

@@ -52,15 +52,11 @@ const AccountForm = () => {
     }
   }, [userData, reset]);
 
- 
   const onSubmit = async (data) => {
     try {
       setIsSubmitting(true);
 
       const formData = {
-        firstname: data.firstname,
-        lastname: data.lastname,
-        middlename: data.middlename,
         email: data.email,
         username: data.username,
         role: userData.role,
@@ -112,44 +108,14 @@ const AccountForm = () => {
               <div className="space-y-2">
                 <FormField
                   control={form.control}
-                  name="firstname"
+                  name="username"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="text-gray-600 text-sm">
-                        Firstname
+                        Username
                       </FormLabel>
                       <FormControl>
-                        <Input {...field} type="text" />
-                      </FormControl>
-                      <FormMessage className="text-xs" />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="middlename"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-gray-600 text-sm">
-                        Middlename
-                      </FormLabel>
-                      <FormControl>
-                        <Input {...field} type="text" />
-                      </FormControl>
-                      <FormMessage className="text-xs" />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="lastname"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-gray-600 text-sm">
-                        Lastname
-                      </FormLabel>
-                      <FormControl>
-                        <Input {...field} type="text" />
+                        <Input {...field} type="username" />
                       </FormControl>
                       <FormMessage className="text-xs" />
                     </FormItem>
@@ -165,21 +131,6 @@ const AccountForm = () => {
                       </FormLabel>
                       <FormControl>
                         <Input {...field} type="email" />
-                      </FormControl>
-                      <FormMessage className="text-xs" />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="username"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-gray-600 text-sm">
-                        Username
-                      </FormLabel>
-                      <FormControl>
-                        <Input {...field} type="username" />
                       </FormControl>
                       <FormMessage className="text-xs" />
                     </FormItem>
