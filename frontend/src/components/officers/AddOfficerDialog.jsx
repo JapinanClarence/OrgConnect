@@ -24,6 +24,7 @@ import { Button } from "@/components/ui/button";
 import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
 import {
   Command,
+  CommandDialog,
   CommandEmpty,
   CommandGroup,
   CommandInput,
@@ -56,7 +57,7 @@ const AddOfficerDialog = ({
   const [members, setMembers] = useState([]);
   const [positions, setPositions] = useState([]);
   const { token } = useAuth();
-
+  const [openCommand, setOpenCommand] = useState(false);
   useEffect(() => {
     fetchMembers();
     fetchPositons();
@@ -105,7 +106,9 @@ const AddOfficerDialog = ({
       console.error(error);
     }
   };
-
+  const handleShowCommand = () => {
+    setOpenCommand(true);
+  };
   return (
     <Dialog open={open} onOpenChange={onOpenChange} disableFocusTrap>
       <DialogContent>
@@ -133,59 +136,62 @@ const AddOfficerDialog = ({
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Officer</FormLabel>
-                    <Popover disableFocusTrap>
-                      <PopoverTrigger asChild>
-                        <FormControl>
-                          <Button
-                            variant="outline"
-                            role="combobox"
-                            className={cn(
-                              "w-full justify-between",
-                              !field.value && "text-muted-foreground"
-                            )}
-                          >
-                            {field.value
-                              ? members.find(
-                                  (member) => member.value === field.value
-                                )?.label
-                              : "Select member"}
-                            <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                          </Button>
-                        </FormControl>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-full p-0 z-50">
-                        <Command>
-                          <CommandInput
-                            placeholder="Search member..."
-                            className="h-9"
-                          />
-                          <CommandList>
-                            <CommandEmpty>No member found.</CommandEmpty>
-                            <CommandGroup>
-                              {members.map((member) => (
-                                <CommandItem
-                                  key={member.value}
-                                  value={member.label}
-                                  onSelect={() => {
-                                    form.setValue("officerId", member.value);
-                                  }}
-                                >
-                                  {member.label}
-                                  <CheckIcon
-                                    className={cn(
-                                      "ml-auto h-4 w-4",
-                                      member.value === field.value
-                                        ? "opacity-100"
-                                        : "opacity-0"
-                                    )}
-                                  />
-                                </CommandItem>
-                              ))}
-                            </CommandGroup>
-                          </CommandList>
-                        </Command>
-                      </PopoverContent>
-                    </Popover>
+
+                    <FormControl>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        role="combobox"
+                        className={cn(
+                          "w-full justify-between",
+                          !field.value && "text-muted-foreground"
+                        )}
+                        onClick={handleShowCommand}
+                      >
+                        {field.value
+                          ? members.find(
+                              (member) => member.value === field.value
+                            )?.label
+                          : "Select member"}
+                        <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                      </Button>
+                    </FormControl>
+                    <CommandDialog
+                      open={openCommand}
+                      onOpenChange={setOpenCommand}
+                    >
+                      <Command>
+                        <CommandInput
+                          placeholder="Search member..."
+                          className="h-9"
+                        />
+                        <CommandList>
+                          <CommandEmpty>No member found.</CommandEmpty>
+                          <CommandGroup>
+                            {members.map((member) => (
+                              <CommandItem
+                                key={member.value}
+                                value={member.label}
+                                onSelect={() => {
+                                  form.setValue("officerId", member.value);
+                                  setOpenCommand(false);
+                                }}
+                              >
+                                {member.label}
+                                <CheckIcon
+                                  className={cn(
+                                    "ml-auto h-4 w-4",
+                                    member.value === field.value
+                                      ? "opacity-100"
+                                      : "opacity-0"
+                                  )}
+                                />
+                              </CommandItem>
+                            ))}
+                          </CommandGroup>
+                        </CommandList>
+                      </Command>
+                    </CommandDialog>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -218,7 +224,11 @@ const AddOfficerDialog = ({
                         <SelectGroup>
                           <SelectLabel>Positions</SelectLabel>
                           {positions.map((position) => (
-                            <SelectItem key={position} className="" value={position}>
+                            <SelectItem
+                              key={position}
+                              className=""
+                              value={position}
+                            >
                               {position.charAt(0).toUpperCase() +
                                 position.slice(1).toLowerCase()}
                             </SelectItem>
