@@ -4,7 +4,11 @@ import Announcement from "../../model/announcementModel.js";
 import Events from "../../model/eventModel.js";
 import Payments from "../../model/paymentModel.js";
 import Organization from "../../model/organizationModel.js";
-import { UserModel as Admin, StudentModel, UserModel } from "../../model/UserModel.js";
+import {
+  UserModel as Admin,
+  StudentModel,
+  UserModel,
+} from "../../model/UserModel.js";
 import mongoose from "mongoose";
 import { studentOrgs } from "../organizationController.js";
 
@@ -46,13 +50,33 @@ export const getDashboardData = async (req, res) => {
       organization: organization._id,
     });
 
-    const totalPaymentAmount = await Payments.aggregate([
-      { $match: { organization: organization._id } }, // Filter documents for the specific organization
+    const expendedCollections = await Payments.aggregate([
+      { $match: { organization: organization._id, category:{$ne: "0"} } }, // Filter documents for the specific organization
       { $group: { _id: null, totalAmount: { $sum: "$amount" } } }, // Group and sum the `amount` field
     ]);
 
-    const totalAmount =
-      totalPaymentAmount.length > 0 ? totalPaymentAmount[0].totalAmount : 0;
+    const totalExpendedCollections =
+      expendedCollections.length > 0 ? expendedCollections[0].totalAmount : 0;
+
+    //get all fees data
+    const feesData = await Payments.find({
+      organization: organization._id,
+      category: "0",
+    });
+
+    //calculate collected payments per events
+    const collectedPayments = feesData.map((fees) => {
+      const totalPaymentsPerEvent = fees.membersPaid.reduce(
+        (sum, member) => sum + (member.amount || 0),
+        0
+      );
+      return totalPaymentsPerEvent;
+    });
+    //calculate total collected payments
+    const totalCollectedPayments = collectedPayments.reduce(
+      (sum, payments) => sum + payments || 0,
+      0
+    );
 
     const totalEventsCount = await Events.countDocuments({
       organization: organization._id,
@@ -88,7 +112,7 @@ export const getDashboardData = async (req, res) => {
         gender: data.student.gender,
       };
     });
-
+  
     // Fetch events with attendees count for the current month
     const eventsAttendees = await Events.aggregate([
       {
@@ -139,7 +163,8 @@ export const getDashboardData = async (req, res) => {
       organization: organization.name,
       eventCount: totalEventsCount,
       announcementCount: totalAnnouncementCount,
-      paymentCount: `₱ ${new Intl.NumberFormat("en-US").format(totalAmount)}`,
+      totalCollectedFees: `₱ ${new Intl.NumberFormat("en-US").format(totalCollectedPayments)}`,
+      totalExpenses: `₱ ${new Intl.NumberFormat("en-US").format(totalExpendedCollections)}`,
       memberCount: totalMembersCount,
       events: trimmedEvents,
       members: cleanMemberData,
@@ -198,40 +223,40 @@ export const getReportsData = async (req, res) => {
 
     const feesData = await Payments.find({
       organization: organization._id,
-      category: "0"
+      category: "0",
     });
 
     const membersFees = await Promise.all(
-      feesData.map((fees) =>{
-        const totalCollectedPayments = fees.membersPaid.reduce((sum, member) => sum + (member.amount || 0), 0);
-        
-          return {
-            _id: fees._id,
-            purpose: fees.purpose,
-            amount: fees.amount,
-            date: fees.createdAt,
-            totalCollectedPayments
-          };
-    
+      feesData.map((fees) => {
+        const totalCollectedPayments = fees.membersPaid.reduce(
+          (sum, member) => sum + (member.amount || 0),
+          0
+        );
+
+        return {
+          _id: fees._id,
+          purpose: fees.purpose,
+          amount: fees.amount,
+          date: fees.createdAt,
+          totalCollectedPayments,
+        };
       })
     );
 
     const collectionSpentData = await Payments.find({
       organization: organization._id,
-      category: { $ne: "0" } 
+      category: { $ne: "0" },
     });
 
     const transactions = await Promise.all(
-      collectionSpentData.map((data) =>{
-   
-          return {
-            _id: data._id,
-            purpose: data.purpose,
-            amount: data.amount,
-            category: data.category,
-            date: data.createdAt,
-          };
-    
+      collectionSpentData.map((data) => {
+        return {
+          _id: data._id,
+          purpose: data.purpose,
+          amount: data.amount,
+          category: data.category,
+          date: data.createdAt,
+        };
       })
     );
 
@@ -241,7 +266,7 @@ export const getReportsData = async (req, res) => {
         attendeesCount,
         membersFees,
         transactions,
-        organizationStartYear: organization.createdAt
+        organizationStartYear: organization.createdAt,
       },
     });
   } catch (err) {

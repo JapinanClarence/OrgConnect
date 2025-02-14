@@ -31,8 +31,9 @@ const OverviewTab = () => {
   const [showDialog, setShowDialog] = useState(false);
   const [eventCount, setEventCount] = useState(0);
   const [announcementCount, setAnnouncmentCount] = useState(0);
+  const [totalExpenses, setTotalExpenses] = useState(0);
   const [membersCount, setMembersCount] = useState(0);
-  const [paymentCount, setPaymentcount] = useState(0);
+  const [totalCollectedFees, setTotalFees] = useState(0);
   const [chartData, setChartData] = useState([]);
   const [eventData, setEventData] = useState([]);
   const [memberData, setMemberData] = useState([]);
@@ -57,7 +58,7 @@ const OverviewTab = () => {
           setOrganizationName(data.organization);
           setEventCount(data.eventCount);
           setAnnouncmentCount(data.announcementCount);
-          setPaymentcount(data.paymentCount);
+          setTotalFees(data.totalCollectedFees);
           setMembersCount(data.memberCount);
           setEventData(data.events);
           setMemberData(data.members);
@@ -65,6 +66,7 @@ const OverviewTab = () => {
           setCurrentYear(data.currentYear);
           setCurrentMonth(data.currentMonth);
           setAnnouncementData(data.announcements);
+          setTotalExpenses(data.totalExpenses)
         }
         setLoading(false);
       } catch (error) {
@@ -89,7 +91,7 @@ const OverviewTab = () => {
           </h1>
         )}
 
-        <div className="max-h-full w-full grid grid-flow-row lg:grid-flow-col grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mt-5">
+        <div className="max-h-full w-full grid grid-flow-row lg:grid-flow-col grid-cols-1 gap-5 sm:grid-cols-1 lg:grid-cols-5 mt-5">
           <Statcard
             name="Total Members"
             icon={Users}
@@ -114,7 +116,14 @@ const OverviewTab = () => {
           <Statcard
             name="Total Collection"
             icon={ChartNoAxesColumn}
-            value={paymentCount}
+            value={totalCollectedFees}
+            color="#10B981"
+            loading={loading}
+          />
+           <Statcard
+            name="Total Expenses"
+            icon={ChartNoAxesColumn}
+            value={totalExpenses}
             color="#10B981"
             loading={loading}
           />
