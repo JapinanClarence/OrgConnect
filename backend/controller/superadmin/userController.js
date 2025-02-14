@@ -2,7 +2,7 @@ import Organization from "../../model/organizationModel.js";
 import { OrgAdminModel as Admin } from "../../model/UserModel.js";
 
 export const createUser = async (req, res, next) => {
-  const { firstname, lastname, middlename, username, email, password } =
+  const { username, email, password } =
     req.body;
   try {
     const user = await Admin.findOne({ $or: [{ username }, { email }] });
@@ -18,9 +18,6 @@ export const createUser = async (req, res, next) => {
     }
 
     await Admin.create({
-      firstname,
-      lastname,
-      middlename,
       username,
       email,
       password,
@@ -44,7 +41,7 @@ export const getUser = async (req, res, next) => {
     const role = "1";
 
     const user = await Admin.find({ role }).select(
-      "firstname lastname middlename username email role active profilePicture"
+      "username email role active profilePicture"
     );
 
     if (user.length <= 0) {
@@ -70,7 +67,7 @@ export const findUser = async (req, res, next) => {
   const userId = req.params.id;
   try {
     const user = await Admin.findById(userId).select(
-      "firstname lastname middlename username email role active profilePicture"
+      " username email role active profilePicture"
     );
 
     if (!user) {

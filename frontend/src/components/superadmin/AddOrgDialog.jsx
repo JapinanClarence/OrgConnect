@@ -75,11 +75,8 @@ const AddOrgDialog = ({
 
       if (response.data.success) {
         const popoverData = response.data.data.map((data) => {
-          const fullname = `${data.firstname} ${
-            data.middlename ? data.middlename[0] + ". " : ""
-          }${data.lastname}`;
           return {
-            label: `${fullname}`,
+            label: data.username,
             value: data._id,
           };
         });

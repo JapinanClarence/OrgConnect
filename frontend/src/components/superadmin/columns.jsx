@@ -34,24 +34,6 @@ export const userColumns = (onUpdateStatus) => [
     },
   },
   {
-    accessorKey: "fullname",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          className="px-0"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Name
-          <CaretSortIcon className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => (
-      <div className="text-xs">{row.getValue("fullname")}</div>
-    ),
-  },
-  {
     accessorKey: "username",
     header: ({ column }) => {
       return (
