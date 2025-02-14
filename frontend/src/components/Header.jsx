@@ -84,12 +84,12 @@ const Header = () => {
               <Avatar className="cursor-pointer size-10">
                 <AvatarImage src={userData.profilePicture} />
                 <AvatarFallback className="text-gray-500 bg-gray-200">
-                  {userData.firstname[0] + userData.lastname[0]}
+                  {userData.username[0] + userData.username[1]}
                 </AvatarFallback>
               </Avatar>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuLabel>{fullname}</DropdownMenuLabel>
+              <DropdownMenuLabel>{userData.username}</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem onSelect={() => navigate("/settings")}>
                 Settings

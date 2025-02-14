@@ -436,7 +436,7 @@ const DesktopSidebar = () => {
                       <Avatar className="cursor-pointer size-10">
                         <AvatarImage src={userData.profilePicture} />
                         <AvatarFallback className="text-gray-500">
-                          {userData.firstname[0] + userData.lastname[0]}
+                          {userData.username[0] + userData.username[1]}
                         </AvatarFallback>
                       </Avatar>
                     </DropdownMenuTrigger>
@@ -457,12 +457,12 @@ const DesktopSidebar = () => {
                   <Avatar className="size-10">
                     <AvatarImage src={userData.profilePicture} />
                     <AvatarFallback className="text-gray-500">
-                      {userData.firstname[0] + userData.lastname[0]}
+                      {userData.username[0] + userData.username[1]}
                     </AvatarFallback>
                   </Avatar>
                   <div className="hidden lg:inline lg:ml-3 text-sm font-bold">
-                    {fullname}{" "}
-                    <p className="font-normal">{userData.username}</p>
+                    {userData.username}{" "}
+                    <p className="font-normal">{userData.email}</p>
                   </div>
 
                   <DropdownMenu>
