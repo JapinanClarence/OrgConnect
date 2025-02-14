@@ -145,21 +145,21 @@ const TableComponent = ({
     <>
       <Label className="font-semibold">{title}</Label>
       <div className="md:flex items-center justify-between py-4">
-        <div className="flex items-center">
+        <div className="flex items-center md:flex">
           {/* <Button className="rounded-none rounded-l-md">
             <Printer />
             Print
           </Button> */}
           <Button
             onClick={exportToPDF}
-            className="rounded-none rounded-l-md border-r-0"
+            className="rounded-none rounded-l-md border-r-0 w-1/2 md:w-full"
           >
             <FileText />
             PDF
           </Button>
           <Button
             onClick={exportToExcel}
-            className="rounded-none rounded-r-md border-l-0"
+            className="rounded-none rounded-r-md border-l-0 w-1/2 md:w-full"
           >
             <Sheet />
             Excel
