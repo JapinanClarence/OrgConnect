@@ -2,8 +2,8 @@ import React, { useState, useEffect, useMemo } from "react";
 import apiClient from "@/api/axios";
 import { useAuth } from "@/context/AuthContext";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import OverviewTab from "../Dashboard/OverviewTab";
-import ReportTab from "../Dashboard/ReportTab";
+import OverviewTab from "../dashboard/OverviewTab";
+import ReportTab from "../dashboard/ReportTab";
 
 const AdminHomeContent = () => {
   
