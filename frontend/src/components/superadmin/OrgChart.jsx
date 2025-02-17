@@ -36,7 +36,7 @@ const OrgChart = ({ data }) => {
     { category: "Institute Based", count: 0 },
     { category: "Non-institute Based", count: 0 },
     { category: "Religious Based", count: 0 },
-    { category: "Fraternities", count: 0 }
+    { category: "Fraternities", count: 0 },
   ];
 
   // Populate chart data with counts for each category
@@ -57,7 +57,7 @@ const OrgChart = ({ data }) => {
   const staticColor = "hsl(var(--chart-static-color))";
 
   return (
-    <Card className="border-none md:shadow-lg">
+    <Card className="border-none md:shadow-lg h-full">
       <CardHeader>
         <CardTitle>Total Organizations</CardTitle>
         <CardDescription>
@@ -65,31 +65,31 @@ const OrgChart = ({ data }) => {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={chartConfig} className="w-full h-full">
+        <ChartContainer config={chartConfig} className="h-full w-full">
           <BarChart
             accessibilityLayer
             data={chartData}
-            layout="vertical"
+            // layout="vertical"
             margin={{
-              right: 16,
+              top: 16,
             }}
           >
-            <CartesianGrid horizontal={false} />
-            <YAxis
+            <CartesianGrid vertical={false} />
+            <XAxis
               dataKey="category"
               type="category"
               tickLine={false}
               tickMargin={10}
               axisLine={false}
-              hide
+              // hide
             />
-            <XAxis type="number" />
+            {/* <XAxis type="number" /> */}
             <ChartTooltip
               cursor={false}
               content={<ChartTooltipContent indicator="line" />}
             />
             <Bar dataKey="count" fill="hsl(var(--chart-1))" radius={4}>
-              <LabelList
+              {/* <LabelList
                 dataKey="category"
                 position="insideLeft"
                 offset={8}
@@ -99,6 +99,13 @@ const OrgChart = ({ data }) => {
               <LabelList
                 dataKey="count"
                 position="right"
+                offset={8}
+                className="fill-foreground"
+                fontSize={12}
+              /> */}
+              <LabelList
+                dataKey="count"
+                position="top"
                 offset={8}
                 className="fill-foreground"
                 fontSize={12}

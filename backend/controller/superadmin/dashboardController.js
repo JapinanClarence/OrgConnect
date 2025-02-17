@@ -13,11 +13,18 @@ export const getDashboardData = async (req, res) =>{
         const orgs = await getOrg();
 
         const currentSemester = await AcademicYear.findOne({isCurrent: true});
+
+        const totalActiveOrgs = orgs.filter((data) => data.active === true);
+        
+        const totalInactiveOrgs= orgs.filter((data) => data.active === false);
+
         res.status(200).json({
             success: true,
             adminCount :admins,
             orgData :orgs,
-            currentSemester
+            currentSemester,
+            totalActiveOrgs,
+            totalInactiveOrgs
         })
 
     } catch (err) {
@@ -45,7 +52,7 @@ const getOrg = async () => {
           _id: data.id,
           name: data.name,
           createdAt: data.createdAt,
-          admin: fullname,
+          admin: data.admin.username,
           active: data.active,
           remarks: data.remarks,
           type: data.type,

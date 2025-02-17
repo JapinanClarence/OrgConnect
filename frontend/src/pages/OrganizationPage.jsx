@@ -59,7 +59,7 @@ const OrganizationPage = () => {
             status: data.active,
             banner: data.banner,
             remarks: data.remarks,
-            admin: data.admin,
+            admin: data.admin,  
           };
         });
 
