@@ -93,14 +93,14 @@ export const getOrg = async (req, res, next) => {
     }
     
     const filteredOrgs = org.map((data) => {
-      const fullname = `${data.admin.firstname} ${
-        data.admin.middlename ? data.admin.middlename[0] + ". " : ""
-      }${data.admin.lastname}`;
+      // const fullname = `${data.admin.firstname} ${
+      //   data.admin.middlename ? data.admin.middlename[0] + ". " : ""
+      // }${data.admin.lastname}`;
       return {
         _id: data.id,
         name: data.name,
         createdAt: data.createdAt,
-        admin: fullname,
+        admin: data.admin.username,
         active: data.active,
         remarks: data.remarks,
       };
