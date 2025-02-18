@@ -35,6 +35,9 @@ const organizationSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
+    admin:{
+      type: String,
+    },
     officerPositions: {
       type: [{ position: String, rank: Number }],
       default: [], // Set default to empty array initially

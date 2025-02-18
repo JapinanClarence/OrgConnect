@@ -141,6 +141,21 @@ const OrganizationForm = ({ orgData, updateData }) => {
                     </FormItem>
                   )}
                 />
+                 <FormField
+                  control={form.control}
+                  name="adviser"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-gray-600 text-sm">
+                        Adviser
+                      </FormLabel>
+                      <FormControl>
+                        <Input {...field} type="text" />
+                      </FormControl>
+                      <FormMessage className="text-xs" />
+                    </FormItem>
+                  )}
+                />
               </div>
               <div className="">
                 <Button

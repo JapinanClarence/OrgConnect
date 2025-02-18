@@ -1,6 +1,6 @@
 import AcademicYear from "../../model/academicYearModel.js";
 import Organization from "../../model/organizationModel.js";
-import { OrgAdminModel as Admin } from "../../model/UserModel.js";
+import { OrgAdminModel as Admin, UserModel } from "../../model/UserModel.js";
 
 export const createOrg = async (req, res, next) => {
   const { name, admin, type } = req.body;
@@ -58,7 +58,6 @@ export const updateOrg = async (req, res, next) => {
   const id = req.params.id;
 
   try {
-   
     const org = await Organization.findByIdAndUpdate(id, req.body);
 
     if (!org) {
@@ -83,7 +82,9 @@ export const getOrg = async (req, res, next) => {
   const email = req.params.user;
 
   try {
-    const org = await Organization.find().populate("admin").sort({createdAt: -1});
+    const org = await Organization.find()
+      .populate("admin")
+      .sort({ createdAt: -1 });
 
     if (!org) {
       return res.status(404).json({
@@ -91,20 +92,21 @@ export const getOrg = async (req, res, next) => {
         message: "Organization not found",
       });
     }
-    
-    const filteredOrgs = org.map((data) => {
-      // const fullname = `${data.admin.firstname} ${
-      //   data.admin.middlename ? data.admin.middlename[0] + ". " : ""
-      // }${data.admin.lastname}`;
-      return {
-        _id: data.id,
-        name: data.name,
-        createdAt: data.createdAt,
-        admin: data.admin.username,
-        active: data.active,
-        remarks: data.remarks,
-      };
-    });
+
+    const filteredOrgs = await Promise.all(
+      org.map(async (data) => {
+        const admin = await UserModel.findById(data.admin)
+      
+        return {
+          _id: data.id,
+          name: data.name,
+          createdAt: data.createdAt,
+          admin: admin.username,
+          active: data.active,
+          remarks: data.remarks,
+        };
+      })
+    );
 
     res.status(200).json({
       success: true,

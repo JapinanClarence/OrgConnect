@@ -72,6 +72,7 @@ export const updateOrg = async (req, res, next) => {
         message: "Organization not found",
       });
     }
+    console.log(org)
     if (!org.active) {
       return res.status(403).json({
         success: false,
@@ -97,7 +98,7 @@ export const findOrg = async (req, res, next) => {
   try {
     const admin = await Admin.findOne({email});
     const org = await Organization.findOne({ admin: admin._id }).select(
-      "name description about contact banner"
+      "name description about contact banner adviser"
     );
 
     if (!org) {

@@ -51,6 +51,7 @@ const OrganizationPage = () => {
       if (!data.success) {
         setData([]);
       } else {
+      
         const tableData = data.data.map((data) => {
           return {
             id: data._id,
