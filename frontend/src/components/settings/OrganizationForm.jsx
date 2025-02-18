@@ -51,7 +51,7 @@ const OrganizationForm = ({ orgData, updateData }) => {
   }, [orgData, reset]);
 
   const onSubmit = async (data) => {
-
+   
     setIsSubmitting(true);
     try {
       const res = await apiClient.patch("/admin/organization", data, {

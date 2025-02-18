@@ -35,7 +35,7 @@ const organizationSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
-    admin:{
+    adviser:{
       type: String,
     },
     officerPositions: {

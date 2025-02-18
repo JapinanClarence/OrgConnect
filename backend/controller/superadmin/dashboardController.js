@@ -1,6 +1,6 @@
 import AcademicYear from "../../model/academicYearModel.js";
 import Organization from "../../model/organizationModel.js";
-import { OrgAdminModel as Admin, UserModel } from "../../model/UserModel.js";
+import { OrgAdminModel as Admin } from "../../model/UserModel.js";
 
 export const getDashboardData = async (req, res) =>{
     const userId = req.user.userId;
@@ -43,18 +43,18 @@ const getOrg = async () => {
       }
   
       // Map organization data and format the admin's full name
-      const filteredOrgs = await Promise.all(orgs.map(async (data) => {
-        const admin = await UserModel.findById(data.admin);
+      const filteredOrgs = orgs.map((data) => {
+        console
         return {
           _id: data.id,
           name: data.name,
           createdAt: data.createdAt,
-          admin: admin.username,
+          admin: data.admin.username,
           active: data.active,
           remarks: data.remarks,
           type: data.type,
         };
-      }));
+      });
       console.log(filteredOrgs)
       return filteredOrgs;
     } catch (err) {

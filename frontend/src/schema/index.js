@@ -94,7 +94,7 @@ export const EditOrgSchema = z.object({
   admin: z.string().optional(),
   status: z.boolean().optional(),
   remarks: z.string().optional(),
-  admin: z.string().optional()
+  adviser: z.string().optional()
 });
 
 export const EventSchema = z.object({
