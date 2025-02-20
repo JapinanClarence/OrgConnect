@@ -64,13 +64,13 @@ export const getDashboardData = async (req, res) => {
       category: "0",
     });
 
-    //calculate collected payments per events
+    //calculate collected payments per record
     const collectedPayments = feesData.map((fees) => {
-      const totalPaymentsPerEvent = fees.membersPaid.reduce(
+      const totalPaymentsPerRecord = fees.membersPaid.reduce(
         (sum, member) => sum + (member.amount || 0),
         0
       );
-      return totalPaymentsPerEvent;
+      return totalPaymentsPerRecord;
     });
     //calculate total collected payments
     const totalCollectedPayments = collectedPayments.reduce(

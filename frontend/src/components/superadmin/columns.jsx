@@ -262,11 +262,7 @@ export const dashboardColumns = [
 
       const status = statusMap[row.getValue("type")];
 
-      return (
-        <span className={`text-xs flex items-center`}>
-          {status}
-        </span>
-      );
+      return <span className={`text-xs flex items-center`}>{status}</span>;
     },
   },
 ];
@@ -589,5 +585,38 @@ export const acadColumns = (onEdit) => [
         </DropdownMenu>
       );
     },
+  },
+];
+
+export const transactionColumns = [
+  {
+    accessorKey: "purpose",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Purpose
+          <CaretSortIcon className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => <div className="">{row.getValue("purpose")}</div>,
+  },
+  {
+    accessorKey: "amount",
+    header: "Amount",
+    cell: ({ row }) => <div className="">{row.getValue("amount")}</div>,
+  },
+  {
+    accessorKey: "date",
+    header: "Date",
+    cell: ({ row }) => <div className="">{row.getValue("date")}</div>,
+  },
+  {
+    accessorKey: "category",
+    header: "Category",
+    cell: ({ row }) => <div className="">{row.getValue("category")}</div>,
   },
 ];

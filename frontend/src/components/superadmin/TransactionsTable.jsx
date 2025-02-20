@@ -39,10 +39,10 @@ import {
   LoaderCircle,
   Settings2,
 } from "lucide-react";
-import { orgColumns } from "@/components/superadmin/columns";
+import { orgColumns, transactionColumns } from "@/components/superadmin/columns";
 import TableSkeleton from "@/components/skeleton/TableSkeleton";
 
-const OrgTable = ({ data, loading, onClick, onAdd, onEdit }) => {
+const TransactionsTable = ({ data, loading, onClick, onAdd, onEdit }) => {
   const [sorting, setSorting] = React.useState([]);
   const [columnFilters, setColumnFilters] = React.useState([]);
   const [columnVisibility, setColumnVisibility] = React.useState({});
@@ -52,11 +52,11 @@ const OrgTable = ({ data, loading, onClick, onAdd, onEdit }) => {
   });
   const [globalFilter, setGlobalFilter] = React.useState("");
   // Define the columns where you want to apply the global filter
-  const filterColumns = ["name", "admin", "status"];
+  const filterColumns = ["purpose", "category"];
 
   const table = useReactTable({
     data,
-    columns: orgColumns(onEdit),
+    columns: transactionColumns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     onPaginationChange: setPagination,
@@ -95,18 +95,18 @@ const OrgTable = ({ data, loading, onClick, onAdd, onEdit }) => {
 
   return (
     <>
-      <div className="md:flex items-center justify-between py-4">
-        <Input
+      <div className="md:flex items-center justify-end py-4">
+        {/* <Input
           placeholder="Search organizations..."
           value={globalFilter ?? ""}
           onChange={(event) => setGlobalFilter(event.target.value)}
           className="md:max-w-sm"
-        />
+        /> */}
 
         <div className="flex-wrap-reverse mt-2 space-y-2 md:space-y-0 md:mt-0 md:space-x-2 md:flex md:items-center">
-          <Button className="w-full md:w-fit" onClick={onAdd}>
+          {/* <Button className="w-full md:w-fit" onClick={onAdd}>
             Create Org
-          </Button>
+          </Button> */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" className="w-full md:w-fit">
@@ -160,7 +160,7 @@ const OrgTable = ({ data, loading, onClick, onAdd, onEdit }) => {
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
-                  onClick={() => onClick(row.original)}
+                //   onClick={() => onClick(row.original)}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
@@ -243,4 +243,4 @@ const OrgTable = ({ data, loading, onClick, onAdd, onEdit }) => {
   );
 };
 
-export default OrgTable;
+export default TransactionsTable;

@@ -16,11 +16,12 @@ import RegistrationPage from "./pages/RegistrationPage";
 import AdminAccPage from "./pages/AdminAccPage";
 import AcademicYearPage from "./pages/AcademicYearPage";
 import MembersPaidPage from "./pages/MembersPaidPage";
-import OrganizationPage from "./pages/OrganizationPage";
+import OrganizationsPage from "./pages/OrganizationsPage";
 import CalendarPage from "./pages/CalendarPage";
 import ExpenditurePage from "./pages/ExpenditurePage";
 import FeesPage from "./pages/FeesPage";
 import PaymentLogsPage from "./pages/PaymentLogsPage";
+import OrganizationPage from "./pages/OrganizationPage";
 // import TestPage from "./pages/TestPage";
 
 function App() {
@@ -55,7 +56,11 @@ function App() {
               <Route path="/accounts" element={<AdminAccPage />} />
             </Route>
             <Route element={<DashboardLayout />}>
-              <Route path="/organizations" element={<OrganizationPage />} />
+              <Route path="/organizations" element={<OrganizationsPage />} />
+            </Route>
+            
+            <Route element={<DashboardLayout />}>
+              <Route path="/organization/:id" element={<OrganizationPage />} />
             </Route>
           </Route>
 

@@ -8,7 +8,7 @@ import {
   authorizeRole,
 } from "../../middleware/authMiddleware.js";
 
-import { getOrg, createOrg, updateOrg } from "../../controller/superadmin/orgController.js";
+import { getOrg, createOrg, updateOrg, findOrg } from "../../controller/superadmin/orgController.js";
 const router = express.Router();
 
 //create organization routes
@@ -23,5 +23,6 @@ router.post(
 );
 router.patch("/organization/:id", authenticate, authorizeRole("superadmin"), express.json(), updateOrg);
 router.get("/organization/", authenticate, authorizeRole("superadmin"), getOrg);
+router.get("/organization/:id", authenticate, authorizeRole("superadmin"), findOrg);
 
 export default router;
