@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import AdminTable from "@/components/superadmin/AdminTable";
 import { useAuth } from "@/context/AuthContext";
 import apiClient from "@/api/axios";
 import { dateOnly } from "@/util/helpers";
@@ -10,11 +9,7 @@ import { formatDate } from "@/util/helpers";
 import { useToast } from "@/hooks/use-toast";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-// import AddAcadsDialog from "@/components/superadmin/AddAcadsDialog";
 import { CreateOrgSchema, EditOrgSchema } from "@/schema";
-import EditOrgDialog from "@/components/superadmin/EditOrgDialog";
-import AddOrgDialog from "./AddOrgDialog";
-import StatCard from "./StatCard";
 import { Skeleton } from "@/components/ui/skeleton";
 import OrgChart from "./OrgChart";
 import { Calendar } from "@/components/ui/calendar";
