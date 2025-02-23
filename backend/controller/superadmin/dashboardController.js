@@ -36,7 +36,7 @@ export const getDashboardData = async (req, res) =>{
 }
 const getOrg = async () => {
     try {
-      const orgs = await Organization.find().populate("admin");
+      const orgs = await Organization.find().populate("admin").sort({createdAt: -1});
   
       if (!orgs || orgs.length === 0) {
         return []; // Return an empty array if no organizations are found
