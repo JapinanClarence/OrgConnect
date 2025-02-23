@@ -113,7 +113,7 @@ const OrganizationDetailsPage = () => {
         )}
       </div>
 
-      <div className="px-5 py-5 space-y-2">
+      <div className="px-5 pt-5 pb-16 space-y-2">
         {loading ? <AboutSkeleton /> : <AboutCard orgData={orgData} />}
       </div>
 
