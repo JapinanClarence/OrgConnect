@@ -78,7 +78,7 @@ export const getEvent = async (req, res, next) => {
 
     const event = await Events.find({ organization: organization._id }).select(
       "title startDate endDate status location description fee organizer"
-    );
+    ).sort({createdAt : -1});
 
     if (event.length <= 0) {
       return res.status(200).json({
