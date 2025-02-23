@@ -3,21 +3,22 @@ import Organization from "../../model/organizationModel.js";
 import { OrgAdminModel as Admin } from "../../model/UserModel.js";
 
 export const createEvent = async (req, res, next) => {
-  const { title, description, startDate, endDate, location, fee, organizer } = req.body;
+  const { title, description, startDate, endDate, location, fee, organizer } =
+    req.body;
 
   const userId = req.user.userId;
 
   try {
     //verify if user exist
     const admin = await Admin.findById(userId);
-    
+
     if (!admin) {
       return res.status(404).json({
         success: false,
         message: "User not found",
       });
     }
-    
+
     const organization = await Organization.findOne({ admin });
 
     if (!organization) {
@@ -35,22 +36,22 @@ export const createEvent = async (req, res, next) => {
       });
     }
 
-    if(await Events.findOne({title})){
+    if (await Events.findOne({ title })) {
       return res.status(400).json({
         success: false,
-        message: "Event already exists"
-      })
+        message: "Event already exists",
+      });
     }
 
     await Events.create({
       title,
       description,
-      startDate,
-      endDate,
+      startDate: new Date(startDate).toISOString(),
+      endDate: new Date(endDate).toISOString(),
       location,
       organization: organization._id,
       fee,
-      organizer
+      organizer,
     });
 
     res.status(201).json({
@@ -76,9 +77,11 @@ export const getEvent = async (req, res, next) => {
       });
     }
 
-    const event = await Events.find({ organization: organization._id }).select(
-      "title startDate endDate status location description fee organizer"
-    ).sort({createdAt : -1});
+    const event = await Events.find({ organization: organization._id })
+      .select(
+        "title startDate endDate status location description fee organizer"
+      )
+      .sort({ createdAt: -1 });
 
     if (event.length <= 0) {
       return res.status(200).json({
@@ -153,7 +156,7 @@ export const updateEvent = async (req, res, next) => {
           "Organization is currently not active, limited actions granted.",
       });
     }
-    
+
     const eventId = req.params.id;
 
     const event = await Events.findByIdAndUpdate(eventId, req.body);
@@ -206,7 +209,7 @@ export const deleteEvent = async (req, res, next) => {
           "Organization is currently not active, limited actions granted.",
       });
     }
-    
+
     const eventId = req.params.id;
 
     const event = await Events.findByIdAndDelete(eventId, req.body);
