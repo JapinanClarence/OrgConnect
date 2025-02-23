@@ -332,7 +332,7 @@ const DesktopSidebar = () => {
                         : "hover:bg-gray-800"
                     }`}
                   >
-                    Fees
+                    Collections
                   </Link>
                   <Link
                     to={"/expenditure"}
@@ -342,7 +342,7 @@ const DesktopSidebar = () => {
                         : "hover:bg-gray-800"
                     }`}
                   >
-                    Expenditure
+                    Transactions
                   </Link>
 
                   <Link
