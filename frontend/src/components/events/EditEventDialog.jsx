@@ -245,7 +245,7 @@ const EditEventDialog = ({
                             <SelectGroup>
                               <SelectLabel>Status</SelectLabel>
                               <SelectItem value="0">Close</SelectItem>
-                              <SelectItem value="1">Pending</SelectItem>
+                              <SelectItem value="1">Upcoming</SelectItem>
                               <SelectItem value="2">Ongoing</SelectItem>
                               <SelectItem value="3">Open</SelectItem>
                             </SelectGroup>

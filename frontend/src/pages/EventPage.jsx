@@ -80,8 +80,8 @@ const EventPage = () => {
         title,
         description,
         location,
-        startDate,
-        endDate,
+        startDate: new Date(startDate).toISOString(),
+        endDate: new Date(endDate).toISOString(),
         fee,
         organizer,
       };
@@ -146,12 +146,31 @@ const EventPage = () => {
     }
   };
 
-  const onEdit = async (data) => {
+  const onEdit = async ({
+    title,
+    description,
+    location,
+    status,
+    startDate,
+    endDate,
+    fee,
+    organizer,
+  }) => {
     try {
+      const formData = {
+        title,
+        description,
+        location,
+        startDate: new Date(startDate).toISOString(),
+        endDate: new Date(endDate).toISOString(),
+        fee,
+        organizer,
+        status,
+      };
       setIsSubmitting(true);
       const res = await apiClient.patch(
         `/admin/event/${selectedEvent.id}`,
-        data,
+        formData,
         {
           headers: {
             Authorization: token,

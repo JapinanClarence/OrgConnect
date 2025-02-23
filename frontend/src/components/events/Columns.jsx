@@ -150,7 +150,7 @@ export const Columns = (onEdit, onDelete, onAttendance) => [
     cell: ({ row }) => {
       const statusMap = {
         0: "Close",
-        1: "Pending",
+        1: "Upcoming",
         2: "Ongoing",
         3: "Open",
       };
