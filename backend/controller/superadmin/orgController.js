@@ -109,6 +109,7 @@ export const getOrg = async (req, res, next) => {
         admin: data.admin.username,
         active: data.active,
         remarks: data.remarks,
+        adviser: data.adviser,
       };
     });
 

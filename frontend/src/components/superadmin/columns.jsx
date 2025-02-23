@@ -337,6 +337,22 @@ export const orgColumns = (onEdit) => [
     cell: ({ row }) => <div className="text-xs">{row.getValue("admin")}</div>,
   },
   {
+    accessorKey: "adviser",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="px-0"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Adviser
+          <CaretSortIcon className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => <div className="text-xs">{row.getValue("adviser")}</div>,
+  },
+  {
     accessorKey: "status",
     header: "Status",
     cell: ({ row }) => {
