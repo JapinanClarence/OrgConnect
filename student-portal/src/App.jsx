@@ -20,6 +20,7 @@ import OfficersPage from "./pages/OfficersPage";
 import EventsPage from "./pages/EventsPage";
 import OrgAnnouncementPage from "./pages/OrgAnnouncementPage";
 import AttendancePage from "./pages/AttendancePage";
+import SearchPage from "./pages/SearchPage";
 
 function App() {
   const [isInstalled, setIsInstalled] = useState(false);
@@ -73,6 +74,10 @@ function App() {
                <Route
                 path="/organization/:id/announcements"
                 element={<OrgAnnouncementPage />}
+              />
+               <Route
+                path="/search"
+                element={<SearchPage />}
               />
             </Route>
           </Route>

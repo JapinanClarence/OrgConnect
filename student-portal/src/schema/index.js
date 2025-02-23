@@ -79,3 +79,7 @@ export const UserSchema = z.object({
     message: "Username is required",
   }),
 });
+
+export const SearchSchema = z.object({
+  content: z.string().optional()
+})

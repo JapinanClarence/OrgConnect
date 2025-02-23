@@ -168,3 +168,36 @@ export const leaveOrg = async (req, res) => {
     });
   }
 };
+
+export const searchOrg = async (req, res) =>{
+  try {
+    const userId = req.user.userId;
+    const { query } = req.query;
+
+    const organizations = await Organization.find({
+      name: { $regex: query, $options: "i" }, // 'i' for case-insensitive
+    });
+
+    const filterOrgs = await Promise.all(
+      organizations.map(async (data) =>{
+        const isMember = await Membership.findOne({organization: data._id, student: userId});
+        return {
+          _id: data._id,
+          name: data.name,
+          about:data.about,
+          banner:data.banner,
+          active: data.active,
+          isMember: isMember ? true : false
+        }
+      })
+    )
+
+    const activeOrgs = filterOrgs.filter((orgs) => orgs.active === true);
+  
+
+    res.status(200).json({success: true, data: activeOrgs});
+
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+}
