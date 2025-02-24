@@ -46,8 +46,8 @@ export const createEvent = async (req, res, next) => {
     await Events.create({
       title,
       description,
-      startDate: new Date(startDate).toISOString(),
-      endDate: new Date(endDate).toISOString(),
+      startDate: new Date(startDate).toUTCString(),
+      endDate: new Date(endDate).toUTCString(),
       location,
       organization: organization._id,
       fee,

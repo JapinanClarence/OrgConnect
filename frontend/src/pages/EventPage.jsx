@@ -212,14 +212,15 @@ const EventPage = () => {
         setCurrentEvents([]);
       } else {
         const events = data.data;
-        console.log(events)
+
         setCurrentEvents(
           events.map((event) => {
+
             return {
               id: event._id,
               title: event.title,
-              startDate: event.startDate,
-              endDate: event.endDate,
+              startDate: formatSimpleDateTime(event.startDate),
+              endDate: formatSimpleDateTime(event.endDate),
               description: event.description,
               status: event.status,
               location: event.location,
