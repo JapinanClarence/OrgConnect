@@ -85,7 +85,7 @@ export const getPayment = async (req, res, next) => {
 
     const payment = await Payments.find({
       organization: organization._id,
-    });
+    }).sort({createdAt: -1});
 
     if (payment.length <= 0) {
       return res.status(200).json({
