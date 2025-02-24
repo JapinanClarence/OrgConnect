@@ -212,7 +212,7 @@ const EventPage = () => {
         setCurrentEvents([]);
       } else {
         const events = data.data;
-
+        console.log(events)
         setCurrentEvents(
           events.map((event) => {
             return {
