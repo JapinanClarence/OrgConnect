@@ -218,8 +218,8 @@ const EventPage = () => {
             return {
               id: event._id,
               title: event.title,
-              startDate: formatSimpleDateTime(event.startDate),
-              endDate: formatSimpleDateTime(event.endDate),
+              startDate: formatDate(event.startDate),
+              endDate: formatDate(event.endDate),
               description: event.description,
               status: event.status,
               location: event.location,
