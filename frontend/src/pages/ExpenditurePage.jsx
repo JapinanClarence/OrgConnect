@@ -24,7 +24,7 @@ import { useNavigate } from "react-router-dom";
 
 const categoryMap = {
   0: "Fees",
-  1: "Expenditure",
+  1: "Transactions",
   2: "Payment Logs",
 };
 
@@ -65,17 +65,19 @@ const ExpenditurePage = () => {
       if (!data.success) {
         setData([]);
       } else {
-        const tableData = data.data.map((data) => ({
-          id: data._id,
-          purpose: data.purpose,
-          details: data.details,
-          amount: data.amount,
-          category: categoryMap[data.category],
-          date: dateOnly(data.createdAt),
-        }));
+        const tableData = data.data.map((data) => {
+          return {
+            id: data._id,
+            purpose: data.purpose,
+            details: data.details,
+            amount: data.amount,
+            category: categoryMap[data.category],
+            date: dateOnly(data.createdAt),
+          };
+        });
 
         const expenditureData = tableData.filter(
-          (data) => data.category === "Expenditure"
+          (data) => data.category === "Transactions"
         );
         // console.log(tableData)
         setData(expenditureData);
@@ -209,9 +211,9 @@ const ExpenditurePage = () => {
 
   return (
     <div className="md:bg-[#fefefe] md:shadow-lg rounded-lg md:border md:border-gray-200 text-gray-900 px-6 py-5 flex flex-col relative">
-      <h1 className="font-bold">Expenditure Records</h1>
+      <h1 className="font-bold">Transactions</h1>
       <p className="text-sm text-muted-foreground">
-        Here are the recent expenditure records of your organization
+        Here are the recent transactions of your organization
       </p>
       <PaymentTable
         data={data}

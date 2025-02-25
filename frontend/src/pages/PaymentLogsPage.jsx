@@ -24,7 +24,7 @@ import { useNavigate } from "react-router-dom";
 
 const categoryMap = {
   0: "Fees",
-  1: "Expenditure",
+  1: "Transactions",
   2: "Payment Logs",
 };
 
