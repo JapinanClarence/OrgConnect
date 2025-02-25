@@ -3,7 +3,7 @@ import { PaymentSchema } from "@/schema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import apiClient from "@/api/axios";
-import PaymentTable from "@/components/payment/PaymentTable";
+import FeesTable from "@/components/payment/FeesTable";
 import AddPaymentDialog from "@/components/payment/AddPaymentDialog";
 import { useToast } from "@/hooks/use-toast";
 import { dateOnly, formatDate } from "@/util/helpers";
@@ -212,7 +212,7 @@ const FeesPage = () => {
       <p className="text-sm text-muted-foreground">
         Here are the recent collections of your organization
       </p>
-      <PaymentTable
+      <FeesTable
         data={data}
         loading={loading}
         onAdd={setShowAddDialog}

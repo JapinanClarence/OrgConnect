@@ -131,6 +131,117 @@ export const columns = (onEdit, onDelete, onManage) => [
   },
 ];
 
+export const feesColumns = (onEdit, onDelete, onManage) =>[
+  {
+    accessorKey: "purpose",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Purpose
+          <CaretSortIcon className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => <div className="">{row.getValue("purpose")}</div>,
+  },
+  {
+    accessorKey: "details",
+    header: "Details",
+    cell: ({ row }) => <div className="">{row.getValue("details")}</div>,
+  },
+  {
+    accessorKey: "category",
+    header: "Category",
+    cell: ({ row }) => <div className="">{row.getValue("category")}</div>,
+  },
+  {
+    accessorKey: "amount",
+    header: ({ column }) => {
+      return (
+        <div className="flex justify-end">
+          <Button
+            variant="ghost"
+            className="p-0"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Amount
+            <CaretSortIcon className="ml-2 h-4 w-4" />
+          </Button>
+        </div>
+      );
+    },
+    cell: ({ row }) => {
+      const amount = parseFloat(row.getValue("amount"));
+
+      // Format the amount as PHP currency
+      const formatted = new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "PHP",
+      }).format(amount);
+
+      return <div className="text-right font-medium">{formatted}</div>;
+    },
+  },
+  {
+    accessorKey: "date",
+    header: "Date",
+    cell: ({ row }) => <div className="">{row.getValue("date")}</div>,
+  },
+  {
+    id: "actions",
+    enableHiding: false,
+    cell: ({ row }) => {
+      const payment = row.original;
+
+      const handleEdit = (event) => {
+        event.stopPropagation();
+        onEdit(payment);
+      };
+
+      const handleDelete = (event) => {
+        event.stopPropagation();
+        onDelete(payment.id);
+      };
+
+      const handleManagePayment = (event) => {
+        event.stopPropagation();
+        onManage(payment.id);
+      };
+      return (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className="h-5 w-5 p-0">
+              <span className="sr-only">Open menu</span>
+              <DotsHorizontalIcon className="h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuItem
+              onClick={() => navigator.clipboard.writeText(payment.id)}
+            >
+              Copy ID
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem onClick={handleEdit}>
+              Edit
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={handleDelete}>
+              Delete
+            </DropdownMenuItem>
+
+            <DropdownMenuItem className={["Transactions", "Payment Logs"].includes(payment.category) ? "hidden" : "flex"} onClick={handleManagePayment}>
+              Manage
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      );
+    },
+  },
+]
 export const membersColumns = (onEdit, onDelete) => [
   {
     id: "profilePicture",
