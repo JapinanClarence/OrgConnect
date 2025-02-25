@@ -9,21 +9,23 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { PhilippinePeso } from "lucide-react";
-
+import { formatDate, formatSimpleDate } from "@/util/helpers";
 
 const PaymentsCard = ({
+  showPaymentStatus = true,
   id,
   purpose,
   details,
   category,
   amount,
   amountPaid,
-  status
+  status,
+  createdAt
 }) => {
   const [showDialog, setShowDialog] = useState(false);
   const statusMap = {
-    "0": { name: "Not Fully Paid", color: "bg-red-500" },
-    "1": { name: "Paid", color: "bg-green-600" },
+    0: { name: "Not Fully Paid", color: "bg-red-500" },
+    1: { name: "Paid", color: "bg-green-600" },
     // 2: { name: "Payment Logs", color: "bg-yellow-500" },
     // 3: { name: "News", color: "bg-purple-500" },
     // 4: { name: "Alerts", color: "bg-red-500" },
@@ -36,10 +38,7 @@ const PaymentsCard = ({
 
   return (
     <>
-      <Card
-        key={id}
-        className="shadow-sm border border-slate-200"
-      >
+      <Card key={id} className="shadow-sm border border-slate-200">
         <CardContent className="p-3 md:p-5">
           {/* <CardHeader className="flex text-xs flex-col md:flex-row p-0">
             <span className="font-bold text-xs mr-2">Posted on:</span>
@@ -63,17 +62,39 @@ const PaymentsCard = ({
                 : details
               : "No description."}
           </CardDescription>
-          <div className="text-sm text-muted-foreground">
-            <h2 className="font-bold">Amount Paid:</h2>
-            <span className="inline-flex items-center"><PhilippinePeso size={12}/> {amountPaid || 0}</span>
-          </div>
-          <CardFooter className="inline md:hidden p-0">
-            {badgeCategory && (
-              <Badge className={`${badgeCategory.color} text-white`}>
-                {badgeCategory.name}
-              </Badge>
-            )}
-          </CardFooter>
+          {showPaymentStatus && (
+            <>
+              <div className="text-sm text-muted-foreground">
+                <h2 className="font-bold">Amount Paid:</h2>
+                <span className="inline-flex items-center">
+                  <PhilippinePeso size={12} /> {amountPaid || 0}
+                </span>
+              </div>
+              <CardFooter className="inline md:hidden p-0">
+                {badgeCategory && (
+                  <Badge className={`${badgeCategory.color} text-white`}>
+                    {badgeCategory.name}
+                  </Badge>
+                )}
+              </CardFooter>
+            </>
+          )}
+          {amount && (
+            <div className="text-sm text-muted-foreground">
+              <h2 className="font-bold">Amount:</h2>
+              <span className="inline-flex items-center">
+                <PhilippinePeso size={12} /> {amount}
+              </span>
+            </div>
+          )}
+          {createdAt && (
+            <div className="text-sm text-muted-foreground">
+              <h2 className="font-bold">Date paid:</h2>
+              <span className="inline-flex items-center">
+                {formatSimpleDate(createdAt)}
+              </span>
+            </div>
+          )}
         </CardContent>
       </Card>
     </>

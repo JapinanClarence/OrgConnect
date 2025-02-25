@@ -42,8 +42,9 @@ const PaymentPage = () => {
           category: data.category,
           amountPaid: data.studentStatus?.amountPaid || null,
           status: data.studentStatus?.status || null,
+          createdAt: data.createdAt
         }));
-         console.log(paymentData)
+
         const payments = paymentData.filter((data) => data.category === "0");
         const transactions = paymentData.filter(
           (data) => data.category !== "0"

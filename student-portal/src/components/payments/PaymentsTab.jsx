@@ -12,7 +12,7 @@ const PaymentsTab = ({ payments }) => {
           purpose={payment.purpose}
           details={payment.details}
           category={payment.category}
-          amount={payment.amount}
+          // amount={payment.amount}
           amountPaid={payment.amountPaid}
           status={payment.status}
         />

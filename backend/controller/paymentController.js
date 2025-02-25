@@ -40,6 +40,7 @@ export const getPayments = async (req, res) =>{
           category: payment.category,
           createdAt: payment.createdAt,
           details: payment.details,
+          createdAt: payment.createdAt,
           // amountPaid : memberPayment.amount || null,
           // status: memberPayment.status || null,
           studentStatus: memberPayment
