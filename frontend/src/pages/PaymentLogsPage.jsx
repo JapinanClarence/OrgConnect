@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { PaymentSchema } from "@/schema";
+import { PaymentSchema, TransactionSchema } from "@/schema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import apiClient from "@/api/axios";
@@ -41,11 +41,12 @@ const PaymentLogsPage = () => {
   const date = formatDate(Date.now());
   const { token } = useAuth();
   const form = useForm({
-    resolver: zodResolver(PaymentSchema),
+    resolver: zodResolver(TransactionSchema),
     defaultValues: {
       purpose: "",
       details: "",
       amount: "",
+      paidBy:""
     },
   });
   const navigate = useNavigate();
@@ -72,6 +73,7 @@ const PaymentLogsPage = () => {
           amount: data.amount,
           category: categoryMap[data.category],
           date: dateOnly(data.createdAt),
+          paidBy: data.paidBy
         }));
 
         const expenditureData = tableData.filter(
@@ -95,6 +97,7 @@ const PaymentLogsPage = () => {
         details: data.details,
         amount: data.amount,
         category: "2",
+        paidBy: data.paidBy
       };
 
       setIsSubmitting(true);
@@ -229,6 +232,7 @@ const PaymentLogsPage = () => {
         onSubmit={onAdd}
         isSubmitting={isSubmitting}
         errorMessage={errorMessage}
+        showPaidBy={true}
       />
 
       <EditPaymentDialog

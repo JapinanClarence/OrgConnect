@@ -4,7 +4,7 @@ import Payments from "../../model/paymentModel.js";
 import { StudentModel as Student } from "../../model/UserModel.js";
 
 export const createPayment = async (req, res, next) => {
-  const { purpose, amount, details, category } = req.body;
+  const { purpose, amount, details, category, paidBy } = req.body;
   const userId = req.user.userId;
 
   try {
@@ -40,6 +40,7 @@ export const createPayment = async (req, res, next) => {
       details,
       category,
       organization: organization._id,
+      paidBy
     });
 
     res.status(201).json({
@@ -83,20 +84,34 @@ export const getPayment = async (req, res, next) => {
       });
     }
 
-    const payment = await Payments.find({
+    const payments = await Payments.find({
       organization: organization._id,
-    }).sort({createdAt: -1});
+    }).sort({createdAt: -1}).populate("paidBy");
 
-    if (payment.length <= 0) {
+    if (payments.length <= 0) {
       return res.status(200).json({
         success: false,
         message: "No payments found",
       });
     }
 
+    const cleanPaymentDetails = payments.map((data) =>{
+      const fullname = `${data.paidBy?.firstname} ${
+        data.paidBy?.middlename ? data.paidBy?.middlename[0] + ". " : ""
+      }${data.paidBy?.lastname}`;
+        return {_id: data._id,
+        purpose: data.purpose,
+        details: data.details,
+        amount: data.amount,
+        category:data.category,
+        createdAt: data.createdAt,
+        paidBy: fullname
+      }
+    })
+
     res.status(200).json({
       success: true,
-      data: payment,
+      data: cleanPaymentDetails,
     });
   } catch (err) {
     return res.status(500).json({

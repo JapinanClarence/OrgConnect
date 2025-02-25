@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { PaymentSchema } from "@/schema";
+import { TransactionSchema } from "@/schema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import apiClient from "@/api/axios";
@@ -40,12 +40,14 @@ const ExpenditurePage = () => {
   const { toast } = useToast();
   const date = formatDate(Date.now());
   const { token } = useAuth();
+
   const form = useForm({
-    resolver: zodResolver(PaymentSchema),
+    resolver: zodResolver(TransactionSchema),
     defaultValues: {
       purpose: "",
       details: "",
       amount: "",
+      paidBy: "",
     },
   });
   const navigate = useNavigate();
@@ -73,6 +75,7 @@ const ExpenditurePage = () => {
             amount: data.amount,
             category: categoryMap[data.category],
             date: dateOnly(data.createdAt),
+            paidBy: data.paidBy
           };
         });
 
@@ -96,9 +99,10 @@ const ExpenditurePage = () => {
         purpose: data.purpose,
         details: data.details,
         amount: data.amount,
+        paidBy: data.paidBy,
         category: "1",
       };
-
+      console.log(expenditureData)
       setIsSubmitting(true);
       const res = await apiClient.post("/admin/payment", expenditureData, {
         headers: {
@@ -225,17 +229,18 @@ const ExpenditurePage = () => {
       />
 
       <AddPaymentDialog
-        title={"Add Expenditure"}
+        title={"Add Transaction"}
         open={showAddDialog}
         onOpenChange={setShowAddDialog}
         form={form}
         onSubmit={onAdd}
         isSubmitting={isSubmitting}
         errorMessage={errorMessage}
+        showPaidBy={true}
       />
 
       <EditPaymentDialog
-        title={"Edit Expenditure"}
+        title={"Edit Transaction"}
         paymentData={currenPayment}
         open={showEditDialog}
         onOpenChange={setShowEditDialog}

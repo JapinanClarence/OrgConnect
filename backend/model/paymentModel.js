@@ -51,6 +51,10 @@ const paymentSchema = new mongoose.Schema(
         }
       },
     ],
+    paidBy:{
+      type: mongoose.Schema.ObjectId,
+      ref: "User",
+    }
   },
   { timestamps: true }
 );

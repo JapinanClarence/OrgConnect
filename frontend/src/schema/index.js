@@ -130,7 +130,22 @@ export const PaymentSchema = z.object({
     z.number().min(1, {
       message: "Amount is required",
     })
-  )
+  ),
+});
+export const TransactionSchema = z.object({
+  purpose: z.string().min(1, {
+    message: "Purpose is required",
+  }),
+  details: z.string().min(1, { message: "Detail is required" }),
+  amount: z.preprocess(
+    (val) => Number(val),
+    z.number().min(1, {
+      message: "Amount is required",
+    })
+  ),
+  paidBy:  z.string({
+    required_error: "Please select officer.",
+  }),
 });
 
 export const PaymentRecordSchema = z.object({

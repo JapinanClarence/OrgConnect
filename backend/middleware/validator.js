@@ -33,12 +33,19 @@ export const announcementValidationRules = () =>[
   body("title").notEmpty().withMessage("Event title is required")
 ]
 
-export const paymentValidationRules = () =>[
+export const paymentValidationRules = () => [
   body("purpose").notEmpty().withMessage("Payment purpose is required"),
   body("details").notEmpty().withMessage("Payment details is required"),
   body("amount").notEmpty().withMessage("Payment amount is required"),
-  body("category").notEmpty().withMessage("Category is required")
-]
+  body("category")
+    .notEmpty()
+    .withMessage("Category is required"),
+  body("paidBy")
+    .if((value, { req }) => req.body.category !== "0") // Check if category is not 0
+    .notEmpty()
+    .withMessage("Paid by is required"),
+];
+
 export const recordPaymentValidationRules = () => [
   body("member").notEmpty().withMessage("Payment purpose is required"),
   body("status").notEmpty().withMessage("Payment status is required"),

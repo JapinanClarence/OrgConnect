@@ -57,7 +57,6 @@ const AddPaymentRecordDialog = ({
   errorMessage,
 }) => {
   const [members, setMembers] = useState([]);
-  const [positions, setPositions] = useState([]);
   const { token } = useAuth();
   const [openCommand, setOpenCommand] = useState(false);
 

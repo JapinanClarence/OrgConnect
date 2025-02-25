@@ -74,6 +74,11 @@ export const columns = (onEdit, onDelete, onManage) => [
     cell: ({ row }) => <div className="">{row.getValue("date")}</div>,
   },
   {
+    accessorKey: "paidBy",
+    header: "Paid By",
+    cell: ({ row }) => <div className="">{row.getValue("paidBy")}</div>,
+  },
+  {
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
@@ -106,18 +111,18 @@ export const columns = (onEdit, onDelete, onManage) => [
             <DropdownMenuItem
               onClick={() => navigator.clipboard.writeText(payment.id)}
             >
-              Copy payment ID
+              Copy ID
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={handleEdit}>
-              Edit Payment
+              Edit
             </DropdownMenuItem>
             <DropdownMenuItem onClick={handleDelete}>
-              Delete Payment
+              Delete
             </DropdownMenuItem>
 
-            <DropdownMenuItem className={["Expenditure", "Payment Logs"].includes(payment.category) ? "hidden" : "flex"} onClick={handleManagePayment}>
-              Manage Payment
+            <DropdownMenuItem className={["Transactions", "Payment Logs"].includes(payment.category) ? "hidden" : "flex"} onClick={handleManagePayment}>
+              Manage
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
