@@ -42,7 +42,7 @@ export const getUser = async (req, res, next) => {
 
     const user = await Admin.find({ role }).select(
       "username email role active profilePicture"
-    );
+    ).sort({createdAt: -1});
 
     if (user.length <= 0) {
       return res.status(200).json({
