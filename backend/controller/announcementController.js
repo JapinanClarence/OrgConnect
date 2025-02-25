@@ -35,6 +35,7 @@ try {
     })
   );
 
+
   // Flatten the array and filter out empty arrays (inactive organizations)
   const flattenedAnnouncements = announcements.flat();
 
@@ -44,10 +45,13 @@ try {
       message: "No announcements found",
     });
   }
-
+  const sortedAnnouncements = flattenedAnnouncements.sort((a, b) => 
+    new Date(b.createdAt) - new Date(a.createdAt)
+  );
+  
   res.status(200).json({
     success: true,
-    data: flattenedAnnouncements,
+    data: sortedAnnouncements,
   });
 } catch (err) {
   return res.status(500).json({
