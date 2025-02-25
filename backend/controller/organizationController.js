@@ -120,7 +120,7 @@ export const findOrg = async (req, res, next) => {
 
   try {
     const org = await Organization.findById(organization).select(
-      "name description about contact banner"
+      "name description about contact banner adviser"
     );
 
     if (!org) {
