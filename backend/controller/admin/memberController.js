@@ -63,7 +63,7 @@ export const getMembers = async (req, res) => {
       })
     );
 
-    const sortedMembers = flattenedAnnouncements.sort((a, b) => 
+    const sortedMembers = memberData.sort((a, b) => 
       new Date(b.joinedDate) - new Date(a.joinedDate)
     );
 
