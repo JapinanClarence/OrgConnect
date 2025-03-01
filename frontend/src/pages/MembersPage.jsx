@@ -81,12 +81,12 @@ const MembersPage = () => {
           profilePicture: data.profilePicture,
         }));
         // Sort by last name
-        const sortedTableData = tableData.sort((a, b) => {
-          const lastNameA = a.fullname.split(" ").slice(-1)[0].toLowerCase();
-          const lastNameB = b.fullname.split(" ").slice(-1)[0].toLowerCase();
-          return lastNameA.localeCompare(lastNameB);
-        });
-        setData(sortedTableData);
+        // const sortedTableData = tableData.sort((a, b) => {
+        //   const lastNameA = a.fullname.split(" ").slice(-1)[0].toLowerCase();
+        //   const lastNameB = b.fullname.split(" ").slice(-1)[0].toLowerCase();
+        //   return lastNameA.localeCompare(lastNameB);
+        // });
+        setData(tableData);
       }
 
       setLoading(false);

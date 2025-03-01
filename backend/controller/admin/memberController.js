@@ -15,7 +15,7 @@ export const getMembers = async (req, res) => {
       });
     }
 
-    const members = await Membership.find({ organization: organization._id }).sort({createdAt: -1});
+    const members = await Membership.find({ organization: organization._id });
 
     if (members.length <= 0) {
       return res.status(200).json({
