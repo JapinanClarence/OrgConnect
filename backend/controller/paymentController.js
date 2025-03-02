@@ -51,10 +51,13 @@ export const getPayments = async (req, res) =>{
             : null, // Null if the student hasn't paid
         };
       });
+      const sortedPayments = paymentDetails.sort((a, b) => 
+        new Date(b.createdAt) - new Date(a.createdAt)
+      );
 
       return res.status(200).json({
         success: true,
-        data: paymentDetails,
+        data: sortedPayments,
       });
   } catch (err) {
     return res.status(500).json({
