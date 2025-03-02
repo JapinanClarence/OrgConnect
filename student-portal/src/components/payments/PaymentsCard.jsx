@@ -20,8 +20,9 @@ const PaymentsCard = ({
   amount,
   amountPaid,
   status,
-  createdAt
+  createdAt,
 }) => {
+  const [showFullDetails, setShowFullDetails] = useState(false);
   const [showDialog, setShowDialog] = useState(false);
   const statusMap = {
     0: { name: "Not Fully Paid", color: "bg-red-500" },
@@ -56,11 +57,17 @@ const PaymentsCard = ({
             )}
           </CardTitle>
           <CardDescription className="text-pretty md:text-wrap overflow-hidden whitespace-nowrap text-ellipsis max-w-full">
-            {details
-              ? details.length > 50
-                ? `${details.slice(0, 100)}...`
-                : details
-              : "No description."}
+            {showFullDetails
+              ? details
+              : details?.slice(0, 100) + (details?.length > 100 ? "..." : "")}
+            {details?.length > 100 && (
+              <button
+                className="block text-slate-600 font-bold hover:underline"
+                onClick={() => setShowFullDetails(!showFullDetails)}
+              >
+                {showFullDetails ? "See Less" : "See More"}
+              </button>
+            )}
           </CardDescription>
           {showPaymentStatus && (
             <>
