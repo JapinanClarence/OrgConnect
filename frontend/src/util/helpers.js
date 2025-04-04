@@ -45,9 +45,11 @@ export const dateOnly = (dateString) => {
   });
 };
 export const dateOnlyISO = (dateString) => {
-  const date = new Date(dateString).toLocaleString("en-PH", {timeZone:"Asia/Manila"}); // Parse the date string into a Date object
-  const year = date.getFullYear(); // Get the full year
-  const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Get the month and pad with leading zero
-  const day = date.getDate().toString().padStart(2, "0"); // Get the day and pad with leading zero
+  const date = new Date(dateString); // Parse the date string into a Date object
+  const options = { timeZone: "Asia/Manila", year: "numeric", month: "2-digit", day: "2-digit" };
+  const formattedDate = new Intl.DateTimeFormat("en-PH", options).format(date);
+
+  // Ensure the format is "YYYY-MM-DD" as Intl.DateTimeFormat might return "MM/DD/YYYY" in some locales
+  const [month, day, year] = formattedDate.split("/");
   return `${year}-${month}-${day}`;
 };

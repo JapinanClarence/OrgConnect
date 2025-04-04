@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { Toaster } from "./components/ui/toaster";
 import MainLayout from "./layout/MainLayout";
@@ -12,7 +11,6 @@ import SettingsPage from "./pages/SettingsPage";
 import OfficersPage from "./pages/OfficersPage";
 import EventPage from "./pages/EventPage";
 import AttendancePage from "./pages/AttendancePage";
-import RegistrationPage from "./pages/RegistrationPage";
 import AdminAccPage from "./pages/AdminAccPage";
 import AcademicYearPage from "./pages/AcademicYearPage";
 import MembersPaidPage from "./pages/MembersPaidPage";
