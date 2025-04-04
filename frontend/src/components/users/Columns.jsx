@@ -63,42 +63,42 @@ export const accountsColumns = (onEdit) => [
       <div className="text-xs">{row.getValue("role")}</div>
     ),
   },
-  {
-    id: "actions",
-    enableHiding: false,
-    cell: ({ row }) => {
-      const admin = row.original;
-    //   const status = row.getValue("status");
-    //   const handleCopy = (event) => {
-    //     event.stopPropagation(); // Prevent the row click event
-    //     navigator.clipboard.writeText(admin.id);
-    //   };
+  // {
+  //   id: "actions",
+  //   enableHiding: false,
+  //   cell: ({ row }) => {
+  //     const admin = row.original;
+  //   //   const status = row.getValue("status");
+  //   //   const handleCopy = (event) => {
+  //   //     event.stopPropagation(); // Prevent the row click event
+  //   //     navigator.clipboard.writeText(admin.id);
+  //   //   };
 
-    //   const handleApprove = (data) => (event) => {
-    //     event.stopPropagation(); // Prevents the row click event
-    //     onUpdateStatus({
-    //       id: admin.id,
-    //       active: data,
-    //     });
-    //   };
+  //   //   const handleApprove = (data) => (event) => {
+  //   //     event.stopPropagation(); // Prevents the row click event
+  //   //     onUpdateStatus({
+  //   //       id: admin.id,
+  //   //       active: data,
+  //   //     });
+  //   //   };
 
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-5 w-5 p-0">
-              <span className="sr-only">Open menu</span>
-              <DotsHorizontalIcon className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+  //     return (
+  //       <DropdownMenu>
+  //         <DropdownMenuTrigger asChild>
+  //           <Button variant="ghost" className="h-5 w-5 p-0">
+  //             <span className="sr-only">Open menu</span>
+  //             <DotsHorizontalIcon className="h-4 w-4" />
+  //           </Button>
+  //         </DropdownMenuTrigger>
+  //         <DropdownMenuContent align="end">
+  //           <DropdownMenuLabel>Actions</DropdownMenuLabel>
 
-            <DropdownMenuSeparator />
-            <DropdownMenuItem >Add Role</DropdownMenuItem>
-            <DropdownMenuItem >Kick</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
-    },
-  },
+  //           <DropdownMenuSeparator />
+  //           <DropdownMenuItem >Add Role</DropdownMenuItem>
+  //           <DropdownMenuItem >Kick</DropdownMenuItem>
+  //         </DropdownMenuContent>
+  //       </DropdownMenu>
+  //     );
+  //   },
+  // },
 ];

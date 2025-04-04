@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { cn } from "@/lib/utils";
 import {
   Form,
   FormField,
@@ -15,34 +14,9 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
-import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from "@/components/ui/command";
 import { Input } from "@/components/ui/input";
 import { EyeOff, Eye, LoaderCircle } from "lucide-react";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectLabel,
-  SelectValue,
-  SelectGroup,
-} from "@/components/ui/select";
-import { useAuth } from "@/context/AuthContext";
-import apiClient from "@/api/axios";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const AddAdmin = ({
