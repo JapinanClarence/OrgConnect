@@ -21,7 +21,7 @@ router.get("/members",
 )
 router.get("/members/approved", 
   authenticate,
-  authorizeRole("admin"),
+  authorizeRole("admin", "secretary", "treasurer", "auditor"),
   getApproveMembers
 )
 router.patch("/members/:id", 

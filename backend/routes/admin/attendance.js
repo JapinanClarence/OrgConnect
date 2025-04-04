@@ -19,7 +19,7 @@ const router = express.Router();
 router.post(
   "/",
   authenticate,
-  authorizeRole("admin"),
+  authorizeRole("admin","secretary"),
   express.json(),
   attendanceValidationRules(),
   validate,
@@ -29,14 +29,14 @@ router.post(
 router.patch(
   "/:id",
   authenticate,
-  authorizeRole("admin"),
+  authorizeRole("admin","secretary"),
   express.json(),
   updateAttendance
 );
 
 router.get("/:id", 
     authenticate,
-    authorizeRole("admin"),
+    authorizeRole("admin","secretary"),
     getAttendance
 )
 

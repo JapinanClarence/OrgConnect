@@ -92,7 +92,6 @@ const MembersPaidPage = () => {
     }
   };
   const onAdd = async (data) => {
-    console.log(data);
     try {
       setIsSubmitting(true);
       const res = await apiClient.patch(

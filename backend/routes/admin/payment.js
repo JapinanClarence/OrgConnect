@@ -26,7 +26,7 @@ const router = express.Router();
 router.post(
   "/payment",
   authenticate,
-  authorizeRole("admin"),
+  authorizeRole("admin", "treasurer", "auditor"),
   express.json(),
   paymentValidationRules(),
   validate,
@@ -36,7 +36,7 @@ router.post(
 router.patch(
   "/payment/:id",
   authenticate,
-  authorizeRole("admin"),
+  authorizeRole("admin", "treasurer", "auditor"),
   express.json(),
   updatePayment
 );
@@ -44,13 +44,13 @@ router.patch(
 router.delete(
   "/payment/:id",
   authenticate,
-  authorizeRole("admin"),
+  authorizeRole("admin", "treasurer", "auditor"),
   deletePayment
 );
 router.patch(
   "/payment/:id/recordPayment",
   authenticate,
-  authorizeRole("admin"),
+  authorizeRole("admin", "treasurer"),
   express.json(),
   recordPaymentValidationRules(),
   recordPayment
@@ -59,14 +59,14 @@ router.patch(
 router.delete(
   "/payment/:paymentId/member/:memberId",
   authenticate,
-  authorizeRole("admin"),
+  authorizeRole("admin", "treasurer"),
   deleteUserPayment
 );
 
 router.patch(
   "/payment/:paymentId/member/:memberId",
   authenticate,
-  authorizeRole("admin"),
+  authorizeRole("admin", "treasurer"),
   express.json(),
   editPaymentRecord
 );

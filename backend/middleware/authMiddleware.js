@@ -39,7 +39,7 @@ export const authorizeRole = (...requiredRoles) => {
     }
 
     const user = await UserModel.findById(req.user.userId);
-
+  
     // Translate the required roles to their database values
     const allowedRoles = requiredRoles.map((user) => roleMapping[user]);
 

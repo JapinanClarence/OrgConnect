@@ -23,7 +23,7 @@ const router = express.Router();
 router.post(
   "/announcement",
   authenticate,
-  authorizeRole("admin"),
+  authorizeRole("admin","secretary"),
   express.json(),
   announcementValidationRules(),
   validate,
@@ -33,7 +33,7 @@ router.post(
 router.patch(
   "/announcement/:id",
   authenticate,
-  authorizeRole("admin"),
+  authorizeRole("admin","secretary"),
   express.json(),
   updateAnnouncement
 );
@@ -41,7 +41,7 @@ router.patch(
 router.delete(
     "/announcement/:id",
     authenticate,
-    authorizeRole("admin"),
+    authorizeRole("admin","secretary"),
     deleteAnnoucement
   );
 
@@ -54,7 +54,7 @@ router.get("/announcement",
 router.get(
     "/announcement/:id",
     authenticate,
-    authorizeRole("admin"),
+    authorizeRole("admin", "secretary", "treasurer", "auditor"),
     findAnnouncement
   );
 

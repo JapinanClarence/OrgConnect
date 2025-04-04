@@ -148,6 +148,7 @@ const ExpenditurePage = () => {
   };
 
   const onDelete = async (paymentId) => {
+    
     try {
       const res = await apiClient.delete(`/admin/payment/${paymentId}`, {
         headers: {
@@ -165,9 +166,10 @@ const ExpenditurePage = () => {
       }
     } catch (error) {
       const message = error.response.data.message;
+
       toast({
         title: { message },
-        description: `${date}`,
+        description: date,
       });
     }
   };

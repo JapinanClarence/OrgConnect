@@ -1,5 +1,5 @@
 import Organization from "../../model/organizationModel.js";
-import { OrgAdminModel as Admin } from "../../model/UserModel.js";
+import { OrgAdminModel as Admin, UserModel } from "../../model/UserModel.js";
 import Payments from "../../model/paymentModel.js";
 import { StudentModel as Student } from "../../model/UserModel.js";
 
@@ -18,7 +18,12 @@ export const createPayment = async (req, res, next) => {
       });
     }
 
-    const organization = await Organization.findOne({ admin });
+    const organization = await Organization.findOne({
+      $or: [
+        { admin: userId }, // Check if the user is an admin
+        { subAdmins: userId }, // Check if the user is a sub-admin
+      ],
+    });
 
     if (!organization) {
       return res.status(404).json({
@@ -33,14 +38,23 @@ export const createPayment = async (req, res, next) => {
           "Organization is currently not active, limited actions granted.",
       });
     }
-
+    // Check if the user is allowed to create payments based on their role and category
+    if (
+      (category === "0" && admin.role !== "4") ||
+      (category !== "0" && admin.role !== "5")
+    ) {
+      return res.status(403).json({
+        success: false,
+        message: "Access denied. Insufficient permissions",
+      });
+    }
     await Payments.create({
       purpose,
       amount,
       details,
       category,
       organization: organization._id,
-      paidBy
+      paidBy,
     });
 
     res.status(201).json({
@@ -68,10 +82,12 @@ export const getPayment = async (req, res, next) => {
       });
     }
 
-    const organization = await Organization.findOne({  $or: [
-      { admin: userId },      // Check if the user is an admin
-      { subAdmins: userId }    // Check if the user is a sub-admin
-    ] });
+    const organization = await Organization.findOne({
+      $or: [
+        { admin: userId }, // Check if the user is an admin
+        { subAdmins: userId }, // Check if the user is a sub-admin
+      ],
+    });
 
     if (!organization) {
       return res.status(404).json({
@@ -89,7 +105,9 @@ export const getPayment = async (req, res, next) => {
 
     const payments = await Payments.find({
       organization: organization._id,
-    }).sort({createdAt: -1}).populate("paidBy");
+    })
+      .sort({ createdAt: -1 })
+      .populate("paidBy");
 
     if (payments.length <= 0) {
       return res.status(200).json({
@@ -98,19 +116,20 @@ export const getPayment = async (req, res, next) => {
       });
     }
 
-    const cleanPaymentDetails = payments.map((data) =>{
+    const cleanPaymentDetails = payments.map((data) => {
       const fullname = `${data.paidBy?.firstname} ${
         data.paidBy?.middlename ? data.paidBy?.middlename[0] + ". " : ""
       }${data.paidBy?.lastname}`;
-        return {_id: data._id,
+      return {
+        _id: data._id,
         purpose: data.purpose,
         details: data.details,
         amount: data.amount,
-        category:data.category,
+        category: data.category,
         createdAt: data.createdAt,
-        paidBy: fullname
-      }
-    })
+        paidBy: fullname,
+      };
+    });
 
     res.status(200).json({
       success: true,
@@ -192,8 +211,8 @@ export const recordPayment = async (req, res, next) => {
     payment.membersPaid.push({
       member,
       amount,
-      status: status || "1",// Default to fully paid if not provided
-      datePaid: Date.now() 
+      status: status || "1", // Default to fully paid if not provided
+      datePaid: Date.now(),
     });
 
     // Save the updated payment document
@@ -245,7 +264,8 @@ export const editPaymentRecord = async (req, res, next) => {
     // Update the payment details
     if (amount !== undefined) payment.membersPaid[memberIndex].amount = amount;
     if (status !== undefined) payment.membersPaid[memberIndex].status = status;
-    if (datePaid !== undefined) payment.membersPaid[memberIndex].datePaid = datePaid;
+    if (datePaid !== undefined)
+      payment.membersPaid[memberIndex].datePaid = datePaid;
 
     // Save the updated payment record
     await payment.save();
@@ -264,6 +284,16 @@ export const editPaymentRecord = async (req, res, next) => {
 
 export const deleteUserPayment = async (req, res, next) => {
   try {
+    if (
+      (category === "0" && admin.role !== "4") ||
+      (category !== "0" && admin.role !== "5")
+    ) {
+      return res.status(403).json({
+        success: false,
+        message: "Access denied. Insufficient permissions",
+      });
+    }
+
     const paymentId = req.params.paymentId; // Payment record ID
     const memberId = req.params.memberId; // User's member ID to remove payment
 
@@ -373,7 +403,12 @@ export const deletePayment = async (req, res, next) => {
       });
     }
 
-    const organization = await Organization.findOne({ admin });
+    const organization = await Organization.findOne({
+      $or: [
+        { admin: userId }, // Check if the user is an admin
+        { subAdmins: userId }, // Check if the user is a sub-admin
+      ],
+    });
 
     if (!organization) {
       return res.status(404).json({
@@ -391,8 +426,7 @@ export const deletePayment = async (req, res, next) => {
     }
 
     const paymentId = req.params.id;
-
-    const payment = await Payments.findByIdAndDelete(paymentId);
+    const payment = await Payments.findById(paymentId);
 
     if (!payment) {
       return res.status(404).json({
@@ -400,6 +434,19 @@ export const deletePayment = async (req, res, next) => {
         message: "Payment not found!",
       });
     }
+    console.log(payment.category, admin.role)
+    // Check if the user is allowed to delete payments based on their role and category
+    if (
+      (payment.category === "0" && admin.role !== "4") ||
+      (payment.category !== "0" && admin.role !== "5")
+    ) {
+      return res.status(403).json({
+        success: false,
+        message: "Access denied. Insufficient permissions",
+      });
+    }
+
+    await Payments.findByIdAndDelete(paymentId);
 
     res.status(200).json({
       success: true,

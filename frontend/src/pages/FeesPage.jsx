@@ -159,8 +159,10 @@ const FeesPage = () => {
       }
     } catch (error) {
       const message = error.response.data.message;
+      console.log(message.toString());
+     
       toast({
-        title: { message },
+        title: message.toString(),
         description: `${date}`,
       });
     }

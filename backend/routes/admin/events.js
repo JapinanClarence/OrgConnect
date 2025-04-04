@@ -18,7 +18,7 @@ const router = express.Router();
 router.post(
   "/event",
   authenticate,
-  authorizeRole("admin"),
+  authorizeRole("admin","secretary"),
   express.json(),
   eventValidationRules(),
   validate,
@@ -40,10 +40,10 @@ router.get(
 router.patch(
   "/event/:id",
   authenticate,
-  authorizeRole("admin"),
+  authorizeRole("admin","secretary"),
   express.json(),
   updateEvent
 );
-router.delete("/event/:id", authenticate, authorizeRole("admin"), deleteEvent);
+router.delete("/event/:id", authenticate, authorizeRole("admin","secretary"), deleteEvent);
 
 export default router;
