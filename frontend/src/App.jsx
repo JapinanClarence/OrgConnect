@@ -22,6 +22,7 @@ import ExpenditurePage from "./pages/ExpenditurePage";
 import FeesPage from "./pages/FeesPage";
 import PaymentLogsPage from "./pages/PaymentLogsPage";
 import OrganizationPage from "./pages/OrganizationPage";
+import AccountsPage from "./pages/AccountsPage";
 // import TestPage from "./pages/TestPage";
 
 function App() {
@@ -37,7 +38,17 @@ function App() {
 
           <Route
             path="/"
-            element={<ProtectedRoutes allowedRoles={["superadmin", "admin"]} />}
+            element={
+              <ProtectedRoutes
+                allowedRoles={[
+                  "superadmin",
+                  "admin",
+                  "secretary",
+                  "treasurer",
+                  "auditor",
+                ]}
+              />
+            }
           >
             <Route element={<DashboardLayout />}>
               <Route index element={<HomePage />} />
@@ -58,16 +69,20 @@ function App() {
             <Route element={<DashboardLayout />}>
               <Route path="/organizations" element={<OrganizationsPage />} />
             </Route>
-            
+
             <Route element={<DashboardLayout />}>
               <Route path="/organization/:id" element={<OrganizationPage />} />
             </Route>
           </Route>
 
-          {/* admin only routes */}
+          {/* admin and sub-admin only routes */}
           <Route
             path="/"
-            element={<ProtectedRoutes allowedRoles={["admin"]} />}
+            element={
+              <ProtectedRoutes
+                allowedRoles={["admin", "secretary", "treasurer", "auditor"]}
+              />
+            }
           >
             <Route element={<DashboardLayout />}>
               <Route path="/events" element={<EventPage />} />
@@ -84,6 +99,8 @@ function App() {
               <Route path="/officers" element={<OfficersPage />} />
 
               <Route path="/members" element={<MembersPage />} />
+
+              <Route path="/users" element={<AccountsPage />} />
             </Route>
           </Route>
         </Route>

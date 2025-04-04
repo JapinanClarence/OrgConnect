@@ -26,6 +26,7 @@ import { useLayoutEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
+const adminRoles = ["1", "5", "3", "4"];
 const LoginForm = () => {
   const navigate = useNavigate();
   const [showPass, setShowPass] = useState(false);
@@ -62,7 +63,7 @@ const LoginForm = () => {
       if (response.data.data.role == "2") {
         setErrorMessage("Invalid Credentials");
         setIsSubmitting(false);
-      } else if (response.data.data.role == "1") {
+      } else if (adminRoles.includes(response.data.data.role)) {
         if (!response.data.data.active) {
           setErrorMessage("Account is currently deactivated.");
           setIsSubmitting(false);

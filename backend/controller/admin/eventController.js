@@ -19,7 +19,10 @@ export const createEvent = async (req, res, next) => {
       });
     }
 
-    const organization = await Organization.findOne({ admin });
+    const organization = await Organization.findOne({  $or: [
+      { admin: admin },      // Check if the user is an admin
+      { subAdmins: admin }    // Check if the user is a sub-admin
+    ] });
 
     if (!organization) {
       return res.status(404).json({
@@ -69,7 +72,10 @@ export const createEvent = async (req, res, next) => {
 export const getEvent = async (req, res, next) => {
   const userId = req.user.userId;
   try {
-    const organization = await Organization.findOne({ admin: userId });
+    const organization = await Organization.findOne({  $or: [
+      { admin: userId },      // Check if the user is an admin
+      { subAdmins: userId }    // Check if the user is a sub-admin
+    ] });
     if (!organization) {
       return res.status(404).json({
         success: false,

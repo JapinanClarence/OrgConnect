@@ -71,9 +71,18 @@ router.patch(
   editPaymentRecord
 );
 
+router.get(
+  "/payment",
+  authenticate,
+  authorizeRole("admin", "secretary", "treasurer", "auditor"),
+  getPayment
+);
 
-router.get("/payment", authenticate, authorizeRole("admin"), getPayment);
-
-router.get("/payment/:id", authenticate, authorizeRole("admin"), findPayment);
+router.get(
+  "/payment/:id",
+  authenticate,
+  authorizeRole("admin", "secretary", "treasurer", "auditor"),
+  findPayment
+);
 
 export default router;

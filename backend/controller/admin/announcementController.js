@@ -65,7 +65,10 @@ export const getAnnouncement = async (req, res, next) => {
       });
     }
 
-    const organization = await Organization.findOne({ admin });
+    const organization = await Organization.findOne({  $or: [
+      { admin: userId },      // Check if the user is an admin
+      { subAdmins: userId }    // Check if the user is a sub-admin
+    ] });
 
     if (!organization) {
       return res.status(404).json({

@@ -14,6 +14,7 @@ import adminPaymentRoutes from "./routes/admin/payment.js";
 import adminMembersRoutes from "./routes/admin/members.js";
 import adminOfficerRoutes from "./routes/admin/officer.js";
 import dashbordRoute from "./routes/admin/dashboard.js";
+import adminAccRoute from "./routes/admin/accounts.js";
 import eventRoutes from "./routes/events.js";
 import announcementRoutes from "./routes/announcements.js";
 import paymentRoutes from "./routes/payment.js";
@@ -69,6 +70,7 @@ app.use("/api/admin/", adminPaymentRoutes);
 app.use("/api/admin/", adminMembersRoutes);
 app.use("/api/admin/", adminOfficerRoutes);
 app.use("/api/admin", dashbordRoute);
+app.use("/api/admin/", adminAccRoute);
 //attendance routes
 app.use("/api/attendance", attendanceRoutes);
 //user routes

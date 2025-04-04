@@ -31,6 +31,7 @@ const organizationSchema = new mongoose.Schema(
       ref: "User",
       required: [true, "User is required"],
     },
+    subAdmins: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     active: {
       type: Boolean,
       default: true,

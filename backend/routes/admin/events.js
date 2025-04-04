@@ -25,9 +25,25 @@ router.post(
   createEvent
 );
 
-router.get("/event", authenticate, authorizeRole("admin"), getEvent);
-router.get("/event/:id", authenticate, authorizeRole("admin"), findEvent);
-router.patch("/event/:id", authenticate, authorizeRole("admin"), express.json(), updateEvent);
+router.get(
+  "/event",
+  authenticate,
+  authorizeRole("admin", "secretary", "treasurer", "auditor"),
+  getEvent
+);
+router.get(
+  "/event/:id",
+  authenticate,
+  authorizeRole("admin", "secretary", "treasurer", "auditor"),
+  findEvent
+);
+router.patch(
+  "/event/:id",
+  authenticate,
+  authorizeRole("admin"),
+  express.json(),
+  updateEvent
+);
 router.delete("/event/:id", authenticate, authorizeRole("admin"), deleteEvent);
 
 export default router;

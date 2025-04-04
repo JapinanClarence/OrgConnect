@@ -16,7 +16,7 @@ const router = express.Router();
 
 router.get("/members", 
     authenticate,
-    authorizeRole("admin"),
+    authorizeRole("admin", "secretary", "treasurer", "auditor"),
     getMembers
 )
 router.get("/members/approved", 

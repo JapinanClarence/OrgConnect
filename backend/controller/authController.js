@@ -113,6 +113,7 @@ export const login = async (req, res, next) => {
       sameSite: "none",
       maxAge: 7 * 24 * 60 * 60 * 1000, //7 days
     });
+
     //send response
     res.status(200).json({
       success: true,

@@ -184,3 +184,17 @@ export const AcadYearSchema = z.object({
   }),
   active: z.boolean().optional()
 })
+
+export const OrgAccountSchema = z.object({
+  username: z.string().min(1, {
+    message: "Username is required",
+  }),
+  email: z.string().email({
+    message: "Invalid email",
+  }),
+  password: z.string()
+    .min(8, { message: "Password should be at least 8 characters" }),
+  role: z.string().min(1, {
+    message: "Role is required",
+  }),
+})

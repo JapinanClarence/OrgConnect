@@ -33,7 +33,10 @@ export const getDashboardData = async (req, res) => {
   });
 
   try {
-    const organization = await Organization.findOne({ admin: userId });
+    const organization = await Organization.findOne({  $or: [
+      { admin: userId },      // Check if the user is an admin
+      { subAdmins: userId }    // Check if the user is a sub-admin
+    ] });
 
     if (!organization) {
       return res.status(404).json({

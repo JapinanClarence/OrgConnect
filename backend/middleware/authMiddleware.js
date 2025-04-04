@@ -25,6 +25,9 @@ export const authorizeRole = (...requiredRoles) => {
   const roleMapping = {
     admin: "1",
     student: "2",
+    secretary: "3",
+    treasurer: "4",
+    auditor: "5",
     superadmin: "0",
   };
 
@@ -36,10 +39,10 @@ export const authorizeRole = (...requiredRoles) => {
     }
 
     const user = await UserModel.findById(req.user.userId);
-    
+
     // Translate the required roles to their database values
     const allowedRoles = requiredRoles.map((user) => roleMapping[user]);
-  
+
     // Check if the user's role is in the list of allowed roles
     if (!allowedRoles.includes(user.role)) {
       return res.status(403).json({

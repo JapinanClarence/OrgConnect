@@ -5,6 +5,15 @@ import bcrypt from "bcrypt";
  * 0 - Superadmin
  * 1 - admin
  * 2 - Student
+ * 3 - secretary
+ * 4 - treasurer
+ * 5 - auditor
+ * 
+ * Secretary -
+ * ang ma manage ra ana niya kay announcement, 
+ * events ug attendance ra
+ * Treasurer - for payment lang
+ * Auditor - katong posting ra sa transaction sa organization
  */
 const userSchema = new mongoose.Schema(
   {
@@ -30,7 +39,7 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ["0", "1", "2"],
+      enum: ["0", "1", "2","3", "4", "5"],
       default: "2",
     },
     password: {

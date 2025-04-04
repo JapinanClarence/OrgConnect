@@ -6,7 +6,12 @@ import Attendance from "../../model/attendanceModel.js";
 export const getMembers = async (req, res) => {
   const userId = req.user.userId;
   try {
-    const organization = await Organization.findOne({ admin: userId });
+    const organization = await Organization.findOne({
+      $or: [
+        { admin: userId }, // Check if the user is an admin
+        { subAdmins: userId }, // Check if the user is a sub-admin
+      ],
+    });
 
     if (!organization) {
       return res.status(404).json({
@@ -25,8 +30,11 @@ export const getMembers = async (req, res) => {
     }
 
     // Fetch all events for the organization
-    const events = await Events.find({ organization: organization._id, status: "0" });
-    const eventIds = events.map(event => event._id);
+    const events = await Events.find({
+      organization: organization._id,
+      status: "0",
+    });
+    const eventIds = events.map((event) => event._id);
 
     const memberData = await Promise.all(
       members.map(async (member) => {
@@ -41,8 +49,12 @@ export const getMembers = async (req, res) => {
           event: { $in: eventIds },
         });
 
-        const attendedEventIds = attendanceRecords.map(record => record.event.toString());
-        const absentCount = eventIds.filter(id => !attendedEventIds.includes(id.toString())).length;
+        const attendedEventIds = attendanceRecords.map((record) =>
+          record.event.toString()
+        );
+        const absentCount = eventIds.filter(
+          (id) => !attendedEventIds.includes(id.toString())
+        ).length;
 
         return {
           _id: data._id,
@@ -58,13 +70,13 @@ export const getMembers = async (req, res) => {
           status: member.status,
           joinedDate: member.joinedDate,
           position: member.position,
-          absentCount,  // Adding absent count for the student
+          absentCount, // Adding absent count for the student
         };
       })
     );
 
-    const sortedMembers = memberData.sort((a, b) => 
-      new Date(b.joinedDate) - new Date(a.joinedDate)
+    const sortedMembers = memberData.sort(
+      (a, b) => new Date(b.joinedDate) - new Date(a.joinedDate)
     );
 
     res.status(200).json({
@@ -91,7 +103,10 @@ export const getApproveMembers = async (req, res) => {
       });
     }
 
-    const members = await Membership.find({ organization: organization._id, status:"1"  });
+    const members = await Membership.find({
+      organization: organization._id,
+      status: "1",
+    });
 
     if (members.length <= 0) {
       return res.status(200).json({
@@ -101,8 +116,11 @@ export const getApproveMembers = async (req, res) => {
     }
 
     // Fetch all events for the organization
-    const events = await Events.find({ organization: organization._id, status: "0" });
-    const eventIds = events.map(event => event._id);
+    const events = await Events.find({
+      organization: organization._id,
+      status: "0",
+    });
+    const eventIds = events.map((event) => event._id);
 
     const memberData = await Promise.all(
       members.map(async (member) => {
@@ -117,8 +135,12 @@ export const getApproveMembers = async (req, res) => {
           event: { $in: eventIds },
         });
 
-        const attendedEventIds = attendanceRecords.map(record => record.event.toString());
-        const absentCount = eventIds.filter(id => !attendedEventIds.includes(id.toString())).length;
+        const attendedEventIds = attendanceRecords.map((record) =>
+          record.event.toString()
+        );
+        const absentCount = eventIds.filter(
+          (id) => !attendedEventIds.includes(id.toString())
+        ).length;
 
         return {
           _id: data._id,
@@ -134,7 +156,7 @@ export const getApproveMembers = async (req, res) => {
           status: member.status,
           joinedDate: member.joinedDate,
           position: member.position,
-          absentCount,  // Adding absent count for the student
+          absentCount, // Adding absent count for the student
         };
       })
     );
@@ -169,8 +191,7 @@ export const updateMember = async (req, res) => {
           "Organization is currently not active, limited actions granted.",
       });
     }
-    
-    
+
     const studentId = req.params.id;
 
     const member = await Membership.findOneAndUpdate(
@@ -218,7 +239,7 @@ export const deleteMember = async (req, res) => {
           "Organization is currently not active, limited actions granted.",
       });
     }
-    
+
     const memberId = req.params.id;
 
     const member = await Membership.findOneAndDelete({

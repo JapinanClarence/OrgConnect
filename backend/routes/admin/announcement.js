@@ -47,7 +47,7 @@ router.delete(
 
 router.get("/announcement", 
     authenticate,
-    authorizeRole("admin"),
+    authorizeRole("admin", "secretary", "treasurer", "auditor"),
     getAnnouncement
 )
 

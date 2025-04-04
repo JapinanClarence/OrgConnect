@@ -1,5 +1,9 @@
 import express from "express";
-import { findUser, updateUser, uploadPicture } from "../../controller/admin/userController.js";
+import {
+  findUser,
+  updateUser,
+  uploadPicture,
+} from "../../controller/admin/userController.js";
 import { userValidationRules, validate } from "../../middleware/validator.js";
 import {
   authenticate,

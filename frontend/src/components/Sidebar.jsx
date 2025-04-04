@@ -20,6 +20,7 @@ import {
   BookA,
   CalendarDays,
   ChevronDown,
+  UserCog,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -77,7 +78,7 @@ const DesktopSidebar = () => {
               <Link
                 to="/"
                 className={`${
-                  userData.role == "1" ? "hidden" : "flex"
+                  userData.role != "0" ? "hidden" : "flex"
                 } rounded-lg size-full  items-center justify-start p-2 ${
                   isActive("/") ? "bg-white text-zinc-900" : "hover:bg-gray-800"
                 }`}
@@ -103,7 +104,7 @@ const DesktopSidebar = () => {
               <Link
                 to="/organizations"
                 className={`${
-                  userData.role == "1" ? "hidden" : "flex"
+                  userData.role != "0" ? "hidden" : "flex"
                 } rounded-lg size-full  items-center justify-start p-2 ${
                   isActive("/organizations")
                     ? "bg-white text-zinc-900"
@@ -131,7 +132,7 @@ const DesktopSidebar = () => {
               <Link
                 to="/academicYear"
                 className={`${
-                  userData.role == "1" ? "hidden" : "flex"
+                  userData.role != "0" ? "hidden" : "flex"
                 } rounded-lg size-full  items-center justify-start p-2 ${
                   isActive("/academicYear")
                     ? "bg-white text-zinc-900"
@@ -159,7 +160,7 @@ const DesktopSidebar = () => {
               <Link
                 to="/accounts"
                 className={`${
-                  userData.role == "1" ? "hidden" : "flex"
+                  userData.role != "0" ? "hidden" : "flex"
                 } rounded-lg size-full  items-center justify-start p-2 ${
                   isActive("/accounts")
                     ? "bg-white text-zinc-900"
@@ -411,6 +412,34 @@ const DesktopSidebar = () => {
                 <User />
                 <span className="hidden lg:block ml-2 font-bold text-sm">
                   Officers
+                </span>
+              </Link>
+            </TooltipTrigger>
+            <TooltipContent
+              className="lg:hidden bg-white text-gray-900"
+              side="right"
+              sideOffset={5}
+            >
+              Officers
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Link
+                to="/users"
+                className={`${
+                  userData.role == "0" ? "hidden" : "flex"
+                } rounded-lg size-full items-center justify-start p-2 ${
+                  isActive("/users")
+                    ? "bg-white text-zinc-900"
+                    : "hover:bg-gray-800"
+                }`}
+              >
+                <UserCog />
+                <span className="hidden lg:block ml-2 font-bold text-sm">
+                  User Accounts
                 </span>
               </Link>
             </TooltipTrigger>

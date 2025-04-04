@@ -31,7 +31,6 @@ export const createOfficer = async (req, res) => {
           "Organization is currently not active, limited actions granted.",
       });
     }
-    
 
     const validPositions = organization.officerPositions;
 
@@ -48,8 +47,10 @@ export const createOfficer = async (req, res) => {
       });
     }
 
-    const positionAvailability = await Membership.find({organization: organization._id});
-   
+    const positionAvailability = await Membership.find({
+      organization: organization._id,
+    });
+
     // Check if the position is taken
     const takenPosition = positionAvailability.find(
       (takenPosition) => takenPosition?.position === position
@@ -61,7 +62,10 @@ export const createOfficer = async (req, res) => {
         message: `Position ${position} is already taken.`,
       });
     }
-    const member = await Membership.findOne({ student: memberId, organization: organization._id });
+    const member = await Membership.findOne({
+      student: memberId,
+      organization: organization._id,
+    });
 
     if (member.status === "0") {
       return res.status(400).json({
@@ -77,7 +81,10 @@ export const createOfficer = async (req, res) => {
       });
     }
 
-    await Membership.findOneAndUpdate({ student: memberId, organization: organization._id }, { position });
+    await Membership.findOneAndUpdate(
+      { student: memberId, organization: organization._id },
+      { position }
+    );
     res.status(200).json({
       success: true,
       message: "Role added successfully!",
@@ -95,9 +102,7 @@ export const updateOfficer = async (req, res) => {
   const userId = req.user.userId;
   const memberId = req.params.id;
   try {
-
     const { position } = req.body;
- 
 
     // Fetch organization
     const organization = await Organization.findOne({ admin: userId }).populate(
@@ -118,7 +123,7 @@ export const updateOfficer = async (req, res) => {
           "Organization is currently not active, limited actions granted.",
       });
     }
-    
+
     const validPositions = organization.officerPositions;
 
     // Validate position
@@ -134,7 +139,9 @@ export const updateOfficer = async (req, res) => {
       });
     }
 
-    const positionAvailability = await Membership.find({organization: organization._id});
+    const positionAvailability = await Membership.find({
+      organization: organization._id,
+    });
 
     // Check if the position is taken
     const takenPosition = positionAvailability.find(
@@ -147,8 +154,11 @@ export const updateOfficer = async (req, res) => {
         message: `Position ${position} is already taken.`,
       });
     }
-  
-    await Membership.findOneAndUpdate({ student: memberId, organization: organization._id }, { position });
+
+    await Membership.findOneAndUpdate(
+      { student: memberId, organization: organization._id },
+      { position }
+    );
     res.status(200).json({
       success: true,
       message: "Role added successfully!",
@@ -185,7 +195,7 @@ export const revokeRole = async (req, res) => {
           "Organization is currently not active, limited actions granted.",
       });
     }
-    
+
     const officer = await Membership.findOneAndUpdate(
       { student: memberId, organization: organization._id },
       {
@@ -214,8 +224,13 @@ export const revokeRole = async (req, res) => {
 export const getOfficer = async (req, res) => {
   const userId = req.user.userId;
   try {
-    const organization = await Organization.findOne({ admin: userId });
-   
+    const organization = await Organization.findOne({
+      $or: [
+        { admin: userId }, // Check if the user is an admin
+        { subAdmins: userId }, // Check if the user is a sub-admin
+      ],
+    });
+
     if (!organization) {
       return res.status(404).json({
         success: false,
@@ -227,14 +242,13 @@ export const getOfficer = async (req, res) => {
       organization: organization._id,
       position: { $ne: "member" }, // Exclude members with position "Member"
     }).populate("student");
-    console.log(officers)
+
     if (officers.length <= 0) {
       return res.status(200).json({
         success: false,
         message: "No members found",
       });
     }
-   
 
     // Validate position
     const validPositions = organization.officerPositions;
@@ -284,7 +298,12 @@ export const getOfficer = async (req, res) => {
 export const getPositions = async (req, res) => {
   const userId = req.user.userId;
   try {
-    const organization = await Organization.findOne({ admin: userId });
+    const organization = await Organization.findOne({
+      $or: [
+        { admin: userId }, // Check if the user is an admin
+        { subAdmins: userId }, // Check if the user is a sub-admin
+      ],
+    });
 
     if (!organization) {
       return res.status(404).json({
