@@ -137,7 +137,7 @@ const SuperAdminHomeContent = () => {
                       className="mr-2"
                       style={{ color: "#8B5CF6" }}
                     />
-                    Total Admin
+                    Total Organization Accounts
                   </span>
                 </CardTitle>
                 <p className="mt-1 text-2xl font-medium ">{adminData}</p>
