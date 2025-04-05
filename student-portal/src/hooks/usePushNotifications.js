@@ -26,7 +26,6 @@ const usePushNotifications = () => {
             headers: {
               Authorization: token, // Use the token from the AuthContext
             },
-            // credentials: 'include' // Uncomment if you need to send cookies with the request
           }
           // { withCredentials: true }
         );
