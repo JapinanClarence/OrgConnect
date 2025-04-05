@@ -9,7 +9,7 @@ const usePushNotifications = () => {
   useEffect(() => {
     const enablePush = async () => {
       if ("serviceWorker" in navigator && "PushManager" in window) {
-        const swUrl = `${window.location.origin}/sw.js`;
+        const swUrl = `${import.meta.env.VITE_PUBLIC_URL}/sw.js`;
         const registration = await navigator.serviceWorker.register(swUrl);
 
         const permission = await Notification.requestPermission();
