@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import apiClient from "@/api/axios";
 // import vapid public key from environment variables
-const VAPID_PUBLIC_KEY = import.meta.env.VITE_VAPID_PUBLIC_KEY;
+const VAPID_PUBLIC_KEY = import.meta.env.VITE_VAPID_PUBLIC;
 import { useAuth } from "@/context/AuthContext";
 
 const usePushNotifications = () => {
