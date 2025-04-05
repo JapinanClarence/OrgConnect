@@ -13,6 +13,7 @@ export const sendNotificationToAll = async (title, message, url = "/") => {
   subscriptions.forEach((sub) => {
     console.log(sub)
     webpush.sendNotification(sub, payload).catch((error) => {
+        console.log(error);
       console.error("Push error:", error.message);
     });
   });

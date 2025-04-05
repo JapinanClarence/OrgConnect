@@ -3,6 +3,7 @@ import apiClient from "@/api/axios";
 // import vapid public key from environment variables
 const VAPID_PUBLIC_KEY = import.meta.env.VITE_VAPID_PUBLIC;
 import { useAuth } from "@/context/AuthContext";
+import { s } from "@fullcalendar/core/internal-common";
 
 const usePushNotifications = () => {
   const { token } = useAuth(); // Get the user from the AuthContext
@@ -10,8 +11,10 @@ const usePushNotifications = () => {
     const enablePush = async () => {
       if ("serviceWorker" in navigator && "PushManager" in window) {
         const swUrl = `${import.meta.env.VITE_PUBLIC_URL}/sw.js`;
-        const registration = await navigator.serviceWorker.register(swUrl);
 
+        console.log(swUrl);
+        const registration = await navigator.serviceWorker.register(swUrl);
+        console.log(registration);
         const permission = await Notification.requestPermission();
         if (permission !== "granted") return;
 
