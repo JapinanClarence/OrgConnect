@@ -21,6 +21,7 @@ import EventsPage from "./pages/EventsPage";
 import OrgAnnouncementPage from "./pages/OrgAnnouncementPage";
 import AttendancePage from "./pages/AttendancePage";
 import SearchPage from "./pages/SearchPage";
+import usePushNotifications from "./hooks/usePushNotifications";
 
 function App() {
   const [isInstalled, setIsInstalled] = useState(false);
@@ -33,6 +34,7 @@ function App() {
     }
   }, []);
 
+  usePushNotifications(); // Initialize push notifications
   return (
     <>
       <Toaster />
@@ -67,18 +69,12 @@ function App() {
                 path="/organization/:id/officers"
                 element={<OfficersPage />}
               />
+              <Route path="/organization/:id/events" element={<EventsPage />} />
               <Route
-                path="/organization/:id/events"
-                element={<EventsPage />}
-              />
-               <Route
                 path="/organization/:id/announcements"
                 element={<OrgAnnouncementPage />}
               />
-               <Route
-                path="/search"
-                element={<SearchPage />}
-              />
+              <Route path="/search" element={<SearchPage />} />
             </Route>
           </Route>
         </Route>

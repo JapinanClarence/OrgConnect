@@ -30,7 +30,6 @@ export const authorizeRole = (...requiredRoles) => {
     auditor: "5",
     superadmin: "0",
   };
-
   return async (req, res, next) => {
     if (!req.user) {
       return res
@@ -39,7 +38,7 @@ export const authorizeRole = (...requiredRoles) => {
     }
 
     const user = await UserModel.findById(req.user.userId);
-  
+
     // Translate the required roles to their database values
     const allowedRoles = requiredRoles.map((user) => roleMapping[user]);
 

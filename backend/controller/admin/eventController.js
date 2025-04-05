@@ -1,6 +1,7 @@
 import Events from "../../model/eventModel.js";
 import Organization from "../../model/organizationModel.js";
 import { OrgAdminModel as Admin } from "../../model/UserModel.js";
+import { sendNotificationToAll } from "../../util/sendNotif.js";
 
 export const createEvent = async (req, res, next) => {
   const { title, description, startDate, endDate, location, fee, organizer } =
@@ -46,7 +47,7 @@ export const createEvent = async (req, res, next) => {
       });
     }
 
-    await Events.create({
+    const event = await Events.create({
       title,
       description,
       startDate: new Date(startDate).toUTCString(),
@@ -56,6 +57,12 @@ export const createEvent = async (req, res, next) => {
       fee,
       organizer,
     });
+
+    await sendNotificationToAll(
+      "A new event has been uploaded",
+      `Check out the new event: ${event.title} from ${organization.name}`,
+      `/organization/${organization._id}/events`,
+    );
 
     res.status(201).json({
       success: true,

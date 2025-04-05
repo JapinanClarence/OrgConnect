@@ -10,12 +10,18 @@ import { formatSimpleDate } from "@/util/helpers";
 import ProfileCardSkeleton from "@/components/skeleton/ProfileCardSkeleton";
 import { Skeleton } from "@/components/ui/skeleton";
 import ProfileDrawer from "@/components/profile/ProfileDrawer";
+import { Switch } from "@/components/ui/switch";
+import usePushNotifications from "@/hooks/usePushNotifications";
+import { set } from "zod";
 const ProfilePage = () => {
   const { token, logout } = useAuth();
   const [showAlert, setShowAlert] = useState(false);
   const [loading, setLoading] = useState(true);
   const [userData, setUserData] = useState("");
+  // const { showPermissionDialog, permissionGranted, setPermissionGranted, disablePush } =
+  //   usePushNotifications();
   const navigate = useNavigate();
+
 
   const fetchUserData = async () => {
     try {
@@ -36,9 +42,10 @@ const ProfilePage = () => {
         birthday: data.data.birthday && formatSimpleDate(data.data.birthday),
         email: data.data.email,
         username: data.data.username,
-        gender: data.data.gender &&
+        gender:
+          data.data.gender &&
           data.data.gender.charAt(0).toUpperCase() +
-          data.data.gender.slice(1).toLowerCase(),
+            data.data.gender.slice(1).toLowerCase(),
         contactNumber: data.data.contactNumber,
         year: data.data.year,
         course: data.data.course,
@@ -66,19 +73,34 @@ const ProfilePage = () => {
     setShowAlert(false); // Close the alert dialog after logout
   };
 
-  // const cancelLogout = () => {
-  //   setShowAlert(false); // Close the alert dialog without logout
+  // const handleSwitchToggle = async (checked) => {
+  //   if (checked) {
+  //     // If the switch is turned on and permission is not granted yet, ask for permission
+  //     if (!permissionGranted) {
+  //       await enablePush(); // Request push notification permission
+  //     }
+  //     setPermissionGranted(true);
+  //   } else {
+  //     // If the switch is turned off, disable push notifications
+  //     await disablePush(); // Call disablePush function to unsubscribe
+  //     setPermissionGranted(false);
+  //   }
   // };
 
+  
   const fullname = `${userData.firstname} ${
     userData.middlename ? userData.middlename[0] + ". " : ""
   }${userData.lastname}`;
-  
+
   return (
     <div className="p-5">
       <div className="shadow-sm rounded-lg border bg-white p-4 flex gap-2 text-white">
         <Avatar className="size-14 flex-shrink overflow-clip">
-          <AvatarImage src={userData.profilePicture} alt="user-profile" className="object-cover" />
+          <AvatarImage
+            src={userData.profilePicture}
+            alt="user-profile"
+            className="object-cover"
+          />
           <AvatarFallback className="text-gray-500 font-bold bg-gray-300">
             {userData &&
               userData.firstname.charAt(0) + userData.lastname.charAt(0)}
@@ -132,14 +154,24 @@ const ProfilePage = () => {
       )}
 
       <div className="border-b my-5 border-zinc-300"></div>
+      {/* <div className="shadow-sm rounded-lg bg-white border p-4 flex justify-between font-medium text-gray-900 mb-3">
+        <p>Allow Notifications</p>
+        <Switch
+          checked={permissionGranted}
+          onCheckedChange={handleSwitchToggle}
+        />
+      </div> */}
       <div
         className="shadow-sm rounded-lg bg-white border p-4 flex gap-3 font-medium text-gray-900"
         onClick={handleLogout}
       >
         <LogOut size={20} className="my-auto" /> Log out
       </div>
-      <ProfileDrawer open={showAlert} onOpenChange={setShowAlert} onConfirm={confirmLogout}/>
-
+      <ProfileDrawer
+        open={showAlert}
+        onOpenChange={setShowAlert}
+        onConfirm={confirmLogout}
+      />
     </div>
   );
 };

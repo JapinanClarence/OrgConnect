@@ -23,6 +23,8 @@ import userAttendanceRoutes from "./routes/attendance.js";
 import superadminOrgs from "./routes/superadmin/organization.js";
 import acadYear from "./routes/superadmin/academicyear.js";
 import superAdminDashboard from "./routes/superadmin/dashboard.js";
+import notifSbuscription from "./routes/subcription.js";
+import webpush from "web-push";
 
 const DB = process.env.DATABASE.replace("<PASSWORD>", process.env.DB_PASSWORD);
 const app = express();
@@ -50,7 +52,16 @@ if (NODE_ENV === "development") {
     });
 }
 
+
 app.use(cors());
+
+// Set up web push configuration
+webpush.setVapidDetails(
+  'mailto:rosaliesumaligpon13@gmail.com',
+  process.env.VAPID_PUBLIC_KEY,
+  process.env.VAPID_PRIVATE_KEY
+);
+
 
 //auth router
 app.use("/api/", auth);
@@ -81,7 +92,8 @@ app.use("/api/user/", announcementRoutes);
 app.use("/api/user/", paymentRoutes);
 app.use("/api/user/", officerRoutes);
 app.use("/api/user/", userAttendanceRoutes);
-
+//web push subscription route
+app.use("/api/notification", notifSbuscription);
 // Handle 404 errors for undefined routes
 app.use((req, res, next) => {
   res.status(404).json({
