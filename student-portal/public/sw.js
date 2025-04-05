@@ -1,4 +1,4 @@
-self.addEventListener("push", function (event) {
+self.addEventListener("push", async function (event) {
   const data = event.data.json();
     console.log("Push event data:", data);
   const options = {
