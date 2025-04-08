@@ -50,16 +50,18 @@ export const getOfficers = async (req, res) => {
         course: officer.student.course,
         position: officer.position,
         profilePicture: officer.student.profilePicture,
+        semester: officer.officerTerm.semester,
+        schoolYear: officer.officerTerm.schoolYear,
       };
     });
 
     // Sort the cleaned officers based on their rank in descending order
-    officerData.sort((a, b) => {
-      return (
-        (positionRankMap[a.position.toLowerCase()] || -Infinity) -
-        (positionRankMap[b.position.toLowerCase()] || -Infinity)
-      );
-    });
+    // officerData.sort((a, b) => {
+    //   return (
+    //     (positionRankMap[a.position.toLowerCase()] || -Infinity) -
+    //     (positionRankMap[b.position.toLowerCase()] || -Infinity)
+    //   );
+    // });
 
     // console.log(officers)
     res.status(200).json({

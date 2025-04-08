@@ -17,8 +17,14 @@ module.exports = {
   theme: {
   	extend: {
   		fontFamily: {
-  			sans: ["DM Sans", "sans-serif"],
-  			accent: ["Poppins", "sans-serif"]
+  			sans: [
+  				'DM Sans',
+  				'sans-serif'
+  			],
+  			accent: [
+  				'Poppins',
+  				'sans-serif'
+  			]
   		},
   		borderRadius: {
   			lg: 'var(--radius)',

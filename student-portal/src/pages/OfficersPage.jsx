@@ -6,6 +6,13 @@ import PageHead from "@/components/nav/PageHead";
 import DataTable from "@/components/payments/DataTable";
 import OfficerCard from "@/components/officers/OfficerCard";
 import OfficerCardSkeleton from "@/components/skeleton/OfficerCardSkeleton";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+
 const OfficersPage = () => {
   const { token } = useAuth();
   const [data, setData] = useState([]);
@@ -22,9 +29,8 @@ const OfficersPage = () => {
           },
         }
       );
-      if (!data.success) {
-        setData([]);
-      } else {
+      if (data.success) {
+        console.log(data.data);
         setData(data.data);
       }
       setLoading(false);
@@ -37,6 +43,20 @@ const OfficersPage = () => {
   useEffect(() => {
     fetchData();
   }, []);
+
+  // Group by schoolYear
+  const grouped = data.reduce((acc, officer) => {
+    if (!acc[officer.schoolYear]) acc[officer.schoolYear] = [];
+    acc[officer.schoolYear].push(officer);
+    return acc;
+  }, {});
+
+  // Sort school years high → low
+  const sortedYears = Object.keys(grouped).sort((a, b) => {
+    const [startA] = a.split("-").map(Number);
+    const [startB] = b.split("-").map(Number);
+    return startB - startA;
+  });
   return (
     <div className="pt-16 pb-10 h-full">
       <PageHead title={"Officers"} />
@@ -50,10 +70,24 @@ const OfficersPage = () => {
             <p className="text-zinc-400">No officers found.</p>
           </div>
         ) : (
-          <div className="mt-5 flex flex-col gap-4 items-center">
-            {data.map((officerData) => (
-              <OfficerCard key={officerData.id} data={officerData} />
-            ))}
+          <div className="mt-5">
+            <Accordion
+              className="min-w-max "
+              type="single"
+              collapsible
+              defaultValue="item-0"
+            >
+              {sortedYears.map((year, index) => (
+                <AccordionItem key={index} value={`item-${index}`}>
+                  <AccordionTrigger>{year}</AccordionTrigger>
+                  <AccordionContent>
+                    {grouped[year].map((officerData) => (
+                      <OfficerCard key={officerData.id} data={officerData} />
+                    ))}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
           </div>
         )}
       </div>
