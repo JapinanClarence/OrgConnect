@@ -15,11 +15,6 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
 import {
@@ -236,6 +231,57 @@ const AddOfficerDialog = ({
                         </SelectGroup>
                       </SelectContent>
                     </Select>
+                  </FormItem>
+                )}
+              />
+              {/* semester */}
+              <FormField
+                control={form.control}
+                name="semester"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-gray-600 text-sm">
+                      Semester
+                    </FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger
+                          className={cn(
+                            "text-xs",
+                            !field.value && "text-muted-foreground"
+                          )}
+                        >
+                          <SelectValue placeholder="Select semester" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent className="bg-white border-zinc-300">
+                        <SelectGroup>
+                          <SelectLabel>Semester</SelectLabel>
+                          <SelectItem value="1st">First Semester</SelectItem>
+                          <SelectItem value="2nd">Second Semester</SelectItem>
+                          <SelectItem value="summer">Summer</SelectItem>
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                  </FormItem>
+                )}
+              />
+              {/* Academic year Field */}
+              <FormField
+                control={form.control}
+                name="academicYear"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-gray-600 text-sm">
+                      Academic Year
+                    </FormLabel>
+                    <FormControl>
+                      <Input {...field} type="text" placeholder="2024-2025" />
+                    </FormControl>
+                    <FormMessage />
                   </FormItem>
                 )}
               />

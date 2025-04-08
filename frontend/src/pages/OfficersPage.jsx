@@ -45,6 +45,8 @@ const OfficersPage = () => {
       officerId: "", // Use officerId instead of officer
       position: "",
       rank: "",
+      semester: "",
+      academicYear: "",
     },
   });
 
@@ -74,6 +76,8 @@ const OfficersPage = () => {
           year: yearMap[data.year],
           course: data.course,
           profilePicture: data.profilePicture,
+          semester: data.officerTerm.semester,
+          academicYear: data.officerTerm.schoolYear,
         }));
 
         setData(officerData);
@@ -105,11 +109,11 @@ const OfficersPage = () => {
   const handleRowClick = (data) => {};
 
   const onDelete = async (officerId) => {
-    console.log(officerId);
     try {
       setIsSubmitting(true);
       const res = await apiClient.patch(
-        `/admin/officer/${officerId}/revokeRole`,{},
+        `/admin/officer/${officerId}/revokeRole`,
+        {},
         {
           headers: {
             Authorization: token,
@@ -129,20 +133,27 @@ const OfficersPage = () => {
         setIsSubmitting(false);
       }
     } catch (error) {
-      console.log(error);
-      const message = error.response.data.message;
-      setErrorMessage(message);
-      setIsSubmitting(false);
+      const message = error.response.data.message.toString();
+
+      toast({
+        title: message,
+        description: date,
+        variant: "destructive",
+      });
     }
   };
   const onEdit = async (data) => {
-    const { officerId, position } = data;
+    const { officerId, position, semester, academicYear } = data;
     try {
       setIsSubmitting(true);
       const res = await apiClient.patch(
         `/admin/officer/${officerId}/updateRole`,
         {
           position: position.toLowerCase(),
+          officerTerm: {
+            semester: semester,
+            schoolYear: academicYear,
+          },
         },
         {
           headers: {
@@ -170,13 +181,17 @@ const OfficersPage = () => {
     }
   };
   const onAdd = async (data) => {
-    const { officerId, position } = data;
+    const { officerId, position, semester, academicYear } = data;
     try {
       setIsSubmitting(true);
       const res = await apiClient.patch(
         `/admin/officer/${officerId}`,
         {
           position: position.toLowerCase(),
+          officerTerm: {
+            semester: semester,
+            schoolYear: academicYear,
+          },
         },
         {
           headers: {

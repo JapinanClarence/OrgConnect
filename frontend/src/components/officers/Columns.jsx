@@ -13,7 +13,7 @@ import {
 import { CircleCheck, Timer } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 // Define the columns for the table
-export const columns = (onEdit, onDelete) =>  [
+export const columns = (onEdit, onDelete) => [
   {
     id: "profilePicture",
     enableHiding: false,
@@ -35,7 +35,7 @@ export const columns = (onEdit, onDelete) =>  [
   },
   {
     accessorKey: "fullname",
-    header:({ column }) => {
+    header: ({ column }) => {
       return (
         <Button
           variant="ghost"
@@ -47,7 +47,9 @@ export const columns = (onEdit, onDelete) =>  [
         </Button>
       );
     },
-    cell: ({ row }) => <div className="text-xs">{row.getValue("fullname")}</div>,
+    cell: ({ row }) => (
+      <div className="text-xs">{row.getValue("fullname")}</div>
+    ),
   },
   {
     accessorKey: "email",
@@ -63,13 +65,11 @@ export const columns = (onEdit, onDelete) =>  [
         </Button>
       );
     },
-    cell: ({ row }) => (
-      <div className="text-xs">{row.getValue("email")}</div>
-    ),
+    cell: ({ row }) => <div className="text-xs">{row.getValue("email")}</div>,
   },
   {
     accessorKey: "course",
-    header:({ column }) => {
+    header: ({ column }) => {
       return (
         <Button
           variant="ghost"
@@ -85,7 +85,7 @@ export const columns = (onEdit, onDelete) =>  [
   },
   {
     accessorKey: "year",
-    header:({ column }) => {
+    header: ({ column }) => {
       return (
         <Button
           variant="ghost"
@@ -101,7 +101,7 @@ export const columns = (onEdit, onDelete) =>  [
   },
   {
     accessorKey: "position",
-    header:({ column }) => {
+    header: ({ column }) => {
       return (
         <Button
           variant="ghost"
@@ -113,9 +113,46 @@ export const columns = (onEdit, onDelete) =>  [
         </Button>
       );
     },
-    cell: ({ row }) => <div className="text-xs">{row.getValue("position")}</div>,
+    cell: ({ row }) => (
+      <div className="text-xs">{row.getValue("position")}</div>
+    ),
   },
-  
+  {
+    accessorKey: "semester",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="px-0"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Semester
+          <CaretSortIcon className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => (
+      <div className="text-xs">{row.getValue("semester")}</div>
+    ),
+  },
+  {
+    accessorKey: "academicYear",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="px-0"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Academic Year
+          <CaretSortIcon className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => (
+      <div className="text-xs">{row.getValue("academicYear")}</div>
+    ),
+  },
   {
     id: "actions",
     enableHiding: false,
@@ -127,15 +164,15 @@ export const columns = (onEdit, onDelete) =>  [
         navigator.clipboard.writeText(officer.id);
       };
 
-        const handleEdit = (event) => {
-          event.stopPropagation(); // Prevent the row click event
-          onEdit(officer)
-        };
+      const handleEdit = (event) => {
+        event.stopPropagation(); // Prevent the row click event
+        onEdit(officer);
+      };
 
-        const handleDelete = (event) => {
-          event.stopPropagation(); // Prevent the row click event
-          onDelete(officer.id)
-        };
+      const handleDelete = (event) => {
+        event.stopPropagation(); // Prevent the row click event
+        onDelete(officer.id);
+      };
 
       return (
         <DropdownMenu>

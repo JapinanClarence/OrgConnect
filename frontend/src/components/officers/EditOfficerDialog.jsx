@@ -32,6 +32,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
 
 const EditOfficerDialog = ({
   officerData,
@@ -44,10 +45,7 @@ const EditOfficerDialog = ({
   const { token } = useAuth();
   const form = useForm({
     resolver: zodResolver(OfficerSchema),
-    defaultValues: {
-      officerId: officerData?.id || "", // Ensure officerId is set
-      position: officerData?.position || "", // Ensure position is set
-    },
+    defaultValues: officerData || {},
   });
   const [positions, setPositions] = useState([]);
   const { reset } = form;
@@ -61,7 +59,7 @@ const EditOfficerDialog = ({
       }); // Reset the form with new officer data
     }
   }, [officerData, reset]);
-
+  console.log(officerData)
   useEffect(() => {
     fetchPositions();
   }, []);
@@ -123,10 +121,14 @@ const EditOfficerDialog = ({
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                      <SelectGroup>
+                        <SelectGroup>
                           <SelectLabel>Positions</SelectLabel>
                           {positions.map((position) => (
-                            <SelectItem key={position} className="" value={position}>
+                            <SelectItem
+                              key={position}
+                              className=""
+                              value={position}
+                            >
                               {position.charAt(0).toUpperCase() +
                                 position.slice(1).toLowerCase()}
                             </SelectItem>
@@ -134,6 +136,57 @@ const EditOfficerDialog = ({
                         </SelectGroup>
                       </SelectContent>
                     </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              {/* semester */}
+              <FormField
+                control={form.control}
+                name="semester"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-gray-600 text-sm">
+                      Semester
+                    </FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger
+                          className={cn(
+                            "text-xs",
+                            !field.value && "text-muted-foreground"
+                          )}
+                        >
+                          <SelectValue placeholder="Select semester" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent className="bg-white border-zinc-300">
+                        <SelectGroup>
+                          <SelectLabel>Semester</SelectLabel>
+                          <SelectItem value="1st">First Semester</SelectItem>
+                          <SelectItem value="2nd">Second Semester</SelectItem>
+                          <SelectItem value="summer">Summer</SelectItem>
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                  </FormItem>
+                )}
+              />
+              {/* Academic year Field */}
+              <FormField
+                control={form.control}
+                name="academicYear"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-gray-600 text-sm">
+                      Academic Year
+                    </FormLabel>
+                    <FormControl>
+                      <Input {...field} type="text" placeholder="2024-2025" />
+                    </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}

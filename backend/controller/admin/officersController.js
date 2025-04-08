@@ -10,7 +10,7 @@ export const createOfficer = async (req, res) => {
   const userId = req.user.userId;
   const memberId = req.params.id;
   try {
-    const { position } = req.body;
+    const { position, officerTerm } = req.body;
 
     // Fetch organization
     const organization = await Organization.findOne({ admin: userId }).populate(
@@ -52,16 +52,16 @@ export const createOfficer = async (req, res) => {
     });
 
     // Check if the position is taken
-    const takenPosition = positionAvailability.find(
-      (takenPosition) => takenPosition?.position === position
-    );
+    // const takenPosition = positionAvailability.find(
+    //   (takenPosition) => takenPosition?.position === position
+    // );
 
-    if (takenPosition) {
-      return res.status(400).json({
-        success: false,
-        message: `Position ${position} is already taken.`,
-      });
-    }
+    // if (takenPosition) {
+    //   return res.status(400).json({
+    //     success: false,
+    //     message: `Position ${position} is already taken.`,
+    //   });
+    // }
     const member = await Membership.findOne({
       student: memberId,
       organization: organization._id,
@@ -83,7 +83,7 @@ export const createOfficer = async (req, res) => {
 
     await Membership.findOneAndUpdate(
       { student: memberId, organization: organization._id },
-      { position }
+      { position, officerTerm }
     );
     res.status(200).json({
       success: true,
@@ -102,7 +102,7 @@ export const updateOfficer = async (req, res) => {
   const userId = req.user.userId;
   const memberId = req.params.id;
   try {
-    const { position } = req.body;
+    const { position, officerTerm } = req.body;
 
     // Fetch organization
     const organization = await Organization.findOne({ admin: userId }).populate(
@@ -144,20 +144,20 @@ export const updateOfficer = async (req, res) => {
     });
 
     // Check if the position is taken
-    const takenPosition = positionAvailability.find(
-      (takenPosition) => takenPosition?.position === position
-    );
+    // const takenPosition = positionAvailability.find(
+    //   (takenPosition) => takenPosition?.position === position
+    // );
 
-    if (takenPosition) {
-      return res.status(400).json({
-        success: false,
-        message: `Position ${position} is already taken.`,
-      });
-    }
+    // if (takenPosition) {
+    //   return res.status(400).json({
+    //     success: false,
+    //     message: `Position ${position} is already taken.`,
+    //   });
+    // }
 
     await Membership.findOneAndUpdate(
       { student: memberId, organization: organization._id },
-      { position }
+      { position, officerTerm }
     );
     res.status(200).json({
       success: true,
@@ -274,6 +274,7 @@ export const getOfficer = async (req, res) => {
         profilePicture: officer.student.profilePicture,
         position: officer.position,
         rank: officer.rank,
+        officerTerm: officer.officerTerm,
       };
     });
 

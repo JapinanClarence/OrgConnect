@@ -44,6 +44,15 @@ const membershipSchema = new mongoose.Schema(
     joinedDate: {
       type: Date,
     },
+    officerTerm: {
+      schoolYear: {
+        type: String, // e.g., "2024-2025"
+      },
+      semester: {
+        type: String,
+        enum: ["1st", "2nd", "summer"],
+      },
+    },
   },
   { timestamps: true }
 );

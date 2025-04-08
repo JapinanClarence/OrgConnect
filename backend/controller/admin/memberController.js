@@ -3,6 +3,7 @@ import Organization from "../../model/organizationModel.js";
 import { StudentModel as Student } from "../../model/UserModel.js";
 import Events from "../../model/eventModel.js";
 import Attendance from "../../model/attendanceModel.js";
+
 export const getMembers = async (req, res) => {
   const userId = req.user.userId;
   try {

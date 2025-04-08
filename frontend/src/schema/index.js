@@ -73,6 +73,15 @@ export const FileSchema = z
 export const OfficerSchema = z.object({
   officerId: z.string().min(1, { message: "Officer is required" }),
   position: z.string().min(1, { message: "Position is required" }),
+  semester: z.string().min(1, {
+    message: "Semester is required",
+  }),
+  academicYear: z
+    .string()
+    .regex(
+      /^\d{4}-\d{4}$/,
+      "Academic year must be in the format YYYY-YYYY (e.g., 2025-2026)"
+    ),
 });
 
 export const CreateOrgSchema = z.object({
