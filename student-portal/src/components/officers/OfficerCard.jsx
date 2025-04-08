@@ -19,7 +19,7 @@ const OfficerCard = ({ data }) => {
   const position =
     data.position[0].toUpperCase() + data.position.slice(1).toLowerCase();
   return (
-    <Card  className="w-[320px] shadow-md ">
+    <Card className="w-[320px] shadow-md ">
       <div className="relative h-[200px] w-full overflow-hidden bg-zinc-300 rounded-t-lg">
         {/* <div className=" absolute top-0 h-full w-full bg-gradient-to-r from-gray-800 to-gray-900 opacity-70 "></div> */}
         {data.profilePicture && (
@@ -30,20 +30,25 @@ const OfficerCard = ({ data }) => {
           />
         )}
       </div>
-      <CardContent className="p-5 flex justify-between ">
+      <CardContent className="p-5 ">
         <div>
           <CardTitle>{fullname}</CardTitle>
-          <CardDescription>{position}</CardDescription>
-        </div>
+          <div className="flex justify-between ">
+            <div>
+              <CardDescription>{position}</CardDescription>
+              <p className="text-muted-foreground">{`Semester: ${data.semester}`}</p>
+            </div>
 
-        <div className="inline-flex justify-center items-center">
-          <Button
-            onClick={() => setShowDialog(true)}
-            variant=""
-            className="p-3 rounded-sm bg-gray-800"
-          >
-            <Info className="h-10 w-19" size={25} />
-          </Button>
+            <div className="inline-flex justify-center items-center">
+              <Button
+                onClick={() => setShowDialog(true)}
+                variant=""
+                className="p-3 rounded-sm bg-gray-800"
+              >
+                <Info className="h-10 w-19" size={25} />
+              </Button>
+            </div>
+          </div>
         </div>
       </CardContent>
       <OfficerDialog
