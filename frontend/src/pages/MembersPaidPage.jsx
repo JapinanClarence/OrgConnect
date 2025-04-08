@@ -197,10 +197,12 @@ const MembersPaidPage = () => {
         });
       }
     } catch (error) {
-      const message = error.response.data.message;
+      const message = error.response.data.message.toString();
+
       toast({
-        title: { message },
-        description: `${date}`,
+        title: message,
+        description: date,
+        variant:"destructive",
       });
     }
   };

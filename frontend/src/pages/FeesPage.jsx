@@ -46,6 +46,7 @@ const FeesPage = () => {
       purpose: "",
       details: "",
       amount: "",
+      dueDate: "",
     },
   });
   const navigate = useNavigate();
@@ -71,7 +72,7 @@ const FeesPage = () => {
           details: data.details,
           amount: data.amount,
           category: categoryMap[data.category],
-            date: dateOnly(data.createdAt),
+          date: dateOnly(data.dueDate),
         }));
 
         const expenditureData = tableData.filter(
@@ -95,6 +96,7 @@ const FeesPage = () => {
         details: data.details,
         amount: data.amount,
         category: "0",
+        dueDate: data.dueDate,
       };
 
       setIsSubmitting(true);
@@ -158,12 +160,12 @@ const FeesPage = () => {
         });
       }
     } catch (error) {
-      const message = error.response.data.message;
-      console.log(message.toString());
-     
+       const message = error.response.data.message.toString();
+
       toast({
-        title: message.toString(),
-        description: `${date}`,
+        title: message,
+        description: date,
+        variant:"destructive",
       });
     }
   };
@@ -174,6 +176,7 @@ const FeesPage = () => {
         purpose: data.purpose,
         details: data.details,
         amount: data.amount,
+        dueDate: data.dueDate,
       };
       setIsSubmitting(true);
       const res = await apiClient.patch(

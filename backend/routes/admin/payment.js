@@ -32,7 +32,7 @@ router.post(
   validate,
   createPayment
 );
-
+//edit payment
 router.patch(
   "/payment/:id",
   authenticate,
@@ -40,13 +40,15 @@ router.patch(
   express.json(),
   updatePayment
 );
-
+//delete payment
 router.delete(
   "/payment/:id",
   authenticate,
   authorizeRole("admin", "treasurer", "auditor"),
   deletePayment
 );
+//user payment routes
+//this routes hanldes the payment of the user
 router.patch(
   "/payment/:id/recordPayment",
   authenticate,

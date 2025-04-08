@@ -75,8 +75,8 @@ const ExpenditurePage = () => {
             details: data.details,
             amount: data.amount,
             category: categoryMap[data.category],
-            date: dateOnly(data.dueDate),
-            paidBy: data.paidBy
+            dueDate: dateOnly(data.dueDate),
+            paidBy: data.paidBy,
           };
         });
 
@@ -150,7 +150,6 @@ const ExpenditurePage = () => {
   };
 
   const onDelete = async (paymentId) => {
-    
     try {
       const res = await apiClient.delete(`/admin/payment/${paymentId}`, {
         headers: {
@@ -167,18 +166,18 @@ const ExpenditurePage = () => {
         });
       }
     } catch (error) {
-      const message = error.response.data.message;
+      const message = error.response.data.message.toString();
 
       toast({
-        title: { message },
+        title: message,
         description: date,
+        variant:"destructive",
       });
     }
   };
 
   const onEdit = async (data) => {
     try {
-
       const expenditureData = {
         purpose: data.purpose,
         details: data.details,

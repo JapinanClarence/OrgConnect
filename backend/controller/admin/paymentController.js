@@ -40,7 +40,7 @@ export const createPayment = async (req, res, next) => {
     }
     const allowedPaymentRoles = ["4", "1"]; // Define allowed roles for payment creation
     const allowedTransactionRoles = ["5", "1"]; // Define allowed roles for transaction creation
-    
+
     // Check if the user is allowed to create payments based on their role and category
     if (
       (category === "0" && !allowedPaymentRoles.includes(admin.role)) ||
@@ -198,6 +198,158 @@ export const findPayment = async (req, res, next) => {
   }
 };
 
+
+export const updatePayment = async (req, res, next) => {
+  const userId = req.user.userId;
+  try {
+    //verify if user exist
+    const admin = await Admin.findById(userId);
+
+    if (!admin) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    const organization = await Organization.findOne({
+      $or: [
+        { admin: userId }, // Check if the user is an admin
+        { subAdmins: userId }, // Check if the user is a sub-admin
+      ],
+    });
+
+    if (!organization) {
+      return res.status(404).json({
+        success: false,
+        message: "Organization not found",
+      });
+    }
+
+    if (!organization.active) {
+      return res.status(403).json({
+        success: false,
+        message:
+          "Organization is currently not active, limited actions granted.",
+      });
+    }
+
+    const paymentId = req.params.id;
+
+    const payment = await Payments.findByIdAndUpdate(paymentId, req.body);
+
+    if (!payment) {
+      return res.status(404).json({
+        success: false,
+        message: "Payment not found!",
+      });
+    }
+
+    const category = payment.category;
+    const allowedPaymentRoles = ["4", "1"]; // Define allowed roles for payment creation
+    const allowedTransactionRoles = ["5", "1"]; // Define allowed roles for transaction creation
+    console.log(category);
+    console.log(admin.role);
+    // Check if the user is allowed to create payments based on their role and category
+    if (
+      (category === "0" && !allowedPaymentRoles.includes(admin.role)) ||
+      (category !== "0" && !allowedTransactionRoles.includes(admin.role))
+    ) {
+      return res.status(403).json({
+        success: false,
+        message: "Access denied. Insufficient permissions",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Payment updated successfully!",
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
+};
+
+export const deletePayment = async (req, res, next) => {
+  const userId = req.user.userId;
+  try {
+    //verify if user exist
+    const admin = await Admin.findById(userId);
+
+    if (!admin) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    const organization = await Organization.findOne({
+      $or: [
+        { admin: userId }, // Check if the user is an admin
+        { subAdmins: userId }, // Check if the user is a sub-admin
+      ],
+    });
+
+    if (!organization) {
+      return res.status(404).json({
+        success: false,
+        message: "Organization not found",
+      });
+    }
+
+    if (!organization.active) {
+      return res.status(403).json({
+        success: false,
+        message:
+          "Organization is currently not active, limited actions granted.",
+      });
+    }
+
+    const paymentId = req.params.id;
+    const payment = await Payments.findById(paymentId);
+
+    if (!payment) {
+      return res.status(404).json({
+        success: false,
+        message: "Payment not found!",
+      });
+    }
+    const allowedPaymentRoles = ["4", "1"]; // Define allowed roles for payment creation
+    const allowedTransactionRoles = ["5", "1"]; // Define allowed roles for transaction creation
+  
+    const category = payment.category;
+
+    // Check if the user is allowed to create payments based on their role and category
+    if (
+      (category === "0" && !allowedPaymentRoles.includes(admin.role)) ||
+      (category !== "0" && !allowedTransactionRoles.includes(admin.role))
+    ) {
+      return res.status(403).json({
+        success: false,
+        message: "Access denied. Insufficient permissions",
+      });
+    }
+
+    await Payments.findByIdAndDelete(paymentId);
+
+    res.status(200).json({
+      success: true,
+      message: "Payment deleted successfully",
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
+};
+
+// Function to record payment for a member
+// This function is called when a member makes a payment for a specific payment record
+
 export const recordPayment = async (req, res, next) => {
   const { member, amount, status } = req.body;
   try {
@@ -289,16 +441,6 @@ export const editPaymentRecord = async (req, res, next) => {
 
 export const deleteUserPayment = async (req, res, next) => {
   try {
-    if (
-      (category === "0" && admin.role !== "4") ||
-      (category !== "0" && admin.role !== "5")
-    ) {
-      return res.status(403).json({
-        success: false,
-        message: "Access denied. Insufficient permissions",
-      });
-    }
-
     const paymentId = req.params.paymentId; // Payment record ID
     const memberId = req.params.memberId; // User's member ID to remove payment
 
@@ -316,7 +458,7 @@ export const deleteUserPayment = async (req, res, next) => {
     const memberIndex = payment.membersPaid.findIndex(
       (paidMember) => paidMember.member.toString() === memberId
     );
-    console.log(memberId);
+
     if (memberIndex === -1) {
       return res.status(404).json({
         success: false,
@@ -333,129 +475,6 @@ export const deleteUserPayment = async (req, res, next) => {
     return res.status(200).json({
       success: true,
       message: "Member's payment record deleted successfully!",
-    });
-  } catch (err) {
-    return res.status(500).json({
-      success: false,
-      message: err.message,
-    });
-  }
-};
-
-export const updatePayment = async (req, res, next) => {
-  const userId = req.user.userId;
-  try {
-    //verify if user exist
-    const admin = await Admin.findById(userId);
-
-    if (!admin) {
-      return res.status(404).json({
-        success: false,
-        message: "User not found",
-      });
-    }
-
-    const organization = await Organization.findOne({ admin });
-
-    if (!organization) {
-      return res.status(404).json({
-        success: false,
-        message: "Organization not found",
-      });
-    }
-
-    if (!organization.active) {
-      return res.status(403).json({
-        success: false,
-        message:
-          "Organization is currently not active, limited actions granted.",
-      });
-    }
-
-    const paymentId = req.params.id;
-
-    const payment = await Payments.findByIdAndUpdate(paymentId, req.body);
-
-    if (!payment) {
-      return res.status(404).json({
-        success: false,
-        message: "Payment not found!",
-      });
-    }
-
-    res.status(200).json({
-      success: true,
-      message: "Payment updated successfully!",
-    });
-  } catch (err) {
-    return res.status(500).json({
-      success: false,
-      message: err.message,
-    });
-  }
-};
-
-export const deletePayment = async (req, res, next) => {
-  const userId = req.user.userId;
-  try {
-    //verify if user exist
-    const admin = await Admin.findById(userId);
-
-    if (!admin) {
-      return res.status(404).json({
-        success: false,
-        message: "User not found",
-      });
-    }
-
-    const organization = await Organization.findOne({
-      $or: [
-        { admin: userId }, // Check if the user is an admin
-        { subAdmins: userId }, // Check if the user is a sub-admin
-      ],
-    });
-
-    if (!organization) {
-      return res.status(404).json({
-        success: false,
-        message: "Organization not found",
-      });
-    }
-
-    if (!organization.active) {
-      return res.status(403).json({
-        success: false,
-        message:
-          "Organization is currently not active, limited actions granted.",
-      });
-    }
-
-    const paymentId = req.params.id;
-    const payment = await Payments.findById(paymentId);
-
-    if (!payment) {
-      return res.status(404).json({
-        success: false,
-        message: "Payment not found!",
-      });
-    }
-    console.log(payment.category, admin.role)
-    // Check if the user is allowed to delete payments based on their role and category
-    if (
-      (payment.category === "0" && admin.role !== "4") ||
-      (payment.category !== "0" && admin.role !== "5")
-    ) {
-      return res.status(403).json({
-        success: false,
-        message: "Access denied. Insufficient permissions",
-      });
-    }
-
-    await Payments.findByIdAndDelete(paymentId);
-
-    res.status(200).json({
-      success: true,
-      message: "Payment deleted successfully",
     });
   } catch (err) {
     return res.status(500).json({

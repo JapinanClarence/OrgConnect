@@ -74,7 +74,7 @@ const PaymentLogsPage = () => {
           amount: data.amount,
           category: categoryMap[data.category],
           paidBy: data.paidBy,
-          date: dateOnly(data.dueDate),
+          dueDate: dateOnly(data.dueDate),
         }));
 
         const expenditureData = tableData.filter(
@@ -163,10 +163,12 @@ const PaymentLogsPage = () => {
         });
       }
     } catch (error) {
-      const message = error.response.data.message;
+      const message = error.response.data.message.toString();
+
       toast({
-        title: { message },
-        description: `${date}`,
+        title: message,
+        description: date,
+        variant:"destructive",
       });
     }
   };
