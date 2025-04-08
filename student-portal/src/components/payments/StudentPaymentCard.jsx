@@ -20,7 +20,7 @@ const StudentPaymentCard = ({
   amountPaid,
   status,
   createdAt,
-  balance
+  balance,
 }) => {
   const [showFullDetails, setShowFullDetails] = useState(false);
   const [showDialog, setShowDialog] = useState(false);
@@ -85,6 +85,14 @@ const StudentPaymentCard = ({
                   <PhilippinePeso size={12} /> {amountPaid || 0}
                 </span>
               </div>
+              {balance && (
+                <div className="text-sm text-muted-foreground">
+                  <h2 className="font-bold">Balance:</h2>
+                  <span className="inline-flex items-center">
+                    <PhilippinePeso size={12} /> {balance}
+                  </span>
+                </div>
+              )}
               <CardFooter className="inline md:hidden p-0">
                 {badgeCategory && (
                   <Badge className={`${badgeCategory.color} text-white`}>
@@ -94,14 +102,7 @@ const StudentPaymentCard = ({
               </CardFooter>
             </>
           )}
-          {balance && (
-            <div className="text-sm text-muted-foreground">
-              <h2 className="font-bold">Balance:</h2>
-              <span className="inline-flex items-center">
-                <PhilippinePeso size={12} /> {balance}
-              </span>
-            </div>
-          )}
+
           {createdAt && (
             <div className="text-sm text-muted-foreground">
               <h2 className="font-bold">Date paid:</h2>
@@ -110,7 +111,6 @@ const StudentPaymentCard = ({
               </span>
             </div>
           )}
-          
         </CardContent>
       </Card>
     </>

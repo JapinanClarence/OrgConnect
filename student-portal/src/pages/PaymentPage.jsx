@@ -43,6 +43,7 @@ const PaymentPage = () => {
           category: data.category,
           amountPaid: data.studentStatus?.amountPaid || null,
           status: data.studentStatus?.status || null,
+          balance: data.studentStatus?.balance || null,
           createdAt: data.createdAt,
         }));
 
@@ -51,9 +52,9 @@ const PaymentPage = () => {
         );
 
         const notPaid = paymentData.filter(
-          (data) => data.category === "0" && !data.status
+          (data) => data.category === "0" && data.status !== "1"
         );
-
+        console.log(notPaid)
         setPaymentData(notPaid);
         setTransactionData(alreadyPaid);
       }

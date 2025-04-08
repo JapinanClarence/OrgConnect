@@ -16,6 +16,7 @@ const TransactionsTab = ({transactions}) => {
               amountPaid={payment.amountPaid}
               status={payment.status}
               createdAt={payment.createdAt}
+              balance={payment.balance}
             />
           ))}
         </div>

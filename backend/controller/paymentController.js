@@ -51,6 +51,7 @@ export const getPayments = async (req, res) => {
         // status: memberPayment.status || null,
         studentStatus: memberPayment
           ? {
+              balance:payment.amount - memberPayment.amount,
               amountPaid: memberPayment.amount,
               status: memberPayment.status, // '0' (not fully paid) or '1' (fully paid)
             }
