@@ -70,7 +70,7 @@ export const columns = (onEdit, onDelete, onManage) => [
   },
   {
     accessorKey: "date",
-    header: "Date",
+    header: "Due Date",
     cell: ({ row }) => <div className="">{row.getValue("date")}</div>,
   },
   {

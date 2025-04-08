@@ -45,7 +45,8 @@ export const RegistrationSchema = z.object({
   email: z.string().email({
     message: "Invalid email",
   }),
-  password: z.string()
+  password: z
+    .string()
     .min(8, { message: "Password should be at least 8 characters" }),
 });
 export const AdminSchema = z.object({
@@ -79,10 +80,10 @@ export const CreateOrgSchema = z.object({
     message: "Organization name is required",
   }),
   admin: z.string().min(1, {
-    message: "Admin is required"
+    message: "Admin is required",
   }),
   type: z.enum(["0", "1", "2", "3"]),
-})
+});
 
 export const EditOrgSchema = z.object({
   name: z.string().min(1, {
@@ -94,7 +95,7 @@ export const EditOrgSchema = z.object({
   admin: z.string().optional(),
   status: z.boolean().optional(),
   remarks: z.string().optional(),
-  adviser: z.string().optional()
+  adviser: z.string().optional(),
 });
 
 export const EventSchema = z.object({
@@ -105,11 +106,11 @@ export const EventSchema = z.object({
   location: z.string().min(1, {
     message: "Location is required",
   }),
-  status: z.enum(["0","1","2", "3"]).optional(),
+  status: z.enum(["0", "1", "2", "3"]).optional(),
   startDate: z.string().optional(),
   endDate: z.string().optional(),
   fee: z.string().optional(),
-  organizer: z.string().optional()
+  organizer: z.string().optional(),
 });
 
 export const AnnouncementSchema = z.object({
@@ -131,6 +132,9 @@ export const PaymentSchema = z.object({
       message: "Amount is required",
     })
   ),
+  dueDate: z.string().min(1, {
+    message: "Due date is required",
+  }),
 });
 export const TransactionSchema = z.object({
   purpose: z.string().min(1, {
@@ -143,23 +147,26 @@ export const TransactionSchema = z.object({
       message: "Amount is required",
     })
   ),
-  paidBy:  z.string({
+  paidBy: z.string({
     required_error: "Please select officer.",
+  }),
+  dueDate: z.string().min(1, {
+    message: "Due date is required",
   }),
 });
 
 export const PaymentRecordSchema = z.object({
-  member:  z.string({
-      required_error: "Please select a member.",
-    }),
+  member: z.string({
+    required_error: "Please select a member.",
+  }),
   amount: z.preprocess(
     (val) => Number(val),
     z.number().min(1, {
       message: "Amount is required",
     })
   ),
-  status: z.enum(["0", "1"])
-})
+  status: z.enum(["0", "1"]),
+});
 
 // Define the file schema
 export const fileSchema = z
@@ -182,8 +189,8 @@ export const AcadYearSchema = z.object({
   endDate: z.string().min(1, {
     message: "End date is required",
   }),
-  active: z.boolean().optional()
-})
+  active: z.boolean().optional(),
+});
 
 export const OrgAccountSchema = z.object({
   username: z.string().min(1, {
@@ -192,9 +199,10 @@ export const OrgAccountSchema = z.object({
   email: z.string().email({
     message: "Invalid email",
   }),
-  password: z.string()
+  password: z
+    .string()
     .min(8, { message: "Password should be at least 8 characters" }),
   role: z.string().min(1, {
     message: "Role is required",
   }),
-})
+});

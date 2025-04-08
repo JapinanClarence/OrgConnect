@@ -54,7 +54,11 @@ const paymentSchema = new mongoose.Schema(
     paidBy:{
       type: mongoose.Schema.ObjectId,
       ref: "User",
-    }
+    },
+    dueDate: {
+      type: Date,
+      required: [true, "Due date is required"],
+    },
   },
   { timestamps: true }
 );

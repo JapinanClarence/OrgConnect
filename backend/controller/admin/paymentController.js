@@ -128,6 +128,7 @@ export const getPayment = async (req, res, next) => {
         category: data.category,
         createdAt: data.createdAt,
         paidBy: fullname,
+        dueDate: data.dueDate,
       };
     });
 

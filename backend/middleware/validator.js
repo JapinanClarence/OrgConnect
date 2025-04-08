@@ -44,6 +44,9 @@ export const paymentValidationRules = () => [
     .if((value, { req }) => req.body.category !== "0") // Check if category is not 0
     .notEmpty()
     .withMessage("Paid by is required"),
+  body("dueDate")
+    .notEmpty()
+    .withMessage("Due date is required"),
 ];
 
 export const recordPaymentValidationRules = () => [

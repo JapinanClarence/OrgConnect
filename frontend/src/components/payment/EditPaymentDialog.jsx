@@ -140,6 +140,24 @@ const EditPaymentDialog = ({
                   )}
                 />
 
+                {/* Due Date */}
+                <FormField
+                  control={form.control}
+                  name="dueDate"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-gray-600 text-sm">
+                        Due Date{" "}
+                      </FormLabel>
+                      <FormControl>
+                        <div className="relative w-full ">
+                          <Input type="date" {...field} />
+                        </div>
+                      </FormControl>
+                      <FormMessage className="text-xs" />
+                    </FormItem>
+                  )}
+                />
               </div>
 
               <div className="flex justify-between mt-4">

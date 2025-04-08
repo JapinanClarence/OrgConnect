@@ -48,6 +48,7 @@ const ExpenditurePage = () => {
       details: "",
       amount: "",
       paidBy: "",
+      dueDate: "",
     },
   });
   const navigate = useNavigate();
@@ -67,6 +68,7 @@ const ExpenditurePage = () => {
       if (!data.success) {
         setData([]);
       } else {
+        console.log(data.data)
         const tableData = data.data.map((data) => {
           return {
             id: data._id,
@@ -74,7 +76,7 @@ const ExpenditurePage = () => {
             details: data.details,
             amount: data.amount,
             category: categoryMap[data.category],
-            date: dateOnly(data.createdAt),
+            date: dateOnly(data.dueDate),
             paidBy: data.paidBy
           };
         });
@@ -100,6 +102,7 @@ const ExpenditurePage = () => {
         details: data.details,
         amount: data.amount,
         paidBy: data.paidBy,
+        dueDate: data.dueDate,
         category: "1",
       };
       console.log(expenditureData)
@@ -181,6 +184,7 @@ const ExpenditurePage = () => {
         purpose: data.purpose,
         details: data.details,
         amount: data.amount,
+        dueDate: data.dueDate,
       };
       setIsSubmitting(true);
       const res = await apiClient.patch(
