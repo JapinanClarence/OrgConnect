@@ -4,7 +4,7 @@ import Payments from "../../model/paymentModel.js";
 import { StudentModel as Student } from "../../model/UserModel.js";
 
 export const createPayment = async (req, res, next) => {
-  const { purpose, amount, details, category, paidBy } = req.body;
+  const { purpose, amount, details, category, paidBy, dueDate } = req.body;
   const userId = req.user.userId;
 
   try {
@@ -38,10 +38,13 @@ export const createPayment = async (req, res, next) => {
           "Organization is currently not active, limited actions granted.",
       });
     }
+    const allowedPaymentRoles = ["4", "1"]; // Define allowed roles for payment creation
+    const allowedTransactionRoles = ["5", "1"]; // Define allowed roles for transaction creation
+    
     // Check if the user is allowed to create payments based on their role and category
     if (
-      (category === "0" && admin.role !== "4") ||
-      (category !== "0" && admin.role !== "5")
+      (category === "0" && !allowedPaymentRoles.includes(admin.role)) ||
+      (category !== "0" && !allowedTransactionRoles.includes(admin.role))
     ) {
       return res.status(403).json({
         success: false,
@@ -54,6 +57,7 @@ export const createPayment = async (req, res, next) => {
       details,
       category,
       organization: organization._id,
+      dueDate,
       paidBy,
     });
 

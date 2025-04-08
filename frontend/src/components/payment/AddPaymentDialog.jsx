@@ -46,7 +46,7 @@ const AddPaymentDialog = ({
   const [officers, setOfficers] = useState([]);
   const { token } = useAuth();
   const [openCommand, setOpenCommand] = useState(false);
- 
+
   useEffect(() => {
     fetchOfficers();
   }, []);
@@ -78,7 +78,6 @@ const AddPaymentDialog = ({
     setOpenCommand(true);
   };
 
- 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
@@ -157,6 +156,24 @@ const AddPaymentDialog = ({
                             placeholder="0.00"
                             className="pl-8"
                           />
+                        </div>
+                      </FormControl>
+                      <FormMessage className="text-xs" />
+                    </FormItem>
+                  )}
+                />
+                {/* Due Date */}
+                <FormField
+                  control={form.control}
+                  name="dueDate"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-gray-600 text-sm">
+                        Due Date{" "}
+                      </FormLabel>
+                      <FormControl>
+                        <div className="relative w-full ">
+                          <Input type="date" {...field} />
                         </div>
                       </FormControl>
                       <FormMessage className="text-xs" />

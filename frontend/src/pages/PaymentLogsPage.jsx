@@ -46,7 +46,8 @@ const PaymentLogsPage = () => {
       purpose: "",
       details: "",
       amount: "",
-      paidBy:""
+      paidBy:"",
+      dueDate: "",
     },
   });
   const navigate = useNavigate();
@@ -72,8 +73,8 @@ const PaymentLogsPage = () => {
           details: data.details,
           amount: data.amount,
           category: categoryMap[data.category],
-          date: dateOnly(data.createdAt),
-          paidBy: data.paidBy
+          paidBy: data.paidBy,
+          date: dateOnly(data.dueDate),
         }));
 
         const expenditureData = tableData.filter(
@@ -97,7 +98,8 @@ const PaymentLogsPage = () => {
         details: data.details,
         amount: data.amount,
         category: "2",
-        paidBy: data.paidBy
+        paidBy: data.paidBy,
+        dueDate: data.dueDate,
       };
 
       setIsSubmitting(true);
@@ -175,6 +177,7 @@ const PaymentLogsPage = () => {
         purpose: data.purpose,
         details: data.details,
         amount: data.amount,
+        dueDate: data.dueDate,
       };
       setIsSubmitting(true);
       const res = await apiClient.patch(

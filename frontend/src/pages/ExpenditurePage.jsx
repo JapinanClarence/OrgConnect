@@ -68,7 +68,6 @@ const ExpenditurePage = () => {
       if (!data.success) {
         setData([]);
       } else {
-        console.log(data.data)
         const tableData = data.data.map((data) => {
           return {
             id: data._id,
@@ -105,7 +104,7 @@ const ExpenditurePage = () => {
         dueDate: data.dueDate,
         category: "1",
       };
-      console.log(expenditureData)
+
       setIsSubmitting(true);
       const res = await apiClient.post("/admin/payment", expenditureData, {
         headers: {
@@ -179,7 +178,7 @@ const ExpenditurePage = () => {
 
   const onEdit = async (data) => {
     try {
-      console.log(data);
+
       const expenditureData = {
         purpose: data.purpose,
         details: data.details,
