@@ -41,7 +41,6 @@ import {
 } from "@/components/ui/collapsible";
 
 const DesktopSidebar = () => {
-  const [showUserDialog, setShowUserDialog] = useState(false);
   const location = useLocation();
   const { logout, userData } = useAuth();
   const navigate = useNavigate();
@@ -454,7 +453,7 @@ const DesktopSidebar = () => {
         </TooltipProvider>
       </nav>
 
-      <nav className="mt-auto grid gap-1 p-3 border-t-[1px] border-gray-500">
+      {/* <nav className="mt-auto grid gap-1 p-3 border-t-[1px] border-gray-500">
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
@@ -526,7 +525,7 @@ const DesktopSidebar = () => {
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
-      </nav>
+      </nav> */}
     </aside>
   );
 };

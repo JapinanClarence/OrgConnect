@@ -19,6 +19,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { MoreVertical } from "lucide-react";
 
 const Header = () => {
   const { logout, userData } = useAuth();
@@ -78,15 +80,22 @@ const Header = () => {
             })}
           </BreadcrumbList>
         </Breadcrumb>
-        <div className="ml-auto md:hidden">
+        {/* mobile icon */}
+        <div className="ml-auto ">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Avatar className="cursor-pointer size-10">
-                <AvatarImage src={userData.profilePicture} />
-                <AvatarFallback className="text-gray-500 bg-gray-200">
-                  {userData.username[0] + userData.username[1]}
-                </AvatarFallback>
-              </Avatar>
+              <div className="flex items-center cursor-pointer">  
+                <Avatar className="cursor-pointer size-10">
+                  <AvatarImage src={userData.profilePicture} />
+                  <AvatarFallback className="text-gray-500 bg-gray-200">
+                    {userData.username[0] + userData.username[1]}
+                  </AvatarFallback>
+                </Avatar>
+                <div className="hidden md:inline lg:ml-3 text-sm font-bold">
+                  {userData.username}{" "}
+                  <p className="font-normal">{userData.email}</p>
+                </div>
+              </div>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>{userData.username}</DropdownMenuLabel>

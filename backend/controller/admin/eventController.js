@@ -1,7 +1,11 @@
 import Events from "../../model/eventModel.js";
+import Membership from "../../model/membershipModel.js";
 import Organization from "../../model/organizationModel.js";
 import { OrgAdminModel as Admin } from "../../model/UserModel.js";
-import { sendNotificationToAll } from "../../util/sendNotif.js";
+import {
+  sendNotificationToAll,
+  sendNotificationToUser,
+} from "../../util/sendNotif.js";
 
 export const createEvent = async (req, res, next) => {
   const { title, description, startDate, endDate, location, fee, organizer } =
@@ -20,10 +24,12 @@ export const createEvent = async (req, res, next) => {
       });
     }
 
-    const organization = await Organization.findOne({  $or: [
-      { admin: admin },      // Check if the user is an admin
-      { subAdmins: admin }    // Check if the user is a sub-admin
-    ] });
+    const organization = await Organization.findOne({
+      $or: [
+        { admin: admin }, // Check if the user is an admin
+        { subAdmins: admin }, // Check if the user is a sub-admin
+      ],
+    });
 
     if (!organization) {
       return res.status(404).json({
@@ -57,12 +63,25 @@ export const createEvent = async (req, res, next) => {
       fee,
       organizer,
     });
+    //get all organization members
+    const membership = await Membership.find({
+      organization: organization._id,
+    });
+    // send notification to all members
+    membership.map(async ({ student }) => {
+      await sendNotificationToUser(
+        student,
+        "A new event has been uploaded",
+        `Check out the new event: ${event.title} from ${organization.name}`,
+        `/organization/${organization._id}/events`
+      );
+    });
 
-    await sendNotificationToAll(
-      "A new event has been uploaded",
-      `Check out the new event: ${event.title} from ${organization.name}`,
-      `/organization/${organization._id}/events`,
-    );
+    // await sendNotificationToAll(
+    //   "A new event has been uploaded",
+    //   `Check out the new event: ${event.title} from ${organization.name}`,
+    //   `/organization/${organization._id}/events`,
+    // );
 
     res.status(201).json({
       success: true,
@@ -79,10 +98,12 @@ export const createEvent = async (req, res, next) => {
 export const getEvent = async (req, res, next) => {
   const userId = req.user.userId;
   try {
-    const organization = await Organization.findOne({  $or: [
-      { admin: userId },      // Check if the user is an admin
-      { subAdmins: userId }    // Check if the user is a sub-admin
-    ] });
+    const organization = await Organization.findOne({
+      $or: [
+        { admin: userId }, // Check if the user is an admin
+        { subAdmins: userId }, // Check if the user is a sub-admin
+      ],
+    });
     if (!organization) {
       return res.status(404).json({
         success: false,

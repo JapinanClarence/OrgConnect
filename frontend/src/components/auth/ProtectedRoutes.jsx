@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
-import apiClient from "@/api/axios";
 
 //handles routes that require authentication and authorization based on user roles
 const ProtectedRoutes = ({ allowedRoles }) => {

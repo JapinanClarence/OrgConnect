@@ -7,7 +7,7 @@ export const createSubscription = async (req, res) => {
     // You can upsert (update or insert) the subscription
     await PushSubscription.findOneAndUpdate(
       { endpoint: subscription.endpoint },
-      { ...subscription, user: req.user._id },
+      { ...subscription, user: req.user.userId },
       { upsert: true, new: true }
     );
 

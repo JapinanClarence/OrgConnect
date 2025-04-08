@@ -3,18 +3,17 @@ import apiClient from "@/api/axios";
 // import vapid public key from environment variables
 const VAPID_PUBLIC_KEY = import.meta.env.VITE_VAPID_PUBLIC;
 import { useAuth } from "@/context/AuthContext";
-import { s } from "@fullcalendar/core/internal-common";
 
 const usePushNotifications = () => {
-  const { token } = useAuth(); // Get the user from the AuthContext
+  const { token, isAuthenticated } = useAuth(); // Get the user from the AuthContext
   useEffect(() => {
+    // if (!isAuthenticated) return; // Check if the user is authenticated
     const enablePush = async () => {
+      // Check if the browser supports service workers and push notifications
       if ("serviceWorker" in navigator && "PushManager" in window) {
         const swUrl = `${import.meta.env.VITE_PUBLIC_URL}/sw.js`;
-
-        console.log(swUrl);
         const registration = await navigator.serviceWorker.register(swUrl);
-        console.log(registration);
+
         const permission = await Notification.requestPermission();
         if (permission !== "granted") return;
 
