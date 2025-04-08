@@ -19,13 +19,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { MoreVertical } from "lucide-react";
+import apiClient from "@/api/axios";
 
 const Header = () => {
-  const { logout, userData } = useAuth();
+  const { logout, userData, token } = useAuth();
   const [showUserDialog, setShowUserDialog] = useState();
   const navigate = useNavigate();
+  const [orgName, setOrgName] = useState(null);
 
   const handleLogout = () => {
     logout();
@@ -40,10 +40,26 @@ const Header = () => {
   const generatePath = (index) =>
     `/${pathSegments.slice(0, index + 1).join("/")}`;
 
-  const fullname = `${userData.firstname} ${
-    userData.middlename ? userData.middlename[0] + ". " : ""
-  }${userData.lastname}`;
+  // Check and fetch org name if ID is in the path
+  useEffect(() => {
+    const fetchOrgName = async () => {
+      const orgIndex = pathSegments.findIndex((seg) => seg === "organization");
+      const orgId = pathSegments[orgIndex + 1];
 
+      if (orgIndex !== -1 && orgId) {
+        try {
+          const res = await apiClient.get(`/superadmin/organization/${orgId}`, {
+            headers: { Authorization: token },
+          });
+          setOrgName(res.data.data.name); // Adjust based on your response structure
+        } catch (error) {
+          console.error("Error fetching org name:", error);
+        }
+      }
+    };
+
+    fetchOrgName();
+  }, [location.pathname]);
   return (
     <>
       <header className="top-0 flex h-[53px] items-center border-b bg-zinc-100 px-4 shadow-sm sticky z-10">
@@ -63,16 +79,20 @@ const Header = () => {
 
             {pathSegments.map((segment, index) => {
               const isLastSegment = index === pathSegments.length - 1;
+              const isOrgId = pathSegments[index - 1] === "organization";
+
               return (
                 <React.Fragment key={index}>
                   <BreadcrumbSeparator />
                   <BreadcrumbItem>
                     <BreadcrumbLink
                       href={generatePath(index)}
-                      className={isLastSegment ? "text-zinc-900" : ""} // Active state styles
+                      className={isLastSegment ? "text-zinc-900" : ""}
                     >
-                      {/* Capitalize the segment */}
-                      {segment.charAt(0).toUpperCase() + segment.slice(1)}
+                      {/* If this segment is an org ID, show the fetched orgName */}
+                      {isOrgId && orgName
+                        ? orgName
+                        : segment.charAt(0).toUpperCase() + segment.slice(1)}
                     </BreadcrumbLink>
                   </BreadcrumbItem>
                 </React.Fragment>
@@ -84,7 +104,7 @@ const Header = () => {
         <div className="ml-auto ">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <div className="flex items-center cursor-pointer">  
+              <div className="flex items-center cursor-pointer">
                 <Avatar className="cursor-pointer size-10">
                   <AvatarImage src={userData.profilePicture} />
                   <AvatarFallback className="text-gray-500 bg-gray-200">

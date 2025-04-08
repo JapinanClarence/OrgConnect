@@ -36,7 +36,7 @@ router.patch(
 
 router.get("/:id", 
     authenticate,
-    authorizeRole("admin","secretary"),
+    authorizeRole("admin","secretary", "treasurer", "auditor"),
     getAttendance
 )
 
