@@ -1,11 +1,11 @@
 import React from 'react'
-import PaymentsCard from './PaymentsCard';
+import StudentPaymentCard from './StudentPaymentCard';
 
 const TransactionsTab = ({transactions}) => {
     return (
         <div className="flex gap-2 flex-col pb-5">
           {transactions.map((payment) => (
-            <PaymentsCard
+            <StudentPaymentCard
               showPaymentStatus={false}
               key={payment.id}
               id={payment.id}
