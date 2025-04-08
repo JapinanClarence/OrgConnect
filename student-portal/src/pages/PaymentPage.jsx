@@ -42,15 +42,19 @@ const PaymentPage = () => {
           category: data.category,
           amountPaid: data.studentStatus?.amountPaid || null,
           status: data.studentStatus?.status || null,
-          createdAt: data.createdAt
+          createdAt: data.createdAt,
         }));
 
-        const payments = paymentData.filter((data) => data.category === "0");
-        const transactions = paymentData.filter(
-          (data) => data.category !== "0"
+        const alreadyPaid = paymentData.filter(
+          (data) => data.category === "0" && data.status === "1"
         );
-        setPaymentData(payments);
-        setTransactionData(transactions);
+
+        const notPaid = paymentData.filter(
+          (data) => data.category === "0" && !data.status
+        );
+
+        setPaymentData(notPaid);
+        setTransactionData(alreadyPaid);
       }
       setLoading(false);
     } catch (error) {
