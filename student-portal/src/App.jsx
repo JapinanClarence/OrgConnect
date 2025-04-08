@@ -22,6 +22,7 @@ import OrgAnnouncementPage from "./pages/OrgAnnouncementPage";
 import AttendancePage from "./pages/AttendancePage";
 import SearchPage from "./pages/SearchPage";
 import usePushNotifications from "./hooks/usePushNotifications";
+import TransactionPage from "./pages/TransactionPage";
 
 function App() {
   const [isInstalled, setIsInstalled] = useState(false);
@@ -64,6 +65,10 @@ function App() {
               <Route
                 path="/organization/:id/payments"
                 element={<PaymentPage />}
+              />
+               <Route
+                path="/organization/:id/transactions"
+                element={<TransactionPage />}
               />
               <Route
                 path="/organization/:id/officers"

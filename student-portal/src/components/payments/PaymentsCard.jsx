@@ -21,6 +21,7 @@ const PaymentsCard = ({
   amountPaid,
   status,
   createdAt,
+  paidBy
 }) => {
   const [showFullDetails, setShowFullDetails] = useState(false);
   const [showDialog, setShowDialog] = useState(false);
@@ -99,6 +100,14 @@ const PaymentsCard = ({
               <h2 className="font-bold">Date paid:</h2>
               <span className="inline-flex items-center">
                 {formatSimpleDate(createdAt)}
+              </span>
+            </div>
+          )}
+          {paidBy && (
+            <div className="text-sm text-muted-foreground">
+              <h2 className="font-bold">Paid by:</h2>
+              <span className="inline-flex items-center">
+                {paidBy}
               </span>
             </div>
           )}
