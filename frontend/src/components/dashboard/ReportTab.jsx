@@ -1,36 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import apiClient from "@/api/axios";
-import Statcard from "@/components/home/Statcard";
 import { useAuth } from "@/context/AuthContext";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
-  ChartCandlestick,
-  ChartNoAxesColumn,
-  ChartSpline,
-  Users,
-  TrendingUp,
-} from "lucide-react";
-import MembersChart from "../home/MembersChart";
-import AnnouncementsChart from "../home/AnnouncementsChart";
-import AttendeesChart from "@/components/home/AttendeesChart";
-import { Skeleton } from "@/components/ui/skeleton";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Label } from "../ui/label";
 import TableComponent from "./Table";
 import { dateOnly } from "@/util/helpers";
 import {
@@ -38,19 +8,21 @@ import {
   memberFeesReportColumns,
   transactionReportColumns,
 } from "./Columns";
+import * as XLSX from "xlsx";
+import { jsPDF } from "jspdf";
 
 const ReportTab = () => {
   const [eventAttendees, setEventAttendees] = useState([]);
   const [collectedPayments, setCollectedPayments] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("0");
   const [transactionData, setTransactionData] = useState([]);
+  const [collectionReport, setCollectionReport] = useState([]);
   const [yearStarted, setYearStarted] = useState("");
-
+  const { token } = useAuth();
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     const fetchReportsData = async () => {
       try {
-        const token = localStorage.getItem("token");
         const { data } = await apiClient.get("/admin/dashboard/report", {
           headers: {
             Authorization: token,
@@ -69,6 +41,7 @@ const ReportTab = () => {
               startDate: dateOnly(data.startDate),
               endDate: dateOnly(data.endDate),
               totalAttendees: data.totalAttendees,
+              category: "Events",
             };
           });
 
@@ -79,6 +52,7 @@ const ReportTab = () => {
               amount: data.amount,
               date: dateOnly(data.date),
               totalCollectedPayments: data.totalCollectedPayments,
+              category: "Collections",
             };
           });
 
@@ -88,6 +62,7 @@ const ReportTab = () => {
               purpose: data.purpose,
               amount: data.amount,
               date: dateOnly(data.date),
+              category: "Transactions",
             };
           });
           setYearStarted(data.data?.organizationStartYear);
@@ -106,6 +81,95 @@ const ReportTab = () => {
 
   const handleSelectedCategory = (data) => {
     setSelectedCategory(data);
+  };
+
+  const onGenerate = (data, reportType) => {
+    if (data.category === "Events") {
+      console.log(data._id);
+    } else if (data.category === "Collections") {
+      fetchCollectionReport(data._id);
+      if (reportType === "pdf") {
+        exportToPDF(
+          {
+            title: "Total Collected Payments",
+            sum: collectionReport.totalCollectedPayments,
+          },
+          collectionReport.membersFees,
+          collectionReport.purpose
+        );
+      }
+    }
+  };
+
+  const fetchEventReport = async (id) => {
+    try {
+      const { data } = await apiClient.get(
+        `/admin/dashboard/eventReport/${id}`,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+
+      return data.data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchCollectionReport = async (id) => {
+    try {
+      const { data } = await apiClient.get(
+        `/admin/dashboard/collectionReport/${id}`,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+
+      if (data.success) {
+        setCollectionReport(data.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const exportToPDF = (summary, data, title) => {
+    const doc = new jsPDF();
+    doc.text(title || "OrgConnect Reports", 10, 10);
+
+    doc.text(`${summary.title}: ${summary.sum}`, 10, 20);
+
+    if (!data.length) {
+      doc.text("No data available", 10, 30);
+      doc.save(`${title || "report"}.pdf`);
+      return;
+    }
+
+    // Dynamically get headers from object keys
+    const tableHeaders = Object.keys(data[0]);
+
+    // Format the data rows
+    const tableData = data.map((row) =>
+      tableHeaders.map((key) => {
+        const value = row[key];
+        if (key.toLowerCase().includes("date")) {
+          return new Date(value).toLocaleDateString();
+        }
+        return typeof value === "number" ? `${value}` : value;
+      })
+    );
+
+    doc.autoTable({
+      head: [tableHeaders],
+      body: tableData,
+      startY: 30,
+    });
+
+    doc.save(`${title || "report"}.pdf`);
   };
 
   return (
@@ -136,6 +200,7 @@ const ReportTab = () => {
             }
             setSelectedCategory={handleSelectedCategory}
             selectedCategory={selectedCategory}
+            onGenerate={onGenerate}
           />
         </div>
       </div>

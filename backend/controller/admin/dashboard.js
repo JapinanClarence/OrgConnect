@@ -33,10 +33,12 @@ export const getDashboardData = async (req, res) => {
   });
 
   try {
-    const organization = await Organization.findOne({  $or: [
-      { admin: userId },      // Check if the user is an admin
-      { subAdmins: userId }    // Check if the user is a sub-admin
-    ] });
+    const organization = await Organization.findOne({
+      $or: [
+        { admin: userId }, // Check if the user is an admin
+        { subAdmins: userId }, // Check if the user is a sub-admin
+      ],
+    });
 
     if (!organization) {
       return res.status(404).json({
@@ -54,7 +56,7 @@ export const getDashboardData = async (req, res) => {
     });
 
     const expendedCollections = await Payments.aggregate([
-      { $match: { organization: organization._id, category:{$ne: "0"} } }, // Filter documents for the specific organization
+      { $match: { organization: organization._id, category: { $ne: "0" } } }, // Filter documents for the specific organization
       { $group: { _id: null, totalAmount: { $sum: "$amount" } } }, // Group and sum the `amount` field
     ]);
 
@@ -115,7 +117,7 @@ export const getDashboardData = async (req, res) => {
         gender: data.student.gender,
       };
     });
-  
+
     // Fetch events with attendees count for the current month
     const eventsAttendees = await Events.aggregate([
       {
@@ -166,8 +168,12 @@ export const getDashboardData = async (req, res) => {
       organization: organization.name,
       eventCount: totalEventsCount,
       announcementCount: totalAnnouncementCount,
-      totalCollectedFees: `₱ ${new Intl.NumberFormat("en-US").format(totalCollectedPayments)}`,
-      totalExpenses: `₱ ${new Intl.NumberFormat("en-US").format(totalExpendedCollections)}`,
+      totalCollectedFees: `₱ ${new Intl.NumberFormat("en-US").format(
+        totalCollectedPayments
+      )}`,
+      totalExpenses: `₱ ${new Intl.NumberFormat("en-US").format(
+        totalExpendedCollections
+      )}`,
       memberCount: totalMembersCount,
       events: trimmedEvents,
       members: cleanMemberData,
@@ -276,6 +282,69 @@ export const getReportsData = async (req, res) => {
     return res.status(500).json({
       success: false,
       message: err.message,
+    });
+  }
+};
+
+export const getEventReports = async (req, res) => {
+  const eventId = req.params.id;
+  try {
+    const event = await Events.findById(eventId);
+
+    if (!event) {
+      return res.status(404).json({
+        success: false,
+        message: "Event not found",
+      });
+    }
+    const attendance = await Attendance.find({ event: eventId });
+
+    console.log(attendance);
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+export const getCollectionReport = async (req, res) => {
+  const collectionId = req.params.id;
+  try {
+    const feesData = await Payments.findById(collectionId);
+
+    const totalCollectedPayments = feesData.membersPaid.reduce(
+      (sum, member) => sum + (member.amount || 0),
+      0
+    );
+
+    const membersFees = await Promise.all(
+      feesData.membersPaid.map(async (fee) => {
+        const member = await UserModel.findById(fee.member);
+        const fullname = `${member.firstname} ${
+          member.middlename ? member.middlename[0] + ". " : ""
+        }${member.lastname}`;
+
+        return {
+          fullname,
+          amount: fee.amount,
+          date: fee.datePaid,
+        };
+      })
+    );
+   
+    res.status(200).json({
+      success: true,
+      data: {
+        purpose: feesData.purpose,
+        membersFees,
+        totalCollectedPayments,
+      },
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
     });
   }
 };

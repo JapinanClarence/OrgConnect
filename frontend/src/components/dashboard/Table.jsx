@@ -57,6 +57,7 @@ const TableComponent = ({
   setSelectedCategory,
   selectedCategory,
   columns,
+  onGenerate
 }) => {
   const [sorting, setSorting] = useState([]);
   const [columnFilters, setColumnFilters] = useState([]);
@@ -98,7 +99,7 @@ const TableComponent = ({
   
   const table = useReactTable({
     data: filteredData,
-    columns: columns,
+    columns: columns(onGenerate),
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     onPaginationChange: setPagination,
@@ -324,7 +325,7 @@ const TableComponent = ({
               <TableRow>
                 <TableCell
                   colSpan={columns.length}
-                  className="text-center py-4"
+                  className="text-center py-4 text-muted-foreground"
                 >
                   No data found for {selectedMonth}
                 </TableCell>

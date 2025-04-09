@@ -5,7 +5,9 @@ import {
 } from "./../../middleware/authMiddleware.js";
 
 import {
+  getCollectionReport,
   getDashboardData,
+  getEventReports,
   getReportsData,
 } from "../../controller/admin/dashboard.js";
 
@@ -22,6 +24,20 @@ router.get(
   authenticate,
   authorizeRole("admin", "secretary", "treasurer", "auditor"),
   getReportsData
+);
+
+router.get(
+  "/dashboard/eventReport/:id",
+  authenticate,
+  authorizeRole("admin", "secretary", "treasurer", "auditor"),
+  getEventReports
+);
+
+router.get(
+  "/dashboard/collectionReport/:id",
+  authenticate,
+  authorizeRole("admin", "secretary", "treasurer", "auditor"),
+  getCollectionReport
 );
 
 export default router;

@@ -11,7 +11,6 @@ import {
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import { CircleCheck, PhilippinePeso, Timer } from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 // Define the columns for the table
 export const Columns = (onEdit, onDelete, onAttendance) => [
