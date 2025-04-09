@@ -97,6 +97,8 @@ const ReportTab = () => {
           collectionReport.membersFees,
           collectionReport.purpose
         );
+      } else if (reportType === "excel") {
+        exportToExcel(collectionReport.purpose, collectionReport.membersFees);
       }
     }
   };
@@ -170,6 +172,15 @@ const ReportTab = () => {
     });
 
     doc.save(`${title || "report"}.pdf`);
+  };
+
+  // Function to export table data to Excel
+  const exportToExcel = (title, data) => {
+
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Report");
+    XLSX.writeFile(workbook, `${title || "report"}.xlsx`);
   };
 
   return (
