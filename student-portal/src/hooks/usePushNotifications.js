@@ -1,42 +1,53 @@
 import { useEffect } from "react";
 import apiClient from "@/api/axios";
+import { useAuth } from "@/context/AuthContext";
 // import vapid public key from environment variables
 const VAPID_PUBLIC_KEY = import.meta.env.VITE_VAPID_PUBLIC;
-import { useAuth } from "@/context/AuthContext";
+const VAPID_PUBLIC_URL = import.meta.env.VITE_PUBLIC_URL;
 
 const usePushNotifications = () => {
-  const { token, isAuthenticated } = useAuth(); // Get the user from the AuthContext
+  const { token, isAuthenticated } = useAuth();
+
   useEffect(() => {
-    // if (!isAuthenticated) return; // Check if the user is authenticated
+    if (!isAuthenticated || !token) return; // Ensure only authenticated users
+
     const enablePush = async () => {
-      // Check if the browser supports service workers and push notifications
-      if ("serviceWorker" in navigator && "PushManager" in window) {
-        const swUrl = `/sw.js`;
-        const registration = await navigator.serviceWorker.register(swUrl);
+      try {
+        if ("serviceWorker" in navigator && "PushManager" in window) {
+          const swUrl = `${VAPID_PUBLIC_URL}/sw.js`;
+          const registration = await navigator.serviceWorker.register(swUrl);
+          console.log("Service worker registered:", registration.scope);
 
-        const permission = await Notification.requestPermission();
-        if (permission !== "granted") return;
-
-        const subscription = await registration.pushManager.subscribe({
-          userVisibleOnly: true,
-          applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY),
-        });
-
-        await apiClient.post(
-          "/notification/subscribe",
-          { subscription },
-          {
-            headers: {
-              Authorization: token, // Use the token from the AuthContext
-            },
+          const permission = await Notification.requestPermission();
+          if (permission !== "granted") {
+            console.warn("Push notifications not granted by user.");
+            return;
           }
-          // { withCredentials: true }
-        );
+
+          const subscription = await registration.pushManager.subscribe({
+            userVisibleOnly: true,
+            applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY),
+          });
+
+          await apiClient.post(
+            "/notification/subscribe",
+            { subscription },
+            {
+              headers: {
+                Authorization: token,
+              },
+            }
+          );
+
+          console.log("Push subscription successful:", subscription);
+        }
+      } catch (error) {
+        console.error("Error enabling push notifications:", error);
       }
     };
 
     enablePush();
-  }, []);
+  }, [isAuthenticated, token]);
 };
 
 function urlBase64ToUint8Array(base64String) {

@@ -6,7 +6,7 @@ self.addEventListener("push", (event) => {
     icon: `/OrgConnect-Default.jpeg`,
     data: { url: data.url || "/" },
   };
-  console.log("Push event options:", options);
+
   event.waitUntil(self.registration.showNotification(data.title, options));
 });
 
