@@ -15,8 +15,18 @@ const usePushNotifications = () => {
       try {
         if ("serviceWorker" in navigator && "PushManager" in window) {
           const swUrl = `${VAPID_PUBLIC_URL || ""}/sw.js`;
-          const registration = await navigator.serviceWorker.register(swUrl);
-          console.log("Service worker registered:", registration.scope);
+          
+          const registration = await navigator.serviceWorker
+          .register(swUrl)
+          .then(
+            function (swRegistration) {
+              console.log("Worker registration successful", swRegistration.scope);
+              return swRegistration; // <- you MUST return this!
+            },
+            function (err) {
+              console.log("Worker registration failed", err);
+            }
+          );
 
           const permission = await Notification.requestPermission();
           if (permission !== "granted") {
