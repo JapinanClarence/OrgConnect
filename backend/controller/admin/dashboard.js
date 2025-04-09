@@ -299,7 +299,33 @@ export const getEventReports = async (req, res) => {
     }
     const attendance = await Attendance.find({ event: eventId });
 
-    console.log(attendance);
+    const totalAttendees = attendance.length;
+
+    const attendees = await Promise.all(
+      attendance.map(async (attendee) => {
+        const student = await UserModel.findById(attendee.student);
+        
+        const fullname = `${student.firstname} ${
+          student.middlename ? student.middlename[0] + ". " : ""
+        }${student.lastname}`;
+        return {
+          fullname,
+          studentId: student.studentId,
+          year: student.year,
+          course: student.course,
+          gender: student.gender
+        };
+      })
+    );
+    res.status(200).json({
+      success: true,
+      data: {
+        title: event.title,
+        attendees,
+        totalAttendees,
+      },
+    });
+
   } catch (error) {
     return res.status(500).json({
       success: false,
@@ -328,7 +354,7 @@ export const getCollectionReport = async (req, res) => {
         return {
           fullname,
           amount: fee.amount,
-          date: fee.datePaid,
+          date: new Date(fee.datePaid).toLocaleDateString(),
         };
       })
     );

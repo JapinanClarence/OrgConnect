@@ -52,11 +52,15 @@ export const eventReportColumns = (onGenerate) => [
     cell: ({ row }) => {
       const currentData = row.original;
 
-      const handleGenerateReport = (event) => {
+      const handleGeneratePDF = (event) => {
         event.stopPropagation();
-        onGenerate(currentData);
+        onGenerate(currentData, "pdf");
       };
-
+      const handleGenerateExcel = (event) => {
+        event.stopPropagation();
+        onGenerate(currentData, "excel");
+      };
+      
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -67,8 +71,11 @@ export const eventReportColumns = (onGenerate) => [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem onClick={handleGenerateReport}>
-              Generate Report
+            <DropdownMenuItem onClick={handleGeneratePDF}>
+              Generate PDF
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={handleGenerateExcel}>
+              Generate Excel
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -148,7 +155,7 @@ export const memberFeesReportColumns = (onGenerate) => [
   },
 ];
 
-export const transactionReportColumns = (onGenerate)=>[
+export const transactionReportColumns = (onGenerate) => [
   {
     accessorKey: "purpose",
     header: ({ column }) => {
@@ -185,9 +192,7 @@ export const transactionReportColumns = (onGenerate)=>[
         onGenerate(currentData);
       };
 
-      return (
-        <></>
-      );
+      return <></>;
     },
   },
 ];

@@ -40,4 +40,11 @@ router.get(
   getCollectionReport
 );
 
+router.get(
+  "/dashboard/eventReport/:id",
+  authenticate,
+  authorizeRole("admin", "secretary", "treasurer", "auditor"),
+  getEventReports
+);
+
 export default router;

@@ -17,6 +17,7 @@ const ReportTab = () => {
   const [selectedCategory, setSelectedCategory] = useState("0");
   const [transactionData, setTransactionData] = useState([]);
   const [collectionReport, setCollectionReport] = useState([]);
+  const [eventReport, setEventReport] = useState([]);
   const [yearStarted, setYearStarted] = useState("");
   const { token } = useAuth();
   const [loading, setLoading] = useState(true);
@@ -83,23 +84,39 @@ const ReportTab = () => {
     setSelectedCategory(data);
   };
 
-  const onGenerate = (data, reportType) => {
-    if (data.category === "Events") {
-      console.log(data._id);
-    } else if (data.category === "Collections") {
-      fetchCollectionReport(data._id);
-      if (reportType === "pdf") {
-        exportToPDF(
-          {
-            title: "Total Collected Payments",
-            sum: collectionReport.totalCollectedPayments,
-          },
-          collectionReport.membersFees,
-          collectionReport.purpose
-        );
-      } else if (reportType === "excel") {
-        exportToExcel(collectionReport.purpose, collectionReport.membersFees);
-      }
+  const onGenerate = async (data, reportType) => {
+    const isEvent = data.category === "Events";
+    const isCollection = data.category === "Collections";
+    const shouldExportPDF = reportType === "pdf";
+    const shouldExportExcel = reportType === "excel";
+
+    let report = null;
+
+    if (isEvent) {
+      report = await fetchEventReport(data._id);
+    } else if (isCollection) {
+      report = await fetchCollectionReport(data._id);
+    }
+
+    if (!report) {
+      console.error("Failed to fetch report data.");
+      return;
+    }
+
+    if (shouldExportPDF) {
+      exportToPDF(
+        {
+          title: isEvent ? "Total Attendees" : "Total Collected Payments",
+          sum: isEvent ? report.totalAttendees : report.totalCollectedPayments,
+        },
+        isEvent ? report.attendees : report.membersFees,
+        isEvent ? report.title : report.purpose
+      );
+    } else if (shouldExportExcel) {
+      exportToExcel(
+        isEvent ? report.title : report.purpose,
+        isEvent ? report.attendees : report.membersFees
+      );
     }
   };
 
@@ -114,10 +131,13 @@ const ReportTab = () => {
         }
       );
 
-      return data.data;
+      if (data.success) {
+        return data.data;
+      }
     } catch (error) {
       console.log(error);
     }
+    return null;
   };
 
   const fetchCollectionReport = async (id) => {
@@ -132,11 +152,12 @@ const ReportTab = () => {
       );
 
       if (data.success) {
-        setCollectionReport(data.data);
+        return data.data;
       }
     } catch (error) {
       console.log(error);
     }
+    return null;
   };
 
   const exportToPDF = (summary, data, title) => {
@@ -144,7 +165,6 @@ const ReportTab = () => {
     doc.text(title || "OrgConnect Reports", 10, 10);
 
     doc.text(`${summary.title}: ${summary.sum}`, 10, 20);
-
     if (!data.length) {
       doc.text("No data available", 10, 30);
       doc.save(`${title || "report"}.pdf`);
@@ -158,9 +178,6 @@ const ReportTab = () => {
     const tableData = data.map((row) =>
       tableHeaders.map((key) => {
         const value = row[key];
-        if (key.toLowerCase().includes("date")) {
-          return new Date(value).toLocaleDateString();
-        }
         return typeof value === "number" ? `${value}` : value;
       })
     );
@@ -176,7 +193,6 @@ const ReportTab = () => {
 
   // Function to export table data to Excel
   const exportToExcel = (title, data) => {
-
     const worksheet = XLSX.utils.json_to_sheet(data);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Report");
