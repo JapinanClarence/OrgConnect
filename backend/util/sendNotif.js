@@ -37,5 +37,16 @@ export const sendNotificationToUser = async (userId, title, message, url) => {
     console.log("Notification sent to user", userId);
   } catch (error) {
     console.error("Error sending notification to user:", error);
+
+    // If the subscription is no longer valid, delete it
+    if (error.statusCode === 410 || error.statusCode === 404) {
+      try {
+        await PushSubscription.findByIdAndDelete(subscription._id);
+        console.warn("Deleted invalid subscription:", subscription._id);
+      } catch (deleteError) {
+        console.error("Failed to delete invalid subscription:", deleteError);
+      }
+    }
   }
 };
+

@@ -14,7 +14,7 @@ const usePushNotifications = () => {
     const enablePush = async () => {
       try {
         if ("serviceWorker" in navigator && "PushManager" in window) {
-          const swUrl = `${VAPID_PUBLIC_URL}/sw.js`;
+          const swUrl = `${VAPID_PUBLIC_URL || ""}/sw.js`;
           const registration = await navigator.serviceWorker.register(swUrl);
           console.log("Service worker registered:", registration.scope);
 
