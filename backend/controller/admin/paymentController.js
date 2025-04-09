@@ -2,6 +2,11 @@ import Organization from "../../model/organizationModel.js";
 import { OrgAdminModel as Admin, UserModel } from "../../model/UserModel.js";
 import Payments from "../../model/paymentModel.js";
 import { StudentModel as Student } from "../../model/UserModel.js";
+import Membership from "../../model/membershipModel.js";
+import {
+  sendNotificationToAll,
+  sendNotificationToUser,
+} from "../../util/sendNotif.js";
 
 export const createPayment = async (req, res, next) => {
   const { purpose, amount, details, category, paidBy, dueDate } = req.body;
@@ -60,6 +65,22 @@ export const createPayment = async (req, res, next) => {
       dueDate,
       paidBy,
     });
+
+    if (category === "0") {
+      //get all organization members
+      const membership = await Membership.find({
+        organization: organization._id,
+      });
+      // send notification to all members
+      membership.map(async ({ student }) => {
+        await sendNotificationToUser(
+          student,
+          "A new payment has been uploaded",
+          `Check out the new payment: ${purpose} from ${organization.name}`,
+          `/organization/${organization._id}/events`
+        );
+      });
+    }
 
     res.status(201).json({
       success: true,
@@ -198,7 +219,6 @@ export const findPayment = async (req, res, next) => {
   }
 };
 
-
 export const updatePayment = async (req, res, next) => {
   const userId = req.user.userId;
   try {
@@ -319,7 +339,7 @@ export const deletePayment = async (req, res, next) => {
     }
     const allowedPaymentRoles = ["4", "1"]; // Define allowed roles for payment creation
     const allowedTransactionRoles = ["5", "1"]; // Define allowed roles for transaction creation
-  
+
     const category = payment.category;
 
     // Check if the user is allowed to create payments based on their role and category

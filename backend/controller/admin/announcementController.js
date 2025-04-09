@@ -1,6 +1,8 @@
 import Announcements from "../../model/announcementModel.js";
 import Organization from "../../model/organizationModel.js";
 import { OrgAdminModel as Admin } from "../../model/UserModel.js";
+import Membership from "../../model/membershipModel.js";
+import {sendNotificationToUser} from "../../util/sendNotif.js";
 
 export const createAnnouncement = async (req, res, next) => {
   const { title, description, category } = req.body;
@@ -38,6 +40,20 @@ export const createAnnouncement = async (req, res, next) => {
       description,
       organization: organization._id,
       category,
+    });
+
+    //get all organization members
+    const membership = await Membership.find({
+      organization: organization._id,
+    });
+    // send notification to all members
+    membership.map(async ({ student }) => {
+      await sendNotificationToUser(
+        student,
+        "A new announcement has been uploaded",
+        `Check out the new announcement: ${title} from ${organization.name}`,
+        `/organization/${organization._id}/events`
+      );
     });
 
     res.status(201).json({
