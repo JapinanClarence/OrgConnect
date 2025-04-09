@@ -48,10 +48,12 @@ export const getAllEvents = async (req, res) => {
         message: "No events found",
       });
     }
-
+    const sortedEvents = flattenedEvents.sort(
+      (a, b) => new Date(b.startDate) - new Date(a.startDate)
+    );
     res.status(200).json({
       success: true,
-      data: flattenedEvents,
+      data: sortedEvents,
     });
   } catch (err) {
     return res.status(500).json({
