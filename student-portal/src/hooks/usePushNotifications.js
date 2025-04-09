@@ -11,7 +11,7 @@ const usePushNotifications = () => {
     const enablePush = async () => {
       // Check if the browser supports service workers and push notifications
       if ("serviceWorker" in navigator && "PushManager" in window) {
-        const swUrl = `${import.meta.env.VITE_PUBLIC_URL}/sw.js`;
+        const swUrl = `/sw.js`;
         console.log("Service Worker URL:", swUrl);
         const registration = await navigator.serviceWorker.register(swUrl);
 
