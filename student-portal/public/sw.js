@@ -3,7 +3,7 @@ self.addEventListener("push", async function (event) {
     console.log("Push event data:", data);
   const options = {
     body: data.message,
-    icon: "OrgConnect-Default.jpeg",
+    icon: `/OrgConnect-Default.jpeg`,
     data: { url: data.url || "/" },
   };
   console.log("Push event options:", options);
