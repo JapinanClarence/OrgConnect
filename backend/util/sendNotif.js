@@ -20,7 +20,7 @@ export const sendNotificationToAll = async (title, message, url = "/") => {
 
 export const sendNotificationToUser = async (userId, title, message, url) => {
   const subscription = await PushSubscription.findOne({ user: userId });
-
+  console.log(title, message, url);
   if (!subscription) {
     console.log("No subscription found for user");
     return;

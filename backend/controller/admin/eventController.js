@@ -67,6 +67,7 @@ export const createEvent = async (req, res, next) => {
     const membership = await Membership.find({
       organization: organization._id,
     });
+    
     // send notification to all members
     membership.map(async ({ student }) => {
       await sendNotificationToUser(
