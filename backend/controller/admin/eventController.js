@@ -52,7 +52,7 @@ export const createEvent = async (req, res, next) => {
         message: "Event already exists",
       });
     }
-    
+
     const event = await Events.create({
       title,
       description,
@@ -179,7 +179,12 @@ export const updateEvent = async (req, res, next) => {
       });
     }
 
-    const organization = await Organization.findOne({ admin });
+    const organization = await Organization.findOne({
+      $or: [
+        { admin: admin }, // Check if the user is an admin
+        { subAdmins: admin }, // Check if the user is a sub-admin
+      ],
+    });
 
     if (!organization) {
       return res.status(404).json({
@@ -232,7 +237,12 @@ export const deleteEvent = async (req, res, next) => {
       });
     }
 
-    const organization = await Organization.findOne({ admin });
+    const organization = await Organization.findOne({
+      $or: [
+        { admin: admin }, // Check if the user is an admin
+        { subAdmins: admin }, // Check if the user is a sub-admin
+      ],
+    });
 
     if (!organization) {
       return res.status(404).json({
