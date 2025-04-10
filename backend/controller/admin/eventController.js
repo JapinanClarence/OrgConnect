@@ -118,7 +118,7 @@ export const getEvent = async (req, res, next) => {
 
     const event = await Events.find({ organization: organization._id })
       .select(
-        "title startDate endDate status location description fee organizer"
+        "title startDate endDate status location description fee organizer postedBy"
       )
       .sort({ createdAt: -1 });
 
@@ -145,7 +145,7 @@ export const findEvent = async (req, res, next) => {
   try {
     const eventId = req.params.id;
 
-    const event = await Events.findById(eventId).populate("postedBy");
+    const event = await Events.findById(eventId);
 
     if (!event) {
       return res.status(404).json({

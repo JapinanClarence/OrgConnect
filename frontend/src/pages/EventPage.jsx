@@ -28,6 +28,12 @@ import {
 } from "@/components/ui/alert-dialog";
 import { useNavigate } from "react-router-dom";
 
+const positionMap = {
+  1: "Governor",
+  3: "Secretary",
+  6: "Vice-Governor"
+}
+
 const EventPage = () => {
   const [showAddEvent, setShowAddEventDialog] = useState(false);
   const [showEditDialog, setShowEditDialog] = useState(false);
@@ -221,6 +227,7 @@ const EventPage = () => {
               title: event.title,
               startDate: formatSimpleDateTime(event.startDate),
               endDate: formatSimpleDateTime(event.endDate),
+              postedBy: positionMap[event.postedBy?.position],
               description: event.description,
               status: event.status,
               location: event.location,

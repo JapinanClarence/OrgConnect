@@ -134,6 +134,17 @@ export const Columns = (onEdit, onDelete, onAttendance) => [
     },
   },
   {
+    accessorKey: "postedBy",
+    header: "Posted by",
+    cell: ({ row }) => {
+      return (
+        <div className="inline-flex items-center">
+          {row.getValue("postedBy")}
+        </div>
+      );
+    },
+  },
+  {
     accessorKey: "status",
     header: ({ column }) => {
       return (
