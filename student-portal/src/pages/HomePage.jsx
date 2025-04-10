@@ -50,7 +50,7 @@ const HomePage = () => {
         const events = data.data;
         
         const upcomingEvents = events.filter((event)=> event.status ==="1")
-
+        console.log(upcomingEvents)
         setEventData(upcomingEvents.slice(0, 10));
       }
     } catch (error) {
@@ -203,7 +203,8 @@ const HomePage = () => {
                 endDate={data.endDate}
                 location={data.location}
                 status={data.status}
-                postedBy={data.organization.name}
+                eventBy={data.organization?.name}
+                postedBy={data.postedBy?.position}
                 eventFee={data.fee}
                 organizer={data.organizer}
               />

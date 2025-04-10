@@ -11,11 +11,17 @@ import { Calendar, MapPin, PhilippinePeso } from "lucide-react";
 import { Button } from "../ui/button";
 import { Badge } from "../ui/badge";
 
+const positionMap = {
+  1: "Governor",
+  3: "Secretary",
+};
+
 const EventDialog = ({
   title,
   description = "No description.",
   location,
   date,
+  eventBy,
   postedBy,
   badgeStatus,
   eventFee,
@@ -31,6 +37,7 @@ const EventDialog = ({
     setExpanded((prev) => !prev);
   };
 
+  console.log(eventBy, postedBy);
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="bg-white p-5 max-w-[340px] rounded-lg">
@@ -97,7 +104,13 @@ const EventDialog = ({
         <DialogFooter>
           <div>
             <h1 className="text-muted-foreground text-xs">Event by:</h1>
-            <p className="text-gray-900 font-semibold text-sm">{postedBy}</p>
+            <p className="text-gray-900 font-semibold text-sm">{eventBy}</p>
+          </div>
+          <div>
+            <h1 className="text-muted-foreground text-xs">Posted by:</h1>
+            <p className="text-gray-900 font-semibold text-sm">
+              {positionMap[postedBy]}
+            </p>
           </div>
         </DialogFooter>
       </DialogContent>

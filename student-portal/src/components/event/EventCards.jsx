@@ -32,6 +32,7 @@ const EventCards = ({
   location,
   startDate,
   endDate,
+  eventBy,
   postedBy,
   status,
   eventFee,
@@ -115,6 +116,7 @@ const EventCards = ({
         location={location}
         date={date}
         badgeStatus={badgeStatus}
+        eventBy={eventBy}
         postedBy={postedBy}
         organizer={organizer}
         eventFee={eventFee}

@@ -51,6 +51,8 @@ export const getAllEvents = async (req, res) => {
     const sortedEvents = flattenedEvents.sort(
       (a, b) => new Date(b.startDate) - new Date(a.startDate)
     );
+
+    console.log(sortedEvents)
     res.status(200).json({
       success: true,
       data: sortedEvents,

@@ -43,6 +43,17 @@ const eventSchema = new mongoose.Schema(
     organizer: {
       type: String,
     },
+    postedBy: {
+      officer: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: [true, "Posted by is required"],
+      },
+      position:{
+        type:String,
+        required: [true, "Position is required"]
+      }
+    },
   },
   { timestamps: true }
 );

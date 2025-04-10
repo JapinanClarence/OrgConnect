@@ -52,7 +52,7 @@ export const createEvent = async (req, res, next) => {
         message: "Event already exists",
       });
     }
-
+    
     const event = await Events.create({
       title,
       description,
@@ -62,12 +62,16 @@ export const createEvent = async (req, res, next) => {
       organization: organization._id,
       fee,
       organizer,
+      postedBy: {
+        officer: userId,
+        position: admin.role,
+      },
     });
     //get all organization members
     const membership = await Membership.find({
       organization: organization._id,
     });
-    
+
     // send notification to all members
     membership.map(async ({ student }) => {
       await sendNotificationToUser(
@@ -141,7 +145,7 @@ export const findEvent = async (req, res, next) => {
   try {
     const eventId = req.params.id;
 
-    const event = await Events.findById(eventId);
+    const event = await Events.findById(eventId).populate("postedBy");
 
     if (!event) {
       return res.status(404).json({
