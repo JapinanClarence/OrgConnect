@@ -22,7 +22,8 @@ const OngoingTab = ({ loading, eventData }) => {
             endDate={data.endDate}
             location={data.location}
             status={data.status}
-            postedBy={data.organization.name}
+            eventBy={data.organization?.name}
+            postedBy={data.postedBy?.position}
             eventFee={data.fee}
             organizer={data.organizer}
             attendance={data.attendance}

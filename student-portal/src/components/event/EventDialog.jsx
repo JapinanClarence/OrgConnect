@@ -37,7 +37,6 @@ const EventDialog = ({
     setExpanded((prev) => !prev);
   };
 
-  console.log(eventBy, postedBy);
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="bg-white p-5 max-w-[340px] rounded-lg">

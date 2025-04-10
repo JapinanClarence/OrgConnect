@@ -107,6 +107,7 @@ export const getEvents = async (req, res) => {
             createdAt: event.createdAt,
             updatedAt: event.updatedAt,
             status: event.status,
+            postedBy: event.postedBy,
             attendance:
               attendance && student.toString() === attendance.student.toString()
                 ? "1"
@@ -124,6 +125,7 @@ export const getEvents = async (req, res) => {
             createdAt: event.createdAt,
             updatedAt: event.updatedAt,
             status: event.status,
+            postedBy: event.postedBy,
             attendance: attendance && student.toString() === attendance.student.toString()
                 ? "1"
                 : "2",
@@ -132,7 +134,7 @@ export const getEvents = async (req, res) => {
       })
     );
 
-    // console.log(attendanceStatus)
+    console.log(attendanceStatus)
 
     res.status(200).json({
       success: true,

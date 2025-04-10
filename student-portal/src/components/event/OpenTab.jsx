@@ -14,19 +14,20 @@ const OpenTab = ({ loading, eventData }) => {
       ) : (
         eventData.map((data) => (
           <EventCards
-            key={data._id}
-            title={data.title}
-            description={data.description}
-            date={data.date}
-            startDate={data.startDate}
-            endDate={data.endDate}
-            location={data.location}
-            status={data.status}
-            postedBy={data.organization.name}
-            eventFee={data.fee}
-            organizer={data.organizer}
-            attendance={data.attendance}
-          />
+          key={data._id}
+          title={data.title}
+          description={data.description}
+          date={data.date}
+          startDate={data.startDate}
+          endDate={data.endDate}
+          location={data.location}
+          status={data.status}
+          eventBy={data.organization?.name}
+          postedBy={data.postedBy?.position}
+          eventFee={data.fee}
+          organizer={data.organizer}
+          attendance={data.attendance}
+        />
         ))
       )}
     </div>
