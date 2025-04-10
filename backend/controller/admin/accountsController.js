@@ -10,11 +10,9 @@ export const getAccounts = async (req, res) => {
         { subAdmins: userId }, // Check if the user is a sub-admin
       ],
     }).sort({ createdAt: -1 });
-  
-   
+
     const accounts = await Promise.all(
       organization.subAdmins.map(async (account) => {
-   
         return await UserModel.findById(account).select(
           "firstname lastname middlename username email profilePicture role active createdAt"
         );
@@ -44,7 +42,7 @@ export const getAccounts = async (req, res) => {
 
 export const createAccount = async (req, res) => {
   const { username, email, password, role } = req.body;
-
+  const userId = req.user.userId;
   try {
     const user = await UserModel.findOne({ $or: [{ username }, { email }] });
     //verify if email is already taken
@@ -65,7 +63,12 @@ export const createAccount = async (req, res) => {
       role, //default admin role
     });
 
-    const organization = await Organization.findOne({ admin: req.user.userId });
+    const organization = await Organization.findOne({
+      $or: [
+        { admin: userId }, // Check if the user is an admin
+        { subAdmins: userId }, // Check if the user is a sub-admin
+      ],
+    });
 
     organization.subAdmins.push(account._id);
     await organization.save();
