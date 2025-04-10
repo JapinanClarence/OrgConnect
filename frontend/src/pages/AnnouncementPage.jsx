@@ -187,8 +187,9 @@ const AnnouncementPage = () => {
     } catch (error) {
       const message = error.response.data.message;
       toast({
-        title: { message },
+        title: message ,
         description: `${date}`,
+        variant: "destructive"
       });
     }
   };

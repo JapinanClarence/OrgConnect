@@ -2,7 +2,7 @@ import Announcements from "../../model/announcementModel.js";
 import Organization from "../../model/organizationModel.js";
 import { OrgAdminModel as Admin } from "../../model/UserModel.js";
 import Membership from "../../model/membershipModel.js";
-import {sendNotificationToUser} from "../../util/sendNotif.js";
+import { sendNotificationToUser } from "../../util/sendNotif.js";
 
 export const createAnnouncement = async (req, res, next) => {
   const { title, description, category } = req.body;
@@ -19,7 +19,12 @@ export const createAnnouncement = async (req, res, next) => {
       });
     }
 
-    const organization = await Organization.findOne({ admin });
+    const organization = await Organization.findOne({
+      $or: [
+        { admin: userId }, // Check if the user is an admin
+        { subAdmins: userId }, // Check if the user is a sub-admin
+      ],
+    });
 
     if (!organization) {
       return res.status(404).json({
@@ -35,6 +40,14 @@ export const createAnnouncement = async (req, res, next) => {
           "Organization is currently not active, limited actions granted.",
       });
     }
+    const allowedRoles = ["3", "1"]; // Define allowed roles for announcement creation
+    if (!allowedRoles.includes(admin.role)) {
+      return res.status(403).json({
+        success: false,
+        message: "Access denied. Insufficient permissions",
+      });
+    }
+
     await Announcements.create({
       title,
       description,
@@ -81,10 +94,12 @@ export const getAnnouncement = async (req, res, next) => {
       });
     }
 
-    const organization = await Organization.findOne({  $or: [
-      { admin: userId },      // Check if the user is an admin
-      { subAdmins: userId }    // Check if the user is a sub-admin
-    ] });
+    const organization = await Organization.findOne({
+      $or: [
+        { admin: userId }, // Check if the user is an admin
+        { subAdmins: userId }, // Check if the user is a sub-admin
+      ],
+    });
 
     if (!organization) {
       return res.status(404).json({
@@ -94,7 +109,7 @@ export const getAnnouncement = async (req, res, next) => {
     }
     const announcement = await Announcements.find({
       organization: organization._id,
-    }).sort({createdAt: -1});
+    }).sort({ createdAt: -1 });
 
     if (announcement.length <= 0) {
       return res.status(200).json({
@@ -153,7 +168,12 @@ export const updateAnnouncement = async (req, res, next) => {
       });
     }
 
-    const organization = await Organization.findOne({ admin });
+    const organization = await Organization.findOne({
+      $or: [
+        { admin: userId }, // Check if the user is an admin
+        { subAdmins: userId }, // Check if the user is a sub-admin
+      ],
+    });
 
     if (!organization) {
       return res.status(404).json({
@@ -169,7 +189,15 @@ export const updateAnnouncement = async (req, res, next) => {
           "Organization is currently not active, limited actions granted.",
       });
     }
-    
+
+    const allowedRoles = ["3", "1"]; // Define allowed roles for announcement creation
+    if (!allowedRoles.includes(admin.role)) {
+      return res.status(403).json({
+        success: false,
+        message: "Access denied. Insufficient permissions",
+      });
+    }
+
     const announcementId = req.params.id;
 
     const announcement = await Announcements.findByIdAndUpdate(
@@ -197,7 +225,48 @@ export const updateAnnouncement = async (req, res, next) => {
 };
 
 export const deleteAnnoucement = async (req, res, next) => {
+  const userId = req.user.userId;
   try {
+    //verify if user exist
+    const admin = await Admin.findById(userId);
+
+    if (!admin) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    const organization = await Organization.findOne({
+      $or: [
+        { admin: userId }, // Check if the user is an admin
+        { subAdmins: userId }, // Check if the user is a sub-admin
+      ],
+    });
+
+    if (!organization) {
+      return res.status(404).json({
+        success: false,
+        message: "Organization not found",
+      });
+    }
+
+    if (!organization.active) {
+      return res.status(403).json({
+        success: false,
+        message:
+          "Organization is currently not active, limited actions granted.",
+      });
+    }
+
+    const allowedRoles = ["3", "1"]; // Define allowed roles for announcement creation
+    if (!allowedRoles.includes(admin.role)) {
+      return res.status(403).json({
+        success: false,
+        message: "Access denied. Insufficient permissions",
+      });
+    }
+    
     const announcementId = req.params.id;
 
     const announcement = await Announcements.findByIdAndDelete(announcementId);
