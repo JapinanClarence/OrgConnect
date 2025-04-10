@@ -19,7 +19,7 @@ router.get(
 router.post(
   "/accounts",
   authenticate,
-  authorizeRole("admin"),
+  authorizeRole("admin", "secretary"),
   express.json(),
   createAccount
 );

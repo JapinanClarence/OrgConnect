@@ -21,7 +21,7 @@ const router = express.Router();
 router.patch(
   "/officer/:id",
   authenticate,
-  authorizeRole("admin"),
+  authorizeRole("admin","secretary"),
   express.json(),
   officerValidationRules(),
   validate,
@@ -30,7 +30,7 @@ router.patch(
 router.patch(
   "/officer/:id/updateRole",
   authenticate,
-  authorizeRole("admin"),
+  authorizeRole("admin", "secretary",),
   express.json(),
   updateOfficer
 );
@@ -49,7 +49,7 @@ router.get(
 router.patch(
   "/officer/:id/revokeRole",
   authenticate,
-  authorizeRole("admin"),
+  authorizeRole("admin", "secretary",),
   revokeRole
 );
 export default router;
