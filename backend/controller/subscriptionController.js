@@ -8,7 +8,7 @@ export const createSubscription = async (req, res) => {
     await PushSubscription.findOneAndUpdate(
       { endpoint: subscription.endpoint },
       { ...subscription, user: req.user.userId },
-      { upsert: true, new: true }
+      { upsert: true, new: true, setDefaultsOnInsert: true }
     );
 
     res.status(201).json({ success: true, message: "Subscribed" });

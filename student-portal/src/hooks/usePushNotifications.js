@@ -1,32 +1,25 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import apiClient from "@/api/axios";
 import { useAuth } from "@/context/AuthContext";
 // import vapid public key from environment variables
 const VAPID_PUBLIC_KEY = import.meta.env.VITE_VAPID_PUBLIC;
-const VAPID_PUBLIC_URL = import.meta.env.VITE_PUBLIC_URL;
 
 const usePushNotifications = () => {
   const { token, isAuthenticated } = useAuth();
+  const hasSubscribedRef = useRef(false);
 
   useEffect(() => {
-    if (!isAuthenticated || !token) return; // Ensure only authenticated users
-
+    if (!isAuthenticated || !token || hasSubscribedRef.current) return; // Ensure only authenticated users
+    
+    hasSubscribedRef.current = true;
+    
     const enablePush = async () => {
       try {
         if ("serviceWorker" in navigator && "PushManager" in window) {
-          const swUrl = `${VAPID_PUBLIC_URL || ""}/sw.js`;
-          
-          const registration = await navigator.serviceWorker
-          .register(swUrl)
-          .then(
-            function (swRegistration) {
-              console.log("Worker registration successful", swRegistration.scope);
-              return swRegistration; // <- you MUST return this!
-            },
-            function (err) {
-              console.log("Worker registration failed", err);
-            }
-          );
+          const swUrl = `/sw.js`;
+
+          const registration = await navigator.serviceWorker.register(swUrl);
+          console.log("Worker registration successful", registration.scope);
 
           const permission = await Notification.requestPermission();
           if (permission !== "granted") {
@@ -34,22 +27,29 @@ const usePushNotifications = () => {
             return;
           }
 
-          const subscription = await registration.pushManager.subscribe({
-            userVisibleOnly: true,
-            applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY),
-          });
+          const existingSubscription =
+            await registration.pushManager.getSubscription();
 
-          await apiClient.post(
-            "/notification/subscribe",
-            { subscription },
-            {
-              headers: {
-                Authorization: token,
-              },
-            }
-          );
+          if (!existingSubscription) {
+            const newSubscription = await registration.pushManager.subscribe({
+              userVisibleOnly: true,
+              applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY),
+            });
 
-          console.log("Push subscription successful:", subscription);
+            await apiClient.post(
+              "/notification/subscribe",
+              { subscription: newSubscription },
+              {
+                headers: {
+                  Authorization: token,
+                },
+              }
+            );
+
+            console.log("New push subscription successful:", newSubscription);
+          } else {
+            console.log("Already subscribed:", existingSubscription);
+          }
         }
       } catch (error) {
         console.error("Error enabling push notifications:", error);

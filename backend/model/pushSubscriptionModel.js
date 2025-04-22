@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const PushSubscriptionSchema = new mongoose.Schema(
   {
-    endpoint: String,
+    endpoint: { type: String, required: true, unique: true },
     keys: {
       auth: String,
       p256dh: String,
