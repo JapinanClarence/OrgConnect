@@ -3,10 +3,10 @@ import { OrgAdminModel as Admin, UserModel } from "../../model/UserModel.js";
 import Payments from "../../model/paymentModel.js";
 import { StudentModel as Student } from "../../model/UserModel.js";
 import Membership from "../../model/membershipModel.js";
-import {
-  sendNotificationToAll,
-  sendNotificationToUser,
-} from "../../util/sendNotif.js";
+// import {
+//   sendNotificationToAll,
+//   sendNotificationToUser,
+// } from "../../util/sendNotif.js";
 
 export const createPayment = async (req, res, next) => {
   const { purpose, amount, details, category, paidBy, dueDate } = req.body;
@@ -66,21 +66,21 @@ export const createPayment = async (req, res, next) => {
       paidBy,
     });
 
-    if (category === "0") {
-      //get all organization members
-      const membership = await Membership.find({
-        organization: organization._id,
-      });
-      // send notification to all members
-      membership.map(async ({ student }) => {
-        await sendNotificationToUser(
-          student,
-          "A new payment has been uploaded",
-          `Check out the new payment: ${purpose} from ${organization.name}`,
-          `/organization/${organization._id}/events`
-        );
-      });
-    }
+    // if (category === "0") {
+    //   //get all organization members
+    //   const membership = await Membership.find({
+    //     organization: organization._id,
+    //   });
+    //   // send notification to all members
+    //   membership.map(async ({ student }) => {
+    //     await sendNotificationToUser(
+    //       student,
+    //       "A new payment has been uploaded",
+    //       `Check out the new payment: ${purpose} from ${organization.name}`,
+    //       `/organization/${organization._id}/events`
+    //     );
+    //   });
+    // }
 
     res.status(201).json({
       success: true,

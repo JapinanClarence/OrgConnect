@@ -2,10 +2,7 @@ import Events from "../../model/eventModel.js";
 import Membership from "../../model/membershipModel.js";
 import Organization from "../../model/organizationModel.js";
 import { OrgAdminModel as Admin } from "../../model/UserModel.js";
-import {
-  sendNotificationToAll,
-  sendNotificationToUser,
-} from "../../util/sendNotif.js";
+import { sendFirebaseNotif } from "../../util/sendNotif.js";
 
 export const createEvent = async (req, res, next) => {
   const { title, description, startDate, endDate, location, fee, organizer } =
@@ -72,15 +69,23 @@ export const createEvent = async (req, res, next) => {
       organization: organization._id,
     });
 
+    // Extract all student IDs from membership
+    const studentIds = membership.map((member) => member.student);
+
+    await sendFirebaseNotif(
+      "A new event has been uploaded",
+      `Check out the new event: ${event.title} from ${organization.name}`,
+      studentIds
+    );
     // send notification to all members
-    membership.map(async ({ student }) => {
-      await sendNotificationToUser(
-        student,
-        "A new event has been uploaded",
-        `Check out the new event: ${event.title} from ${organization.name}`,
-        `/organization/${organization._id}/events`
-      );
-    });
+    // membership.map(async ({ student }) => {
+    //   await sendNotificationToUser(
+    //     student,
+    //     "A new event has been uploaded",
+    //     `Check out the new event: ${event.title} from ${organization.name}`,
+    //     `/organization/${organization._id}/events`
+    //   );
+    // });
 
     // await sendNotificationToAll(
     //   "A new event has been uploaded",

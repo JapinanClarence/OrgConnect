@@ -1,18 +1,18 @@
-import PushSubscription from "../model/pushSubscriptionModel.js";
+import FirebaseNotif from "../model/firebaseNotifModel.js";
 
 export const createSubscription = async (req, res) => {
-  const { subscription } = req.body;
+  const user = req.user.userId;
+  const { fcmToken } = req.body;
 
   try {
-    // You can upsert (update or insert) the subscription
-    await PushSubscription.findOneAndUpdate(
-      { endpoint: subscription.endpoint },
-      { ...subscription, user: req.user.userId },
-      { upsert: true, new: true, setDefaultsOnInsert: true }
-    );
+    const existingToken = await FirebaseNotif.findOne({ fcmToken });
 
-    res.status(201).json({ success: true, message: "Subscribed" });
-  } catch (error) {
+    if (!existingToken) {
+      await FirebaseNotif.create({ fcmToken, user });
+      console.log("FCM token saved");
+    }
+    res.status(201).json({ success: true, message: "FCM token saved" });
+  } catch (err) {
     return res.status(500).json({
       success: false,
       message: err.message,

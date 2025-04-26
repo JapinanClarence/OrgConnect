@@ -30,6 +30,8 @@ function App() {
   const [isInstalled, setIsInstalled] = useState(false);
   const navigate = useNavigate(); // React Router v6 useNavigate for redirection
   const { toast } = useToast();
+
+  
   useEffect(() => {
     // Check if the app is running as a PWA (standalone)
     if (window.matchMedia("(display-mode: standalone)").matches) {

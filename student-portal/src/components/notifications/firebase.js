@@ -2,6 +2,9 @@
 import { initializeApp } from "firebase/app";
 // import { getAnalytics } from "firebase/analytics";
 import { getMessaging, getToken } from "firebase/messaging";
+import apiClient from "@/api/axios";
+
+const jwtToken = localStorage.getItem("token");
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -24,14 +27,39 @@ export const messaging = getMessaging(app);
 const VAPID_KEY = import.meta.env.VITE_VAPID_KEY;
 
 export const generateToken = async () => {
-  const permission = await Notification.requestPermission();
+  try {
+    const permission = await Notification.requestPermission();
+    console.log('Notification permission status:', permission);
 
-  console.log(permission);
+    if (permission !== "granted") {
+      console.warn('Permission not granted for notifications');
+      return;
+    }
 
-  if (permission === "granted") {
-    const token = await getToken(messaging, {
-      vapidKey: VAPID_KEY,
-    });
-    console.log(token)
+    const token = await getToken(messaging, { vapidKey: VAPID_KEY });
+
+    if (token) {
+      console.log('Generated FCM Token:', token);
+
+      try {
+        await apiClient.post(
+          "/notification/subscribe",
+          { fcmToken: token },
+          {
+            headers: {
+              Authorization: jwtToken,
+            },
+          }
+        );
+        console.log('FCM Token sent to server successfully');
+      } catch (error) {
+        console.error('Error sending FCM token to server:', error);
+      }
+      
+    } else {
+      console.warn('Failed to get FCM token. Token is null.');
+    }
+  } catch (error) {
+    console.error('An error occurred while generating FCM token:', error);
   }
 };
