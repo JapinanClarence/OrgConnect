@@ -23,19 +23,30 @@ import AttendancePage from "./pages/AttendancePage";
 import SearchPage from "./pages/SearchPage";
 import usePushNotifications from "./hooks/usePushNotifications";
 import TransactionPage from "./pages/TransactionPage";
-
+import { generateToken, messaging } from "./components/notifications/firebase";
+import { onMessage } from "firebase/messaging";
+import { useToast } from "./hooks/use-toast";
 function App() {
   const [isInstalled, setIsInstalled] = useState(false);
   const navigate = useNavigate(); // React Router v6 useNavigate for redirection
-
+  const { toast } = useToast();
   useEffect(() => {
     // Check if the app is running as a PWA (standalone)
     if (window.matchMedia("(display-mode: standalone)").matches) {
       setIsInstalled(true);
     }
+    generateToken();
+
+    onMessage(messaging, (payload) => {
+      console.log(payload);
+      toast({
+        title: payload.notification.title,
+        description: payload.notification.body,
+      });
+    });
   }, []);
 
-  usePushNotifications(); // Initialize push notifications
+  // usePushNotifications(); // Initialize push notifications
   return (
     <>
       <Toaster />
@@ -66,7 +77,7 @@ function App() {
                 path="/organization/:id/payments"
                 element={<PaymentPage />}
               />
-               <Route
+              <Route
                 path="/organization/:id/transactions"
                 element={<TransactionPage />}
               />
