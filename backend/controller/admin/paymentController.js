@@ -66,21 +66,20 @@ export const createPayment = async (req, res, next) => {
       paidBy,
     });
 
-    // if (category === "0") {
-    //   //get all organization members
-    //   const membership = await Membership.find({
-    //     organization: organization._id,
-    //   });
-    //   // send notification to all members
-    //   membership.map(async ({ student }) => {
-    //     await sendNotificationToUser(
-    //       student,
-    //       "A new payment has been uploaded",
-    //       `Check out the new payment: ${purpose} from ${organization.name}`,
-    //       `/organization/${organization._id}/events`
-    //     );
-    //   });
-    // }
+    if (category === "0") {
+      //get all organization members
+      const membership = await Membership.find({
+        organization: organization._id,
+      });
+      // Extract all student IDs from membership
+      const studentIds = membership.map((member) => member.student);
+
+      await sendFirebaseNotif(
+        "A new payment has been uploaded",
+        `Check out the new payment: ${purpose} from ${organization.name}`,
+        studentIds
+      );
+    }
 
     res.status(201).json({
       success: true,
