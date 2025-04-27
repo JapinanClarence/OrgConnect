@@ -3,10 +3,7 @@ import { OrgAdminModel as Admin, UserModel } from "../../model/UserModel.js";
 import Payments from "../../model/paymentModel.js";
 import { StudentModel as Student } from "../../model/UserModel.js";
 import Membership from "../../model/membershipModel.js";
-// import {
-//   sendNotificationToAll,
-//   sendNotificationToUser,
-// } from "../../util/sendNotif.js";
+import { sendFirebaseNotif } from "../../util/sendNotif.js";
 
 export const createPayment = async (req, res, next) => {
   const { purpose, amount, details, category, paidBy, dueDate } = req.body;
