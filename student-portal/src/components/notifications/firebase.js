@@ -25,9 +25,17 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 export const messaging = getMessaging(app);
 const VAPID_KEY = import.meta.env.VITE_VAPID_KEY;
+// Store token in localStorage to avoid duplicate sending
+const LOCAL_FCM_TOKEN_KEY = "fcmToken";
 
 export const generateToken = async () => {
   try {
+    const existingToken = localStorage.getItem(LOCAL_FCM_TOKEN_KEY);
+
+    if (existingToken) {
+      console.log('FCM token already exists');
+      return; // Already have a token, no need to generate again
+    }
     const permission = await Notification.requestPermission();
     console.log('Notification permission status:', permission);
 
@@ -39,7 +47,7 @@ export const generateToken = async () => {
     const token = await getToken(messaging, { vapidKey: VAPID_KEY });
 
     if (token) {
-      console.log('Generated FCM Token:', token);
+      console.log('Generated FCM Token');
 
       try {
         await apiClient.post(
@@ -52,6 +60,8 @@ export const generateToken = async () => {
           }
         );
         console.log('FCM Token sent to server successfully');
+        // Save the token locally after successful server save
+        localStorage.setItem(LOCAL_FCM_TOKEN_KEY, token);
       } catch (error) {
         console.error('Error sending FCM token to server:', error);
       }

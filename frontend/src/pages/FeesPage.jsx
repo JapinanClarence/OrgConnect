@@ -227,7 +227,7 @@ const FeesPage = () => {
       />
 
       <AddPaymentDialog
-        title={"Add Payment Log"}
+        title={"Add Collection"}
         open={showAddDialog}
         onOpenChange={setShowAddDialog}
         form={form}

@@ -35,6 +35,7 @@ import {
 
 const AddPaymentDialog = ({
   title,
+  description = "Please fill in all required fields to add financial records.",
   open,
   onOpenChange,
   onSubmit,
@@ -84,7 +85,7 @@ const AddPaymentDialog = ({
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
           <DialogDescription>
-            Please fill in all required fields to add financial records.
+           {description}
           </DialogDescription>
         </DialogHeader>
         <div className="">
