@@ -9,11 +9,16 @@ import {
 import { MenuIcon } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
+import {
+  Collapsible,
+  CollapsibleTrigger,
+  CollapsibleContent,
+} from "./ui/collapsible";
 
 const MobileNav = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
-  const {userData} = useAuth();
+  const { userData } = useAuth();
 
   const handleNavigation = (path) => {
     setIsOpen(false); // Close the sheet
@@ -47,7 +52,11 @@ const MobileNav = () => {
           <span className="inline text-2xl font-semibold">OrgConnect</span>
         </div>
 
-        <div className={`${userData.role == "1" ? "grid" : "hidden"} gap-1 mt-5 font-normal text-lg`}>
+        <div
+          className={`${
+            userData.role != "0" ? "grid" : "hidden"
+          } gap-1 mt-5 font-normal text-lg`}
+        >
           <button
             onClick={() => handleNavigation("/")}
             className="rounded-lg hover:bg-gray-800 p-2 w-full text-left"
@@ -68,13 +77,36 @@ const MobileNav = () => {
           >
             Announcements
           </button>
+          <Collapsible>
+            <CollapsibleTrigger asChild>
+              <button
+                className="rounded-lg hover:bg-gray-800 p-2 w-full text-left"
+              >
+                Financial Records
+              </button>
+            </CollapsibleTrigger>
+            <CollapsibleContent className="space-y-2 border-l ml-4 pl-2 flex flex-col">
+              <button
+                onClick={() => handleNavigation("/fees")}
+                className="rounded-lg text-sm hover:bg-gray-800 p-2 w-full text-left"
+              >
+                Collections
+              </button>
+              <button
+                onClick={() => handleNavigation("/expenditure")}
+                className="rounded-lg text-sm hover:bg-gray-800 p-2 w-full text-left"
+              >
+                Transactions
+              </button>
+              <button
+                onClick={() => handleNavigation("/payment-logs")}
+                className="rounded-lg text-sm hover:bg-gray-800 p-2 w-full text-left"
+              >
+                Payment Logs
+              </button>
+            </CollapsibleContent>
+          </Collapsible>
 
-          <button
-            onClick={() => handleNavigation("/payments")}
-            className="rounded-lg hover:bg-gray-800 p-2 w-full text-left"
-          >
-            Financial Records
-          </button>
           <button
             onClick={() => handleNavigation("/officers")}
             className="rounded-lg hover:bg-gray-800 p-2 w-full text-left"
@@ -89,7 +121,11 @@ const MobileNav = () => {
             Members
           </button>
         </div>
-        <div className={`${userData.role == "0" ? "grid" : "hidden"} gap-1 mt-5 font-normal text-lg`}>
+        <div
+          className={`${
+            userData.role == "0" ? "grid" : "hidden"
+          } gap-1 mt-5 font-normal text-lg`}
+        >
           <button
             onClick={() => handleNavigation("/")}
             className="rounded-lg hover:bg-gray-800 p-2 w-full text-left"
@@ -109,7 +145,6 @@ const MobileNav = () => {
           >
             Users
           </button>
-
         </div>
       </SheetContent>
     </Sheet>
