@@ -6,7 +6,7 @@ import {
   SheetTrigger,
   SheetTitle,
 } from "@/components/ui/sheet";
-import { MenuIcon } from "lucide-react";
+import { ChevronDown, MenuIcon } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 import {
@@ -82,7 +82,8 @@ const MobileNav = () => {
               <button
                 className="rounded-lg hover:bg-gray-800 p-2 w-full text-left"
               >
-                Financial Records
+                Financial Records 
+                <ChevronDown className="h-5 w-5 inline ml-2" />
               </button>
             </CollapsibleTrigger>
             <CollapsibleContent className="space-y-2 border-l ml-4 pl-2 flex flex-col">
