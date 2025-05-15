@@ -121,6 +121,13 @@ const MobileNav = () => {
           >
             Members
           </button>
+           <button
+            onClick={() => handleNavigation("/users")}
+            className="rounded-lg hover:bg-gray-800 p-2 w-full text-left"
+          >
+            User Accounts
+          </button>
+
         </div>
         <div
           className={`${
