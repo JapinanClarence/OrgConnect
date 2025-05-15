@@ -71,13 +71,14 @@ export const getMembers = async (req, res) => {
           status: member.status,
           joinedDate: member.joinedDate,
           position: member.position,
+          createdAt: member.createdAt,
           absentCount, // Adding absent count for the student
         };
       })
     );
 
     const sortedMembers = memberData.sort(
-      (a, b) => new Date(b.joinedDate) - new Date(a.joinedDate)
+      (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
     );
 
     res.status(200).json({
