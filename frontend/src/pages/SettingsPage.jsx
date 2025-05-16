@@ -74,7 +74,7 @@ const SettingsPage = () => {
           <Tabs defaultValue="account" className="w-full">
             <TabsList className="bg-gray-200 grid w-full md:w-min grid-cols-[1fr,1fr]">
               <TabsTrigger value="account">Account</TabsTrigger>
-              <TabsTrigger className={userData.role !== 1 && "hidden"} value="organization">Organization</TabsTrigger>
+              <TabsTrigger className={userData.role !== "1" && "hidden"} value="organization">Organization</TabsTrigger>
             </TabsList>
 
             <TabsContent value="account">
