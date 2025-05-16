@@ -28,6 +28,7 @@ export const getAccounts = async (req, res) => {
       (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
     );
 
+    console.log(sortAccounts);
     res.status(200).json({
       success: true,
       data: sortAccounts,
