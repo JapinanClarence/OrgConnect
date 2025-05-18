@@ -52,6 +52,7 @@ const SignupForm = () => {
       firstname: "",
       lastname: "",
       middlename: "",
+      gender:"",
       studentId: "",
       year: "",
       course: "",
@@ -153,6 +154,34 @@ const SignupForm = () => {
               </FormItem>
             )}
           />
+           <FormField
+              control={form.control}
+              name="gender"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-gray-600 text-sm">Gender</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger className="">
+                        <SelectValue placeholder="Select your gender" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectLabel>Year</SelectLabel>
+                        <SelectItem value="male">Male</SelectItem>
+                        <SelectItem value="female">Female</SelectItem>
+                        <SelectItem value="other">Other</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage className="text-xs " />
+                </FormItem>
+              )}
+            />
           <FormField
             control={form.control}
             name="studentId"

@@ -20,6 +20,7 @@ export const register = async (req, res, next) => {
     year,
     email,
     password,
+    gender
   } = req.body;
 
   try {
@@ -48,6 +49,7 @@ export const register = async (req, res, next) => {
       email,
       year,
       password,
+      gender
     };
    
     await Student.create(studentData);
