@@ -37,6 +37,10 @@ function App() {
     if (window.matchMedia("(display-mode: standalone)").matches) {
       setIsInstalled(true);
     }
+    
+  }, []);
+
+  useEffect(() =>{
     generateToken();
 
     onMessage(messaging, (payload) => {
@@ -46,8 +50,7 @@ function App() {
         description: payload.notification.body,
       });
     });
-  }, []);
-
+  }, [])
   // usePushNotifications(); // Initialize push notifications
   return (
     <>

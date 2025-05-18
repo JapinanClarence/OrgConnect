@@ -29,7 +29,6 @@ import  {initializeApp} from "firebase-admin/app";
 import admin from "firebase-admin";
 
 const serviceAccount = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS);
-console.log(serviceAccount);
 
 initializeApp({
   credential: admin.credential.cert(serviceAccount),

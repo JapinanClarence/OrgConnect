@@ -11,28 +11,28 @@ export const getAccounts = async (req, res) => {
       ],
     }).sort({ createdAt: -1 });
 
-    // const accounts = await Promise.all(
-    //   organization.subAdmins.map(async (account) => {
-    //     return await UserModel.findById(account).select(
-    //       "firstname lastname middlename username email profilePicture role active createdAt"
-    //     );
-    //   })
-    // );
-    // if (!accounts) {
-    //   return res.status(404).json({
-    //     success: false,
-    //     message: "No accounts found",
-    //   });
-    // }
-    // const sortAccounts = accounts.sort(
-    //   (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-    // );
+    const accounts = await Promise.all(
+      organization.subAdmins.map(async (account) => {
+        return await UserModel.findById(account).select(
+          "firstname lastname middlename username email profilePicture role active createdAt"
+        );
+      })
+    );
+    if (!accounts) {
+      return res.status(404).json({
+        success: false,
+        message: "No accounts found",
+      });
+    }
+    const sortAccounts = accounts.sort(
+      (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+    );
 
-    // console.log(sortAccounts);
-    // res.status(200).json({
-    //   success: true,
-    //   data: sortAccounts,
-    // });
+    console.log(sortAccounts);
+    res.status(200).json({
+      success: true,
+      data: sortAccounts,
+    });
   } catch (error) {
     return res.status(500).json({
       success: false,
