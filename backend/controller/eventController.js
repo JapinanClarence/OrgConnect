@@ -90,50 +90,42 @@ export const getEvents = async (req, res) => {
 
     const attendanceStatus = await Promise.all(
       events.map(async (event) => {
-
         const isAttendanace = ["0"];
-        const attendance = await Attendance.findOne({ event: event._id });
+        const attendance = await Attendance.find({ event: event._id });
+
+        const hasAttended = attendance.some(
+          (att) => att.student.toString() === student.toString()
+        );
+
+        const baseEventData = {
+          _id: event._id,
+          title: event.title,
+          description: event.description,
+          startDate: event.startDate,
+          endDate: event.endDate,
+          location: event.location,
+          organization: event.organization,
+          createdAt: event.createdAt,
+          updatedAt: event.updatedAt,
+          status: event.status,
+          postedBy: event.postedBy,
+        };
 
         if (isAttendanace.includes(event.status)) {
           return {
-            _id: event._id,
-            title: event.title,
-            description: event.description,
-            startDate: event.startDate,
-            endDate: event.endDate,
-            location: event.location,
-            organization: event.organization,
-            createdAt: event.createdAt,
-            updatedAt: event.updatedAt,
-            status: event.status,
-            postedBy: event.postedBy,
-            attendance:
-              attendance && student.toString() === attendance.student.toString()
-                ? "1"
-                : "0",
+            ...baseEventData,
+            attendance: hasAttended ? "1" : "0", // 1 = attended, 0 = not attended
           };
         } else {
           return {
-            _id: event._id,
-            title: event.title,
-            description: event.description,
-            startDate: event.startDate,
-            endDate: event.endDate,
-            location: event.location,
-            organization: event.organization,
-            createdAt: event.createdAt,
-            updatedAt: event.updatedAt,
-            status: event.status,
-            postedBy: event.postedBy,
-            attendance: attendance && student.toString() === attendance.student.toString()
-                ? "1"
-                : "2",
+            ...baseEventData,
+            attendance: hasAttended ? "1" : "2", // 1 = attended, 2 = not allowed
           };
         }
       })
     );
 
-    console.log(attendanceStatus)
+    // console.log(attendanceStatus)
 
     res.status(200).json({
       success: true,
