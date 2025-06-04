@@ -141,6 +141,16 @@ export const getPayment = async (req, res, next) => {
       const fullname = `${data.paidBy?.firstname} ${
         data.paidBy?.middlename ? data.paidBy?.middlename[0] + ". " : ""
       }${data.paidBy?.lastname}`;
+
+      // Default to 0 unless category is "0"
+      let totalCollected = 0;
+
+      if (data.category === "0" && Array.isArray(data.membersPaid)) {
+        totalCollected = data.membersPaid.reduce((sum, member) => {
+          return sum + (member.amount || 0);
+        }, 0);
+      }
+
       return {
         _id: data._id,
         purpose: data.purpose,
@@ -150,9 +160,10 @@ export const getPayment = async (req, res, next) => {
         createdAt: data.createdAt,
         paidBy: fullname,
         dueDate: data.dueDate,
+        ...(data.category === "0" && { totalCollected }), // include only for category "0"
       };
     });
-
+    console.log(cleanPaymentDetails);
     res.status(200).json({
       success: true,
       data: cleanPaymentDetails,

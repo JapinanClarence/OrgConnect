@@ -73,6 +73,7 @@ const FeesPage = () => {
           amount: data.amount,
           category: categoryMap[data.category],
           date: dateOnly(data.dueDate),
+          totalCollected : data.totalCollected? data.totalCollected : ""
         }));
 
         const expenditureData = tableData.filter(

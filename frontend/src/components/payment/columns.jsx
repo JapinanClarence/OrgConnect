@@ -114,14 +114,17 @@ export const columns = (onEdit, onDelete, onManage) => [
               Copy ID
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={handleEdit}>
-              Edit
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={handleDelete}>
-              Delete
-            </DropdownMenuItem>
+            <DropdownMenuItem onClick={handleEdit}>Edit</DropdownMenuItem>
+            <DropdownMenuItem onClick={handleDelete}>Delete</DropdownMenuItem>
 
-            <DropdownMenuItem className={["Transactions", "Payment Logs"].includes(payment.category) ? "hidden" : "flex"} onClick={handleManagePayment}>
+            <DropdownMenuItem
+              className={
+                ["Transactions", "Payment Logs"].includes(payment.category)
+                  ? "hidden"
+                  : "flex"
+              }
+              onClick={handleManagePayment}
+            >
               Manage
             </DropdownMenuItem>
           </DropdownMenuContent>
@@ -131,7 +134,7 @@ export const columns = (onEdit, onDelete, onManage) => [
   },
 ];
 
-export const feesColumns = (onEdit, onDelete, onManage) =>[
+export const feesColumns = (onEdit, onDelete, onManage) => [
   {
     accessorKey: "purpose",
     header: ({ column }) => {
@@ -173,6 +176,7 @@ export const feesColumns = (onEdit, onDelete, onManage) =>[
         </div>
       );
     },
+
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue("amount"));
 
@@ -181,6 +185,39 @@ export const feesColumns = (onEdit, onDelete, onManage) =>[
         style: "currency",
         currency: "PHP",
       }).format(amount);
+
+      return <div className="text-right font-medium">{formatted}</div>;
+    },
+  },
+  {
+    accessorKey: "totalCollected",
+    header: ({ column }) => {
+      return (
+        <div className="flex justify-end">
+          <Button
+            variant="ghost"
+            className="p-0"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Total Collected
+            <CaretSortIcon className="ml-2 h-4 w-4" />
+          </Button>
+        </div>
+      );
+    },
+
+    cell: ({ row }) => {
+      const rawValue = row.getValue("totalCollected");
+      const amount = parseFloat(rawValue);
+
+      // Check if amount is a valid number
+      const validAmount = isNaN(amount) ? 0 : amount;
+
+      // Format the amount as PHP currency
+      const formatted = new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "PHP",
+      }).format(validAmount);
 
       return <div className="text-right font-medium">{formatted}</div>;
     },
@@ -226,14 +263,17 @@ export const feesColumns = (onEdit, onDelete, onManage) =>[
               Copy ID
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={handleEdit}>
-              Edit
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={handleDelete}>
-              Delete
-            </DropdownMenuItem>
+            <DropdownMenuItem onClick={handleEdit}>Edit</DropdownMenuItem>
+            <DropdownMenuItem onClick={handleDelete}>Delete</DropdownMenuItem>
 
-            <DropdownMenuItem className={["Transactions", "Payment Logs"].includes(payment.category) ? "hidden" : "flex"} onClick={handleManagePayment}>
+            <DropdownMenuItem
+              className={
+                ["Transactions", "Payment Logs"].includes(payment.category)
+                  ? "hidden"
+                  : "flex"
+              }
+              onClick={handleManagePayment}
+            >
               Manage
             </DropdownMenuItem>
           </DropdownMenuContent>
@@ -241,7 +281,7 @@ export const feesColumns = (onEdit, onDelete, onManage) =>[
       );
     },
   },
-]
+];
 export const membersColumns = (onEdit, onDelete) => [
   {
     id: "profilePicture",
