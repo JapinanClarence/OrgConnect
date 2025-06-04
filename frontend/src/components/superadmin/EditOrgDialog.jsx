@@ -68,6 +68,22 @@ const EditOrgDialog = ({
                 </Alert>
               )}
               <div className="space-y-2">
+                 {/* Name Field */}
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-gray-600 text-sm">
+                        Name
+                      </FormLabel>
+                      <FormControl>
+                        <Input {...field} type="text" />
+                      </FormControl>
+                      <FormMessage className="text-xs" />
+                    </FormItem>
+                  )}
+                />
                 {/* Status Field */}
                 <FormField
                   control={form.control}

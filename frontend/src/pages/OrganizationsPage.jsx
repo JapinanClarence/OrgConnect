@@ -61,7 +61,7 @@ const OrganizationsPage = () => {
             createdAt: data.createdAt ? dateOnly(data.createdAt) : null,
             status: data.active,
             banner: data.banner,
-            remarks: data.remarks,
+            remarks: data.remarks? data.remarks : "",
             admin: data.admin,  
             type: data.type,
             adviser: data.adviser,
@@ -80,7 +80,7 @@ const OrganizationsPage = () => {
 
   const handleEditDialog = (data) => {
     setShowEditDialog(true);
-
+    console.log(data)
     setCurrentOrgData(data);
   };
 
@@ -119,6 +119,7 @@ const OrganizationsPage = () => {
       const formData = {
         active: data.status,
         remarks: data.remarks || null,
+        name: data.name,
       };
       setIsSubmitting(true);
       const res = await apiClient.patch(

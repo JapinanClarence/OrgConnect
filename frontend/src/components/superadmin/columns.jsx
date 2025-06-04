@@ -251,7 +251,7 @@ export const dashboardColumns = [
   },
   {
     accessorKey: "type",
-    header: "Status",
+    header: "Type",
     cell: ({ row }) => {
       const statusMap = {
         0: "Institute Based",
