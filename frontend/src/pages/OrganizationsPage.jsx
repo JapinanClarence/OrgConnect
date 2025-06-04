@@ -63,6 +63,7 @@ const OrganizationsPage = () => {
             banner: data.banner,
             remarks: data.remarks,
             admin: data.admin,  
+            type: data.type,
             adviser: data.adviser,
           };
         });

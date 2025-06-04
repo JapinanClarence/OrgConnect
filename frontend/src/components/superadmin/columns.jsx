@@ -353,6 +353,26 @@ export const orgColumns = (onEdit) => [
     cell: ({ row }) => <div className="text-xs">{row.getValue("adviser")}</div>,
   },
   {
+    accessorKey: "type",
+    header: "Type",
+    cell: ({ row }) => {
+      const typeMap = {
+        '0': "Institute Based",
+        '1': "Non-Institute Based",
+        '2': "Religious Based",
+        '3': "Fraternities",
+      };
+
+      const type = typeMap[row.getValue("type")];
+
+      return (
+        <div className="text-xs">
+          {type}
+        </div>
+      );
+    },
+  },
+  {
     accessorKey: "status",
     header: "Status",
     cell: ({ row }) => {
