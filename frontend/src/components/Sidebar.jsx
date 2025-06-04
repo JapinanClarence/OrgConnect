@@ -21,6 +21,7 @@ import {
   CalendarDays,
   ChevronDown,
   UserCog,
+  Proportions,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -447,7 +448,35 @@ const DesktopSidebar = () => {
               side="right"
               sideOffset={5}
             >
-              Officers
+              User Accounts
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+         <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Link
+                to="/reports"
+                className={`${
+                  userData.role == "0" ? "hidden" : "flex"
+                } rounded-lg size-full items-center justify-start p-2 ${
+                  isActive("/reports")
+                    ? "bg-white text-zinc-900"
+                    : "hover:bg-gray-800"
+                }`}
+              >
+                <Proportions />
+                <span className="hidden lg:block ml-2 font-bold text-sm">
+                  Reports
+                </span>
+              </Link>
+            </TooltipTrigger>
+            <TooltipContent
+              className="lg:hidden bg-white text-gray-900"
+              side="right"
+              sideOffset={5}
+            >
+              Reports
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>

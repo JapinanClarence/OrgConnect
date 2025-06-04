@@ -9,7 +9,8 @@ const AdminHomeContent = () => {
   
   return (
     <>
-      <Tabs defaultValue="overview" className="p-5 md:px-0">
+    <OverviewTab/>
+      {/* <Tabs defaultValue="overview" className="p-5 md:px-0">
         <TabsList className="grid w-fit grid-cols-2 border">
           <TabsTrigger value="overview">Overview</TabsTrigger>
           <TabsTrigger value="reports">Reports</TabsTrigger>
@@ -22,7 +23,7 @@ const AdminHomeContent = () => {
           <ReportTab />
         </TabsContent>
         <TabsContent value="reports"></TabsContent>
-      </Tabs>
+      </Tabs> */}
     </>
   );
 };

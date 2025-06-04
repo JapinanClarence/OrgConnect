@@ -21,7 +21,7 @@ import FeesPage from "./pages/FeesPage";
 import PaymentLogsPage from "./pages/PaymentLogsPage";
 import OrganizationPage from "./pages/OrganizationPage";
 import AccountsPage from "./pages/AccountsPage";
-// import TestPage from "./pages/TestPage";
+import ReportsPage from "./pages/ReportsPage";
 
 function App() {
   return (
@@ -99,6 +99,7 @@ function App() {
               <Route path="/members" element={<MembersPage />} />
 
               <Route path="/users" element={<AccountsPage />} />
+                <Route path="/reports" element={<ReportsPage />} />
             </Route>
           </Route>
         </Route>
